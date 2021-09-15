@@ -2,10 +2,10 @@ function App() {
   return (
     <div>
       <header>
-        Open Ethereum
+        Ether Alley
       </header>
       <p>
-        Highlight who you are through your wallet.
+        Under Construction...
       </p>
     </div>
   );

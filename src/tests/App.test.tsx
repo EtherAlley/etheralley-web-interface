@@ -10,5 +10,5 @@ test('renders highlight message', () => {
     </Provider>
   );
 
-  expect(getByText(/wallet/i)).toBeInTheDocument();
+  expect(getByText(/Ether/i)).toBeInTheDocument();
 });
