@@ -1,4 +1,4 @@
-import homeReducer, { State, setAddress } from '../../../containers/home/slice';
+import homeReducer, { State, setAddress } from '../../../containers/HomePage/slice';
 
 describe('home reducer', () => {
   const initialState: State = {

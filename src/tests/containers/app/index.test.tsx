@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { store } from '../../../store';
-import App from '../../../containers/app';
+import App from '../../../containers/App';
 import { HashRouter as Router } from 'react-router-dom';
 
 test('renders highlight message', () => {

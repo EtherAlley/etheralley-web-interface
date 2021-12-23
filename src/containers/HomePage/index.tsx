@@ -3,7 +3,7 @@ import { Routes } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectHome, setAddress } from './slice';
 
-function Home() {
+function HomePage() {
   const { push } = useHistory();
   const dispatch = useAppDispatch();
   const { address } = useAppSelector(selectHome);
@@ -22,4 +22,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;

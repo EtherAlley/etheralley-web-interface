@@ -5,6 +5,8 @@ import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadProfile, selectProfile } from './slice';
 import Profile from './Profile';
+import LoadingOverlay from '../../components/LoadingOverlay';
+import ErrorOverlay from '../../components/ErrorOverlay';
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
@@ -20,11 +22,11 @@ function ProfilePage() {
   }, [dispatch, library, address]);
 
   if (loading) {
-    return <div>loading...</div>;
+    return <LoadingOverlay />;
   }
 
   if (error) {
-    return <div>error</div>;
+    return <ErrorOverlay />;
   }
 
   if (!profileConfig) {

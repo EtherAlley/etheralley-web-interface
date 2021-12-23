@@ -4,10 +4,10 @@ import { injectedConnector } from '../../connectors';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { saveProfile, selectProfile } from '../profile/slice';
+import { saveProfile, selectProfile } from '../ProfilePage/slice';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Routes, ProfileMode } from '../../constants';
-import { setProfileMode } from '../profile/slice';
+import { setProfileMode } from '../ProfilePage/slice';
 
 function Connection() {
   const dispatch = useAppDispatch();
@@ -25,8 +25,6 @@ function Connection() {
   useInjectedListener(!triedEager || activating);
 
   const isUsersProfile = pathname.split('/').length >= 3 && pathname.split('/')[2] === account;
-
-  console.log(library);
 
   return active && account ? (
     <span>

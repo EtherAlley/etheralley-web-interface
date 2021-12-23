@@ -1,6 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import homeReducer from './containers/home/slice';
-import profileReducer from './containers/profile/slice';
+import homeReducer from './containers/HomePage/slice';
+import profileReducer from './containers/ProfilePage/slice';
 
 export const store = configureStore({
   reducer: {

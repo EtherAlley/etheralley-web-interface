@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
 import { Route, Switch } from 'react-router';
-import Home from '../home';
-import Profile from '../profile';
+import Home from '../HomePage';
+import Profile from '../ProfilePage';
 import { Routes } from '../../constants';
 import NavBar from './NavBar';
 import { useWeb3React } from '@web3-react/core';
 import { networkConnector } from '../../connectors';
+import LoadingOverlay from '../../components/LoadingOverlay';
 
 function App() {
   const { activate, active } = useWeb3React();
@@ -27,7 +28,7 @@ function App() {
           </Route>
         </Switch>
       ) : (
-        <span>loading...</span>
+        <LoadingOverlay />
       )}
     </>
   );
