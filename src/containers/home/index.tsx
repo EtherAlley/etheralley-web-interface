@@ -11,9 +11,10 @@ function Home() {
     <div>
       <form onSubmit={() => push(Routes.PROFILE.replace(':address', address))}>
         <input
-          placeholder="enter address..."
+          placeholder="Enter ENS name or Ethereum address..."
           onChange={(event) => dispatch(setAddress(event.target.value))}
           value={address}
+          style={{ width: '15rem' }}
         />
         <button disabled={!address}>submit</button>
       </form>

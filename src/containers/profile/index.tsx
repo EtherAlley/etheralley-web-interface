@@ -9,13 +9,13 @@ function Profile() {
 
   const { library } = useWeb3React();
 
-  const { loading, error, balance } = useAppSelector(selectProfile);
+  const { loading, error, profileTemplate } = useAppSelector(selectProfile);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadProfile({ library, address }));
-  }, []);
+  }, [dispatch, library, address]);
 
   if (loading) {
     return <div>loading...</div>;
@@ -28,7 +28,7 @@ function Profile() {
   return (
     <div>
       <p>
-        Showing profile [{address}] with balance [{balance}]
+        Showing profile [{address}] with template [{JSON.stringify(profileTemplate)}]
       </p>
     </div>
   );
