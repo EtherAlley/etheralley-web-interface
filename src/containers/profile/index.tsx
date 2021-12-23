@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { useParams } from 'react-router';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadProfile, selectProfile } from './slice';
+import Profile from './Profile';
 
-function Profile() {
+function ProfilePage() {
   const { address } = useParams<{ address: string }>();
 
   const { library } = useWeb3React();
 
-  const { loading, error, profileTemplate } = useAppSelector(selectProfile);
+  const { loading, error, profileMode, profileConfig } = useAppSelector(selectProfile);
 
   const dispatch = useAppDispatch();
 
@@ -25,13 +27,15 @@ function Profile() {
     return <div>error</div>;
   }
 
+  if (!profileConfig) {
+    return <div>no profile found... default profile goes here</div>;
+  }
+
   return (
     <div>
-      <p>
-        Showing profile [{address}] with template [{JSON.stringify(profileTemplate)}]
-      </p>
+      <Profile profileMode={profileMode} elements={profileConfig.elements} />
     </div>
   );
 }
 
-export default Profile;
+export default ProfilePage;

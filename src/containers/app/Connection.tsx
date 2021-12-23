@@ -3,12 +3,17 @@ import { useWeb3React } from '@web3-react/core';
 import { injectedConnector } from '../../connectors';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
-import { useAppDispatch } from '../../hooks';
-import { saveProfile } from '../profile/slice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { saveProfile, selectProfile } from '../profile/slice';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Routes, ProfileMode } from '../../constants';
+import { setProfileMode } from '../profile/slice';
 
 function Connection() {
   const dispatch = useAppDispatch();
-
+  const { profileMode } = useAppSelector(selectProfile);
+  const { push } = useHistory();
+  const { pathname } = useLocation();
   const { activate, active, library, account } = useWeb3React();
 
   const [activating, setActivating] = useState(false);
@@ -19,16 +24,29 @@ function Connection() {
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInjectedListener(!triedEager || activating);
 
+  const isUsersProfile = pathname.split('/').length >= 3 && pathname.split('/')[2] === account;
+
+  console.log(library);
+
   return active && account ? (
     <span>
-      connected!{' '}
-      <button
-        onClick={() => {
-          dispatch(saveProfile({ library, account }));
-        }}
-      >
-        Post to IPFS
-      </button>
+      {isUsersProfile ? (
+        profileMode === ProfileMode.View ? (
+          <button onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}>Edit Profile</button>
+        ) : (
+          <button
+            onClick={() => {
+              dispatch(saveProfile({ library, account }));
+            }}
+          >
+            Save profile
+          </button>
+        )
+      ) : (
+        <>
+          <button onClick={() => push(Routes.PROFILE.replace(':address', account))}>My Profile</button>
+        </>
+      )}
     </span>
   ) : (
     <button
@@ -38,7 +56,7 @@ function Connection() {
       }}
       disabled={!triedEager || activating}
     >
-      connect to a wallet...
+      Connect to a wallet...
     </button>
   );
 }
