@@ -8,14 +8,16 @@ export interface State {
   loading: boolean;
   error: boolean;
   profileMode: ProfileMode;
-  profileConfig: ProfileConfig;
+  profileConfig: ProfileConfig | undefined;
+  currentNodeId: string | undefined;
 }
 
 const initialState: State = {
   loading: true,
   error: false,
   profileMode: ProfileMode.View,
-  profileConfig: defaultConfig(),
+  profileConfig: undefined,
+  currentNodeId: undefined,
 };
 
 //TODO:
@@ -61,6 +63,9 @@ export const slice = createSlice({
     setProfileMode: (state, action: PayloadAction<ProfileMode>) => {
       state.profileMode = action.payload;
     },
+    setCurrentSelectedNode: (state, action: PayloadAction<string | undefined>) => {
+      state.currentNodeId = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -82,7 +87,7 @@ export const slice = createSlice({
   },
 });
 
-export const { setProfileMode } = slice.actions;
+export const { setProfileMode, setCurrentSelectedNode } = slice.actions;
 
 export const selectProfile = (state: RootState) => state.profile;
 

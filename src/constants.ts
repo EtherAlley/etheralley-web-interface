@@ -1,3 +1,5 @@
+import { Node } from 'react-flow-renderer';
+
 export const Routes = {
   HOME: '/',
   PROFILE: '/profiles/:address',
@@ -11,7 +13,7 @@ export enum ProfileMode {
 }
 
 export type ProfileConfig = {
-  elements: any[];
+  elements: Node[];
 };
 
 export const ContractABI = [

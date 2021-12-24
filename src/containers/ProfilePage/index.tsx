@@ -19,13 +19,14 @@ function ProfilePage() {
 
   useEffect(() => {
     dispatch(loadProfile({ library, address }));
-  }, [dispatch, library, address]);
+  }, []);
 
   if (loading) {
     return <LoadingOverlay />;
   }
 
-  if (error) {
+  if (error || !profileConfig) {
+    console.log(loading, error, profileConfig);
     return <ErrorOverlay />;
   }
 
