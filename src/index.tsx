@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import { Web3ReactProvider, createWeb3ReactRoot } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { INJECTED_CONTEXT_NAME } from './constants';
+import { ReactFlowProvider } from 'react-flow-renderer/nocss';
 
 const Web3ProviderInjected = createWeb3ReactRoot(INJECTED_CONTEXT_NAME);
 
@@ -20,9 +21,11 @@ ReactDOM.render(
     <Provider store={store}>
       <Web3ReactProvider getLibrary={getLibrary}>
         <Web3ProviderInjected getLibrary={getLibrary}>
-          <Router>
-            <App />
-          </Router>
+          <ReactFlowProvider>
+            <Router>
+              <App />
+            </Router>
+          </ReactFlowProvider>
         </Web3ProviderInjected>
       </Web3ReactProvider>
     </Provider>

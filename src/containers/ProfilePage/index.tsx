@@ -29,13 +29,9 @@ function ProfilePage() {
     return <ErrorOverlay />;
   }
 
-  if (!profileConfig) {
-    return <div>no profile found... default profile goes here</div>;
-  }
-
   return (
     <div>
-      <Profile profileMode={profileMode} elements={profileConfig.elements} />
+      <Profile profileMode={profileMode} profileConfig={profileConfig} />
     </div>
   );
 }

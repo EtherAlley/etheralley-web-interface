@@ -1,85 +1,55 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
-import axios from 'axios';
 import { Contract } from '@ethersproject/contracts';
-import { ContractABI, ProfileMode } from '../../constants';
+import { RootState } from '../../store';
+import { ContractABI, ProfileConfig, ProfileMode } from '../../constants';
+import { defaultConfig, fromIPFSToProfileConfig } from './transformers';
 
 export interface State {
   loading: boolean;
   error: boolean;
   profileMode: ProfileMode;
-  profileConfig: undefined | any;
+  profileConfig: ProfileConfig;
 }
 
 const initialState: State = {
   loading: true,
   error: false,
   profileMode: ProfileMode.View,
-  profileConfig: undefined,
+  profileConfig: defaultConfig(),
 };
 
 //TODO:
 const contractAddres = '0xd50d3F16F89a3B0028Cb3069d9979d78Dc11435A';
 
-function fromHash(hash: any): any {
-  return hash;
-}
-
-function toHash(profileConfig: any): string {
-  return JSON.stringify({
-    elements: [
-      {
-        id: '1',
-        data: { label: 'Node 1' },
-        position: { x: 250, y: 25 },
-      },
-      {
-        id: '2',
-        data: { label: 'Node 2' },
-        position: { x: 100, y: 125 },
-      },
-      {
-        id: '3',
-        data: { label: 'Node 3' },
-        position: { x: 250, y: 250 },
-      },
-    ],
-  });
-}
-
-export const loadProfile = createAsyncThunk<string, { library: any; address: string }, any>(
+export const loadProfile = createAsyncThunk<ProfileConfig, { library: any; address: string }, any>(
   'profile/load',
   async ({ library, address }) => {
     const contract = new Contract(contractAddres, ContractABI, library);
     const hash: string = await contract.getProfile(address);
     if (hash) {
-      const { data } = await axios(`https://ipfs.infura.io:5001/api/v0/cat?arg=${hash}&encoding=json`, {
+      const response = await fetch(`https://ipfs.infura.io:5001/api/v0/cat?arg=${hash}`, {
         method: 'GET',
       });
-      return fromHash(data);
+      const data = await response.text();
+      return fromIPFSToProfileConfig(data);
     }
-    return undefined;
+    return defaultConfig();
   }
 );
 
-export const saveProfile = createAsyncThunk<void, { library: any; account: string }, any>(
+export const saveProfile = createAsyncThunk<void, { library: any; account: string; profileConfig: ProfileConfig }, any>(
   'profile/save',
-  async ({ library, account }, { getState }) => {
-    const {
-      profile: { profileConfig },
-    } = getState() as any;
+  async ({ library, account, profileConfig }) => {
     const contract = new Contract(contractAddres, ContractABI, library.getSigner(account).connectUnchecked());
     const formData = new FormData();
-    formData.append('document', toHash(profileConfig));
-    const {
-      data: { Hash },
-    } = await axios(`https://ipfs.infura.io:5001/api/v0/add`, {
+    formData.append('document', JSON.stringify(profileConfig));
+
+    const response = await fetch(`https://ipfs.infura.io:5001/api/v0/add`, {
       method: 'POST',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+      body: formData,
     });
+    const { Hash } = await response.json();
+
     await contract.setProfile(Hash);
   }
 );

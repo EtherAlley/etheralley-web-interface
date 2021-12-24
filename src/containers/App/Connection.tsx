@@ -4,7 +4,7 @@ import { injectedConnector } from '../../connectors';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { saveProfile, selectProfile } from '../ProfilePage/slice';
+import { selectProfile } from '../ProfilePage/slice';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Routes, ProfileMode } from '../../constants';
 import { setProfileMode } from '../ProfilePage/slice';
@@ -14,7 +14,7 @@ function Connection() {
   const { profileMode } = useAppSelector(selectProfile);
   const { push } = useHistory();
   const { pathname } = useLocation();
-  const { activate, active, library, account } = useWeb3React();
+  const { activate, active, account } = useWeb3React();
 
   const [activating, setActivating] = useState(false);
 
@@ -29,16 +29,8 @@ function Connection() {
   return active && account ? (
     <span>
       {isUsersProfile ? (
-        profileMode === ProfileMode.View ? (
+        profileMode === ProfileMode.View && (
           <button onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}>Edit Profile</button>
-        ) : (
-          <button
-            onClick={() => {
-              dispatch(saveProfile({ library, account }));
-            }}
-          >
-            Save profile
-          </button>
         )
       ) : (
         <>

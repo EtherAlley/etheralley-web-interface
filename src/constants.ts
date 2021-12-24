@@ -10,6 +10,10 @@ export enum ProfileMode {
   Edit = 'EDIT',
 }
 
+export type ProfileConfig = {
+  elements: any[];
+};
+
 export const ContractABI = [
   {
     inputs: [
