@@ -39,7 +39,7 @@ const NETWORK_URLS = {
   [SupportedChainId.ARBITRUM_RINKEBY]: `https://arbitrum-rinkeby.infura.io/v3/${INFURA_KEY}`,
 };
 
-export const networkConnector = new NetworkConnector({ urls: NETWORK_URLS, defaultChainId: 4 });
+export const networkConnector = new NetworkConnector({ urls: NETWORK_URLS, defaultChainId: 1 });
 
 export const injectedConnector = new InjectedConnector({
   supportedChainIds: ALL_SUPPORTED_CHAIN_IDS,

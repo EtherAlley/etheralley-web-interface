@@ -1,4 +1,10 @@
-function NFTNode({ data: { url, label }, selected }: { data: any; selected: boolean }) {
+function NFTNode({
+  data: { image, name, description, attributes, tokenId },
+  selected,
+}: {
+  data: any;
+  selected: boolean;
+}) {
   return (
     <div
       style={{
@@ -8,8 +14,8 @@ function NFTNode({ data: { url, label }, selected }: { data: any; selected: bool
         padding: 10,
       }}
     >
-      <img alt={label} src={url} style={{ width: 150, height: 150 }} />
-      <div>{label}</div>
+      <img alt={name} src={image} style={{ width: 150, height: 150 }} />
+      <div>{name}</div>
     </div>
   );
 }

@@ -15,38 +15,3 @@ export enum ProfileMode {
 export type ProfileConfig = {
   elements: Node[];
 };
-
-export const ContractABI = [
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'profile',
-        type: 'address',
-      },
-    ],
-    name: 'getProfile',
-    outputs: [
-      {
-        internalType: 'string',
-        name: 'uri',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'string',
-        name: 'uri',
-        type: 'string',
-      },
-    ],
-    name: 'setProfile',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-];

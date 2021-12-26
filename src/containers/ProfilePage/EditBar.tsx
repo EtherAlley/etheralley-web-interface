@@ -3,7 +3,23 @@ import { useWeb3React } from '@web3-react/core';
 
 import { useAppDispatch } from '../../hooks';
 import { saveProfile } from './slice';
-import { fromRFStatetoProfileConfig } from './transformers';
+import { ReactFlowState } from 'react-flow-renderer';
+import { ProfileConfig } from '../../constants';
+
+export function toExternal(reactFlowState: ReactFlowState): ProfileConfig {
+  const profileConfig: ProfileConfig = {
+    elements: [],
+  };
+  for (const node of reactFlowState.nodes) {
+    profileConfig.elements.push({
+      id: node.id,
+      type: node.type,
+      data: node.data,
+      position: node.__rf.position,
+    });
+  }
+  return profileConfig;
+}
 
 function EditBar() {
   const state = useStoreState((store) => store);
@@ -23,7 +39,7 @@ function EditBar() {
       <button>Delete box</button>
       <button
         onClick={() => {
-          dispatch(saveProfile({ library, account: account!, profileConfig: fromRFStatetoProfileConfig(state) }));
+          dispatch(saveProfile({ library, account: account!, profileConfig: toExternal(state) }));
         }}
       >
         Save profile
