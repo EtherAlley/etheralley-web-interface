@@ -6,8 +6,9 @@ import { saveProfile } from './slice';
 import { ReactFlowState } from 'react-flow-renderer';
 import { ProfileConfig } from '../../constants';
 
-export function toExternal(reactFlowState: ReactFlowState): ProfileConfig {
+export function toExternal(address: string, reactFlowState: ReactFlowState): ProfileConfig {
   const profileConfig: ProfileConfig = {
+    address,
     elements: [],
   };
   for (const node of reactFlowState.nodes) {
@@ -24,7 +25,7 @@ export function toExternal(reactFlowState: ReactFlowState): ProfileConfig {
 function EditBar() {
   const state = useStoreState((store) => store);
   const dispatch = useAppDispatch();
-  const { library, account } = useWeb3React();
+  const { account } = useWeb3React();
 
   /**
    * add nft box button -> dispatch action to add new element to profile config
@@ -39,7 +40,7 @@ function EditBar() {
       <button>Delete box</button>
       <button
         onClick={() => {
-          dispatch(saveProfile({ library, account: account!, profileConfig: toExternal(state) }));
+          dispatch(saveProfile({ address: account!, profileConfig: toExternal(account!, state) }));
         }}
       >
         Save profile

@@ -13,5 +13,6 @@ export enum ProfileMode {
 }
 
 export type ProfileConfig = {
+  address: string;
   elements: Node[];
 };
