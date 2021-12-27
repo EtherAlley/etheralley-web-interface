@@ -5,8 +5,6 @@ export const Routes = {
   PROFILE: '/profiles/:address',
 };
 
-export const INJECTED_CONTEXT_NAME = 'INJECTED';
-
 export enum ProfileMode {
   View = 'VIEW',
   Edit = 'EDIT',
