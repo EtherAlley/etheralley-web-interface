@@ -27,12 +27,19 @@ export const loadProfile = createAsyncThunk<ProfileConfig, { address: string }, 
   }
 );
 
-export const saveProfile = createAsyncThunk<void, { address: string; profileConfig: ProfileConfig }, any>(
+export const saveProfile = createAsyncThunk<void, { address: string; library: any; profileConfig: ProfileConfig }, any>(
   'profile/save',
-  async ({ address, profileConfig }) => {
+  async ({ address, profileConfig, library }) => {
+    const response = await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/auth/${address}`, { method: 'GET' });
+    const { message } = await response.json();
+
+    const signer = library.getSigner(address);
+    const signature = await signer.signMessage(message);
+
     await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/profiles/${address}`, {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${signature}`,
       },
       method: 'PUT',
       body: JSON.stringify(profileConfig),

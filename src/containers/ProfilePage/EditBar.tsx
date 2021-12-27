@@ -25,7 +25,7 @@ export function toExternal(address: string, reactFlowState: ReactFlowState): Pro
 function EditBar() {
   const state = useStoreState((store) => store);
   const dispatch = useAppDispatch();
-  const { account } = useWeb3React();
+  const { account, library } = useWeb3React();
 
   /**
    * add nft box button -> dispatch action to add new element to profile config
@@ -40,7 +40,7 @@ function EditBar() {
       <button>Delete box</button>
       <button
         onClick={() => {
-          dispatch(saveProfile({ address: account!, profileConfig: toExternal(account!, state) }));
+          dispatch(saveProfile({ address: account!, library, profileConfig: toExternal(account!, state) }));
         }}
       >
         Save profile
