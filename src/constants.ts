@@ -1,5 +1,3 @@
-import { Node } from 'react-flow-renderer';
-
 export const Routes = {
   HOME: '/',
   PROFILE: '/profiles/:address',
@@ -10,7 +8,16 @@ export enum ProfileMode {
   Edit = 'EDIT',
 }
 
-export type ProfileConfig = {
+export type Profile = {
+  nft_elements: NFTElement[];
+};
+
+export type NFTElement = {
+  order: number;
   address: string;
-  elements: Node[];
+  schema_name: string;
+  token_id: string;
+  name: string;
+  image_url: string;
+  attributes: { [x: string]: string };
 };

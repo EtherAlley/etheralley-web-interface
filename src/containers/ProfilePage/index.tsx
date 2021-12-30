@@ -10,7 +10,7 @@ import ErrorOverlay from '../../components/ErrorOverlay';
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
 
-  const { loading, error, profileMode, profileConfig } = useAppSelector(selectProfile);
+  const { loading, error, profileMode, profile } = useAppSelector(selectProfile);
 
   const dispatch = useAppDispatch();
 
@@ -22,16 +22,11 @@ function ProfilePage() {
     return <LoadingOverlay />;
   }
 
-  if (error || !profileConfig) {
-    console.log(loading, error, profileConfig);
+  if (error || !profile) {
     return <ErrorOverlay />;
   }
 
-  return (
-    <div>
-      <Profile profileMode={profileMode} profileConfig={profileConfig} />
-    </div>
-  );
+  return <Profile profileMode={profileMode} profile={profile} />;
 }
 
 export default ProfilePage;

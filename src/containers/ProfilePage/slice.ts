@@ -1,24 +1,22 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { ProfileConfig, ProfileMode } from '../../constants';
+import { Profile, ProfileMode } from '../../constants';
 
 export interface State {
   loading: boolean;
   error: boolean;
   profileMode: ProfileMode;
-  profileConfig: ProfileConfig | undefined;
-  currentNodeId: string | undefined;
+  profile: Profile | undefined;
 }
 
 const initialState: State = {
   loading: true,
   error: false,
   profileMode: ProfileMode.View,
-  profileConfig: undefined,
-  currentNodeId: undefined,
+  profile: undefined,
 };
 
-export const loadProfile = createAsyncThunk<ProfileConfig, { address: string }, any>(
+export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
     const response = await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/profiles/${address}`, { method: 'GET' });
@@ -27,9 +25,11 @@ export const loadProfile = createAsyncThunk<ProfileConfig, { address: string }, 
   }
 );
 
-export const saveProfile = createAsyncThunk<void, { address: string; library: any; profileConfig: ProfileConfig }, any>(
+export const saveProfile = createAsyncThunk<void, { address: string; library: any }, { state: RootState }>(
   'profile/save',
-  async ({ address, profileConfig, library }) => {
+  async ({ address, library }, { getState }) => {
+    const { profilePage } = getState();
+
     const response = await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/challenge/${address}`, { method: 'GET' });
     const { message } = await response.json();
 
@@ -42,20 +42,17 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
         Authorization: `Bearer ${signature}`,
       },
       method: 'PUT',
-      body: JSON.stringify(profileConfig),
+      body: JSON.stringify(profilePage.profile),
     });
   }
 );
 
 export const slice = createSlice({
-  name: 'profile',
+  name: 'profilePage',
   initialState,
   reducers: {
     setProfileMode: (state, action: PayloadAction<ProfileMode>) => {
       state.profileMode = action.payload;
-    },
-    setCurrentSelectedNode: (state, action: PayloadAction<string | undefined>) => {
-      state.currentNodeId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -70,7 +67,7 @@ export const slice = createSlice({
       .addCase(loadProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.profileConfig = action.payload;
+        state.profile = action.payload;
       })
       .addCase(saveProfile.fulfilled, (state, _) => {
         state.profileMode = ProfileMode.View;
@@ -78,8 +75,8 @@ export const slice = createSlice({
   },
 });
 
-export const { setProfileMode, setCurrentSelectedNode } = slice.actions;
+export const { setProfileMode } = slice.actions;
 
-export const selectProfile = (state: RootState) => state.profile;
+export const selectProfile = (state: RootState) => state.profilePage;
 
 export default slice.reducer;

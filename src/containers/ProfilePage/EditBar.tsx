@@ -1,29 +1,9 @@
-import { useStoreState } from 'react-flow-renderer/nocss';
 import { useWeb3React } from '@web3-react/core';
 
 import { useAppDispatch } from '../../hooks';
 import { saveProfile } from './slice';
-import { ReactFlowState } from 'react-flow-renderer';
-import { ProfileConfig } from '../../constants';
-
-export function toExternal(address: string, reactFlowState: ReactFlowState): ProfileConfig {
-  const profileConfig: ProfileConfig = {
-    address,
-    elements: [],
-  };
-  for (const node of reactFlowState.nodes) {
-    profileConfig.elements.push({
-      id: node.id,
-      type: node.type,
-      data: node.data,
-      position: node.__rf.position,
-    });
-  }
-  return profileConfig;
-}
 
 function EditBar() {
-  const state = useStoreState((store) => store);
   const dispatch = useAppDispatch();
   const { account, library } = useWeb3React();
 
@@ -40,7 +20,7 @@ function EditBar() {
       <button>Delete box</button>
       <button
         onClick={() => {
-          dispatch(saveProfile({ address: account!, library, profileConfig: toExternal(account!, state) }));
+          dispatch(saveProfile({ address: account!, library }));
         }}
       >
         Save profile

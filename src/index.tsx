@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
-import { ReactFlowProvider } from 'react-flow-renderer/nocss';
 
 const getLibrary = (provider: any, _connector: any) => {
   return new Web3Provider(provider);
@@ -17,11 +16,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <ReactFlowProvider>
-          <Router>
-            <App />
-          </Router>
-        </ReactFlowProvider>
+        <Router>
+          <App />
+        </Router>
       </Web3ReactProvider>
     </Provider>
   </React.StrictMode>,

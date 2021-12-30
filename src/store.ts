@@ -5,7 +5,7 @@ import profileReducer from './containers/ProfilePage/slice';
 export const store = configureStore({
   reducer: {
     home: homeReducer,
-    profile: profileReducer,
+    profilePage: profileReducer,
   },
 });
 
