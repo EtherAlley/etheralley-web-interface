@@ -1,6 +1,6 @@
 import { NFT } from '../../constants';
 
-export default function ({ image_url, name }: NFT) {
+export default function ({ metadata: { image, name } }: NFT) {
   return (
     <div
       style={{
@@ -12,7 +12,7 @@ export default function ({ image_url, name }: NFT) {
         height: 150,
       }}
     >
-      <img alt={name} src={image_url} />
+      <img alt={name} src={image} style={{ width: 'auto', height: 'auto', maxWidth: '100%', maxHeight: '100%' }} />
       <div>{name}</div>
     </div>
   );
