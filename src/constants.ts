@@ -9,15 +9,16 @@ export enum ProfileMode {
 }
 
 export type Profile = {
-  nft_elements: NFTElement[];
+  nfts: NFT[];
 };
 
-export type NFTElement = {
-  order: number;
-  address: string;
-  schema_name: string;
+export type NFT = {
   token_id: string;
+  owned: boolean;
+  contract_address: string;
+  schema_name: string;
   name: string;
+  description: string;
   image_url: string;
-  attributes: { [x: string]: string };
+  attributes: { [x: string]: string }[];
 };

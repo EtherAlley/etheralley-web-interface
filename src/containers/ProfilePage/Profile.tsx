@@ -6,7 +6,7 @@ export default function ({ profileMode, profile }: { profileMode: ProfileMode; p
   return (
     <div style={{ height: '100vh', width: '100%' }}>
       {profileMode === ProfileMode.Edit && <EditBar />}
-      {profile.nft_elements.map((nft) => (
+      {profile.nfts.map((nft) => (
         <NFT {...nft} />
       ))}
     </div>

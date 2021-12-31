@@ -1,6 +1,6 @@
-import { NFTElement } from '../../constants';
+import { NFT } from '../../constants';
 
-function NFT({ image_url, name }: NFTElement) {
+export default function ({ image_url, name }: NFT) {
   return (
     <div
       style={{
@@ -17,5 +17,3 @@ function NFT({ image_url, name }: NFTElement) {
     </div>
   );
 }
-
-export default NFT;
