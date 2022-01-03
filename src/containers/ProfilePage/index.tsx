@@ -4,19 +4,19 @@ import { useParams } from 'react-router';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadProfile, selectProfile } from './slice';
 import Profile from './Profile';
-import LoadingOverlay from '../../components/LoadingOverlay';
-import ErrorOverlay from '../../components/ErrorOverlay';
+import LoadingOverlay from '../LoadingPage';
+import ErrorOverlay from '../ErrorPage';
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
 
-  const { loading, error, profileMode, profile } = useAppSelector(selectProfile);
+  const { loading, error, profile } = useAppSelector(selectProfile);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadProfile({ address }));
-  }, []);
+  }, [address, dispatch]);
 
   if (loading) {
     return <LoadingOverlay />;
@@ -26,7 +26,7 @@ function ProfilePage() {
     return <ErrorOverlay />;
   }
 
-  return <Profile profileMode={profileMode} profile={profile} />;
+  return <Profile profile={profile} />;
 }
 
 export default ProfilePage;

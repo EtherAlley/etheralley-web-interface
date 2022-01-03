@@ -3,15 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^1.1.1",
+    "@chakra-ui/react": "^1.7.3",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
     "@reduxjs/toolkit": "^1.5.1",
     "@web3-react/core": "^6.1.9",
     "@web3-react/injected-connector": "^6.0.7",
     "@web3-react/network-connector": "^6.1.9",
     "axios": "^0.21.4",
     "ethers": "^5.4.6",
+    "framer-motion": "^5.5.5",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-flow-renderer": "^9.7.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3"
@@ -26,6 +30,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.1.9",
+    "react-app-rewired": "^2.1.11",
     "typescript": "~4.1.5"
   },
   "eslintConfig": {
@@ -33,9 +38,9 @@
     "rules": {}
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "browserslist": {

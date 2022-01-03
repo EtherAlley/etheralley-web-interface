@@ -1,6 +1,6 @@
 import { NFT } from '../../constants';
 
-export default function ({ metadata: { image, name } }: NFT) {
+function NFTComponent({ metadata: { image, name } }: NFT) {
   return (
     <div
       style={{
@@ -17,3 +17,5 @@ export default function ({ metadata: { image, name } }: NFT) {
     </div>
   );
 }
+
+export default NFTComponent;
