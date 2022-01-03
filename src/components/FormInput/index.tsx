@@ -1,9 +1,9 @@
-import { IconButton } from '@chakra-ui/button';
 import { FormControl, FormErrorMessage, FormLabel } from '@chakra-ui/form-control';
-import { Input, InputGroup, InputRightElement } from '@chakra-ui/input';
+import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { ChangeEventHandler } from 'react';
+import IconButton, { IconButtonComponentProps } from '../IconButton';
 
-export default ({
+function FormInput({
   id,
   label,
   value,
@@ -14,9 +14,7 @@ export default ({
   isReadOnly = false,
   variant,
   mb,
-  Icon,
-  iconOnClick,
-  onSubmit,
+  iconProps,
 }: {
   id: string;
   label?: string;
@@ -28,31 +26,30 @@ export default ({
   isReadOnly?: boolean;
   variant?: string;
   mb?: number;
-  Icon?: any;
-  iconOnClick?: any;
-  onSubmit?: any;
-}) => {
+  iconProps?: IconButtonComponentProps;
+}) {
   return (
-    <form onSubmit={onSubmit}>
-      <FormControl isInvalid={isInvalid} mb={mb}>
-        {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
-        <InputGroup>
-          <Input
-            id={id}
-            value={value}
-            onChange={onChange}
-            placeholder={placeholder}
-            isReadOnly={isReadOnly}
-            variant={variant}
-          />
-          {Icon && (
-            <InputRightElement>
-              <IconButton icon={<Icon color="brand.400" />} onClick={iconOnClick} aria-label="icon button" />
-            </InputRightElement>
-          )}
-        </InputGroup>
-        <FormErrorMessage>{errorMessage}</FormErrorMessage>
-      </FormControl>
-    </form>
+    <FormControl isInvalid={isInvalid} mb={mb}>
+      {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
+      <InputGroup size="lg">
+        <Input
+          id={id}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          isReadOnly={isReadOnly}
+          variant={variant}
+          colorScheme="brand"
+        />
+        {iconProps && (
+          <InputLeftElement>
+            <IconButton bg="inherit" {...iconProps} />
+          </InputLeftElement>
+        )}
+      </InputGroup>
+      <FormErrorMessage>{errorMessage}</FormErrorMessage>
+    </FormControl>
   );
-};
+}
+
+export default FormInput;

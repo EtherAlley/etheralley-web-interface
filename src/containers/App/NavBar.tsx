@@ -2,29 +2,25 @@ import { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { saveProfile, selectProfile } from '../ProfilePage/slice';
-import { Routes, ProfileMode } from '../../constants';
-import { setProfileMode } from '../ProfilePage/slice';
-import { Link as ReachLink, useHistory, useLocation } from 'react-router-dom';
+import { Routes } from '../../constants';
+import { Link as ReachLink, useHistory, useRouteMatch } from 'react-router-dom';
 import { Box, Flex, Heading, Button, Badge, LinkOverlay, LinkBox } from '@chakra-ui/react';
 import { injectedConnector } from '../../connectors';
 
 function Navbar() {
-  const dispatch = useAppDispatch();
-  const { profileMode } = useAppSelector(selectProfile);
-  const { activate, active, account, library } = useWeb3React();
-  const { pathname } = useLocation();
+  const { activate, active, account } = useWeb3React();
   const { push } = useHistory();
   const [activating, setActivating] = useState(false);
-
+  const isOnProfilePage = useRouteMatch('/profiles');
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
 
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInjectedListener(!triedEager || activating);
 
-  const isUsersProfile = pathname.split('/').length >= 3 && pathname.split('/')[2] === account;
+  if (isOnProfilePage) {
+    return <></>;
+  }
 
   const UserButton = () => {
     if (!active || !account) {
@@ -38,40 +34,14 @@ function Navbar() {
           }}
           disabled={!triedEager || activating}
         >
-          Connect to a wallet...
-        </Button>
-      );
-    }
-
-    if (!isUsersProfile) {
-      return (
-        <Button
-          colorScheme="brand"
-          variant="outline"
-          onClick={() => push(Routes.PROFILE.replace(':address', account!))}
-        >
-          My Profile
-        </Button>
-      );
-    }
-
-    if (profileMode === ProfileMode.View) {
-      return (
-        <Button colorScheme="brand" variant="outline" onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}>
-          Edit Profile
+          Connect to a wallet
         </Button>
       );
     }
 
     return (
-      <Button
-        colorScheme="brand"
-        variant="outline"
-        onClick={() => {
-          dispatch(saveProfile({ address: account!, library }));
-        }}
-      >
-        Save profile
+      <Button colorScheme="brand" variant="outline" onClick={() => push(Routes.PROFILE.replace(':address', account))}>
+        My Profile
       </Button>
     );
   };

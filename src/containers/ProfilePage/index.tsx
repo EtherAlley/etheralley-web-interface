@@ -6,6 +6,8 @@ import { loadProfile, selectProfile } from './slice';
 import Profile from './Profile';
 import LoadingOverlay from '../LoadingPage';
 import ErrorOverlay from '../ErrorPage';
+import ProfileBar from './ProfileBar';
+import Container from '../../components/Container';
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
@@ -26,7 +28,14 @@ function ProfilePage() {
     return <ErrorOverlay />;
   }
 
-  return <Profile profile={profile} />;
+  return (
+    <>
+      <ProfileBar />
+      <Container>
+        <Profile profile={profile} />
+      </Container>
+    </>
+  );
 }
 
 export default ProfilePage;
