@@ -13,11 +13,8 @@ export type Profile = {
 };
 
 export type NFT = {
-  token_id: string;
-  blockchain: string;
+  location: NFTLocation;
   owned: boolean;
-  contract_address: string;
-  schema_name: string;
   metadata: NFTMetadata;
 };
 
@@ -27,4 +24,11 @@ export type NFTMetadata = {
   image: string;
   attributes: { [x: string]: string }[];
   properties: { [x: string]: any };
+};
+
+export type NFTLocation = {
+  token_id: string;
+  blockchain: string;
+  contract_address: string;
+  schema_name: string;
 };

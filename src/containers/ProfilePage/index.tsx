@@ -8,6 +8,7 @@ import LoadingOverlay from '../LoadingPage';
 import ErrorOverlay from '../ErrorPage';
 import ProfileBar from './ProfileBar';
 import Container from '../../components/Container';
+import { Center } from '@chakra-ui/react';
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
@@ -31,8 +32,10 @@ function ProfilePage() {
   return (
     <>
       <ProfileBar />
-      <Container>
-        <Profile profile={profile} />
+      <Container maxW="container.lg">
+        <Center>
+          <Profile profile={profile} />
+        </Center>
       </Container>
     </>
   );

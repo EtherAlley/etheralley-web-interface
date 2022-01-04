@@ -1,9 +1,9 @@
 import { Box, Flex, Container } from '@chakra-ui/layout';
 import { ReactChild } from 'react';
 
-function ContainerComponent({ children, ...props }: { children: ReactChild; [x: string]: any }) {
+function ContainerComponent({ children, maxW, ...props }: { children: ReactChild; maxW?: string; [x: string]: any }) {
   return (
-    <Container>
+    <Container maxW={maxW}>
       <Flex minHeight="93vh">
         <Box marginY="auto" width="100%" {...props}>
           {children}

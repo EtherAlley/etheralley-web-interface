@@ -51,7 +51,7 @@ function ProfileBar() {
 
   return (
     <>
-      <Box position="fixed" zIndex={2} width="100%" mt={4}>
+      <Box position="fixed" width="100%" mt={4}>
         <Flex alignItems={'center'} justifyContent={'space-between'} mx={4}>
           <IconButton
             aria-label="go home"
