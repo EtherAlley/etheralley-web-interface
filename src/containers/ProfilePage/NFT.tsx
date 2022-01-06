@@ -32,7 +32,13 @@ function NFTComponent({
     <Paper as="button" onClick={() => setIsOpen(true)}>
       <>
         <Flex width={200} height={200}>
-          <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" />
+          <Image
+            alt={name}
+            src={image.includes('ipfs://') ? image.replace('ipfs://', 'https://ipfs.io/ipfs/') : image}
+            margin="auto"
+            maxWidth="100%"
+            maxHeight="100%"
+          />
         </Flex>
         <Text fontSize="lg" maxWidth={200} align="center" noOfLines={1}>
           {name}

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { Profile, ProfileMode } from '../../constants';
+import { fetchCoreAPI } from '../../api';
 
 export interface State {
   loading: boolean;
@@ -19,7 +20,7 @@ const initialState: State = {
 export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
-    const response = await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/profiles/${address}`, { method: 'GET' });
+    const response = await fetchCoreAPI(`/address/${address}/profile`);
     const profile = await response.json();
     return profile;
   }
@@ -30,13 +31,13 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
   async ({ address, library }, { getState }) => {
     const { profilePage } = getState();
 
-    const response = await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/challenge/${address}`, { method: 'GET' });
+    const response = await fetchCoreAPI(`/address/${address}/challenge`);
     const { message } = await response.json();
 
     const signer = library.getSigner(address);
     const signature = await signer.signMessage(message);
 
-    await fetch(`${process.env.REACT_APP_CORE_API_FQDN}/profiles/${address}`, {
+    await fetchCoreAPI(`/address/${address}/profile`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${signature}`,
