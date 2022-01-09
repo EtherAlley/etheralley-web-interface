@@ -7,9 +7,11 @@ function ProfileComponent({ profile }: { profile: Profile }) {
     <Box>
       <Box height="150px" />
       <SimpleGrid columns={[1, 2, 3]} spacing={20}>
-        {profile.nfts.map((nft, i) => (
-          <NFT key={i} {...nft} />
-        ))}
+        {profile.nfts
+          .filter((nft) => Boolean(nft.metadata))
+          .map((nft, i) => (
+            <NFT key={i} {...nft} />
+          ))}
       </SimpleGrid>
     </Box>
   );
