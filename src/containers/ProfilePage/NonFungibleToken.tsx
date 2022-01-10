@@ -18,12 +18,13 @@ import {
 } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import Paper from '../../components/Paper';
-import { NFT } from '../../constants';
+import { NonFungibleToken } from '../../constants';
 
-function NFTComponent({
+function NonFungibleTokenComponent({
   metadata: { image, name, description, attributes },
-  location: { contract_address, token_id, blockchain, schema_name },
-}: NFT) {
+  contract: { address, blockchain, interface: interfaceName },
+  token_id,
+}: NonFungibleToken) {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
@@ -45,7 +46,7 @@ function NFTComponent({
               </AlertDialogHeader>
               <AlertDialogCloseButton />
               <AlertDialogBody>
-                <Link color="blue.500" href={`https://opensea.io/assets/${contract_address}/${token_id}`} isExternal>
+                <Link color="blue.500" href={`https://opensea.io/assets/${address}/${token_id}`} isExternal>
                   OpenSea <Icon as={RiExternalLinkLine}></Icon>
                 </Link>
                 <Text fontSize="md" noOfLines={3} mt={3}>
@@ -71,7 +72,7 @@ function NFTComponent({
                   {blockchain}
                 </Text>
                 <Text fontSize="md" noOfLines={3} mt={3}>
-                  {schema_name}
+                  {interfaceName}
                 </Text>
               </AlertDialogBody>
               <AlertDialogFooter>
@@ -87,4 +88,4 @@ function NFTComponent({
   );
 }
 
-export default NFTComponent;
+export default NonFungibleTokenComponent;

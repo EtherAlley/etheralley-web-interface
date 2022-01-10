@@ -9,16 +9,17 @@ export enum ProfileMode {
 }
 
 export type Profile = {
-  nfts: NFT[];
+  non_fungible_tokens: NonFungibleToken[];
 };
 
-export type NFT = {
-  location: NFTLocation;
-  owned: boolean;
-  metadata: NFTMetadata;
+export type NonFungibleToken = {
+  contract: Contract;
+  token_id: string;
+  balance: string;
+  metadata: NonFungibleMetadata;
 };
 
-export type NFTMetadata = {
+export type NonFungibleMetadata = {
   name: string;
   description: string;
   image: string;
@@ -26,9 +27,8 @@ export type NFTMetadata = {
   properties: { [x: string]: any };
 };
 
-export type NFTLocation = {
-  token_id: string;
+export type Contract = {
   blockchain: string;
-  contract_address: string;
-  schema_name: string;
+  address: string;
+  interface: string;
 };
