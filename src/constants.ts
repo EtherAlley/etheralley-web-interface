@@ -10,6 +10,7 @@ export enum ProfileMode {
 
 export type Profile = {
   non_fungible_tokens: NonFungibleToken[];
+  fungible_tokens: FungibleToken[];
 };
 
 export type NonFungibleToken = {
@@ -25,6 +26,18 @@ export type NonFungibleMetadata = {
   image: string;
   attributes: { [x: string]: string }[];
   properties: { [x: string]: any };
+};
+
+export type FungibleToken = {
+  contract: Contract;
+  balance: string;
+  metadata: FungibleMetadata;
+};
+
+export type FungibleMetadata = {
+  name: string;
+  symbol: string;
+  decimals: number;
 };
 
 export type Contract = {
