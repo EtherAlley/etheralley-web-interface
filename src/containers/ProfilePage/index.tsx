@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadProfile, selectProfile } from './slice';
 import Profile from './Profile';
-import LoadingOverlay from '../LoadingPage';
-import ErrorOverlay from '../ErrorPage';
+import Loading from '../../components/Loading';
+import Error from '../../components/Error';
 import ProfileBar from './ProfileBar';
 import Container from '../../components/Container';
 import { Center } from '@chakra-ui/react';
@@ -21,23 +21,37 @@ function ProfilePage() {
     dispatch(loadProfile({ address }));
   }, [address, dispatch]);
 
+  const PageWrapper = ({ children }: { children: ReactNode }) => {
+    return (
+      <>
+        <ProfileBar />
+        <Container maxW="container.lg">
+          <Center>{children}</Center>
+        </Container>
+      </>
+    );
+  };
+
   if (loading) {
-    return <LoadingOverlay />;
+    return (
+      <PageWrapper>
+        <Loading />
+      </PageWrapper>
+    );
   }
 
   if (error || !profile) {
-    return <ErrorOverlay />;
+    return (
+      <PageWrapper>
+        <Error message="Could not load this profile" />
+      </PageWrapper>
+    );
   }
 
   return (
-    <>
-      <ProfileBar />
-      <Container maxW="container.lg">
-        <Center>
-          <Profile profile={profile} />
-        </Center>
-      </Container>
-    </>
+    <PageWrapper>
+      <Profile profile={profile} />
+    </PageWrapper>
   );
 }
 

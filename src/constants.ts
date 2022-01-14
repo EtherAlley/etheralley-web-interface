@@ -8,6 +8,30 @@ export enum ProfileMode {
   Edit = 'EDIT',
 }
 
+export enum ContractKeys {
+  DAI = 'dai',
+  ETH = 'eth',
+  WETH = 'weth',
+  MATIC = 'matic',
+  WMATIC = 'wmatic',
+  UNI = 'uni',
+  LINK = 'link',
+  UNKNOWN = 'unknown',
+}
+
+export enum Blockchains {
+  ETHEREUM = 'ethereum',
+  POLYGON = 'polygon',
+  ARBITRUM = 'arbitrum',
+  OPTIMISM = 'optimism',
+}
+
+export enum Interfaces {
+  ERC20 = 'ERC20',
+  ERC721 = 'ERC721',
+  ERC1155 = 'ERC1155',
+}
+
 export type Profile = {
   non_fungible_tokens: NonFungibleToken[];
   fungible_tokens: FungibleToken[];
@@ -17,15 +41,15 @@ export type NonFungibleToken = {
   contract: Contract;
   token_id: string;
   balance: string;
-  metadata: NonFungibleMetadata;
+  metadata?: NonFungibleMetadata;
 };
 
 export type NonFungibleMetadata = {
   name: string;
   description: string;
   image: string;
-  attributes: { [x: string]: string }[];
-  properties: { [x: string]: any };
+  attributes?: { [x: string]: string }[];
+  properties?: { [x: string]: any };
 };
 
 export type FungibleToken = {
@@ -41,7 +65,7 @@ export type FungibleMetadata = {
 };
 
 export type Contract = {
-  blockchain: string;
+  blockchain: Blockchains;
   address: string;
-  interface: string;
+  interface: Interfaces;
 };
