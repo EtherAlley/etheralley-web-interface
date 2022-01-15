@@ -13,17 +13,9 @@ function ProfileComponent({ profile }: { profile: Profile }) {
         </Heading>
         {profile.non_fungible_tokens && profile.non_fungible_tokens.length > 0 && (
           <SimpleGrid columns={[1, 2, 3]} spacing={20}>
-            {profile.non_fungible_tokens
-              .filter((nft) => Boolean(nft.metadata))
-              .map((nft, i) => (
-                <NonFungibleToken
-                  key={i}
-                  metadata={nft.metadata!}
-                  contract={nft.contract}
-                  balance={nft.balance}
-                  token_id={nft.token_id}
-                />
-              ))}
+            {profile.non_fungible_tokens.map((nft, i) => (
+              <NonFungibleToken key={i} {...nft} />
+            ))}
           </SimpleGrid>
         )}
       </Box>

@@ -41,7 +41,7 @@ export type NonFungibleToken = {
   contract: Contract;
   token_id: string;
   balance: string;
-  metadata?: NonFungibleMetadata;
+  metadata: NonFungibleMetadata;
 };
 
 export type NonFungibleMetadata = {
@@ -49,7 +49,6 @@ export type NonFungibleMetadata = {
   description: string;
   image: string;
   attributes?: { [x: string]: string }[];
-  properties?: { [x: string]: any };
 };
 
 export type FungibleToken = {

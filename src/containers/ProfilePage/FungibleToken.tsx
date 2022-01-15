@@ -46,19 +46,19 @@ function FungibleTokenComponent({
             Etherscan <Icon as={RiExternalLinkLine}></Icon>
           </Link>
           <Text fontSize="md" noOfLines={3} mt={3}>
-            {name}
+            Name: {name}
           </Text>
           <Text fontSize="md" noOfLines={3} mt={3}>
-            {symbol}
+            Symbol: {symbol}
           </Text>
           <Text fontSize="md" noOfLines={3} mt={3}>
-            {address}
+            Address: {address}
           </Text>
           <Text fontSize="md" noOfLines={3} mt={3}>
-            {blockchain}
+            Blockchain: {blockchain}
           </Text>
           <Text fontSize="md" noOfLines={3} mt={3}>
-            {interfaceName}
+            Interface: {interfaceName}
           </Text>
         </>
       }

@@ -8,15 +8,13 @@ function NonFungibleTokenComponent({
   contract: { address, blockchain, interface: interfaceName },
   token_id,
   balance,
-}: {
-  [P in keyof NonFungibleToken]-?: NonFungibleToken[P];
-}) {
+}: NonFungibleToken) {
   return (
     <Badge
       Display={
         <Box height={240}>
           <Flex width={200} height={200}>
-            <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" />
+            <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" borderRadius={8} />
           </Flex>
           <Heading as="h3" size="sm" my={2} maxWidth={200} noOfLines={1}>
             {name}
@@ -50,6 +48,9 @@ function NonFungibleTokenComponent({
           )}
           <Text fontSize="md" noOfLines={3} mt={3}>
             Balance: {balance}
+          </Text>
+          <Text fontSize="md" noOfLines={3} mt={3}>
+            Address: {address}
           </Text>
           <Text fontSize="md" noOfLines={3} mt={3}>
             Blockchain: {blockchain}
