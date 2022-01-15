@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Blockchains, ContractKeys } from '../constants';
+import { Blockchains, ContractKeys } from '../common/constants';
 
 export enum EthereumGoerliAddresses {
   DAI = '0x11fe4b6ae13d2a6055c8d9cf65c55bac32b5d844',

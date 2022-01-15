@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
-import { Routes } from '../../constants';
+import { Routes } from '../../common/constants';
 import { Link as ReachLink, useHistory, useRouteMatch } from 'react-router-dom';
 import { Box, Flex, Heading, Button, Badge, LinkOverlay, LinkBox } from '@chakra-ui/react';
 import { injectedConnector } from '../../connectors';

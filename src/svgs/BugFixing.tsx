@@ -1,4 +1,4 @@
-function EtherOne({ width, height }: { width: string | number | undefined; height: string | number | undefined }) {
+function BugFixing({ width, height }: { width: string | number | undefined; height: string | number | undefined }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -469,4 +469,4 @@ function EtherOne({ width, height }: { width: string | number | undefined; heigh
   );
 }
 
-export default EtherOne;
+export default BugFixing;

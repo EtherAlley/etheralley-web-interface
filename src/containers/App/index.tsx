@@ -1,7 +1,7 @@
 import { Route, Switch } from 'react-router';
 import Home from '../HomePage';
 import Profile from '../ProfilePage';
-import { Routes } from '../../constants';
+import { Routes } from '../../common/constants';
 import NavBar from './NavBar';
 
 function App() {

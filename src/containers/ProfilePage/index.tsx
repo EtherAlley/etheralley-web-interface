@@ -1,14 +1,15 @@
 import { ReactNode, useEffect } from 'react';
 import { useParams } from 'react-router';
+import { Center } from '@chakra-ui/react';
 
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loadProfile, selectProfile } from './slice';
 import Profile from './Profile';
 import Loading from '../../components/Loading';
 import Error from '../../components/Error';
 import ProfileBar from './ProfileBar';
 import Container from '../../components/Container';
-import { Center } from '@chakra-ui/react';
+import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();

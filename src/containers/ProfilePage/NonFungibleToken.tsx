@@ -1,7 +1,19 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { NonFungibleToken } from '../../constants';
+import { NonFungibleToken } from '../../api/types';
+import { Blockchains } from '../../common/constants';
+import Settings from '../../common/settings';
 import Badge from '../../components/Badge';
+
+function getOpenSeaUrl(address: string, token_id: string, blockchain: Blockchains): string {
+  switch (blockchain) {
+    case Blockchains.ETHEREUM:
+    case Blockchains.POLYGON:
+      return `${Settings.OPENSEA_URL}/assets/${address}/${token_id}`;
+    default:
+      return '';
+  }
+}
 
 function NonFungibleTokenComponent({
   metadata: { image, name, description, attributes },
@@ -9,6 +21,8 @@ function NonFungibleTokenComponent({
   token_id,
   balance,
 }: NonFungibleToken) {
+  const openSeaUrl = getOpenSeaUrl(address, token_id, blockchain);
+
   return (
     <Badge
       Display={
@@ -24,9 +38,11 @@ function NonFungibleTokenComponent({
       DialogHeader={name}
       DialogBody={
         <>
-          <Link color="blue.500" href={`https://opensea.io/assets/${address}/${token_id}`} isExternal>
-            OpenSea <Icon as={RiExternalLinkLine}></Icon>
-          </Link>
+          {openSeaUrl && (
+            <Link color="blue.500" href={openSeaUrl} isExternal>
+              OpenSea <Icon as={RiExternalLinkLine}></Icon>
+            </Link>
+          )}
           <Text fontSize="md" noOfLines={3} mt={3}>
             {description}
           </Text>

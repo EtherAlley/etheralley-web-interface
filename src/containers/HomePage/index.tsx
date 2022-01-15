@@ -2,10 +2,11 @@ import { useHistory } from 'react-router';
 import Container from '../../components/Container';
 import FormInput from '../../components/FormInput';
 import Paper from '../../components/Paper';
-import { Routes } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Routes } from '../../common/constants';
 import { selectHome, setAddress } from './slice';
 import { RiSearchLine } from 'react-icons/ri';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 
 function HomePage() {
   const { push } = useHistory();

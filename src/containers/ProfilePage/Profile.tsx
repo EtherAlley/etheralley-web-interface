@@ -1,5 +1,5 @@
 import { Box, Heading, SimpleGrid } from '@chakra-ui/react';
-import { Profile } from '../../constants';
+import { Profile } from '../../api/types';
 import FungibleToken from './FungibleToken';
 import NonFungibleToken from './NonFungibleToken';
 

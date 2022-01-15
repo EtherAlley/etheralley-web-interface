@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { Profile, ProfileMode } from '../../constants';
+import { ProfileMode } from '../../common/constants';
 import { fetchCoreAPI } from '../../api';
+import { Profile } from '../../api/types';
 
 export interface State {
   loading: boolean;
