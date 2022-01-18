@@ -8,17 +8,6 @@ export enum ProfileMode {
   Edit = 'EDIT',
 }
 
-export enum ContractKeys {
-  DAI = 'dai',
-  ETH = 'eth',
-  WETH = 'weth',
-  MATIC = 'matic',
-  WMATIC = 'wmatic',
-  UNI = 'uni',
-  LINK = 'link',
-  UNKNOWN = 'unknown',
-}
-
 export enum Blockchains {
   ETHEREUM = 'ethereum',
   POLYGON = 'polygon',

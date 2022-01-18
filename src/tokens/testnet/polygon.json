@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Dai Stablecoin (DAI)",
+        "symbol": "DAI",
+        "address": "0x001b3b4d0f3714ca98ba10f6042daebf0b1b7b6f"
+    },
+    {
+        "name": "Wrapped Matic (WMATIC)",
+        "symbol": "WMATIC",
+        "address": "0x9c3c9283d3e44854697cd22d3faa240cfb032889"
+    }
+]

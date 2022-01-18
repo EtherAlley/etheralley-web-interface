@@ -1,9 +1,9 @@
 import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex, Link, Icon } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { Blockchains, ContractKeys } from '../../common/constants';
+import { Blockchains } from '../../common/constants';
 import Badge from '../../components/Badge';
 import useDisplayBalance from '../../hooks/useDisplayBalance';
-import useContractKey from '../../hooks/useContractKey';
+import useTokenKey from '../../hooks/useTokenKey';
 import { FungibleToken } from '../../api/types';
 import Settings from '../../common/settings';
 
@@ -27,17 +27,16 @@ function FungibleTokenComponent({
   balance,
 }: FungibleToken) {
   const displayBalance = useDisplayBalance(balance, decimals);
-  const contractKey = useContractKey(address, blockchain);
+  const key = useTokenKey(address, blockchain);
 
   const coinStyling = {
-    width: 100,
-    height: 100,
+    width: 90,
+    height: 90,
     backgroundColor: 'gray.900',
     borderColor: 'gray.900',
     borderRadius: '50%',
     boxShadow: 'dark-lg',
     borderWidth: '1px',
-    padding: 3,
   };
 
   return (
@@ -45,18 +44,14 @@ function FungibleTokenComponent({
       Display={
         <Box height={240}>
           <Flex justifyContent="center" mt={10} mb={5}>
-            {contractKey === ContractKeys.UNKNOWN ? (
+            {!key ? (
               <Box {...coinStyling} pt={9}>
                 <Heading as="h3" size="md">
                   {symbol}
                 </Heading>
               </Box>
             ) : (
-              <Image
-                alt={symbol}
-                src={`${Settings.PUBLIC_URL}/contracts/${contractKey.toLowerCase()}.svg`}
-                {...coinStyling}
-              />
+              <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
             )}
           </Flex>
           <ChakraBadge borderRadius={8} py={1} px={2}>
