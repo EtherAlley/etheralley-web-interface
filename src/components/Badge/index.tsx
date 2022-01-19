@@ -29,8 +29,8 @@ function Badge({
       as="button"
       onClick={() => setIsOpen(true)}
       _hover={{ transform: 'scale(1.1)' }}
-      height={240}
-      width={200}
+      height={200}
+      width={165}
       borderRadius={8}
       transition="all .1s ease-in-out"
     >

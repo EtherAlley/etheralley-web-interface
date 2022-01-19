@@ -26,11 +26,11 @@ function NonFungibleTokenComponent({
   return (
     <Badge
       Display={
-        <Box height={240}>
-          <Flex width={200} height={200}>
+        <Box height={200}>
+          <Flex width={165} height={165}>
             <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" borderRadius={8} />
           </Flex>
-          <Heading as="h3" size="sm" my={2} maxWidth={200} noOfLines={1}>
+          <Heading size="sm" my={2} maxWidth={165} noOfLines={1} mx={2}>
             {name}
           </Heading>
         </Box>
@@ -38,6 +38,9 @@ function NonFungibleTokenComponent({
       DialogHeader={name}
       DialogBody={
         <>
+          <Flex width={165} height={165}>
+            <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" borderRadius={8} />
+          </Flex>
           {openSeaUrl && (
             <Link color="blue.500" href={openSeaUrl} isExternal>
               OpenSea <Icon as={RiExternalLinkLine}></Icon>

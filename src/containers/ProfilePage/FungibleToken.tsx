@@ -21,6 +21,16 @@ function getEtherscanUrl(address: string, blockchain: Blockchains): string {
   }
 }
 
+const coinStyling = {
+  width: 75,
+  height: 75,
+  backgroundColor: 'gray.900',
+  borderColor: 'gray.900',
+  borderRadius: '50%',
+  boxShadow: 'dark-lg',
+  borderWidth: '1px',
+};
+
 function FungibleTokenComponent({
   metadata: { name, symbol, decimals },
   contract: { address, blockchain, interface: interfaceName },
@@ -29,21 +39,11 @@ function FungibleTokenComponent({
   const displayBalance = useDisplayBalance(balance, decimals);
   const key = useTokenKey(address, blockchain);
 
-  const coinStyling = {
-    width: 90,
-    height: 90,
-    backgroundColor: 'gray.900',
-    borderColor: 'gray.900',
-    borderRadius: '50%',
-    boxShadow: 'dark-lg',
-    borderWidth: '1px',
-  };
-
   return (
     <Badge
       Display={
         <Box height={240}>
-          <Flex justifyContent="center" mt={10} mb={5}>
+          <Flex justifyContent="center" mt={5} mb={5}>
             {!key ? (
               <Box {...coinStyling} pt={9}>
                 <Heading as="h3" size="md">
@@ -54,7 +54,7 @@ function FungibleTokenComponent({
               <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
             )}
           </Flex>
-          <ChakraBadge borderRadius={8} py={1} px={2}>
+          <ChakraBadge borderRadius={8} py={1} px={2} mt={3}>
             <Heading as="h3" size="md" noOfLines={2}>
               {displayBalance + ' ' + symbol}
             </Heading>
@@ -64,6 +64,7 @@ function FungibleTokenComponent({
       DialogHeader={name}
       DialogBody={
         <>
+          <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
           <Link color="blue.500" href={getEtherscanUrl(address, blockchain)} isExternal>
             Etherscan <Icon as={RiExternalLinkLine}></Icon>
           </Link>
