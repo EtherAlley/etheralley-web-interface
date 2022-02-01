@@ -21,7 +21,7 @@ const initialState: State = {
 export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
-    const response = await fetchCoreAPI(`/address/${address}/profile`);
+    const response = await fetchCoreAPI(`/profiles/${address}`);
     const profile = await response.json();
     return profile;
   }
@@ -32,13 +32,13 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
   async ({ address, library }, { getState }) => {
     const { profilePage } = getState();
 
-    const response = await fetchCoreAPI(`/address/${address}/challenge`);
+    const response = await fetchCoreAPI(`/challenges/${address}`);
     const { message } = await response.json();
 
     const signer = library.getSigner(address);
     const signature = await signer.signMessage(message);
 
-    await fetchCoreAPI(`/address/${address}/profile`, {
+    await fetchCoreAPI(`/profiles/${address}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${signature}`,

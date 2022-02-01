@@ -1,8 +1,15 @@
-import { Blockchains, Interfaces } from '../common/constants';
+import { Blockchains, Interfaces, StatisticTypes } from '../common/constants';
 
 export type Profile = {
   non_fungible_tokens: NonFungibleToken[];
   fungible_tokens: FungibleToken[];
+  statistics: Statistic[];
+};
+
+export type Contract = {
+  blockchain: Blockchains;
+  address: string;
+  interface: Interfaces;
 };
 
 export type NonFungibleToken = {
@@ -31,8 +38,22 @@ export type FungibleMetadata = {
   decimals: number;
 };
 
-export type Contract = {
-  blockchain: Blockchains;
-  address: string;
-  interface: Interfaces;
+export type Statistic = {
+  type: StatisticTypes;
+  contract: Contract;
+  data: Swap[] | any;
+};
+
+export type SwapToken = {
+  id: string;
+  amount: string;
+  symbol: string;
+};
+
+export type Swap = {
+  id: string;
+  timestamp: string;
+  amountUSD: string;
+  input: SwapToken;
+  output: SwapToken;
 };

@@ -45,7 +45,7 @@ function FungibleTokenComponent({
         <Box height={240}>
           <Flex justifyContent="center" mt={5} mb={5}>
             {!key ? (
-              <Box {...coinStyling} pt={9}>
+              <Box {...coinStyling} pt={6}>
                 <Heading as="h3" size="md">
                   {symbol}
                 </Heading>
@@ -90,38 +90,3 @@ function FungibleTokenComponent({
 }
 
 export default FungibleTokenComponent;
-
-// alternative styling
-
-// const BadgeDisplay1 = () => (
-//   <Box
-//     width={200}
-//     height={240}
-//     backdropFilter="opacity(0.8)"
-//     overflow="hidden"
-//     display="flex"
-//     alignItems="center"
-//     justifyContent="center"
-//     flexDirection="column"
-//   >
-//     <Box>
-//       <Image alt={symbol} src={tokenLogo} height="100px" width="100px" />
-//       <Image
-//         alt={symbol}
-//         src={tokenLogo}
-//         position="absolute"
-//         top={75}
-//         left={75}
-//         backgroundSize="250%"
-//         filter="blur(60px)"
-//         display="block"
-//         opacity={0.6}
-//       />
-//     </Box>
-//     <Box mt={5}>
-//       <Heading as="h3" size="md" noOfLines={2}>
-//         {displayBalance + ' ' + symbol}
-//       </Heading>
-//     </Box>
-//   </Box>
-// );

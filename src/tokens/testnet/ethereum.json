@@ -20,23 +20,13 @@
         "address": "0x08249c12c66c76ea384cf851bb3e274a2bb1874a"
     },
     {
-        "name": "Binance USD (BUSD)",
-        "symbol": "BUSD",
-        "address": "0xb809b9b2dc5e93cb863176ea2d565425b03c0540"
+        "name": "SHIBA INU (SHIB)",
+        "symbol": "SHIB",
+        "address": "0xC5Ad32f66e0dd5FA75dB3FF839AB7783ce9f1a68"
     },
     {
-        "name": "Coinbase USD (USDC)",
-        "symbol": "USDC",
-        "address": "0x07865c6e87b9f70255377e024ace6630c1eaa37f"
-    },
-    {
-        "name": "Tether USD (USDT)",
-        "symbol": "USDT",
-        "address": "0xe583769738b6dd4e7caf8451050d1948be717679"
-    },
-    {
-        "name": "Wrapped Ether (WETH)",
-        "symbol": "WETH",
-        "address": "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6"
+        "name": "Crypto.com Coin (CRO)",
+        "symbol": "CRO",
+        "address": "0x014EB3F44A9687450459a219f47C154158fc62aD"
     }
 ]

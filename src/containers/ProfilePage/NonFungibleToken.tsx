@@ -1,4 +1,4 @@
-import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box } from '@chakra-ui/react';
+import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { NonFungibleToken } from '../../api/types';
 import { Blockchains } from '../../common/constants';
@@ -15,6 +15,14 @@ function getOpenSeaUrl(address: string, token_id: string, blockchain: Blockchain
   }
 }
 
+function Fallback({ interfaceName }: { interfaceName: string }) {
+  return (
+    <Center width="100%">
+      <Heading size="md">{interfaceName}</Heading>
+    </Center>
+  );
+}
+
 function NonFungibleTokenComponent({
   metadata: { image, name, description, attributes },
   contract: { address, blockchain, interface: interfaceName },
@@ -23,12 +31,22 @@ function NonFungibleTokenComponent({
 }: NonFungibleToken) {
   const openSeaUrl = getOpenSeaUrl(address, token_id, blockchain);
 
+  const fallback = <Fallback interfaceName={interfaceName} />;
+
   return (
     <Badge
       Display={
         <Box height={200}>
           <Flex width={165} height={165}>
-            <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" borderRadius={8} />
+            <Image
+              alt={name}
+              fallback={fallback}
+              src={image}
+              margin="auto"
+              maxWidth="100%"
+              maxHeight="100%"
+              borderRadius={8}
+            />
           </Flex>
           <Heading size="sm" my={2} maxWidth={165} noOfLines={1} mx={2}>
             {name}
@@ -39,7 +57,15 @@ function NonFungibleTokenComponent({
       DialogBody={
         <>
           <Flex width={165} height={165}>
-            <Image alt={name} src={image} margin="auto" maxWidth="100%" maxHeight="100%" borderRadius={8} />
+            <Image
+              alt={name}
+              fallback={fallback}
+              src={image}
+              margin="auto"
+              maxWidth="100%"
+              maxHeight="100%"
+              borderRadius={8}
+            />
           </Flex>
           {openSeaUrl && (
             <Link color="blue.500" href={openSeaUrl} isExternal>
