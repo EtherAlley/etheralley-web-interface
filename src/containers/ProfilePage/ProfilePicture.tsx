@@ -1,5 +1,5 @@
 import { Box, Text } from '@chakra-ui/react';
-import { BadgeTypes, DisplayItem, NonFungibleToken, Profile } from '../../api/types';
+import { BadgeTypes, DisplayItem, NonFungibleToken, Profile } from '../../common/types';
 import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../svgs/ProfileUser';

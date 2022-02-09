@@ -12,7 +12,7 @@ import {
   Icon,
 } from '@chakra-ui/react';
 import Badge from '../../components/Badge';
-import { Contract, Swap } from '../../api/types';
+import { Contract, Swap } from '../../common/types';
 import Settings from '../../common/settings';
 import useInterfaceKey from '../../hooks/useInterfaceKey';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';

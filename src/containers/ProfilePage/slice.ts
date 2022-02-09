@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { ProfileMode } from '../../common/constants';
 import { fetchCoreAPI } from '../../api';
-import { BadgeTypes, DisplayConfig, DisplayGroup, Profile } from '../../api/types';
+import { BadgeTypes, DisplayConfig, DisplayGroup, Profile } from '../../common/types';
 
 export interface State {
   loading: boolean;

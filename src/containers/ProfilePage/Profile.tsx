@@ -1,5 +1,5 @@
 import { Box, Center, Grid, GridItem, Heading, SimpleGrid } from '@chakra-ui/react';
-import { BadgeTypes, FungibleToken, NonFungibleToken, Profile, Statistic } from '../../api/types';
+import { BadgeTypes, FungibleToken, NonFungibleToken, Profile, Statistic } from '../../common/types';
 import { StatisticTypes } from '../../common/constants';
 import Paper from '../../components/Paper';
 import FungibleTokenComponent from './FungibleToken';

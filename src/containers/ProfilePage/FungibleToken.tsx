@@ -3,7 +3,7 @@ import { RiExternalLinkLine } from 'react-icons/ri';
 import Badge from '../../components/Badge';
 import useDisplayBalance from '../../hooks/useDisplayBalance';
 import useTokenKey from '../../hooks/useTokenKey';
-import { FungibleToken } from '../../api/types';
+import { FungibleToken } from '../../common/types';
 import Settings from '../../common/settings';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import { BADGE_DIMENSION } from '../../common/constants';

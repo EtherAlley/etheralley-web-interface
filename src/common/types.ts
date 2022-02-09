@@ -1,4 +1,4 @@
-import { Blockchains, Interfaces, StatisticTypes } from '../common/constants';
+import { Blockchains, Interfaces, StatisticTypes } from './constants';
 
 export enum BadgeTypes {
   NonFungibleToken = 'non_fungible_tokens',

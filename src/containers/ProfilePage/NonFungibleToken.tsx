@@ -1,6 +1,6 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { NonFungibleToken } from '../../api/types';
+import { NonFungibleToken } from '../../common/types';
 import { Blockchains, BADGE_DIMENSION } from '../../common/constants';
 import Settings from '../../common/settings';
 import Badge from '../../components/Badge';
