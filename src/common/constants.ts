@@ -1,3 +1,5 @@
+export const BADGE_DIMENSION = 185;
+
 export const Routes = {
   HOME: '/',
   PROFILE: '/profiles/:address',

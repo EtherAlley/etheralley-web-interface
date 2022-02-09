@@ -8,14 +8,21 @@ import {
   AlertDialogHeader,
   AlertDialogOverlay,
   AlertDialogCloseButton,
+  Box,
 } from '@chakra-ui/react';
 import Paper from '../../components/Paper';
 
 function Badge({
+  width,
+  height,
+  usePaper = true,
   Display,
   DialogHeader,
   DialogBody,
 }: {
+  width: number;
+  height: number;
+  usePaper?: boolean;
   Display: ReactNode;
   DialogHeader: ReactNode;
   DialogBody: ReactNode;
@@ -23,38 +30,39 @@ function Badge({
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = useRef(null);
+  const boxStyling: any = {
+    as: 'button',
+    onClick: () => setIsOpen(true),
+    _hover: { transform: 'scale(1.1)' },
+    width,
+    height,
+    borderRadius: 8,
+    transition: 'all .1s ease-in-out',
+  };
 
-  return (
-    <Paper
-      as="button"
-      onClick={() => setIsOpen(true)}
-      _hover={{ transform: 'scale(1.1)' }}
-      height={200}
-      width={165}
-      borderRadius={8}
-      transition="all .1s ease-in-out"
-    >
-      <>
-        {Display}
-        <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-          <AlertDialogOverlay>
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                {DialogHeader}
-              </AlertDialogHeader>
-              <AlertDialogCloseButton />
-              <AlertDialogBody>{DialogBody}</AlertDialogBody>
-              <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onClose}>
-                  Close
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialogOverlay>
-        </AlertDialog>
-      </>
-    </Paper>
+  const Content = (
+    <>
+      {Display}
+      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              {DialogHeader}
+            </AlertDialogHeader>
+            <AlertDialogCloseButton />
+            <AlertDialogBody>{DialogBody}</AlertDialogBody>
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={onClose}>
+                Close
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
+    </>
   );
+
+  return usePaper ? <Paper {...boxStyling}>{Content}</Paper> : <Box {...boxStyling}>{Content}</Box>;
 }
 
 export default Badge;

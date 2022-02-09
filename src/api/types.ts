@@ -1,9 +1,36 @@
 import { Blockchains, Interfaces, StatisticTypes } from '../common/constants';
 
+export enum BadgeTypes {
+  NonFungibleToken = 'non_fungible_tokens',
+  FungibleToken = 'fungible_tokens',
+  Statistics = 'statistics',
+}
+
 export type Profile = {
-  non_fungible_tokens: NonFungibleToken[];
-  fungible_tokens: FungibleToken[];
-  statistics: Statistic[];
+  display_config: DisplayConfig;
+  ens_name: string;
+  [BadgeTypes.NonFungibleToken]: NonFungibleToken[];
+  [BadgeTypes.FungibleToken]: FungibleToken[];
+  [BadgeTypes.Statistics]: Statistic[];
+};
+
+export type DisplayConfig = {
+  header: { text: string };
+  description: { text: string };
+  picture: {
+    item: DisplayItem | undefined;
+  };
+  groups: DisplayGroup[];
+};
+
+export type DisplayGroup = {
+  text: string;
+  items: DisplayItem[];
+};
+
+export type DisplayItem = {
+  id: number;
+  type: BadgeTypes;
 };
 
 export type Contract = {

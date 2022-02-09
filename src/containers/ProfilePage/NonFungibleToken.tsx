@@ -1,7 +1,7 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { NonFungibleToken } from '../../api/types';
-import { Blockchains } from '../../common/constants';
+import { Blockchains, BADGE_DIMENSION } from '../../common/constants';
 import Settings from '../../common/settings';
 import Badge from '../../components/Badge';
 
@@ -15,58 +15,59 @@ function getOpenSeaUrl(address: string, token_id: string, blockchain: Blockchain
   }
 }
 
-function Fallback({ interfaceName }: { interfaceName: string }) {
-  return (
+function NonFungibleTokenComponent({
+  data: {
+    metadata: { image, name, description, attributes },
+    contract: { address, blockchain, interface: interfaceName },
+    token_id,
+    balance,
+  },
+  usePaper = true,
+  useHeader = true,
+}: {
+  data: NonFungibleToken;
+  usePaper?: boolean;
+  useHeader?: boolean;
+}) {
+  const openSeaUrl = getOpenSeaUrl(address, token_id, blockchain);
+  const fallback = (
     <Center width="100%">
       <Heading size="md">{interfaceName}</Heading>
     </Center>
   );
-}
-
-function NonFungibleTokenComponent({
-  metadata: { image, name, description, attributes },
-  contract: { address, blockchain, interface: interfaceName },
-  token_id,
-  balance,
-}: NonFungibleToken) {
-  const openSeaUrl = getOpenSeaUrl(address, token_id, blockchain);
-
-  const fallback = <Fallback interfaceName={interfaceName} />;
+  const imageComponent = (
+    <Flex height={BADGE_DIMENSION} widht={BADGE_DIMENSION}>
+      <Image
+        alt={name}
+        fallback={fallback}
+        src={image}
+        margin="auto"
+        maxWidth="100%"
+        maxHeight="100%"
+        borderRadius={8}
+      />
+    </Flex>
+  );
 
   return (
     <Badge
+      width={BADGE_DIMENSION}
+      height={useHeader ? BADGE_DIMENSION + 35 : BADGE_DIMENSION}
+      usePaper={usePaper}
       Display={
-        <Box height={200}>
-          <Flex width={165} height={165}>
-            <Image
-              alt={name}
-              fallback={fallback}
-              src={image}
-              margin="auto"
-              maxWidth="100%"
-              maxHeight="100%"
-              borderRadius={8}
-            />
-          </Flex>
-          <Heading size="sm" my={2} maxWidth={165} noOfLines={1} mx={2}>
-            {name}
-          </Heading>
+        <Box maxHeight="100%" maxWidth="100%">
+          {imageComponent}
+          {useHeader && (
+            <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2}>
+              {name}
+            </Heading>
+          )}
         </Box>
       }
       DialogHeader={name}
       DialogBody={
         <>
-          <Flex width={165} height={165}>
-            <Image
-              alt={name}
-              fallback={fallback}
-              src={image}
-              margin="auto"
-              maxWidth="100%"
-              maxHeight="100%"
-              borderRadius={8}
-            />
-          </Flex>
+          {imageComponent}
           {openSeaUrl && (
             <Link color="blue.500" href={openSeaUrl} isExternal>
               OpenSea <Icon as={RiExternalLinkLine}></Icon>
