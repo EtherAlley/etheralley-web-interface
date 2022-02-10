@@ -19,7 +19,7 @@ function ProfilePictureComponent({
     <Paper py={2} px={4}>
       <Box>
         <Picture item={item} non_fungible_tokens={non_fungible_tokens} />
-        <Text fontWeight="bold" textAlign="center" mt={3}>
+        <Text fontWeight="bold" textAlign="center" mt={1}>
           {ens_name}
         </Text>
       </Box>

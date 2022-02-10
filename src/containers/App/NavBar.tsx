@@ -5,7 +5,7 @@ import useInjectedListener from '../../hooks/useInjectedListener';
 import { Routes } from '../../common/constants';
 import { Link as ReachLink, useHistory, useRouteMatch } from 'react-router-dom';
 import { Box, Flex, Heading, Button, Badge, LinkOverlay, LinkBox } from '@chakra-ui/react';
-import { injectedConnector } from '../../connectors';
+import { injectedConnector } from '../../common/connectors';
 
 function Navbar() {
   const { activate, active, account } = useWeb3React();

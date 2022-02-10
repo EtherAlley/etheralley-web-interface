@@ -1,18 +1,28 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { NonFungibleToken } from '../../common/types';
-import { Blockchains, BADGE_DIMENSION } from '../../common/constants';
-import Settings from '../../common/settings';
+import { BADGE_DIMENSION } from '../../common/constants';
 import Badge from '../../components/Badge';
+import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 
-function getOpenSeaUrl(address: string, token_id: string, blockchain: Blockchains): string {
-  switch (blockchain) {
-    case Blockchains.ETHEREUM:
-    case Blockchains.POLYGON:
-      return `${Settings.OPENSEA_URL}/assets/${address}/${token_id}`;
-    default:
-      return '';
-  }
+function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
+  return (
+    <Flex height={BADGE_DIMENSION} widht={BADGE_DIMENSION}>
+      <Image
+        alt={alt}
+        fallback={
+          <Center width="100%">
+            <Heading size="md">{fallbackText}</Heading>
+          </Center>
+        }
+        src={image}
+        margin="auto"
+        maxWidth="100%"
+        maxHeight="100%"
+        borderRadius={8}
+      />
+    </Flex>
+  );
 }
 
 function NonFungibleTokenComponent({
@@ -29,25 +39,7 @@ function NonFungibleTokenComponent({
   usePaper?: boolean;
   useHeader?: boolean;
 }) {
-  const openSeaUrl = getOpenSeaUrl(address, token_id, blockchain);
-  const fallback = (
-    <Center width="100%">
-      <Heading size="md">{interfaceName}</Heading>
-    </Center>
-  );
-  const imageComponent = (
-    <Flex height={BADGE_DIMENSION} widht={BADGE_DIMENSION}>
-      <Image
-        alt={name}
-        fallback={fallback}
-        src={image}
-        margin="auto"
-        maxWidth="100%"
-        maxHeight="100%"
-        borderRadius={8}
-      />
-    </Flex>
-  );
+  const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
 
   return (
     <Badge
@@ -56,7 +48,7 @@ function NonFungibleTokenComponent({
       usePaper={usePaper}
       Display={
         <Box maxHeight="100%" maxWidth="100%">
-          {imageComponent}
+          <ImageWrapper image={image} alt={name} fallbackText={interfaceName} />
           {useHeader && (
             <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2}>
               {name}
@@ -67,7 +59,7 @@ function NonFungibleTokenComponent({
       DialogHeader={name}
       DialogBody={
         <>
-          {imageComponent}
+          <ImageWrapper image={image} alt={name} fallbackText={interfaceName} />
           {openSeaUrl && (
             <Link color="blue.500" href={openSeaUrl} isExternal>
               OpenSea <Icon as={RiExternalLinkLine}></Icon>

@@ -1,5 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
-import { saveProfile, selectProfile } from '../ProfilePage/slice';
+import { saveProfile, selectProfilePage } from '../ProfilePage/slice';
 import { Routes, ProfileMode } from '../../common/constants';
 import { setProfileMode } from '../ProfilePage/slice';
 import { useHistory, useParams } from 'react-router-dom';
@@ -9,46 +9,47 @@ import { RiArrowGoBackLine, RiSaveLine, RiPencilLine, RiCloseLine } from 'react-
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
-function ProfileBar() {
+function UserButton() {
   const dispatch = useAppDispatch();
-  const { push } = useHistory();
-  const { profileMode } = useAppSelector(selectProfile);
+  const { profileMode } = useAppSelector(selectProfilePage);
   const { account, library } = useWeb3React();
   const { address } = useParams<{ address: string }>();
 
-  const UserButton = () => {
-    if (!account || account !== address) {
-      return <></>;
-    }
+  if (!account || account !== address) {
+    return <></>;
+  }
 
-    if (profileMode === ProfileMode.View) {
-      return (
-        <IconButton
-          aria-label="edit profile"
-          tooltip="Edit profile"
-          Icon={RiPencilLine}
-          onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
-        />
-      );
-    }
-
+  if (profileMode === ProfileMode.View) {
     return (
-      <span>
-        <IconButton
-          aria-label="save profile"
-          tooltip="Save Profile"
-          Icon={RiSaveLine}
-          onClick={() => dispatch(saveProfile({ address: account, library }))}
-        />
-        <IconButton
-          aria-label="cancel edit profile"
-          tooltip="Cancel edit"
-          Icon={RiCloseLine}
-          onClick={() => dispatch(setProfileMode(ProfileMode.View))}
-        />
-      </span>
+      <IconButton
+        aria-label="edit profile"
+        tooltip="Edit profile"
+        Icon={RiPencilLine}
+        onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
+      />
     );
-  };
+  }
+
+  return (
+    <span>
+      <IconButton
+        aria-label="save profile"
+        tooltip="Save Profile"
+        Icon={RiSaveLine}
+        onClick={() => dispatch(saveProfile({ address: account, library }))}
+      />
+      <IconButton
+        aria-label="cancel edit profile"
+        tooltip="Cancel edit"
+        Icon={RiCloseLine}
+        onClick={() => dispatch(setProfileMode(ProfileMode.View))}
+      />
+    </span>
+  );
+}
+
+function ProfileBar() {
+  const { push } = useHistory();
 
   return (
     <>

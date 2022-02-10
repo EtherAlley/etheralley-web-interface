@@ -7,6 +7,7 @@ import { FungibleToken } from '../../common/types';
 import Settings from '../../common/settings';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import { BADGE_DIMENSION } from '../../common/constants';
+import Coin from '../../svgs/Coin';
 
 const coinStyling = {
   width: 85,
@@ -39,10 +40,8 @@ function FungibleTokenComponent({
         <Box maxWidth="100%" maxHeight="100%">
           <Flex justifyContent="center" mb={5}>
             {!key ? (
-              <Box {...coinStyling} pt={7}>
-                <Heading as="h3" size="md">
-                  {symbol}
-                </Heading>
+              <Box {...coinStyling}>
+                <Coin width="85px" height="85px" />
               </Box>
             ) : (
               <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />

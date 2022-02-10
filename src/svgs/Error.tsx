@@ -1,4 +1,4 @@
-function BugFixing({ width, height }: { width: string | number | undefined; height: string | number | undefined }) {
+function Error({ width, height }: { width: string | number | undefined; height: string | number | undefined }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -469,4 +469,4 @@ function BugFixing({ width, height }: { width: string | number | undefined; heig
   );
 }
 
-export default BugFixing;
+export default Error;

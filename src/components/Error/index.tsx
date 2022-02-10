@@ -1,12 +1,12 @@
 import { Box, Flex, Heading, Icon } from '@chakra-ui/react';
 import { RiErrorWarningLine } from 'react-icons/ri';
-import BugFixing from '../../svgs/BugFixing';
+import ErrorSvg from '../../svgs/Error';
 
 function Error({ message }: { message: string }) {
   return (
     <Box>
       <Flex justifyContent="center" ml={7}>
-        <BugFixing width={250} height={250} />
+        <ErrorSvg width={250} height={250} />
       </Flex>
       <Flex>
         <Icon as={RiErrorWarningLine} w={7} h={7} color="red.500" mr={4} />

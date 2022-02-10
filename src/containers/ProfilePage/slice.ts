@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { ProfileMode } from '../../common/constants';
-import { fetchCoreAPI } from '../../api';
+import { fetchAPI, fetchAPINoResponse } from '../../common/http';
 import { BadgeTypes, DisplayConfig, DisplayGroup, Profile } from '../../common/types';
 
 export interface State {
@@ -21,9 +21,7 @@ const initialState: State = {
 export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
-    const response = await fetchCoreAPI(`/profiles/${address}`);
-    const profile = await response.json();
-    return profile;
+    return fetchAPI<Profile>(`/profiles/${address}`);
   }
 );
 
@@ -32,13 +30,12 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
   async ({ address, library }, { getState }) => {
     const { profilePage } = getState();
 
-    const response = await fetchCoreAPI(`/challenges/${address}`);
-    const { message } = await response.json();
+    const { message } = await fetchAPI<{ message: string }>(`/challenges/${address}`);
 
     const signer = library.getSigner(address);
     const signature = await signer.signMessage(message);
 
-    await fetchCoreAPI(`/profiles/${address}`, {
+    await fetchAPINoResponse(`/profiles/${address}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${signature}`,
@@ -59,8 +56,8 @@ export const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadProfile.pending, (state) => {
-        Object.assign(state, initialState);
+      .addCase(loadProfile.pending, () => {
+        return initialState;
       })
       .addCase(loadProfile.rejected, (state) => {
         state.loading = false;
@@ -80,7 +77,9 @@ export const slice = createSlice({
 
 export const { setProfileMode } = slice.actions;
 
-export const selectProfile = (state: RootState) => state.profilePage;
+export const selectProfilePage = (state: RootState) => state.profilePage;
+
+export const selectProfile = (state: RootState) => state.profilePage.profile;
 
 export default slice.reducer;
 
@@ -110,7 +109,7 @@ function buildDefaultConfig(profile: Profile): DisplayConfig {
 
   if (profile.non_fungible_tokens.length > 0) {
     display.picture.item = {
-      id: 2,
+      id: 0,
       type: BadgeTypes.NonFungibleToken,
     };
     const group: DisplayGroup = {

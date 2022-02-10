@@ -1,13 +1,21 @@
 import { Box, Center, Grid, GridItem, Heading, SimpleGrid } from '@chakra-ui/react';
-import { BadgeTypes, FungibleToken, NonFungibleToken, Profile, Statistic } from '../../common/types';
+import { BadgeTypes, FungibleToken, NonFungibleToken, Statistic } from '../../common/types';
 import { StatisticTypes } from '../../common/constants';
 import Paper from '../../components/Paper';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfilePicture from './ProfilePicture';
 import Swaps from './Swaps';
+import { selectProfile } from './slice';
+import useAppSelector from '../../hooks/useAppSelector';
 
-function ProfileComponent({ profile }: { profile: Profile }) {
+function ProfileComponent() {
+  const profile = useAppSelector(selectProfile);
+
+  if (!profile) {
+    return <></>;
+  }
+
   return (
     <Box>
       <Box height="100px" />
@@ -29,9 +37,9 @@ function ProfileComponent({ profile }: { profile: Profile }) {
         </GridItem>
       </Grid>
       {profile.display_config.groups.length > 0 &&
-        profile.display_config.groups.map((group) => {
+        profile.display_config.groups.map((group, i) => {
           return (
-            <Box my={10}>
+            <Box my={10} key={i}>
               <Heading as="h3" size="lg" mb={10}>
                 {group.text}
               </Heading>
@@ -42,16 +50,16 @@ function ProfileComponent({ profile }: { profile: Profile }) {
                     let gridItem: JSX.Element;
                     switch (item.type) {
                       case BadgeTypes.NonFungibleToken:
-                        gridItem = <NonFungibleTokenComponent key={item.id} data={asset as NonFungibleToken} />;
+                        gridItem = <NonFungibleTokenComponent data={asset as NonFungibleToken} />;
                         break;
                       case BadgeTypes.FungibleToken:
-                        gridItem = <FungibleTokenComponent key={item.id} data={asset as FungibleToken} />;
+                        gridItem = <FungibleTokenComponent data={asset as FungibleToken} />;
                         break;
                       case BadgeTypes.Statistics:
                         const stat = asset as Statistic;
                         switch (stat.type) {
                           case StatisticTypes.SWAP:
-                            gridItem = <Swaps key={item.id} swaps={stat.data} contract={stat.contract} />;
+                            gridItem = <Swaps swaps={stat.data} contract={stat.contract} />;
                             break;
                           default:
                             gridItem = <></>;
@@ -62,7 +70,7 @@ function ProfileComponent({ profile }: { profile: Profile }) {
                         gridItem = <></>;
                         break;
                     }
-                    return <Center>{gridItem}</Center>;
+                    return <Center key={item.id}>{gridItem}</Center>;
                   })}
                 </SimpleGrid>
               )}
