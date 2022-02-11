@@ -1,9 +1,10 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { NonFungibleToken } from '../../common/types';
 import { BADGE_DIMENSION } from '../../common/constants';
 import Badge from '../../components/Badge';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
+import useAppSelector from '../../hooks/useAppSelector';
+import { selectNonFungibleToken } from './slice';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
   return (
@@ -26,19 +27,20 @@ function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string
 }
 
 function NonFungibleTokenComponent({
-  data: {
+  id,
+  usePaper = true,
+  useHeader = true,
+}: {
+  id: number;
+  usePaper?: boolean;
+  useHeader?: boolean;
+}) {
+  const {
     metadata: { image, name, description, attributes },
     contract: { address, blockchain, interface: interfaceName },
     token_id,
     balance,
-  },
-  usePaper = true,
-  useHeader = true,
-}: {
-  data: NonFungibleToken;
-  usePaper?: boolean;
-  useHeader?: boolean;
-}) {
+  } = useAppSelector((state) => selectNonFungibleToken(state, id));
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
 
   return (

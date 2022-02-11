@@ -1,24 +1,17 @@
 import { Box, Text } from '@chakra-ui/react';
-import { BadgeTypes, DisplayItem, NonFungibleToken, Profile } from '../../common/types';
 import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../svgs/ProfileUser';
+import useAppSelector from '../../hooks/useAppSelector';
+import { selectDisplayConfig, selectENSName, selectNonFungibleTokens } from './slice';
 
-function ProfilePictureComponent({
-  profile: {
-    display_config: {
-      picture: { item },
-    },
-    non_fungible_tokens,
-    ens_name,
-  },
-}: {
-  profile: Profile;
-}) {
+function ProfilePictureComponent() {
+  const ens_name = useAppSelector(selectENSName);
+
   return (
     <Paper py={2} px={4}>
       <Box>
-        <Picture item={item} non_fungible_tokens={non_fungible_tokens} />
+        <Picture />
         <Text fontWeight="bold" textAlign="center" mt={1}>
           {ens_name}
         </Text>
@@ -27,20 +20,17 @@ function ProfilePictureComponent({
   );
 }
 
-function Picture({
-  item,
-  non_fungible_tokens,
-}: {
-  item: DisplayItem | undefined;
-  non_fungible_tokens: NonFungibleToken[];
-}) {
-  if (!item || item.type !== BadgeTypes.NonFungibleToken || item.id < 0 || item.id >= non_fungible_tokens.length) {
+function Picture() {
+  const {
+    picture: { item },
+  } = useAppSelector(selectDisplayConfig);
+  const nfts = useAppSelector(selectNonFungibleTokens);
+
+  if (!item || item.id < 0 || item.id >= nfts.length) {
     return <ProfileUser width="165px" height="165px" />;
   }
 
-  const nft = non_fungible_tokens[item.id];
-
-  return <NonFungibleTokenComponent data={nft} usePaper={false} useHeader={false} />;
+  return <NonFungibleTokenComponent id={item.id} useHeader={false} usePaper={false} />;
 }
 
 export default ProfilePictureComponent;

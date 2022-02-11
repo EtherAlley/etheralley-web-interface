@@ -18,6 +18,8 @@ import useInterfaceKey from '../../hooks/useInterfaceKey';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { BADGE_DIMENSION } from '../../common/constants';
+import useAppSelector from '../../hooks/useAppSelector';
+import { selectStatistic } from './slice';
 
 const logoStyling = {
   width: 100,
@@ -30,8 +32,10 @@ const logoStyling = {
   borderWidth: '1px',
 };
 
-function SwapComponent({ swaps, contract }: { swaps: Swap[]; contract: Contract }) {
+function SwapComponent({ id }: { id: number }) {
+  const { data, contract } = useAppSelector((state) => selectStatistic(state, id));
   const key = useInterfaceKey(contract.interface);
+  const swaps = data as Swap[];
 
   return (
     <Badge

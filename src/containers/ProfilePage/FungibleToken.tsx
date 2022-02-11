@@ -3,11 +3,12 @@ import { RiExternalLinkLine } from 'react-icons/ri';
 import Badge from '../../components/Badge';
 import useDisplayBalance from '../../hooks/useDisplayBalance';
 import useTokenKey from '../../hooks/useTokenKey';
-import { FungibleToken } from '../../common/types';
 import Settings from '../../common/settings';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import { BADGE_DIMENSION } from '../../common/constants';
 import Coin from '../../svgs/Coin';
+import useAppSelector from '../../hooks/useAppSelector';
+import { selectFungibleToken } from './slice';
 
 const coinStyling = {
   width: 85,
@@ -19,15 +20,12 @@ const coinStyling = {
   borderWidth: '1px',
 };
 
-function FungibleTokenComponent({
-  data: {
+function FungibleTokenComponent({ id }: { id: number }) {
+  const {
     metadata: { name, symbol, decimals },
     contract: { address, blockchain, interface: interfaceName },
     balance,
-  },
-}: {
-  data: FungibleToken;
-}) {
+  } = useAppSelector((state) => selectFungibleToken(state, id));
   const displayBalance = useDisplayBalance(balance, decimals);
   const key = useTokenKey(address, blockchain);
   const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);

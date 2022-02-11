@@ -2,20 +2,33 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { ProfileMode } from '../../common/constants';
 import { fetchAPI, fetchAPINoResponse } from '../../common/http';
-import { BadgeTypes, DisplayConfig, DisplayGroup, Profile } from '../../common/types';
+import { BadgeTypes, DisplayGroup, Profile } from '../../common/types';
 
 export interface State {
   loading: boolean;
   error: boolean;
   profileMode: ProfileMode;
-  profile: Profile | undefined;
+  profile: Profile;
 }
 
 const initialState: State = {
   loading: true,
   error: false,
   profileMode: ProfileMode.View,
-  profile: undefined,
+  profile: {
+    ens_name: '',
+    display_config: {
+      header: { text: 'My Profile' },
+      description: { text: 'My Description is very long and goes here.' },
+      picture: {
+        item: undefined,
+      },
+      groups: [],
+    },
+    non_fungible_tokens: [],
+    fungible_tokens: [],
+    statistics: [],
+  },
 };
 
 export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
@@ -66,8 +79,10 @@ export const slice = createSlice({
       .addCase(loadProfile.fulfilled, (state, action) => {
         state.loading = false;
         state.error = false;
-        state.profile = action.payload;
-        state.profile.display_config = buildDefaultConfig(action.payload); // TODO
+        state.profile = { ...state.profile, ...action.payload };
+        if (!action.payload.display_config) {
+          buildDefaultConfig(state.profile, action.payload); // TODO
+        }
       })
       .addCase(saveProfile.fulfilled, (state, _) => {
         state.profileMode = ProfileMode.View;
@@ -75,40 +90,23 @@ export const slice = createSlice({
   },
 });
 
-export const { setProfileMode } = slice.actions;
-
-export const selectProfilePage = (state: RootState) => state.profilePage;
-
-export const selectProfile = (state: RootState) => state.profilePage.profile;
-
-export default slice.reducer;
-
-function buildDefaultConfig(profile: Profile): DisplayConfig {
-  const display: DisplayConfig = {
-    header: { text: 'My Profile' },
-    description: { text: 'My Description is very long and goes here.' },
-    picture: {
-      item: undefined,
-    },
-    groups: [],
-  };
-
-  if (profile.statistics.length > 0) {
+function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void {
+  if (actionProfile.statistics.length > 0) {
     const group: DisplayGroup = {
       text: 'Statistics',
       items: [],
     };
-    for (let i = 0; i < profile.statistics.length; i++) {
+    for (let i = 0; i < actionProfile.statistics.length; i++) {
       group.items.push({
         id: i,
         type: BadgeTypes.Statistics,
       });
     }
-    display.groups.push(group);
+    stateProfile.display_config.groups.push(group);
   }
 
-  if (profile.non_fungible_tokens.length > 0) {
-    display.picture.item = {
+  if (actionProfile.non_fungible_tokens.length > 0) {
+    stateProfile.display_config.picture.item = {
       id: 0,
       type: BadgeTypes.NonFungibleToken,
     };
@@ -116,28 +114,46 @@ function buildDefaultConfig(profile: Profile): DisplayConfig {
       text: 'Non Fungible Tokens',
       items: [],
     };
-    for (let i = 0; i < profile.non_fungible_tokens.length; i++) {
+    for (let i = 0; i < actionProfile.non_fungible_tokens.length; i++) {
       group.items.push({
         id: i,
         type: BadgeTypes.NonFungibleToken,
       });
     }
-    display.groups.push(group);
+    stateProfile.display_config.groups.push(group);
   }
 
-  if (profile.fungible_tokens.length > 0) {
+  if (actionProfile.fungible_tokens.length > 0) {
     const group: DisplayGroup = {
       text: 'Tokens',
       items: [],
     };
-    for (let i = 0; i < profile.fungible_tokens.length; i++) {
+    for (let i = 0; i < actionProfile.fungible_tokens.length; i++) {
       group.items.push({
         id: i,
         type: BadgeTypes.FungibleToken,
       });
     }
-    display.groups.push(group);
+    stateProfile.display_config.groups.push(group);
   }
-
-  return display;
 }
+
+export const { setProfileMode } = slice.actions;
+
+export const selectProfilePage = (state: RootState) => state.profilePage;
+
+export const selectDisplayConfig = (state: RootState) => state.profilePage.profile.display_config;
+
+export const selectENSName = (state: RootState) => state.profilePage.profile.ens_name;
+
+export const selectNonFungibleTokens = (state: RootState) => state.profilePage.profile.non_fungible_tokens;
+
+export const selectNonFungibleToken = (state: RootState, index: number) =>
+  state.profilePage.profile.non_fungible_tokens[index];
+
+export const selectFungibleToken = (state: RootState, index: number) =>
+  state.profilePage.profile.fungible_tokens[index];
+
+export const selectStatistic = (state: RootState, index: number) => state.profilePage.profile.statistics[index];
+
+export default slice.reducer;
