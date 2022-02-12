@@ -1,6 +1,6 @@
 import { Flex, Image, Icon, Text, Link, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
 import { RiExternalLinkLine } from 'react-icons/ri';
-import { BADGE_DIMENSION } from '../../common/constants';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import Badge from '../../components/Badge';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -8,7 +8,7 @@ import { selectNonFungibleToken } from './slice';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
   return (
-    <Flex height={BADGE_DIMENSION} widht={BADGE_DIMENSION}>
+    <Flex height={BADGE_WIDTH} widht={BADGE_WIDTH}>
       <Image
         alt={alt}
         fallback={
@@ -36,17 +36,23 @@ function NonFungibleTokenComponent({
   useHeader?: boolean;
 }) {
   const {
-    metadata: { image, name, description, attributes },
+    metadata,
     contract: { address, blockchain, interface: interfaceName },
     token_id,
     balance,
   } = useAppSelector((state) => selectNonFungibleToken(state, id));
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
 
+  if (!metadata || balance === '0') {
+    return <></>;
+  }
+
+  const { name, image, description, attributes } = metadata;
+
   return (
     <Badge
-      width={BADGE_DIMENSION}
-      height={useHeader ? BADGE_DIMENSION + 35 : BADGE_DIMENSION}
+      width={BADGE_WIDTH}
+      height={useHeader ? BADGE_HEIGHT : BADGE_WIDTH}
       usePaper={usePaper}
       Display={
         <Box maxHeight="100%" maxWidth="100%">

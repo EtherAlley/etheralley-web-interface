@@ -3,11 +3,10 @@ import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../svgs/ProfileUser';
 import useAppSelector from '../../hooks/useAppSelector';
-import { selectDisplayConfig, selectENSName, selectNonFungibleTokens } from './slice';
+import { selectDisplayConfig, selectENSName } from './slice';
 
-function ProfilePictureComponent() {
+function ProfilePicture() {
   const ens_name = useAppSelector(selectENSName);
-
   return (
     <Paper py={2} px={4}>
       <Box>
@@ -24,13 +23,12 @@ function Picture() {
   const {
     picture: { item },
   } = useAppSelector(selectDisplayConfig);
-  const nfts = useAppSelector(selectNonFungibleTokens);
 
-  if (!item || item.id < 0 || item.id >= nfts.length) {
+  if (!item) {
     return <ProfileUser width="165px" height="165px" />;
   }
 
   return <NonFungibleTokenComponent id={item.id} useHeader={false} usePaper={false} />;
 }
 
-export default ProfilePictureComponent;
+export default ProfilePicture;

@@ -1,20 +1,19 @@
-import { Box, Flex, Heading, Icon } from '@chakra-ui/react';
-import { RiErrorWarningLine } from 'react-icons/ri';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import ErrorSvg from '../../svgs/Error';
+import Paper from '../Paper';
 
-function Error({ message }: { message: string }) {
+function Error({ message, width, height }: { message: string; width: number; height: number }) {
   return (
-    <Box>
-      <Flex justifyContent="center" ml={7}>
-        <ErrorSvg width={250} height={250} />
-      </Flex>
-      <Flex>
-        <Icon as={RiErrorWarningLine} w={7} h={7} color="red.500" mr={4} />
-        <Heading as="h3" size="md" textAlign="center">
+    <Paper width={width} height={height}>
+      <Box mt={5}>
+        <Flex justifyContent="center">
+          <ErrorSvg width={width * 0.4} height={height * 0.4} />
+        </Flex>
+        <Heading as="h1" size="md" textAlign="center">
           {message}
         </Heading>
-      </Flex>
-    </Box>
+      </Box>
+    </Paper>
   );
 }
 

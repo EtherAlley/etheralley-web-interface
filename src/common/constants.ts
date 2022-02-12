@@ -1,4 +1,5 @@
-export const BADGE_DIMENSION = 185;
+export const BADGE_WIDTH = 185;
+export const BADGE_HEIGHT = 220;
 
 export const Routes = {
   HOME: '/',

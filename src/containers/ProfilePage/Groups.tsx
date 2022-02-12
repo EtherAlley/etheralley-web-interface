@@ -1,5 +1,7 @@
 import { Box, Center, Heading, SimpleGrid } from '@chakra-ui/react';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
+import ErrorBoundary from '../../components/ErrorBoundary';
 import useAppSelector from '../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
@@ -33,7 +35,9 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
           {items.map(({ type, id }, i) => {
             return (
               <Center key={id}>
-                <GroupItem type={type} id={id} />
+                <ErrorBoundary message="Something went wrong" width={BADGE_WIDTH} height={BADGE_HEIGHT}>
+                  <GroupItem type={type} id={id} />
+                </ErrorBoundary>
               </Center>
             );
           })}

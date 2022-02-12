@@ -5,7 +5,7 @@ import useDisplayBalance from '../../hooks/useDisplayBalance';
 import useTokenKey from '../../hooks/useTokenKey';
 import Settings from '../../common/settings';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import { BADGE_DIMENSION } from '../../common/constants';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import Coin from '../../svgs/Coin';
 import useAppSelector from '../../hooks/useAppSelector';
 import { selectFungibleToken } from './slice';
@@ -32,8 +32,8 @@ function FungibleTokenComponent({ id }: { id: number }) {
 
   return (
     <Badge
-      width={BADGE_DIMENSION}
-      height={BADGE_DIMENSION + 35}
+      width={BADGE_WIDTH}
+      height={BADGE_HEIGHT}
       Display={
         <Box maxWidth="100%" maxHeight="100%">
           <Flex justifyContent="center" mb={5}>

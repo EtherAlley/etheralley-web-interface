@@ -43,7 +43,7 @@ export type NonFungibleToken = {
   contract: Contract;
   token_id: string;
   balance: string;
-  metadata: NonFungibleMetadata;
+  metadata: NonFungibleMetadata | undefined;
 };
 
 export type NonFungibleMetadata = {
