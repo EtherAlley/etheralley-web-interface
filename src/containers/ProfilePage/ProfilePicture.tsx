@@ -8,7 +8,7 @@ import { BADGE_WIDTH } from '../../common/constants';
 
 function ProfilePicture() {
   return (
-    <Paper py={2} px={4}>
+    <Paper py={2} px={2} width={BADGE_WIDTH + 20}>
       <Box>
         <Picture />
         <Info />

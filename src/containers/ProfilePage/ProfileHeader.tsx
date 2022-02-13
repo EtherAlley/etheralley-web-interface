@@ -1,52 +1,20 @@
-import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
-import { BADGE_HEIGHT } from '../../common/constants';
-import Paper from '../../components/Paper';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectDisplayConfig, selectLoading } from './slice';
+import { Grid, GridItem, Center } from '@chakra-ui/react';
+import ProfilePicture from './ProfilePicture';
+import ProfileText from './ProfileText';
 
 function ProfileHeader() {
   return (
-    <Paper py={2} px={4}>
-      <Box height={BADGE_HEIGHT + 10}>
-        <Header />
-        <Description />
-      </Box>
-    </Paper>
+    <Grid templateColumns={[`repeat(1, 1fr)`, `repeat(6, 1fr)`]} gap={10}>
+      <GridItem colSpan={[6, 1]}>
+        <Center>
+          <ProfilePicture />
+        </Center>
+      </GridItem>
+      <GridItem colSpan={[6, 5]}>
+        <ProfileText />
+      </GridItem>
+    </Grid>
   );
-}
-
-function Header() {
-  const { header } = useAppSelector(selectDisplayConfig);
-  const loading = useAppSelector(selectLoading);
-
-  if (loading) {
-    return <Skeleton width="30%" height={8} />;
-  }
-
-  return (
-    <Heading size="lg" mb={5}>
-      {header.text}
-    </Heading>
-  );
-}
-
-function Description() {
-  const { description } = useAppSelector(selectDisplayConfig);
-  const loading = useAppSelector(selectLoading);
-
-  if (loading) {
-    return (
-      <Stack>
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-      </Stack>
-    );
-  }
-
-  return <Heading size="md">{description.text}</Heading>;
 }
 
 export default ProfileHeader;

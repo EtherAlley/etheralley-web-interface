@@ -1,4 +1,4 @@
-import { Box, Center, Heading, SimpleGrid, Skeleton } from '@chakra-ui/react';
+import { Box, Center, Grid, GridItem, Heading, Skeleton } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -31,17 +31,23 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
     <>
       <GroupTitle text={text} />
       {items.length > 0 && (
-        <SimpleGrid columns={[1, 2, 3]} spacing={20}>
-          {items.map(({ type, id }, i) => {
+        <Grid
+          templateColumns={[`repeat(1, 100%)`, `repeat(2, ${BADGE_WIDTH}px)`, `repeat(3, ${BADGE_WIDTH}px)`]}
+          justifyContent="space-between"
+          gap={20}
+        >
+          {items.map(({ type, id }) => {
             return (
-              <Center key={id}>
-                <ErrorBoundary message="Something went wrong" width={BADGE_WIDTH} height={BADGE_HEIGHT}>
-                  <GroupItem type={type} id={id} />
-                </ErrorBoundary>
-              </Center>
+              <GridItem key={id}>
+                <Center>
+                  <ErrorBoundary message="Something went wrong" width={BADGE_WIDTH} height={BADGE_HEIGHT}>
+                    <GroupItem type={type} id={id} />
+                  </ErrorBoundary>
+                </Center>
+              </GridItem>
             );
           })}
-        </SimpleGrid>
+        </Grid>
       )}
     </>
   );
@@ -55,7 +61,7 @@ function GroupTitle({ text }: { text: string }) {
   }
 
   return (
-    <Heading as="h3" size="lg" mb={10}>
+    <Heading as="h3" size="lg" mb={10} noOfLines={1}>
       {text}
     </Heading>
   );
