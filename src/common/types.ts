@@ -30,7 +30,7 @@ export type DisplayGroup = {
 
 export type DisplayItem = {
   id: number;
-  type: BadgeTypes;
+  type: BadgeTypes | undefined;
 };
 
 export type Contract = {

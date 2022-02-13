@@ -1,17 +1,19 @@
-import { Box, Center, Heading, SimpleGrid } from '@chakra-ui/react';
+import { Box, Center, Heading, SimpleGrid, Skeleton } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
 import ErrorBoundary from '../../components/ErrorBoundary';
+import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import { selectDisplayConfig } from './slice';
+import { selectDisplayConfig, selectLoading } from './slice';
 import Statistic from './Statistic';
 
 function Groups() {
   const { groups } = useAppSelector(selectDisplayConfig);
+
   return (
-    <Box>
+    <>
       {groups.length > 0 &&
         groups.map(({ text, items }, i) => {
           return (
@@ -20,16 +22,14 @@ function Groups() {
             </Box>
           );
         })}
-    </Box>
+    </>
   );
 }
 
 function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   return (
     <>
-      <Heading as="h3" size="lg" mb={10}>
-        {text}
-      </Heading>
+      <GroupTitle text={text} />
       {items.length > 0 && (
         <SimpleGrid columns={[1, 2, 3]} spacing={20}>
           {items.map(({ type, id }, i) => {
@@ -47,7 +47,31 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   );
 }
 
-function GroupItem({ type, id }: { type: BadgeTypes; id: number }) {
+function GroupTitle({ text }: { text: string }) {
+  const loading = useAppSelector(selectLoading);
+
+  if (loading) {
+    return <Skeleton width={200} height="36px" mb={10} />;
+  }
+
+  return (
+    <Heading as="h3" size="lg" mb={10}>
+      {text}
+    </Heading>
+  );
+}
+
+function GroupItem({ type, id }: { type: BadgeTypes | undefined; id: number }) {
+  const loading = useAppSelector(selectLoading);
+
+  if (loading) {
+    return (
+      <Paper width={BADGE_WIDTH} height={BADGE_HEIGHT}>
+        <Skeleton width={BADGE_WIDTH} height={BADGE_HEIGHT} />
+      </Paper>
+    );
+  }
+
   switch (type) {
     case BadgeTypes.NonFungibleToken:
       return <NonFungibleTokenComponent id={id} />;

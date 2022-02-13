@@ -18,12 +18,42 @@ const initialState: State = {
   profile: {
     ens_name: '',
     display_config: {
-      header: { text: 'My Profile' },
-      description: { text: 'My Description is very long and goes here.' },
+      header: { text: '' },
+      description: { text: '' },
       picture: {
         item: undefined,
       },
-      groups: [],
+      groups: [
+        {
+          text: '',
+          items: [
+            {
+              id: 0,
+              type: undefined,
+            },
+            {
+              id: 2,
+              type: undefined,
+            },
+            {
+              id: 3,
+              type: undefined,
+            },
+            {
+              id: 4,
+              type: undefined,
+            },
+            {
+              id: 5,
+              type: undefined,
+            },
+            {
+              id: 6,
+              type: undefined,
+            },
+          ],
+        },
+      ],
     },
     non_fungible_tokens: [],
     fungible_tokens: [],
@@ -91,6 +121,10 @@ export const slice = createSlice({
 });
 
 function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void {
+  stateProfile.display_config.header.text = 'My Profile';
+  stateProfile.display_config.description.text = 'A really long description goes here.';
+  stateProfile.display_config.groups = [];
+
   if (actionProfile.statistics.length > 0) {
     const group: DisplayGroup = {
       text: 'Statistics',
@@ -140,7 +174,11 @@ function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void
 
 export const { setProfileMode } = slice.actions;
 
-export const selectProfilePage = (state: RootState) => state.profilePage;
+export const selectLoading = (state: RootState) => state.profilePage.loading;
+
+export const selectError = (state: RootState) => state.profilePage.error;
+
+export const selectProfileMode = (state: RootState) => state.profilePage.profileMode;
 
 export const selectDisplayConfig = (state: RootState) => state.profilePage.profile.display_config;
 

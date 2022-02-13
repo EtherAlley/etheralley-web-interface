@@ -1,5 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
-import { saveProfile, selectProfilePage } from '../ProfilePage/slice';
+import { saveProfile, selectProfileMode } from '../ProfilePage/slice';
 import { Routes, ProfileMode } from '../../common/constants';
 import { setProfileMode } from '../ProfilePage/slice';
 import { useHistory, useParams } from 'react-router-dom';
@@ -11,7 +11,7 @@ import useAppSelector from '../../hooks/useAppSelector';
 
 function UserButton() {
   const dispatch = useAppDispatch();
-  const { profileMode } = useAppSelector(selectProfilePage);
+  const profileMode = useAppSelector(selectProfileMode);
   const { account, library } = useWeb3React();
   const { address } = useParams<{ address: string }>();
 

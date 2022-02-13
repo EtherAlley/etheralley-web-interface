@@ -1,12 +1,10 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactChild, useEffect } from 'react';
 import { useParams } from 'react-router';
-import { Box, Center, Grid, GridItem } from '@chakra-ui/react';
+import { Box, Container, Grid, GridItem } from '@chakra-ui/react';
 
-import { loadProfile, selectProfilePage } from './slice';
-import Loading from '../../components/Loading';
+import { loadProfile, selectError } from './slice';
 import Error from '../../components/Error';
 import ProfileBar from './ProfileBar';
-import Container from '../../components/Container';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import Groups from './Groups';
@@ -14,45 +12,35 @@ import ProfileHeader from './ProfileHeader';
 import ProfilePicture from './ProfilePicture';
 import ErrorBoundary from '../../components/ErrorBoundary';
 
-const PageWrapper = ({ children }: { children: ReactNode }) => {
+const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
     <>
       <ProfileBar />
-      <Container maxW="container.lg">
-        <Center>{children}</Center>
-      </Container>
+      <Container maxW="container.lg">{children}</Container>
     </>
   );
 };
 
 function ProfilePage() {
   const { address } = useParams<{ address: string }>();
-  const { loading, error } = useAppSelector(selectProfilePage);
+  const error = useAppSelector(selectError);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(loadProfile({ address }));
   }, [address, dispatch]);
 
-  if (loading) {
-    return (
-      <PageWrapper>
-        <Loading />
-      </PageWrapper>
-    );
-  }
-
   if (error) {
     return (
       <PageWrapper>
-        <Error message="Could not load profile" width={250} height={250} />
+        <Error message="Could not load profile" width={250} height={180} />
       </PageWrapper>
     );
   }
 
   return (
     <PageWrapper>
-      <ErrorBoundary message="Something went wrong" width={250} height={250}>
+      <ErrorBoundary message="Something went wrong" width={250} height={180}>
         <Box>
           <Box height="100px" />
           <Grid templateRows="repeat(2, 1fr)" templateColumns="repeat(5, 1fr)" gap={4}>

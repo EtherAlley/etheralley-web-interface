@@ -1,23 +1,52 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
+import { BADGE_HEIGHT } from '../../common/constants';
 import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
-import { selectDisplayConfig } from './slice';
+import { selectDisplayConfig, selectLoading } from './slice';
 
 function ProfileHeader() {
-  const { header, description } = useAppSelector(selectDisplayConfig);
-
   return (
     <Paper py={2} px={4}>
-      <Box>
-        <Heading size="lg" mb={5}>
-          {header.text}
-        </Heading>
-        <Heading size="md" mb={5}>
-          {description.text}
-        </Heading>
+      <Box height={BADGE_HEIGHT + 10}>
+        <Header />
+        <Description />
       </Box>
     </Paper>
   );
+}
+
+function Header() {
+  const { header } = useAppSelector(selectDisplayConfig);
+  const loading = useAppSelector(selectLoading);
+
+  if (loading) {
+    return <Skeleton width="30%" height={8} />;
+  }
+
+  return (
+    <Heading size="lg" mb={5}>
+      {header.text}
+    </Heading>
+  );
+}
+
+function Description() {
+  const { description } = useAppSelector(selectDisplayConfig);
+  const loading = useAppSelector(selectLoading);
+
+  if (loading) {
+    return (
+      <Stack>
+        <Skeleton width="100%" height={8} mt={2} />
+        <Skeleton width="100%" height={8} mt={2} />
+        <Skeleton width="100%" height={8} mt={2} />
+        <Skeleton width="100%" height={8} mt={2} />
+        <Skeleton width="100%" height={8} mt={2} />
+      </Stack>
+    );
+  }
+
+  return <Heading size="md">{description.text}</Heading>;
 }
 
 export default ProfileHeader;

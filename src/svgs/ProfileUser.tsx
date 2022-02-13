@@ -1,4 +1,4 @@
-function UserPortrait({ width, height }: { width: string; height: string }) {
+function ProfileUser({ width, height }: { width: number; height: number }) {
   return (
     <svg version="1.1" x="0px" y="0px" width={width} height={height} viewBox="0 0 45.916 45.916">
       <g>
@@ -30,4 +30,4 @@ function UserPortrait({ width, height }: { width: string; height: string }) {
   );
 }
 
-export default UserPortrait;
+export default ProfileUser;
