@@ -17,7 +17,7 @@ function Groups() {
       {groups.length > 0 &&
         groups.map(({ text, items }, i) => {
           return (
-            <Box my={10} key={i}>
+            <Box my={20} key={i}>
               <Group text={text} items={items} />
             </Box>
           );
@@ -57,11 +57,15 @@ function GroupTitle({ text }: { text: string }) {
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
-    return <Skeleton width={200} height="36px" mb={10} />;
+    return (
+      <Center>
+        <Skeleton width={330} height="36px" mb={10} />
+      </Center>
+    );
   }
 
   return (
-    <Heading as="h3" size="lg" mb={10} noOfLines={1}>
+    <Heading as="h3" size="lg" mb={10} isTruncated textAlign="center">
       {text}
     </Heading>
   );
