@@ -1,7 +1,7 @@
 import { Box, Skeleton, Text } from '@chakra-ui/react';
 import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import ProfileUser from '../../svgs/ProfileUser';
+import ProfileUser from '../../icons/ProfileUser';
 import useAppSelector from '../../hooks/useAppSelector';
 import { selectDisplayConfig, selectENSName, selectLoading } from './slice';
 import { BADGE_WIDTH } from '../../common/constants';

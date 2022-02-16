@@ -6,7 +6,7 @@ import useTokenKey from '../../hooks/useTokenKey';
 import Settings from '../../common/settings';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
-import Coin from '../../svgs/Coin';
+import Coin from '../../icons/Coin';
 import useAppSelector from '../../hooks/useAppSelector';
 import { selectFungibleToken } from './slice';
 

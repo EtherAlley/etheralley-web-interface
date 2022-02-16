@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Blockchains } from '../common/constants';
-import tokens from '../tokens';
+import tokens from './tokens';
 
 // we do not want to show a token logo just because a contract has the same symbol. So we maintain a mapping of known contracts.
 // unknown contracts will resolve to empty string.

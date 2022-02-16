@@ -18,8 +18,8 @@ import { RiExternalLinkLine } from 'react-icons/ri';
 import { InteractionTypes } from '../../common/constants';
 import useAppSelector from '../../hooks/useAppSelector';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import Rocket from '../../svgs/Rocket';
-import Trophy from '../../svgs/Trophy';
+import Rocket from '../../icons/Rocket';
+import Trophy from '../../icons/Trophy';
 import { selectDisplayConfig, selectInteraction } from './slice';
 
 function AchievementBar() {
@@ -36,8 +36,8 @@ function AchievementBar() {
       </Heading>
       <Flex>
         {achievements.map(({ id }) => (
-          <Box mr={3}>
-            <Achievement key={id} id={id} />
+          <Box mr={3} key={id}>
+            <Achievement id={id} />
           </Box>
         ))}
       </Flex>
