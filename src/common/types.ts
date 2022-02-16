@@ -1,4 +1,4 @@
-import { Blockchains, Interfaces, StatisticTypes } from './constants';
+import { Blockchains, InteractionTypes, Interfaces, StatisticTypes } from './constants';
 
 export enum BadgeTypes {
   NonFungibleToken = 'non_fungible_tokens',
@@ -9,6 +9,7 @@ export enum BadgeTypes {
 export type Profile = {
   display_config: DisplayConfig;
   ens_name: string;
+  interactions: Interaction[];
   [BadgeTypes.NonFungibleToken]: NonFungibleToken[];
   [BadgeTypes.FungibleToken]: FungibleToken[];
   [BadgeTypes.Statistics]: Statistic[];
@@ -20,9 +21,13 @@ export type DisplayConfig = {
   picture: {
     item: DisplayItem | undefined;
   };
+  achievements: DisplayAchievement[];
   groups: DisplayGroup[];
 };
 
+export type DisplayAchievement = {
+  id: number;
+};
 export type DisplayGroup = {
   text: string;
   items: DisplayItem[];
@@ -37,6 +42,17 @@ export type Contract = {
   blockchain: Blockchains;
   address: string;
   interface: Interfaces;
+};
+
+export type Transaction = {
+  id: string;
+  blockchain: Blockchains;
+};
+
+export type Interaction = {
+  transaction: Transaction;
+  type: InteractionTypes;
+  timestamp: number;
 };
 
 export type NonFungibleToken = {

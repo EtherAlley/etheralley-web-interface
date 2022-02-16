@@ -17,7 +17,7 @@ function Groups() {
       {groups.length > 0 &&
         groups.map(({ text, items }, i) => {
           return (
-            <Box my={20} key={i}>
+            <Box mt={20} key={i}>
               <Group text={text} items={items} />
             </Box>
           );
@@ -54,16 +54,6 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
 }
 
 function GroupTitle({ text }: { text: string }) {
-  const loading = useAppSelector(selectLoading);
-
-  if (loading) {
-    return (
-      <Center>
-        <Skeleton width={330} height="36px" mb={10} />
-      </Center>
-    );
-  }
-
   return (
     <Heading as="h3" size="lg" mb={10} isTruncated textAlign="center">
       {text}

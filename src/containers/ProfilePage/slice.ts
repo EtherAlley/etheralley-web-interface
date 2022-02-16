@@ -23,6 +23,7 @@ const initialState: State = {
       picture: {
         item: undefined,
       },
+      achievements: [],
       groups: [
         {
           text: '',
@@ -55,6 +56,7 @@ const initialState: State = {
         },
       ],
     },
+    interactions: [],
     non_fungible_tokens: [],
     fungible_tokens: [],
     statistics: [],
@@ -125,9 +127,15 @@ function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void
   stateProfile.display_config.description.text = 'A really long description goes here.';
   stateProfile.display_config.groups = [];
 
+  for (let i = 0; i < actionProfile.interactions.length; i++) {
+    stateProfile.display_config.achievements.push({
+      id: i,
+    });
+  }
+
   if (actionProfile.statistics.length > 0) {
     const group: DisplayGroup = {
-      text: 'Statistics',
+      text: 'Stats',
       items: [],
     };
     for (let i = 0; i < actionProfile.statistics.length; i++) {
@@ -145,7 +153,7 @@ function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void
       type: BadgeTypes.NonFungibleToken,
     };
     const group: DisplayGroup = {
-      text: 'Non Fungible Tokens',
+      text: 'Non Fungibles',
       items: [],
     };
     for (let i = 0; i < actionProfile.non_fungible_tokens.length; i++) {
@@ -193,5 +201,7 @@ export const selectFungibleToken = (state: RootState, index: number) =>
   state.profilePage.profile.fungible_tokens[index];
 
 export const selectStatistic = (state: RootState, index: number) => state.profilePage.profile.statistics[index];
+
+export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
 
 export default slice.reducer;

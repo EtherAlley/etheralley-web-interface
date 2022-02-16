@@ -28,6 +28,11 @@ export enum Interfaces {
   UNISWAP_V3_EXCHANGE = 'UNISWAP_V3_EXCHANGE',
 }
 
+export enum InteractionTypes {
+  CONTRACT_CREATION = 'CONTRACT_CREATION',
+  SEND_ETHER = 'SEND_ETHER',
+}
+
 export enum StatisticTypes {
   SWAP = 'SWAP',
 }

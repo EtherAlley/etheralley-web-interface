@@ -10,6 +10,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import Groups from './Groups';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ProfileHeader from './ProfileHeader';
+import AchievementBar from './AchievementBar';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
@@ -43,6 +44,7 @@ function ProfilePage() {
         <Box>
           <Box height={100} />
           <ProfileHeader />
+          <AchievementBar />
           <Groups />
         </Box>
       </ErrorBoundary>
