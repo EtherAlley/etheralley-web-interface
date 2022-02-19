@@ -1,4 +1,4 @@
-import { Box, Center, Grid, GridItem, Heading, Skeleton } from '@chakra-ui/react';
+import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -30,6 +30,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   return (
     <>
       <GroupTitle text={text} />
+      <Divider mb={10} />
       {items.length > 0 && (
         <Grid
           templateColumns={[`repeat(1, 100%)`, `repeat(2, ${BADGE_WIDTH}px)`, `repeat(3, ${BADGE_WIDTH}px)`]}

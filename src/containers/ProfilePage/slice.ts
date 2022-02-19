@@ -16,6 +16,7 @@ const initialState: State = {
   error: false,
   profileMode: ProfileMode.View,
   profile: {
+    address: '',
     ens_name: '',
     display_config: {
       header: { text: '' },
@@ -189,6 +190,8 @@ export const selectError = (state: RootState) => state.profilePage.error;
 export const selectProfileMode = (state: RootState) => state.profilePage.profileMode;
 
 export const selectDisplayConfig = (state: RootState) => state.profilePage.profile.display_config;
+
+export const selectAddress = (state: RootState) => state.profilePage.profile.address;
 
 export const selectENSName = (state: RootState) => state.profilePage.profile.ens_name;
 

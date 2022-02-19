@@ -3,7 +3,7 @@ import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../icons/ProfileUser';
 import useAppSelector from '../../hooks/useAppSelector';
-import { selectDisplayConfig, selectENSName, selectLoading } from './slice';
+import { selectAddress, selectDisplayConfig, selectENSName, selectLoading } from './slice';
 import { BADGE_WIDTH } from '../../common/constants';
 
 function ProfilePicture() {
@@ -36,16 +36,27 @@ function Picture() {
 
 function Info() {
   const ens_name = useAppSelector(selectENSName);
+  const address = useAppSelector(selectAddress);
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
-    return <Skeleton width={BADGE_WIDTH} height={10} mt={2} />;
+    return (
+      <>
+        <Skeleton width={BADGE_WIDTH} height={10} mt={2} />
+        <Skeleton width={BADGE_WIDTH} height={10} mt={2} />
+      </>
+    );
   }
 
   return (
-    <Text fontWeight="bold" textAlign="center" height={8} mt={2}>
-      {ens_name}
-    </Text>
+    <>
+      <Text fontWeight="bold" isTruncated textAlign="center" height={8} mt={2}>
+        {ens_name}
+      </Text>
+      <Text textAlign="center" isTruncated height={8} mt={2}>
+        {address}
+      </Text>
+    </>
   );
 }
 

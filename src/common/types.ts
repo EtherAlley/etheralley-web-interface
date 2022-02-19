@@ -7,6 +7,7 @@ export enum BadgeTypes {
 }
 
 export type Profile = {
+  address: string;
   display_config: DisplayConfig;
   ens_name: string;
   interactions: Interaction[];

@@ -7,7 +7,7 @@ import { selectDisplayConfig, selectLoading } from './slice';
 function ProfileText() {
   return (
     <Paper py={2} px={4}>
-      <Box height={BADGE_HEIGHT + 10}>
+      <Box height={BADGE_HEIGHT + 50}>
         <Header />
         <Description />
       </Box>
