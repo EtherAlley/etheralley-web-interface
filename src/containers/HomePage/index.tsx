@@ -1,4 +1,4 @@
-import { useHistory } from 'react-router';
+import { useNavigate } from 'react-router';
 import Container from '../../components/Container';
 import FormInput from '../../components/FormInput';
 import Paper from '../../components/Paper';
@@ -10,10 +10,10 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { Text } from '@chakra-ui/react';
 
 function HomePage() {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { address } = useAppSelector(selectHome);
-  const search = () => push(Routes.PROFILE.replace(':address', address));
+  const search = () => navigate(Routes.PROFILE.replace(':address', address));
   return (
     <>
       <Container>

@@ -2,7 +2,7 @@ import { useWeb3React } from '@web3-react/core';
 import { saveProfile, selectProfileMode } from '../ProfilePage/slice';
 import { Routes, ProfileMode } from '../../common/constants';
 import { setProfileMode } from '../ProfilePage/slice';
-import { useHistory, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../components/IconButton';
 import { RiArrowGoBackLine, RiSaveLine, RiPencilLine, RiCloseLine } from 'react-icons/ri';
@@ -49,7 +49,7 @@ function UserButton() {
 }
 
 function ProfileBar() {
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -59,7 +59,7 @@ function ProfileBar() {
             aria-label="go home"
             tooltip="Go Home"
             Icon={RiArrowGoBackLine}
-            onClick={() => push(Routes.HOME)}
+            onClick={() => navigate(Routes.HOME)}
           />
           <UserButton />
         </Flex>

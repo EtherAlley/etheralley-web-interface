@@ -3,15 +3,15 @@ import { useWeb3React } from '@web3-react/core';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
 import { Routes } from '../../common/constants';
-import { Link as ReachLink, useHistory, useRouteMatch } from 'react-router-dom';
+import { Link as ReachLink, useNavigate, useMatch } from 'react-router-dom';
 import { Box, Flex, Heading, Button, Badge, LinkOverlay, LinkBox } from '@chakra-ui/react';
 import { injectedConnector } from '../../common/connectors';
 
 function Navbar() {
   const { activate, active, account } = useWeb3React();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const [activating, setActivating] = useState(false);
-  const isOnProfilePage = useRouteMatch('/profiles');
+  const isOnProfilePage = useMatch('/profiles/*');
   // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
   const triedEager = useEagerConnect();
 
@@ -40,7 +40,11 @@ function Navbar() {
     }
 
     return (
-      <Button colorScheme="brand" variant="outline" onClick={() => push(Routes.PROFILE.replace(':address', account))}>
+      <Button
+        colorScheme="brand"
+        variant="outline"
+        onClick={() => navigate(Routes.PROFILE.replace(':address', account))}
+      >
         My Profile
       </Button>
     );

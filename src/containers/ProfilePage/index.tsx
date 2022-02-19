@@ -27,7 +27,9 @@ function ProfilePage() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadProfile({ address }));
+    if (address) {
+      dispatch(loadProfile({ address }));
+    }
   }, [address, dispatch]);
 
   if (error) {

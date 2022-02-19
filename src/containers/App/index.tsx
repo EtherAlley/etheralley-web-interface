@@ -1,21 +1,17 @@
-import { Route, Switch } from 'react-router';
+import { Route, Routes } from 'react-router';
 import Home from '../HomePage';
 import Profile from '../ProfilePage';
-import { Routes } from '../../common/constants';
+import { Routes as RouteStrings } from '../../common/constants';
 import NavBar from './NavBar';
 
 function App() {
   return (
     <>
       <NavBar />
-      <Switch>
-        <Route path={Routes.PROFILE}>
-          <Profile />
-        </Route>
-        <Route path={Routes.HOME}>
-          <Home />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path={RouteStrings.PROFILE} element={<Profile />} />
+        <Route path={RouteStrings.HOME} element={<Home />} />
+      </Routes>
     </>
   );
 }
