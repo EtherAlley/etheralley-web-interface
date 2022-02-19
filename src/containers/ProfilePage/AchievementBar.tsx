@@ -56,7 +56,7 @@ const badgeStyling: any = {
   as: 'button',
   width: '43px',
   height: '43px',
-  backgroundColor: 'gray.900',
+  backgroundColor: 'gray.800',
   borderColor: 'gray.900',
   borderRadius: '50%',
   boxShadow: 'dark-lg',

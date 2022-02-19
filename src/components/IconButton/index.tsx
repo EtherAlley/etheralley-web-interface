@@ -13,7 +13,7 @@ function IconButtonComponent({ tooltip, Icon, ...rest }: IconButtonComponentProp
     <Tooltip label={tooltip}>
       <IconButton
         variant="ghost"
-        bg="blackAlpha.600"
+        bg="gray.800"
         size="lg"
         icon={<ChakraIcon color="brand.400" as={Icon} w={6} h={6} />}
         {...rest}

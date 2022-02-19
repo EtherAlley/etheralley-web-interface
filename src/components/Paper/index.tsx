@@ -4,11 +4,11 @@ import { ReactChild } from 'react';
 function Paper({ children, ...props }: { children: ReactChild; [x: string]: any }) {
   return (
     <Box
-      borderWidth="1px"
       borderRadius="lg"
-      borderColor="gray.800"
-      boxShadow="dark-lg"
       background="gray.800"
+      boxShadow="dark-lg"
+      borderWidth="1px"
+      borderColor="gray.800"
       {...props}
     >
       {children}

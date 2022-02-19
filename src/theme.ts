@@ -9,6 +9,13 @@ const theme = extendTheme({
     initialColorMode: 'dark',
     useSystemColorMode: false,
   },
+  styles: {
+    global: {
+      body: {
+        bg: 'gray.900',
+      },
+    },
+  },
   colors: {
     brand: {
       50: '#dcfff6',
@@ -22,11 +29,11 @@ const theme = extendTheme({
       800: '#004435',
       900: '#001811',
     },
-    // gray: {
-    //   700: '#262626',
-    //   800: '#1a1a1a',
-    //   900: '#0d0d0d',
-    // },
+    gray: {
+      700: '#262626',
+      800: '#1a1a1b',
+      900: '#121212',
+    },
   },
 });
 
