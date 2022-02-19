@@ -1,4 +1,4 @@
-import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton } from '@chakra-ui/react';
+import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -55,8 +55,10 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
 }
 
 function GroupTitle({ text }: { text: string }) {
+  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
+
   return (
-    <Heading as="h3" size="lg" mb={10} isTruncated textAlign="center">
+    <Heading as="h3" size="lg" mb={10} isTruncated textAlign={textAlign}>
       {text}
     </Heading>
   );

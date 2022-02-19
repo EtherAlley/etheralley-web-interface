@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   Flex,
   Heading,
   Icon,
@@ -12,11 +13,11 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { InteractionTypes } from '../../common/constants';
-import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import Rocket from '../../icons/Rocket';
@@ -25,6 +26,8 @@ import { selectDisplayConfig, selectInteraction } from './slice';
 
 function AchievementBar() {
   const { achievements } = useAppSelector(selectDisplayConfig);
+  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
+  const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
 
   if (achievements.length <= 0) {
     return <></>;
@@ -32,18 +35,17 @@ function AchievementBar() {
 
   return (
     <Box mt={10}>
-      <Heading as="h3" size="lg" mb={5}>
+      <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
         Achievements
       </Heading>
-      <Paper>
-        <Flex p={3}>
-          {achievements.map(({ id }) => (
-            <Box mr={3} key={id}>
-              <Achievement id={id} />
-            </Box>
-          ))}
-        </Flex>
-      </Paper>
+      <Divider />
+      <Flex p={3} justifyContent={justifyContent}>
+        {achievements.map(({ id }) => (
+          <Box mr={3} key={id}>
+            <Achievement id={id} />
+          </Box>
+        ))}
+      </Flex>
     </Box>
   );
 }
