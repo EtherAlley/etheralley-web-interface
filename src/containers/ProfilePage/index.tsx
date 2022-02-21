@@ -11,13 +11,14 @@ import Groups from './Groups';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import ProfileHeader from './ProfileHeader';
 import AchievementBar from './AchievementBar';
+import ProfileEditDrawer from './ProfileEditDrawer';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
-    <>
+    <Box backgroundColor="profile.primary">
       <ProfileBar />
       <Container maxW="container.lg">{children}</Container>
-    </>
+    </Box>
   );
 };
 
@@ -48,6 +49,7 @@ function ProfilePage() {
           <ProfileHeader />
           <AchievementBar />
           <Groups />
+          <ProfileEditDrawer />
         </Box>
       </ErrorBoundary>
     </PageWrapper>

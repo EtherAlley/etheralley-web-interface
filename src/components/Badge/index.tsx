@@ -45,7 +45,7 @@ function Badge({
       {Display}
       <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
         <AlertDialogOverlay>
-          <AlertDialogContent backgroundColor="gray.900">
+          <AlertDialogContent backgroundColor="profile.primary">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               {DialogHeader}
             </AlertDialogHeader>

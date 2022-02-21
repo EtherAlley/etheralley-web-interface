@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router';
 import Container from '../../components/Container';
-import FormInput from '../../components/FormInput';
+import Input from '../../components/Input';
 import Paper from '../../components/Paper';
 import { Routes } from '../../common/constants';
 import { selectHome, setAddress } from './slice';
@@ -33,8 +33,9 @@ function HomePage() {
                 if (address) search();
               }}
             >
-              <FormInput
+              <Input
                 id="searchbar"
+                size="lg"
                 variant="filled"
                 placeholder="Enter ENS name or Ethereum address..."
                 value={address}

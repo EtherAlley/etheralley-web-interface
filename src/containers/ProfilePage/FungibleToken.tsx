@@ -13,8 +13,8 @@ import { selectFungibleToken } from './slice';
 const coinStyling = {
   width: 85,
   height: 85,
-  backgroundColor: 'gray.900',
-  borderColor: 'gray.900',
+  backgroundColor: 'profile.primary',
+  borderColor: 'profile.primary',
   borderRadius: '50%',
   boxShadow: 'dark-lg',
   borderWidth: '1px',

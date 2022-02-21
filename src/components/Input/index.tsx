@@ -3,7 +3,7 @@ import { Input, InputGroup, InputLeftElement } from '@chakra-ui/input';
 import { ChangeEventHandler } from 'react';
 import IconButton, { IconButtonComponentProps } from '../IconButton';
 
-function FormInput({
+function InputComponent({
   id,
   label,
   value,
@@ -13,7 +13,9 @@ function FormInput({
   errorMessage = '',
   isReadOnly = false,
   variant,
+  size = 'md',
   mb,
+  mt,
   iconProps,
 }: {
   id: string;
@@ -25,13 +27,15 @@ function FormInput({
   errorMessage?: string;
   isReadOnly?: boolean;
   variant?: string;
+  size?: string;
   mb?: number;
+  mt?: number;
   iconProps?: IconButtonComponentProps;
 }) {
   return (
-    <FormControl isInvalid={isInvalid} mb={mb}>
+    <FormControl isInvalid={isInvalid} mb={mb} mt={mt}>
       {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
-      <InputGroup size="lg">
+      <InputGroup size={size}>
         <Input
           id={id}
           value={value}
@@ -52,4 +56,4 @@ function FormInput({
   );
 }
 
-export default FormInput;
+export default InputComponent;

@@ -19,6 +19,12 @@ const initialState: State = {
     address: '',
     ens_name: '',
     display_config: {
+      colors: {
+        primary: '#121212',
+        secondary: '#1a1a1b',
+        primaryText: '#FFF',
+        secondaryText: '#FFF',
+      },
       header: { text: '' },
       description: { text: '' },
       picture: {
@@ -31,6 +37,10 @@ const initialState: State = {
           items: [
             {
               id: 0,
+              type: undefined,
+            },
+            {
+              id: 1,
               type: undefined,
             },
             {
@@ -47,10 +57,6 @@ const initialState: State = {
             },
             {
               id: 5,
-              type: undefined,
-            },
-            {
-              id: 6,
               type: undefined,
             },
           ],
@@ -99,6 +105,24 @@ export const slice = createSlice({
     setProfileMode: (state, action: PayloadAction<ProfileMode>) => {
       state.profileMode = action.payload;
     },
+    updateProfileHeader: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.header.text = action.payload;
+    },
+    updateProfileDescription: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.description.text = action.payload;
+    },
+    updatePrimaryColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.primary = action.payload;
+    },
+    updateSecondaryColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.secondary = action.payload;
+    },
+    updatePrimaryTextColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.primaryText = action.payload;
+    },
+    updateSecondaryTextColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.secondaryText = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -125,7 +149,11 @@ export const slice = createSlice({
 
 function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void {
   stateProfile.display_config.header.text = 'My Profile';
-  stateProfile.display_config.description.text = 'A really long description goes here.';
+  stateProfile.display_config.description.text = `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat.
+  `;
   stateProfile.display_config.groups = [];
 
   for (let i = 0; i < actionProfile.interactions.length; i++) {
@@ -181,7 +209,15 @@ function buildDefaultConfig(stateProfile: Profile, actionProfile: Profile): void
   }
 }
 
-export const { setProfileMode } = slice.actions;
+export const {
+  setProfileMode,
+  updateProfileHeader,
+  updateProfileDescription,
+  updatePrimaryColor,
+  updateSecondaryColor,
+  updatePrimaryTextColor,
+  updateSecondaryTextColor,
+} = slice.actions;
 
 export const selectLoading = (state: RootState) => state.profilePage.loading;
 
@@ -190,6 +226,12 @@ export const selectError = (state: RootState) => state.profilePage.error;
 export const selectProfileMode = (state: RootState) => state.profilePage.profileMode;
 
 export const selectDisplayConfig = (state: RootState) => state.profilePage.profile.display_config;
+
+export const selectHeaderText = (state: RootState) => state.profilePage.profile.display_config.header.text;
+
+export const selectDescriptionText = (state: RootState) => state.profilePage.profile.display_config.description.text;
+
+export const selectColors = (state: RootState) => state.profilePage.profile.display_config.colors;
 
 export const selectAddress = (state: RootState) => state.profilePage.profile.address;
 

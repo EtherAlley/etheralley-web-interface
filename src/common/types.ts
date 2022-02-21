@@ -17,6 +17,12 @@ export type Profile = {
 };
 
 export type DisplayConfig = {
+  colors: {
+    primary: string;
+    secondary: string;
+    primaryText: string;
+    secondaryText: string;
+  };
   header: { text: string };
   description: { text: string };
   picture: {

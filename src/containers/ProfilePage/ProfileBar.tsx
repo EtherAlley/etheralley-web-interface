@@ -1,50 +1,31 @@
 import { useWeb3React } from '@web3-react/core';
-import { saveProfile, selectProfileMode } from '../ProfilePage/slice';
+import { selectAddress, selectProfileMode } from '../ProfilePage/slice';
 import { Routes, ProfileMode } from '../../common/constants';
 import { setProfileMode } from '../ProfilePage/slice';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../components/IconButton';
-import { RiArrowGoBackLine, RiSaveLine, RiPencilLine, RiCloseLine } from 'react-icons/ri';
+import { RiArrowGoBackLine, RiPencilLine } from 'react-icons/ri';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
-function UserButton() {
+function EditButton() {
   const dispatch = useAppDispatch();
   const profileMode = useAppSelector(selectProfileMode);
-  const { account, library } = useWeb3React();
-  const { address } = useParams<{ address: string }>();
+  const { account } = useWeb3React();
+  const address = useAppSelector(selectAddress);
 
-  if (!account || account !== address) {
+  if (profileMode === ProfileMode.Edit || !account || account.toLowerCase() !== address.toLowerCase()) {
     return <></>;
   }
 
-  if (profileMode === ProfileMode.View) {
-    return (
-      <IconButton
-        aria-label="edit profile"
-        tooltip="Edit profile"
-        Icon={RiPencilLine}
-        onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
-      />
-    );
-  }
-
   return (
-    <span>
-      <IconButton
-        aria-label="save profile"
-        tooltip="Save Profile"
-        Icon={RiSaveLine}
-        onClick={() => dispatch(saveProfile({ address: account, library }))}
-      />
-      <IconButton
-        aria-label="cancel edit profile"
-        tooltip="Cancel edit"
-        Icon={RiCloseLine}
-        onClick={() => dispatch(setProfileMode(ProfileMode.View))}
-      />
-    </span>
+    <IconButton
+      aria-label="edit profile"
+      tooltip="Edit profile"
+      Icon={RiPencilLine}
+      onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
+    />
   );
 }
 
@@ -61,7 +42,7 @@ function ProfileBar() {
             Icon={RiArrowGoBackLine}
             onClick={() => navigate(Routes.HOME)}
           />
-          <UserButton />
+          <EditButton />
         </Flex>
       </Box>
     </>
