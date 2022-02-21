@@ -17,14 +17,13 @@ import useAppSelector from '../../hooks/useAppSelector';
 import {
   saveProfile,
   selectColors,
-  selectDescriptionText,
-  selectHeaderText,
+  selectText,
   selectProfileMode,
   setProfileMode,
   updatePrimaryColor,
   updatePrimaryTextColor,
   updateProfileDescription,
-  updateProfileHeader,
+  updateProfileTitle,
   updateSecondaryColor,
   updateSecondaryTextColor,
 } from './slice';
@@ -66,22 +65,23 @@ function ProfileEditDrawer() {
 
 function EditInfoForm() {
   const dispatch = useAppDispatch();
-  const headerText = useAppSelector(selectHeaderText);
-  const descriptionText = useAppSelector(selectDescriptionText);
+  const { title, description } = useAppSelector(selectText);
 
   return (
     <>
       <Input
-        id="header"
-        label="Header"
-        value={headerText}
-        onChange={(event) => dispatch(updateProfileHeader(event.target.value))}
+        id="title"
+        label="Title"
+        value={title}
+        onChange={(event) => dispatch(updateProfileTitle(event.target.value))}
+        maxLength={40}
       />
       <TextArea
         id="test"
         label="Description"
-        value={descriptionText}
+        value={description}
         onChange={(event) => dispatch(updateProfileDescription(event.target.value))}
+        maxLength={500}
       />
     </>
   );
@@ -98,18 +98,21 @@ function EditColorsForm() {
         label="Primary"
         value={primary}
         onChange={(event) => dispatch(updatePrimaryColor(event.target.value))}
+        maxLength={15}
       />
       <Input
         id="secondaryColor"
         label="Secondary"
         value={secondary}
         onChange={(event) => dispatch(updateSecondaryColor(event.target.value))}
+        maxLength={15}
         mt={4}
       />
       <Input
         id="primaryText"
         label="Primary Text"
         value={primaryText}
+        maxLength={15}
         onChange={(event) => dispatch(updatePrimaryTextColor(event.target.value))}
         mt={4}
       />
@@ -117,6 +120,7 @@ function EditColorsForm() {
         id="secondaryText"
         label="Secondary Text"
         value={secondaryText}
+        maxLength={15}
         onChange={(event) => dispatch(updateSecondaryTextColor(event.target.value))}
         mt={4}
       />

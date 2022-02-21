@@ -17,6 +17,7 @@ function InputComponent({
   mb,
   mt,
   iconProps,
+  maxLength,
 }: {
   id: string;
   label?: string;
@@ -31,6 +32,7 @@ function InputComponent({
   mb?: number;
   mt?: number;
   iconProps?: IconButtonComponentProps;
+  maxLength?: number;
 }) {
   return (
     <FormControl isInvalid={isInvalid} mb={mb} mt={mt}>
@@ -44,6 +46,7 @@ function InputComponent({
           isReadOnly={isReadOnly}
           variant={variant}
           colorScheme="brand"
+          maxLength={maxLength}
         />
         {iconProps && (
           <InputLeftElement>

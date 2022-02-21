@@ -3,7 +3,7 @@ import Paper from '../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../icons/ProfileUser';
 import useAppSelector from '../../hooks/useAppSelector';
-import { selectAddress, selectDisplayConfig, selectENSName, selectLoading } from './slice';
+import { selectAddress, selectENSName, selectLoading, selectPicture } from './slice';
 import { BADGE_WIDTH } from '../../common/constants';
 
 function ProfilePicture() {
@@ -18,9 +18,7 @@ function ProfilePicture() {
 }
 
 function Picture() {
-  const {
-    picture: { item },
-  } = useAppSelector(selectDisplayConfig);
+  const { item } = useAppSelector(selectPicture);
   const loading = useAppSelector(selectLoading);
 
   if (loading) {

@@ -1,42 +1,27 @@
-import { Box, Heading, Skeleton, Stack } from '@chakra-ui/react';
+import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { BADGE_HEIGHT } from '../../common/constants';
 import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
-import { selectDisplayConfig, selectLoading } from './slice';
+import { selectLoading, selectText } from './slice';
 
 function ProfileText() {
   return (
     <Paper py={2} px={4}>
       <Box height={BADGE_HEIGHT + 50}>
-        <Header />
-        <Description />
+        <TextArea />
       </Box>
     </Paper>
   );
 }
 
-function Header() {
-  const { header } = useAppSelector(selectDisplayConfig);
-  const loading = useAppSelector(selectLoading);
-
-  if (loading) {
-    return <Skeleton width="30%" height={8} />;
-  }
-
-  return (
-    <Heading size="lg" mb={5} noOfLines={1}>
-      {header.text}
-    </Heading>
-  );
-}
-
-function Description() {
-  const { description } = useAppSelector(selectDisplayConfig);
+function TextArea() {
+  const { title, description } = useAppSelector(selectText);
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
     return (
       <Stack>
+        <Skeleton width="30%" height={8} />;
         <Skeleton width="100%" height={8} mt={2} />
         <Skeleton width="100%" height={8} mt={2} />
         <Skeleton width="100%" height={8} mt={2} />
@@ -47,9 +32,14 @@ function Description() {
   }
 
   return (
-    <Heading size="md" noOfLines={7}>
-      {description.text}
-    </Heading>
+    <Stack>
+      <Heading size="lg" mb={5} noOfLines={1}>
+        {title}
+      </Heading>
+      <Text size="md" noOfLines={7}>
+        {description}
+      </Text>
+    </Stack>
   );
 }
 

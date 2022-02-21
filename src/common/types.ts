@@ -23,8 +23,10 @@ export type DisplayConfig = {
     primaryText: string;
     secondaryText: string;
   };
-  header: { text: string };
-  description: { text: string };
+  text: {
+    title: string;
+    description: string;
+  };
   picture: {
     item: DisplayItem | undefined;
   };

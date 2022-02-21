@@ -6,11 +6,48 @@ import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import { selectDisplayConfig, selectLoading } from './slice';
+import { selectGroups, selectLoading } from './slice';
 import Statistic from './Statistic';
 
 function Groups() {
-  const { groups } = useAppSelector(selectDisplayConfig);
+  const groups = useAppSelector(selectGroups);
+  const loading = useAppSelector(selectLoading);
+
+  if (loading) {
+    return (
+      <Box mt={20}>
+        <Group
+          text=""
+          items={[
+            {
+              id: 0,
+              type: undefined,
+            },
+            {
+              id: 1,
+              type: undefined,
+            },
+            {
+              id: 2,
+              type: undefined,
+            },
+            {
+              id: 3,
+              type: undefined,
+            },
+            {
+              id: 4,
+              type: undefined,
+            },
+            {
+              id: 5,
+              type: undefined,
+            },
+          ]}
+        />
+      </Box>
+    );
+  }
 
   return (
     <>

@@ -22,10 +22,10 @@ import useAppSelector from '../../hooks/useAppSelector';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import Rocket from '../../icons/Rocket';
 import Trophy from '../../icons/Trophy';
-import { selectDisplayConfig, selectInteraction } from './slice';
+import { selectAchievements, selectInteraction } from './slice';
 
 function AchievementBar() {
-  const { achievements } = useAppSelector(selectDisplayConfig);
+  const achievements = useAppSelector(selectAchievements);
   const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
   const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
 
