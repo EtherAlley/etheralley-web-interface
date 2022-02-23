@@ -3,8 +3,6 @@ import {
   Divider,
   Flex,
   Heading,
-  Icon,
-  Link,
   Popover,
   PopoverArrow,
   PopoverBody,
@@ -16,8 +14,8 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { RiExternalLinkLine } from 'react-icons/ri';
 import { InteractionTypes } from '../../common/constants';
+import LinkComponent from '../../components/Link';
 import useAppSelector from '../../hooks/useAppSelector';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
 import Rocket from '../../icons/Rocket';
@@ -40,9 +38,9 @@ function AchievementBar() {
       </Heading>
       <Divider />
       <Flex p={3} justifyContent={justifyContent}>
-        {achievements.map(({ id }) => (
-          <Box mr={3} key={id}>
-            <Achievement id={id} />
+        {achievements.map(({ index }) => (
+          <Box mr={3} key={index}>
+            <Achievement index={index} />
           </Box>
         ))}
       </Flex>
@@ -68,8 +66,8 @@ const iconStyling = {
   height: '25px',
 };
 
-function Achievement({ id }: { id: number }) {
-  const { type } = useAppSelector((state) => selectInteraction(state, id));
+function Achievement({ index }: { index: number }) {
+  const { type } = useAppSelector((state) => selectInteraction(state, index));
 
   switch (type) {
     case InteractionTypes.CONTRACT_CREATION:
@@ -77,7 +75,7 @@ function Achievement({ id }: { id: number }) {
         <AchievementPopover
           trigger={<Rocket {...iconStyling} />}
           header={<AchievementHeader text="Deployed a Smart Contract!" />}
-          body={<AchievementBody id={id} />}
+          body={<AchievementBody index={index} />}
         />
       );
     case InteractionTypes.SEND_ETHER:
@@ -85,7 +83,7 @@ function Achievement({ id }: { id: number }) {
         <AchievementPopover
           trigger={<Trophy {...iconStyling} />}
           header={<AchievementHeader text="Sent Ether!" />}
-          body={<AchievementBody id={id} />}
+          body={<AchievementBody index={index} />}
         />
       );
     default:
@@ -101,17 +99,14 @@ function AchievementHeader({ text }: { text: string }) {
   );
 }
 
-function AchievementBody({ id }: { id: number }) {
-  const { transaction, timestamp } = useAppSelector((state) => selectInteraction(state, id));
+function AchievementBody({ index }: { index: number }) {
+  const { transaction, timestamp } = useAppSelector((state) => selectInteraction(state, index));
   const url = useEtherscanUrl(transaction.blockchain, 'tx', transaction.id);
 
   return (
     <>
       <Text>Timestamp: {timestamp}</Text>
-      <Link color="blue.500" href={url} isExternal>
-        Etherscan <Icon as={RiExternalLinkLine}></Icon>
-      </Link>
-      <Text>Blockchain: {transaction.blockchain}</Text>
+      <LinkComponent url={url} text="Etherscan" />
     </>
   );
 }

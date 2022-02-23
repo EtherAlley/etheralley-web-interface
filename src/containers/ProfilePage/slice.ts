@@ -3,6 +3,8 @@ import { RootState } from '../../store';
 import { ProfileMode } from '../../common/constants';
 import { fetchAPI, fetchAPINoResponse } from '../../common/http';
 import { BadgeTypes, DisplayGroup, Profile } from '../../common/types';
+import { onDragDrop } from '../DragDropProvider/slice';
+import { nanoid } from 'nanoid';
 
 export interface State {
   loading: boolean;
@@ -95,6 +97,9 @@ export const slice = createSlice({
     updateSecondaryTextColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.secondaryText = action.payload;
     },
+    updateGroupText: (state, action: PayloadAction<{ index: number; text: string }>) => {
+      state.profile.display_config.groups[action.payload.index].text = action.payload.text;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,6 +120,26 @@ export const slice = createSlice({
       })
       .addCase(saveProfile.fulfilled, (state, _) => {
         state.profileMode = ProfileMode.View;
+      })
+      .addCase(onDragDrop, (state, { payload }) => {
+        const { source, destination } = payload;
+
+        if (!destination) {
+          return;
+        }
+
+        const sourceGroupId = +source.droppableId;
+        const destinationGroupId = +destination.droppableId;
+        const sourceGroup = state.profile.display_config.groups[sourceGroupId].items;
+        const destinationGroup = state.profile.display_config.groups[destinationGroupId].items;
+
+        if (sourceGroupId === destinationGroupId) {
+          const [removed] = sourceGroup.splice(source.index, 1);
+          sourceGroup.splice(destination.index, 0, removed);
+        } else {
+          const [removed] = sourceGroup.splice(source.index, 1);
+          destinationGroup.splice(destination.index, 0, removed);
+        }
       });
   },
 });
@@ -136,18 +161,20 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
 
   for (let i = 0; i < actionProfile.interactions.length; i++) {
     stateProfile.display_config.achievements.push({
-      id: i,
+      index: i,
     });
   }
 
   if (actionProfile.statistics.length > 0) {
     const group: DisplayGroup = {
+      id: nanoid(),
       text: 'Stats',
       items: [],
     };
     for (let i = 0; i < actionProfile.statistics.length; i++) {
       group.items.push({
-        id: i,
+        id: nanoid(),
+        index: i,
         type: BadgeTypes.Statistics,
       });
     }
@@ -156,16 +183,19 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
 
   if (actionProfile.non_fungible_tokens.length > 0) {
     stateProfile.display_config.picture.item = {
-      id: 0,
+      id: nanoid(),
+      index: 0,
       type: BadgeTypes.NonFungibleToken,
     };
     const group: DisplayGroup = {
+      id: nanoid(),
       text: 'Non Fungibles',
       items: [],
     };
     for (let i = 0; i < actionProfile.non_fungible_tokens.length; i++) {
       group.items.push({
-        id: i,
+        id: nanoid(),
+        index: i,
         type: BadgeTypes.NonFungibleToken,
       });
     }
@@ -174,12 +204,14 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
 
   if (actionProfile.fungible_tokens.length > 0) {
     const group: DisplayGroup = {
+      id: nanoid(),
       text: 'Tokens',
       items: [],
     };
     for (let i = 0; i < actionProfile.fungible_tokens.length; i++) {
       group.items.push({
-        id: i,
+        id: nanoid(),
+        index: i,
         type: BadgeTypes.FungibleToken,
       });
     }
@@ -195,6 +227,7 @@ export const {
   updateSecondaryColor,
   updatePrimaryTextColor,
   updateSecondaryTextColor,
+  updateGroupText,
 } = slice.actions;
 
 export const selectLoading = (state: RootState) => state.profilePage.loading;

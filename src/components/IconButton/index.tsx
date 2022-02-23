@@ -5,19 +5,14 @@ export type IconButtonComponentProps = {
   'aria-label': string;
   tooltip: string;
   Icon: any;
+  iconColor?: string;
   onClick: MouseEventHandler<HTMLInputElement>;
 } & IconButtonProps;
 
-function IconButtonComponent({ tooltip, Icon, ...rest }: IconButtonComponentProps) {
+function IconButtonComponent({ tooltip, Icon, iconColor = 'brand.400', ...rest }: IconButtonComponentProps) {
   return (
     <Tooltip label={tooltip}>
-      <IconButton
-        variant="ghost"
-        bg="gray.800"
-        size="lg"
-        icon={<ChakraIcon color="brand.400" as={Icon} w={6} h={6} />}
-        {...rest}
-      />
+      <IconButton size="lg" icon={<ChakraIcon color={iconColor} as={Icon} w={6} h={6} />} {...rest} />
     </Tooltip>
   );
 }

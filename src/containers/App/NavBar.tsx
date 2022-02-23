@@ -52,7 +52,7 @@ function Navbar() {
 
   return (
     <>
-      <Box bg={'gray.800'} position="fixed" zIndex={2} width="100%">
+      <Box bg={'gray.800'} boxShadow="dark-lg" position="fixed" zIndex={2} width="100%">
         <Flex h="7vh" alignItems={'center'} justifyContent={'space-between'} mx={4}>
           <LinkBox>
             <Heading size="md" as="span">

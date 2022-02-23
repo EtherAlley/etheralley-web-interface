@@ -29,7 +29,7 @@ function Picture() {
     return <ProfileUser width={BADGE_WIDTH} height={BADGE_WIDTH} />;
   }
 
-  return <NonFungibleTokenComponent id={item.id} useHeader={false} usePaper={false} />;
+  return <NonFungibleTokenComponent index={item.index} useHeader={false} usePaper={false} />;
 }
 
 function Info() {

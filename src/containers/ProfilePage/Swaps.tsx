@@ -8,18 +8,16 @@ import {
   ListItem,
   Text,
   Image,
-  Link,
-  Icon,
 } from '@chakra-ui/react';
 import Badge from '../../components/Badge';
 import { Contract, Swap } from '../../common/types';
 import Settings from '../../common/settings';
 import useInterfaceKey from '../../hooks/useInterfaceKey';
 import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import { RiExternalLinkLine } from 'react-icons/ri';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import useAppSelector from '../../hooks/useAppSelector';
 import { selectStatistic } from './slice';
+import LinkComponent from '../../components/Link';
 
 const logoStyling = {
   width: 100,
@@ -32,8 +30,8 @@ const logoStyling = {
   borderWidth: '1px',
 };
 
-function SwapComponent({ id }: { id: number }) {
-  const { data, contract } = useAppSelector((state) => selectStatistic(state, id));
+function SwapComponent({ index }: { index: number }) {
+  const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
   const key = useInterfaceKey(contract.interface);
   const swaps = data as Swap[];
 
@@ -83,9 +81,7 @@ function SwapItem({
     <ListItem>
       <UnorderedList>
         <ListItem key={0}>
-          <Link color="blue.500" href={etherscanUrl} isExternal>
-            Etherscan <Icon as={RiExternalLinkLine}></Icon>
-          </Link>
+          <LinkComponent url={etherscanUrl} text="Etherscan" />
         </ListItem>
         <ListItem key={1}>
           <Text>{timestamp}</Text>

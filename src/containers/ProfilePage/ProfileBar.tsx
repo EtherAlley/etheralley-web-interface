@@ -5,7 +5,7 @@ import { setProfileMode } from '../ProfilePage/slice';
 import { useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../components/IconButton';
-import { RiArrowGoBackLine, RiPencilLine } from 'react-icons/ri';
+import { MdKeyboardBackspace, MdModeEdit } from 'react-icons/md';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 
@@ -23,7 +23,7 @@ function EditButton() {
     <IconButton
       aria-label="edit profile"
       tooltip="Edit profile"
-      Icon={RiPencilLine}
+      Icon={MdModeEdit}
       onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
     />
   );
@@ -39,7 +39,7 @@ function ProfileBar() {
           <IconButton
             aria-label="go home"
             tooltip="Go Home"
-            Icon={RiArrowGoBackLine}
+            Icon={MdKeyboardBackspace}
             onClick={() => navigate(Routes.HOME)}
           />
           <EditButton />

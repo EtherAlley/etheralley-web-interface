@@ -1,5 +1,4 @@
-import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex, Link, Icon } from '@chakra-ui/react';
-import { RiExternalLinkLine } from 'react-icons/ri';
+import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex } from '@chakra-ui/react';
 import Badge from '../../components/Badge';
 import useDisplayBalance from '../../hooks/useDisplayBalance';
 import useTokenKey from '../../hooks/useTokenKey';
@@ -9,6 +8,7 @@ import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import Coin from '../../icons/Coin';
 import useAppSelector from '../../hooks/useAppSelector';
 import { selectFungibleToken } from './slice';
+import LinkComponent from '../../components/Link';
 
 const coinStyling = {
   width: 85,
@@ -20,12 +20,12 @@ const coinStyling = {
   borderWidth: '1px',
 };
 
-function FungibleTokenComponent({ id }: { id: number }) {
+function FungibleTokenComponent({ index }: { index: number }) {
   const {
     metadata: { name, symbol, decimals },
     contract: { address, blockchain, interface: interfaceName },
     balance,
-  } = useAppSelector((state) => selectFungibleToken(state, id));
+  } = useAppSelector((state) => selectFungibleToken(state, index));
   const displayBalance = useDisplayBalance(balance, decimals);
   const key = useTokenKey(address, blockchain);
   const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
@@ -56,9 +56,7 @@ function FungibleTokenComponent({ id }: { id: number }) {
       DialogBody={
         <>
           <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
-          <Link color="blue.500" href={etherscanUrl} isExternal>
-            Etherscan <Icon as={RiExternalLinkLine}></Icon>
-          </Link>
+          <LinkComponent url={etherscanUrl} text="Etherscan" />
           <Text fontSize="md" noOfLines={3} mt={3}>
             Name: {name}
           </Text>

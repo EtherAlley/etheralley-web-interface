@@ -35,15 +35,17 @@ export type DisplayConfig = {
 };
 
 export type DisplayAchievement = {
-  id: number;
+  index: number;
 };
 export type DisplayGroup = {
+  id: string;
   text: string;
   items: DisplayItem[];
 };
 
 export type DisplayItem = {
-  id: number;
+  id: string;
+  index: number;
   type: BadgeTypes | undefined;
 };
 

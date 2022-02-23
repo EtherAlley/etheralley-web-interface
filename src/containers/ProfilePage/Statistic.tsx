@@ -3,11 +3,11 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { selectStatistic } from './slice';
 import Swaps from './Swaps';
 
-function Statistic({ id }: { id: number }) {
-  const { type } = useAppSelector((state) => selectStatistic(state, id));
+function Statistic({ index }: { index: number }) {
+  const { type } = useAppSelector((state) => selectStatistic(state, index));
   switch (type) {
     case StatisticTypes.SWAP:
-      return <Swaps id={id} />;
+      return <Swaps index={index} />;
     default:
       return <></>;
   }

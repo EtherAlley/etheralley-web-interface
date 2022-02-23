@@ -4,7 +4,7 @@ import Input from '../../components/Input';
 import Paper from '../../components/Paper';
 import { Routes } from '../../common/constants';
 import { selectHome, setAddress } from './slice';
-import { RiSearchLine } from 'react-icons/ri';
+import { MdSearch } from 'react-icons/md';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { Text } from '@chakra-ui/react';
@@ -43,7 +43,7 @@ function HomePage() {
                 iconProps={{
                   'aria-label': 'go to profile',
                   tooltip: 'Search',
-                  Icon: RiSearchLine,
+                  Icon: MdSearch,
                   onClick: search,
                   disabled: !address,
                 }}

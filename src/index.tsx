@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import ThemeProvider from './containers/ThemeProvider';
+import DragDropProvider from './containers/DragDropProvider';
 
 const getLibrary = (provider: any, _connector: any) => {
   return new Web3Provider(provider);
@@ -17,11 +18,13 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-        <Web3ReactProvider getLibrary={getLibrary}>
-          <Router>
-            <App />
-          </Router>
-        </Web3ReactProvider>
+        <DragDropProvider>
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <Router>
+              <App />
+            </Router>
+          </Web3ReactProvider>
+        </DragDropProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

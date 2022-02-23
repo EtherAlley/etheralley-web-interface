@@ -1,4 +1,5 @@
 import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
+import { nanoid } from '@reduxjs/toolkit';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../common/types';
 import ErrorBoundary from '../../components/ErrorBoundary';
@@ -20,27 +21,33 @@ function Groups() {
           text=""
           items={[
             {
-              id: 0,
+              id: nanoid(),
+              index: 0,
               type: undefined,
             },
             {
-              id: 1,
+              id: nanoid(),
+              index: 1,
               type: undefined,
             },
             {
-              id: 2,
+              id: nanoid(),
+              index: 2,
               type: undefined,
             },
             {
-              id: 3,
+              id: nanoid(),
+              index: 3,
               type: undefined,
             },
             {
-              id: 4,
+              id: nanoid(),
+              index: 4,
               type: undefined,
             },
             {
-              id: 5,
+              id: nanoid(),
+              index: 5,
               type: undefined,
             },
           ]}
@@ -74,12 +81,12 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
           justifyContent="space-between"
           gap={20}
         >
-          {items.map(({ type, id }) => {
+          {items.map(({ type, index, id }) => {
             return (
               <GridItem key={id}>
                 <Center>
                   <ErrorBoundary message="Something went wrong" width={BADGE_WIDTH} height={BADGE_HEIGHT}>
-                    <GroupItem type={type} id={id} />
+                    <GroupItem type={type} index={index} />
                   </ErrorBoundary>
                 </Center>
               </GridItem>
@@ -101,7 +108,7 @@ function GroupTitle({ text }: { text: string }) {
   );
 }
 
-function GroupItem({ type, id }: { type: BadgeTypes | undefined; id: number }) {
+function GroupItem({ type, index }: { type: BadgeTypes | undefined; index: number }) {
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
@@ -114,11 +121,11 @@ function GroupItem({ type, id }: { type: BadgeTypes | undefined; id: number }) {
 
   switch (type) {
     case BadgeTypes.NonFungibleToken:
-      return <NonFungibleTokenComponent id={id} />;
+      return <NonFungibleTokenComponent index={index} />;
     case BadgeTypes.FungibleToken:
-      return <FungibleTokenComponent id={id} />;
+      return <FungibleTokenComponent index={index} />;
     case BadgeTypes.Statistics:
-      return <Statistic id={id} />;
+      return <Statistic index={index} />;
     default:
       return <></>;
   }

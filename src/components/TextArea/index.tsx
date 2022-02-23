@@ -12,6 +12,7 @@ function TextAreaComponent({
   mb,
   mt,
   maxLength,
+  height,
 }: {
   id: string;
   label?: string;
@@ -22,11 +23,12 @@ function TextAreaComponent({
   mb?: number;
   mt?: number;
   maxLength?: number;
+  height?: number;
 }) {
   return (
     <FormControl isInvalid={isInvalid} mb={mb} mt={mt}>
       {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
-      <Textarea id={id} value={value} onChange={onChange} maxLength={maxLength} />
+      <Textarea id={id} value={value} onChange={onChange} maxLength={maxLength} height={height} />
       <FormErrorMessage>{errorMessage}</FormErrorMessage>
     </FormControl>
   );
