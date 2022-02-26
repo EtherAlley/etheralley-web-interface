@@ -1,22 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { ProfileMode } from '../../common/constants';
 import { fetchAPI, fetchAPINoResponse } from '../../common/http';
-import { BadgeTypes, DisplayGroup, Profile } from '../../common/types';
+import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 
 export interface State {
   loading: boolean;
   error: boolean;
-  profileMode: ProfileMode;
+  showEditBar: boolean;
+  showAssetForm: boolean;
   profile: Profile;
 }
 
 const initialState: State = {
   loading: true,
   error: false,
-  profileMode: ProfileMode.View,
+  showEditBar: false,
+  showAssetForm: false,
   profile: {
     address: '',
     ens_name: '',
@@ -76,8 +77,17 @@ export const slice = createSlice({
   name: 'profilePage',
   initialState,
   reducers: {
-    setProfileMode: (state, action: PayloadAction<ProfileMode>) => {
-      state.profileMode = action.payload;
+    openEditBar: (state) => {
+      state.showEditBar = true;
+    },
+    closeEditBar: (state) => {
+      state.showEditBar = false;
+    },
+    openAssetForm: (state) => {
+      state.showAssetForm = true;
+    },
+    closeAssetForm: (state) => {
+      state.showAssetForm = false;
     },
     updateProfileTitle: (state, action: PayloadAction<string>) => {
       state.profile.display_config.text.title = action.payload;
@@ -100,6 +110,24 @@ export const slice = createSlice({
     updateGroupText: (state, action: PayloadAction<{ index: number; text: string }>) => {
       state.profile.display_config.groups[action.payload.index].text = action.payload.text;
     },
+    addGroup: (state) => {
+      state.profile.display_config.groups = [
+        { id: nanoid(), text: '', items: [] },
+        ...state.profile.display_config.groups,
+      ];
+    },
+    removeGroup: (state, action: PayloadAction<number>) => {
+      const groups = state.profile.display_config.groups;
+      removeAssets(state, groups[action.payload].items);
+      groups.splice(action.payload, 1);
+    },
+    removeItem: (state, action: PayloadAction<{ groupArrayIndex: number; itemArrayIndex: number }>) => {
+      const group = state.profile.display_config.groups[action.payload.groupArrayIndex];
+      console.log(action.payload.groupArrayIndex);
+      console.log(action.payload.itemArrayIndex);
+      removeAssets(state, [group.items[action.payload.itemArrayIndex]]);
+      group.items.splice(action.payload.itemArrayIndex, 1);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -119,7 +147,7 @@ export const slice = createSlice({
         }
       })
       .addCase(saveProfile.fulfilled, (state, _) => {
-        state.profileMode = ProfileMode.View;
+        state.showEditBar = false;
       })
       .addCase(onDragDrop, (state, { payload }) => {
         const { source, destination } = payload;
@@ -145,7 +173,7 @@ export const slice = createSlice({
 });
 
 function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile): void {
-  stateProfile.display_config.text.title = 'My Profile 💎';
+  stateProfile.display_config.text.title = '💎 My Profile 💎';
   stateProfile.display_config.text.description = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
     magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -162,6 +190,7 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
   for (let i = 0; i < actionProfile.interactions.length; i++) {
     stateProfile.display_config.achievements.push({
       index: i,
+      type: AchievementTypes.Interactions,
     });
   }
 
@@ -219,22 +248,47 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
   }
 }
 
-export const {
-  setProfileMode,
-  updateProfileTitle,
-  updateProfileDescription,
-  updatePrimaryColor,
-  updateSecondaryColor,
-  updatePrimaryTextColor,
-  updateSecondaryTextColor,
-  updateGroupText,
-} = slice.actions;
+function removeAssets(state: State, itemsBeingDeleted: DisplayItem[]) {
+  for (const itemBeingDeleted of itemsBeingDeleted) {
+    // dont remove the asset if the picture still points to it
+    if (
+      itemBeingDeleted.type === BadgeTypes.NonFungibleToken &&
+      itemBeingDeleted.index === state.profile.display_config.picture.item?.index
+    ) {
+      continue;
+    }
+
+    // fix the pointers of all other items that are affected by the asset type being removed from the array
+    for (const group of state.profile.display_config.groups) {
+      for (const item of group.items) {
+        if (item.type === itemBeingDeleted.type && item.index > itemBeingDeleted.index) {
+          item.index--;
+        }
+      }
+    }
+
+    // remove the assets from the array
+    switch (itemBeingDeleted.type) {
+      case BadgeTypes.FungibleToken:
+        state.profile.fungible_tokens.splice(itemBeingDeleted.index, 1);
+        break;
+      case BadgeTypes.NonFungibleToken:
+        state.profile.non_fungible_tokens.splice(itemBeingDeleted.index, 1);
+        break;
+      case BadgeTypes.Statistics:
+        state.profile.statistics.splice(itemBeingDeleted.index, 1);
+        break;
+    }
+  }
+}
 
 export const selectLoading = (state: RootState) => state.profilePage.loading;
 
 export const selectError = (state: RootState) => state.profilePage.error;
 
-export const selectProfileMode = (state: RootState) => state.profilePage.profileMode;
+export const selectShowEditBar = (state: RootState) => state.profilePage.showEditBar;
+
+export const selectShowAssetForm = (state: RootState) => state.profilePage.showAssetForm;
 
 export const selectText = (state: RootState) => state.profilePage.profile.display_config.text;
 
@@ -263,3 +317,20 @@ export const selectStatistic = (state: RootState, index: number) => state.profil
 export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
 
 export default slice.reducer;
+
+export const {
+  openEditBar,
+  closeEditBar,
+  openAssetForm,
+  closeAssetForm,
+  updateProfileTitle,
+  updateProfileDescription,
+  updatePrimaryColor,
+  updateSecondaryColor,
+  updatePrimaryTextColor,
+  updateSecondaryTextColor,
+  updateGroupText,
+  addGroup,
+  removeGroup,
+  removeItem,
+} = slice.actions;

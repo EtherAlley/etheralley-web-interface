@@ -1,10 +1,10 @@
 import { Box, Skeleton, Text } from '@chakra-ui/react';
-import Paper from '../../components/Paper';
+import Paper from '../../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import ProfileUser from '../../icons/ProfileUser';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectAddress, selectENSName, selectLoading, selectPicture } from './slice';
-import { BADGE_WIDTH } from '../../common/constants';
+import ProfileUser from '../../../icons/ProfileUser';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectAddress, selectENSName, selectLoading, selectPicture } from './../slice';
+import { BADGE_WIDTH } from '../../../common/constants';
 
 function ProfilePicture() {
   return (

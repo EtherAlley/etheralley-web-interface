@@ -1,5 +1,9 @@
 import { Blockchains, InteractionTypes, Interfaces, StatisticTypes } from './constants';
 
+export enum AchievementTypes {
+  Interactions = 'interactions',
+}
+
 export enum BadgeTypes {
   NonFungibleToken = 'non_fungible_tokens',
   FungibleToken = 'fungible_tokens',
@@ -36,6 +40,7 @@ export type DisplayConfig = {
 
 export type DisplayAchievement = {
   index: number;
+  type: AchievementTypes;
 };
 export type DisplayGroup = {
   id: string;
@@ -46,7 +51,7 @@ export type DisplayGroup = {
 export type DisplayItem = {
   id: string;
   index: number;
-  type: BadgeTypes | undefined;
+  type: BadgeTypes;
 };
 
 export type Contract = {

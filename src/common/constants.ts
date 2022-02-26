@@ -6,11 +6,6 @@ export const Routes = {
   PROFILE: '/profiles/:address',
 };
 
-export enum ProfileMode {
-  View = 'VIEW',
-  Edit = 'EDIT',
-}
-
 export enum Blockchains {
   ETHEREUM = 'ethereum',
   POLYGON = 'polygon',

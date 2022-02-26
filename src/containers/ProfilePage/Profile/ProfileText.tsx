@@ -1,8 +1,8 @@
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
-import { BADGE_HEIGHT } from '../../common/constants';
-import Paper from '../../components/Paper';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectLoading, selectText } from './slice';
+import { BADGE_HEIGHT } from '../../../common/constants';
+import Paper from '../../../components/Paper';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectLoading, selectText } from './../slice';
 
 function ProfileText() {
   return (

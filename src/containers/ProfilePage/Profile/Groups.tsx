@@ -1,19 +1,20 @@
 import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
 import { nanoid } from '@reduxjs/toolkit';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
-import { BadgeTypes, DisplayItem } from '../../common/types';
-import ErrorBoundary from '../../components/ErrorBoundary';
-import Paper from '../../components/Paper';
-import useAppSelector from '../../hooks/useAppSelector';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
+import { BadgeTypes, DisplayItem } from '../../../common/types';
+import ErrorBoundary from '../../../components/ErrorBoundary';
+import Paper from '../../../components/Paper';
+import useAppSelector from '../../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import { selectGroups, selectLoading } from './slice';
+import { selectGroups, selectLoading } from './../slice';
 import Statistic from './Statistic';
 
 function Groups() {
   const groups = useAppSelector(selectGroups);
   const loading = useAppSelector(selectLoading);
 
+  // rendering a group with hard coded items to show a loading skeleton
   if (loading) {
     return (
       <Box mt={20}>
@@ -23,32 +24,32 @@ function Groups() {
             {
               id: nanoid(),
               index: 0,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
             {
               id: nanoid(),
               index: 1,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
             {
               id: nanoid(),
               index: 2,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
             {
               id: nanoid(),
               index: 3,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
             {
               id: nanoid(),
               index: 4,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
             {
               id: nanoid(),
               index: 5,
-              type: undefined,
+              type: BadgeTypes.FungibleToken,
             },
           ]}
         />

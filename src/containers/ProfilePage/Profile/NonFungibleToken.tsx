@@ -1,10 +1,10 @@
 import { Flex, Image, Text, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
-import Badge from '../../components/Badge';
-import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectNonFungibleToken } from './slice';
-import LinkComponent from '../../components/Link';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
+import Badge from '../../../components/Badge';
+import useOpenSeaUrl from '../../../hooks/useOpenSeaUrl';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectNonFungibleToken } from './../slice';
+import LinkComponent from '../../../components/Link';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
   return (

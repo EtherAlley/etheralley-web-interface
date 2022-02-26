@@ -14,13 +14,13 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { InteractionTypes } from '../../common/constants';
-import LinkComponent from '../../components/Link';
-import useAppSelector from '../../hooks/useAppSelector';
-import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import Rocket from '../../icons/Rocket';
-import Trophy from '../../icons/Trophy';
-import { selectAchievements, selectInteraction } from './slice';
+import { InteractionTypes } from '../../../common/constants';
+import LinkComponent from '../../../components/Link';
+import useAppSelector from '../../../hooks/useAppSelector';
+import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
+import Rocket from '../../../icons/Rocket';
+import Trophy from '../../../icons/Trophy';
+import { selectAchievements, selectInteraction } from '../slice';
 
 function AchievementBar() {
   const achievements = useAppSelector(selectAchievements);

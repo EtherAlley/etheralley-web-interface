@@ -1,21 +1,20 @@
 import { useWeb3React } from '@web3-react/core';
-import { selectAddress, selectProfileMode } from '../ProfilePage/slice';
-import { Routes, ProfileMode } from '../../common/constants';
-import { setProfileMode } from '../ProfilePage/slice';
+import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage/slice';
+import { Routes } from '../../../common/constants';
 import { useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
-import IconButton from '../../components/IconButton';
+import IconButton from '../../../components/IconButton';
 import { MdKeyboardBackspace, MdModeEdit } from 'react-icons/md';
-import useAppDispatch from '../../hooks/useAppDispatch';
-import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import useAppSelector from '../../../hooks/useAppSelector';
 
 function EditButton() {
   const dispatch = useAppDispatch();
-  const profileMode = useAppSelector(selectProfileMode);
+  const showEditBar = useAppSelector(selectShowEditBar);
   const { account } = useWeb3React();
   const address = useAppSelector(selectAddress);
 
-  if (profileMode === ProfileMode.Edit || !account || account.toLowerCase() !== address.toLowerCase()) {
+  if (showEditBar || !account || account.toLowerCase() !== address.toLowerCase()) {
     return <></>;
   }
 
@@ -24,7 +23,7 @@ function EditButton() {
       aria-label="edit profile"
       tooltip="Edit profile"
       Icon={MdModeEdit}
-      onClick={() => dispatch(setProfileMode(ProfileMode.Edit))}
+      onClick={() => dispatch(openEditBar())}
     />
   );
 }

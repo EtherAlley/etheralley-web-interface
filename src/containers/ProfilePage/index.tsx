@@ -4,19 +4,17 @@ import { Box, Container } from '@chakra-ui/react';
 
 import { loadProfile, selectError } from './slice';
 import Error from '../../components/Error';
-import ProfileBar from './ProfileBar';
+import Toolbar from './Toolbar';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import Groups from './Groups';
 import ErrorBoundary from '../../components/ErrorBoundary';
-import ProfileHeader from './ProfileHeader';
-import AchievementBar from './AchievementBar';
-import ProfileEditDrawer from './ProfileEditDrawer';
+import EditDrawer from './EditDrawer';
+import Profile from './Profile';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
     <Box backgroundColor="profile.primary">
-      <ProfileBar />
+      <Toolbar />
       <Container maxW="container.lg">{children}</Container>
     </Box>
   );
@@ -45,11 +43,8 @@ function ProfilePage() {
     <PageWrapper>
       <ErrorBoundary message="Something went wrong" width={250} height={180}>
         <Box>
-          <Box height={100} />
-          <ProfileHeader />
-          <AchievementBar />
-          <Groups />
-          <ProfileEditDrawer />
+          <Profile />
+          <EditDrawer />
         </Box>
       </ErrorBoundary>
     </PageWrapper>

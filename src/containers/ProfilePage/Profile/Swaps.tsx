@@ -9,22 +9,22 @@ import {
   Text,
   Image,
 } from '@chakra-ui/react';
-import Badge from '../../components/Badge';
-import { Contract, Swap } from '../../common/types';
-import Settings from '../../common/settings';
-import useInterfaceKey from '../../hooks/useInterfaceKey';
-import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectStatistic } from './slice';
-import LinkComponent from '../../components/Link';
+import Badge from '../../../components/Badge';
+import { Contract, Swap } from '../../../common/types';
+import Settings from '../../../common/settings';
+import useInterfaceKey from '../../../hooks/useInterfaceKey';
+import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectStatistic } from './../slice';
+import LinkComponent from '../../../components/Link';
 
 const logoStyling = {
   width: 100,
   height: 100,
   padding: 2,
-  backgroundColor: 'profile.primary',
-  borderColor: 'profile.primary',
+  backgroundColor: 'gray.900',
+  borderColor: 'gray.900',
   borderRadius: '50%',
   boxShadow: 'dark-lg',
   borderWidth: '1px',

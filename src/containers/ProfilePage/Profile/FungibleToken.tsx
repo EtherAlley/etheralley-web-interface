@@ -1,14 +1,14 @@
 import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex } from '@chakra-ui/react';
-import Badge from '../../components/Badge';
-import useDisplayBalance from '../../hooks/useDisplayBalance';
-import useTokenKey from '../../hooks/useTokenKey';
-import Settings from '../../common/settings';
-import useEtherscanUrl from '../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../common/constants';
-import Coin from '../../icons/Coin';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectFungibleToken } from './slice';
-import LinkComponent from '../../components/Link';
+import Badge from '../../../components/Badge';
+import useDisplayBalance from '../../../hooks/useDisplayBalance';
+import useTokenKey from '../../../hooks/useTokenKey';
+import Settings from '../../../common/settings';
+import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
+import Coin from '../../../icons/Coin';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectFungibleToken } from './../slice';
+import LinkComponent from '../../../components/Link';
 
 const coinStyling = {
   width: 85,

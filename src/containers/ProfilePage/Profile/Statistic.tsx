@@ -1,6 +1,6 @@
-import { StatisticTypes } from '../../common/constants';
-import useAppSelector from '../../hooks/useAppSelector';
-import { selectStatistic } from './slice';
+import { StatisticTypes } from '../../../common/constants';
+import useAppSelector from '../../../hooks/useAppSelector';
+import { selectStatistic } from './../slice';
 import Swaps from './Swaps';
 
 function Statistic({ index }: { index: number }) {
