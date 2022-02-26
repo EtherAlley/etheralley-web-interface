@@ -6,7 +6,7 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import {
   addGroup,
-  openAssetForm,
+  openBadgeForm,
   removeGroup,
   removeItem,
   selectFungibleToken,
@@ -50,7 +50,7 @@ function Group({ group, arrayIndex }: { group: DisplayGroup; arrayIndex: number 
 
   return (
     <Box>
-      <Flex alignItems="end">
+      <Flex alignItems="end" mr={2}>
         <Input
           id={id}
           label={`Group ${arrayIndex + 1}`}
@@ -62,7 +62,7 @@ function Group({ group, arrayIndex }: { group: DisplayGroup; arrayIndex: number 
           aria-label="Add Item"
           tooltip="Add Item"
           Icon={MdAdd}
-          onClick={() => dispatch(openAssetForm())}
+          onClick={() => dispatch(openBadgeForm())}
           size="md"
           variant="solid"
           bg="gray.700"

@@ -10,12 +10,15 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import EditDrawer from './EditDrawer';
 import Profile from './Profile';
+import BadgeFormModal from './BadgeFormModal';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
     <Box backgroundColor="profile.primary">
-      <Toolbar />
-      <Container maxW="container.lg">{children}</Container>
+      <ErrorBoundary message="Something went wrong" width={250} height={180}>
+        <Toolbar />
+        <Container maxW="container.lg">{children}</Container>
+      </ErrorBoundary>
     </Box>
   );
 };
@@ -41,12 +44,11 @@ function ProfilePage() {
 
   return (
     <PageWrapper>
-      <ErrorBoundary message="Something went wrong" width={250} height={180}>
-        <Box>
-          <Profile />
-          <EditDrawer />
-        </Box>
-      </ErrorBoundary>
+      <>
+        <Profile />
+        <EditDrawer />
+        <BadgeFormModal />
+      </>
     </PageWrapper>
   );
 }

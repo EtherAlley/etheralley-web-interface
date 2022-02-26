@@ -5,12 +5,12 @@ import ProfileHeader from './ProfileHeader';
 
 function Profile() {
   return (
-    <>
+    <Box>
       <Box height={100} />
       <ProfileHeader />
       <AchievementBar />
       <Groups />
-    </>
+    </Box>
   );
 }
 

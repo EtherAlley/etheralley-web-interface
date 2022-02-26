@@ -9,7 +9,10 @@ export interface State {
   loading: boolean;
   error: boolean;
   showEditBar: boolean;
-  showAssetForm: boolean;
+  showBadgeForm: boolean;
+  badgeForm: {
+    type: BadgeTypes | undefined;
+  };
   profile: Profile;
 }
 
@@ -17,7 +20,10 @@ const initialState: State = {
   loading: true,
   error: false,
   showEditBar: false,
-  showAssetForm: false,
+  showBadgeForm: false,
+  badgeForm: {
+    type: undefined,
+  },
   profile: {
     address: '',
     ens_name: '',
@@ -83,12 +89,6 @@ export const slice = createSlice({
     closeEditBar: (state) => {
       state.showEditBar = false;
     },
-    openAssetForm: (state) => {
-      state.showAssetForm = true;
-    },
-    closeAssetForm: (state) => {
-      state.showAssetForm = false;
-    },
     updateProfileTitle: (state, action: PayloadAction<string>) => {
       state.profile.display_config.text.title = action.payload;
     },
@@ -123,10 +123,17 @@ export const slice = createSlice({
     },
     removeItem: (state, action: PayloadAction<{ groupArrayIndex: number; itemArrayIndex: number }>) => {
       const group = state.profile.display_config.groups[action.payload.groupArrayIndex];
-      console.log(action.payload.groupArrayIndex);
-      console.log(action.payload.itemArrayIndex);
       removeAssets(state, [group.items[action.payload.itemArrayIndex]]);
       group.items.splice(action.payload.itemArrayIndex, 1);
+    },
+    openBadgeForm: (state) => {
+      state.showBadgeForm = true;
+    },
+    closeBadgeForm: (state) => {
+      state.showBadgeForm = false;
+    },
+    updateBadgeType: (state, action: PayloadAction<string>) => {
+      state.badgeForm.type = action.payload as BadgeTypes;
     },
   },
   extraReducers: (builder) => {
@@ -288,8 +295,6 @@ export const selectError = (state: RootState) => state.profilePage.error;
 
 export const selectShowEditBar = (state: RootState) => state.profilePage.showEditBar;
 
-export const selectShowAssetForm = (state: RootState) => state.profilePage.showAssetForm;
-
 export const selectText = (state: RootState) => state.profilePage.profile.display_config.text;
 
 export const selectColors = (state: RootState) => state.profilePage.profile.display_config.colors;
@@ -316,13 +321,15 @@ export const selectStatistic = (state: RootState, index: number) => state.profil
 
 export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
 
+export const selectShowBadgeForm = (state: RootState) => state.profilePage.showBadgeForm;
+
+export const selectBadgeForm = (state: RootState) => state.profilePage.badgeForm;
+
 export default slice.reducer;
 
 export const {
   openEditBar,
   closeEditBar,
-  openAssetForm,
-  closeAssetForm,
   updateProfileTitle,
   updateProfileDescription,
   updatePrimaryColor,
@@ -333,4 +340,7 @@ export const {
   addGroup,
   removeGroup,
   removeItem,
+  openBadgeForm,
+  closeBadgeForm,
+  updateBadgeType,
 } = slice.actions;

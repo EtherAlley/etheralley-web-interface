@@ -1,14 +1,14 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import {
   Button,
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  AlertDialogCloseButton,
   Box,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
 } from '@chakra-ui/react';
 import Paper from '../../components/Paper';
 
@@ -29,7 +29,6 @@ function Badge({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
-  const cancelRef = useRef(null);
   const boxStyling: any = {
     as: 'button',
     onClick: () => setIsOpen(true),
@@ -43,22 +42,19 @@ function Badge({
   const Content = (
     <>
       {Display}
-      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent backgroundColor="profile.primary">
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {DialogHeader}
-            </AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>{DialogBody}</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Close
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent backgroundColor="profile.primary">
+          <ModalHeader fontSize="lg" fontWeight="bold">
+            {DialogHeader}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{DialogBody}</ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 
