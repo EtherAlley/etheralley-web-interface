@@ -128,11 +128,13 @@ export const slice = createSlice({
     },
     openBadgeForm: (state) => {
       state.showBadgeForm = true;
+      state.badgeForm = { ...initialState.badgeForm };
     },
     closeBadgeForm: (state) => {
       state.showBadgeForm = false;
     },
     updateBadgeType: (state, action: PayloadAction<string>) => {
+      state.badgeForm = { ...initialState.badgeForm };
       state.badgeForm.type = action.payload as BadgeTypes;
     },
   },

@@ -16,7 +16,7 @@ import {
   updateGroupText,
 } from '../slice';
 import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
-import { Interfaces, StatisticTypes } from '../../../common/constants';
+import { Interfaces } from '../../../common/constants';
 import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -205,8 +205,13 @@ function StatisticLabel({ index }: { index: number }) {
         <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Sushiswap Stats' })}</Text>
       );
     case Interfaces.UNISWAP_V2_EXCHANGE:
+      return (
+        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap V2 Stats' })}</Text>
+      );
     case Interfaces.UNISWAP_V3_EXCHANGE:
-      return <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap Stats' })}</Text>;
+      return (
+        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap V3 Stats' })}</Text>
+      );
     default:
       return <Text isTruncated>{stat.contract.interface}</Text>;
   }

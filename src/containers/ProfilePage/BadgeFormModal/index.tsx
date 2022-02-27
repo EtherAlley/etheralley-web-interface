@@ -7,9 +7,12 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Box,
+  Divider,
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { BadgeTypes } from '../../../common/types';
+import Input from '../../../components/Input';
 import Select from '../../../components/Select';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -48,16 +51,98 @@ function NewBadgeForm() {
   const { type } = useAppSelector(selectBadgeForm);
   const dispatch = useAppDispatch();
 
+  const options: { id: string; label: string }[] = [];
+  for (const [, value] of Object.entries(BadgeTypes)) {
+    switch (value) {
+      case BadgeTypes.FungibleToken:
+        options.push({
+          id: value,
+          label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
+        });
+        break;
+      case BadgeTypes.NonFungibleToken:
+        options.push({
+          id: value,
+          label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
+        });
+        break;
+      case BadgeTypes.Statistics:
+        options.push({
+          id: value,
+          label: intl.formatMessage({ id: 'statistic-option', defaultMessage: 'Statistic' }),
+        });
+        break;
+    }
+  }
+
   return (
-    <Select
-      id="select-badge-type"
-      label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
-      options={Object.entries(BadgeTypes).map(([_, value]) => ({ id: value, label: value }))}
-      value={type}
-      onChange={(event) => {
-        dispatch(updateBadgeType(event.target.value));
-      }}
-    />
+    <Box>
+      <Select
+        id="select-badge-type"
+        label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
+        options={options}
+        value={type}
+        onChange={(event) => {
+          dispatch(updateBadgeType(event.target.value));
+        }}
+        mb={5}
+      />
+      <Divider mb={5} />
+      <NonFungibleForm />
+      <FungibleForm />
+      <StatForm />
+    </Box>
+  );
+}
+
+function NonFungibleForm() {
+  const intl = useIntl();
+  const { type } = useAppSelector(selectBadgeForm);
+  const dispatch = useAppDispatch();
+
+  if (type !== BadgeTypes.NonFungibleToken) {
+    return <></>;
+  }
+  return (
+    <Box>
+      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
+      <Select id="interface" label="Interface" value={undefined} options={[]} onChange={() => {}} />
+      <Input id="contract-address" value="" label="Address" />
+      <Input id="token-id" value="" label="Token Id" />
+    </Box>
+  );
+}
+
+function FungibleForm() {
+  const intl = useIntl();
+  const { type } = useAppSelector(selectBadgeForm);
+  const dispatch = useAppDispatch();
+
+  if (type !== BadgeTypes.FungibleToken) {
+    return <></>;
+  }
+  return (
+    <Box>
+      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
+      <Input id="token-symbol" value="" label="Token Symbol" />
+      <Input id="contract-address" value="" label="Address" />
+    </Box>
+  );
+}
+
+function StatForm() {
+  const intl = useIntl();
+  const { type } = useAppSelector(selectBadgeForm);
+  const dispatch = useAppDispatch();
+
+  if (type !== BadgeTypes.Statistics) {
+    return <></>;
+  }
+  return (
+    <Box>
+      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
+      <Select id="interface" label="Stat Type" value={undefined} options={[]} onChange={() => {}} />
+    </Box>
   );
 }
 

@@ -14,6 +14,7 @@ function Select({
   onChange,
   isInvalid,
   errorMessage,
+  mb,
 }: {
   id: string;
   label?: string;
@@ -22,11 +23,12 @@ function Select({
   onChange?: ChangeEventHandler<HTMLSelectElement>;
   isInvalid?: boolean;
   errorMessage?: string;
+  mb?: number;
 }) {
   return (
     <FormControl isInvalid={isInvalid}>
       {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
-      <SelectComponent id={id} value={value} onChange={onChange}>
+      <SelectComponent id={id} value={value} onChange={onChange} mb={mb}>
         {!value && <option key="undefined" value={undefined}></option>}
         {options.map((option) => (
           <option key={option.id} value={option.id}>
