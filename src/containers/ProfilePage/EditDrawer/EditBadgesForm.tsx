@@ -20,7 +20,7 @@ import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import { openBadgeForm } from '../BadgeFormModal/slice';
 
-function EditGroupsForm() {
+function EditBadgesForm() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const groups = useAppSelector(selectGroups);
@@ -218,4 +218,4 @@ function StatisticLabel({ index }: { index: number }) {
   }
 }
 
-export default EditGroupsForm;
+export default EditBadgesForm;

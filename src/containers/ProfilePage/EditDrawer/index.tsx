@@ -15,7 +15,7 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import { closeEditBar, saveProfile, selectSaving, selectShowEditBar } from '../slice';
 import EditInfoForm from './EditInfoForm';
 import EditColorsForm from './EditColorsForm';
-import EditGroupsForm from './EditGroupsForm';
+import EditBadgesForm from './EditBadgesForm';
 
 function ProfileEditDrawer() {
   const intl = useIntl();
@@ -39,7 +39,7 @@ function ProfileEditDrawer() {
             items={[
               { header: intl.formatMessage({ id: 'info-form', defaultMessage: 'Info' }), body: <EditInfoForm /> },
               { header: intl.formatMessage({ id: 'colors-form', defaultMessage: 'Colors' }), body: <EditColorsForm /> },
-              { header: intl.formatMessage({ id: 'groups-form', defaultMessage: 'Groups' }), body: <EditGroupsForm /> },
+              { header: intl.formatMessage({ id: 'badges-form', defaultMessage: 'Badges' }), body: <EditBadgesForm /> },
             ]}
           />
         </DrawerBody>
