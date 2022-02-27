@@ -1,0 +1,140 @@
+{
+  "alpha": [
+    {
+      "type": 0,
+      "value": "Ḁĺṗḫâ"
+    }
+  ],
+  "badge-form-close": [
+    {
+      "type": 0,
+      "value": "Ḉâńćèĺ"
+    }
+  ],
+  "badge-form-header": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ â ńèẘ ḃâḋĝè ṭŏ ẏŏůŕ ćŏĺĺèćṭíŏń"
+    }
+  ],
+  "badge-form-submit": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ"
+    }
+  ],
+  "close-edit-button": [
+    {
+      "type": 0,
+      "value": "Ḉĺŏśè"
+    }
+  ],
+  "colors-form": [
+    {
+      "type": 0,
+      "value": "Ḉŏĺŏŕś"
+    }
+  ],
+  "connect-to-a-wallet": [
+    {
+      "type": 0,
+      "value": "Ḉŏńńèćṭ ṭŏ â ẘâĺĺèṭ"
+    }
+  ],
+  "edit-description": [
+    {
+      "type": 0,
+      "value": "Ḋèśćŕíṗṭíŏń"
+    }
+  ],
+  "edit-primary-color": [
+    {
+      "type": 0,
+      "value": "Ṕŕíṁâŕẏ"
+    }
+  ],
+  "edit-primary-text-color": [
+    {
+      "type": 0,
+      "value": "Ṕŕíṁâŕẏ Ṯèẋṭ"
+    }
+  ],
+  "edit-profile-button": [
+    {
+      "type": 0,
+      "value": "Ḕḋíṭ Ṕŕŏḟíĺè"
+    }
+  ],
+  "edit-profile-header": [
+    {
+      "type": 0,
+      "value": "Ḕḋíṭ ẏŏůŕ ṗŕŏḟíĺè"
+    }
+  ],
+  "edit-secondary-color": [
+    {
+      "type": 0,
+      "value": "Ṡèćŏńḋâŕẏ"
+    }
+  ],
+  "edit-secondary-text-color": [
+    {
+      "type": 0,
+      "value": "Ṡèćŏńḋâŕẏ Ṯèẋṭ"
+    }
+  ],
+  "edit-title": [
+    {
+      "type": 0,
+      "value": "Ṯíṭĺè"
+    }
+  ],
+  "enter-wallet-address": [
+    {
+      "type": 0,
+      "value": "Ḕńṭèŕ ḔŊṠ ńâṁè ŏŕ Ḕṭḫèŕèůṁ âḋḋŕèśś..."
+    }
+  ],
+  "go-home-button": [
+    {
+      "type": 0,
+      "value": "Ḡŏ Ḣŏṁè"
+    }
+  ],
+  "groups-form": [
+    {
+      "type": 0,
+      "value": "Ḡŕŏůṗś"
+    }
+  ],
+  "info-form": [
+    {
+      "type": 0,
+      "value": "Ḭńḟŏ"
+    }
+  ],
+  "my-profile": [
+    {
+      "type": 0,
+      "value": "Ḿẏ Ṕŕŏḟíĺè"
+    }
+  ],
+  "save-edits-button": [
+    {
+      "type": 0,
+      "value": "Ṡâṿè"
+    }
+  ],
+  "search-aria-label": [
+    {
+      "type": 0,
+      "value": "Ḡŏ ṭŏ â ṗŕŏḟíĺè"
+    }
+  ],
+  "welcome-message": [
+    {
+      "type": 0,
+      "value": "Ẅèĺćŏṁè ṭŏ Ḕṭḫèŕ Ḁĺĺèẏ"
+    }
+  ]
+}

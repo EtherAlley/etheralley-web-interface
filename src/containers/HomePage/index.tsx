@@ -8,8 +8,10 @@ import { MdSearch } from 'react-icons/md';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { Text } from '@chakra-ui/react';
+import { useIntl } from 'react-intl';
 
 function HomePage() {
+  const intl = useIntl();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { address } = useAppSelector(selectHome);
@@ -25,7 +27,7 @@ function HomePage() {
             fontWeight="extrabold"
             textAlign="center"
           >
-            Welcome to Ether Alley
+            {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to Ether Alley' })}
           </Text>
           <Paper mt={5}>
             <form
@@ -37,11 +39,14 @@ function HomePage() {
                 id="searchbar"
                 size="lg"
                 variant="filled"
-                placeholder="Enter ENS name or Ethereum address..."
+                placeholder={intl.formatMessage({
+                  id: 'enter-wallet-address',
+                  defaultMessage: 'Enter ENS name or Ethereum address...',
+                })}
                 value={address}
                 onChange={(event) => dispatch(setAddress(event.target.value))}
                 iconProps={{
-                  'aria-label': 'go to profile',
+                  'aria-label': intl.formatMessage({ id: 'search-aria-label', defaultMessage: 'Go to a profile' }),
                   tooltip: 'Search',
                   Icon: MdSearch,
                   onClick: search,

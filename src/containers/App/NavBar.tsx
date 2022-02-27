@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
+import { useIntl } from 'react-intl';
 import useEagerConnect from '../../hooks/useEagerConnect';
 import useInjectedListener from '../../hooks/useInjectedListener';
 import { Routes } from '../../common/constants';
@@ -9,6 +10,7 @@ import { injectedConnector } from '../../common/connectors';
 
 function Navbar() {
   const { activate, active, account } = useWeb3React();
+  const intl = useIntl();
   const navigate = useNavigate();
   const [activating, setActivating] = useState(false);
   const isOnProfilePage = useMatch('/profiles/*');
@@ -34,7 +36,7 @@ function Navbar() {
           }}
           disabled={!triedEager || activating}
         >
-          Connect to a wallet
+          {intl.formatMessage({ id: 'connect-to-a-wallet', defaultMessage: 'Connect to a wallet' })}
         </Button>
       );
     }
@@ -45,7 +47,7 @@ function Navbar() {
         variant="outline"
         onClick={() => navigate(Routes.PROFILE.replace(':address', account))}
       >
-        My Profile
+        {intl.formatMessage({ id: 'my-profile', defaultMessage: 'My Profile' })}
       </Button>
     );
   };
@@ -61,7 +63,7 @@ function Navbar() {
               </LinkOverlay>
             </Heading>
             <Badge colorScheme="brand" mb={1} ml={3}>
-              Alpha
+              {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
             </Badge>
           </LinkBox>
           <UserButton />

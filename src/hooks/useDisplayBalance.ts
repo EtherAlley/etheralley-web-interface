@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
 export default function useDisplayBalance(balance: string, decimals: number): string {
+  const intl = useIntl();
   const [displayBalance, setDisplayBalance] = useState('0');
 
   useEffect(() => {
@@ -15,9 +17,9 @@ export default function useDisplayBalance(balance: string, decimals: number): st
       }
       number = Number.parseFloat(`${numString}.${balance}`);
     }
-    const display = new Intl.NumberFormat('en-US', { compactDisplay: 'short', notation: 'compact' }).format(number);
+    const display = intl.formatNumber(number, { compactDisplay: 'short', notation: 'compact' });
     setDisplayBalance(display);
-  }, [balance, decimals]);
+  }, [balance, decimals, intl]);
 
   return displayBalance;
 }

@@ -1,4 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
+import { useIntl } from 'react-intl';
 import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage/slice';
 import { Routes } from '../../../common/constants';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 
 function EditButton() {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const showEditBar = useAppSelector(selectShowEditBar);
   const { account } = useWeb3React();
@@ -18,10 +20,12 @@ function EditButton() {
     return <></>;
   }
 
+  const buttonLabel = intl.formatMessage({ id: 'edit-profile-button', defaultMessage: 'Edit Profile' });
+
   return (
     <IconButton
-      aria-label="edit profile"
-      tooltip="Edit profile"
+      aria-label={buttonLabel}
+      tooltip={buttonLabel}
       Icon={MdModeEdit}
       onClick={() => dispatch(openEditBar())}
     />
@@ -30,14 +34,17 @@ function EditButton() {
 
 function ProfileBar() {
   const navigate = useNavigate();
+  const intl = useIntl();
+
+  const buttonLabel = intl.formatMessage({ id: 'go-home-button', defaultMessage: 'Go Home' });
 
   return (
     <>
       <Box position="fixed" width="100%" mt={4}>
         <Flex alignItems={'center'} justifyContent={'space-between'} mx={4}>
           <IconButton
-            aria-label="go home"
-            tooltip="Go Home"
+            aria-label={buttonLabel}
+            tooltip={buttonLabel}
             Icon={MdKeyboardBackspace}
             onClick={() => navigate(Routes.HOME)}
           />

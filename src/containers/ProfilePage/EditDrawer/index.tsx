@@ -7,6 +7,7 @@ import {
   DrawerFooter,
   Button,
 } from '@chakra-ui/react';
+import { useIntl } from 'react-intl';
 import { useWeb3React } from '@web3-react/core';
 import AccordionComponent from '../../../components/Accordion';
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -17,6 +18,7 @@ import EditColorsForm from './EditColorsForm';
 import EditGroupsForm from './EditGroupsForm';
 
 function ProfileEditDrawer() {
+  const intl = useIntl();
   const showEditBar = useAppSelector(selectShowEditBar);
   const dispatch = useAppDispatch();
   const { account, library } = useWeb3React();
@@ -27,24 +29,26 @@ function ProfileEditDrawer() {
       <DrawerContent>
         <DrawerCloseButton onClick={closeEdit} />
 
-        <DrawerHeader>Edit your profile</DrawerHeader>
+        <DrawerHeader>
+          {intl.formatMessage({ id: 'edit-profile-header', defaultMessage: 'Edit your profile' })}
+        </DrawerHeader>
 
         <DrawerBody>
           <AccordionComponent
             items={[
-              { header: 'Info', body: <EditInfoForm /> },
-              { header: 'Colors', body: <EditColorsForm /> },
-              { header: 'Groups', body: <EditGroupsForm /> },
+              { header: intl.formatMessage({ id: 'info-form', defaultMessage: 'Info' }), body: <EditInfoForm /> },
+              { header: intl.formatMessage({ id: 'colors-form', defaultMessage: 'Colors' }), body: <EditColorsForm /> },
+              { header: intl.formatMessage({ id: 'groups-form', defaultMessage: 'Groups' }), body: <EditGroupsForm /> },
             ]}
           />
         </DrawerBody>
 
         <DrawerFooter>
           <Button variant="outline" colorScheme="red" mr={3} onClick={closeEdit}>
-            Cancel
+            {intl.formatMessage({ id: 'close-edit-button', defaultMessage: 'Close' })}
           </Button>
           <Button colorScheme="brand" onClick={() => dispatch(saveProfile({ address: account!, library }))}>
-            Save
+            {intl.formatMessage({ id: 'save-edits-button', defaultMessage: 'Save' })}
           </Button>
         </DrawerFooter>
       </DrawerContent>

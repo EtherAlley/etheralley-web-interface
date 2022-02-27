@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalFooter,
 } from '@chakra-ui/react';
+import { useIntl } from 'react-intl';
 import { BadgeTypes } from '../../../common/types';
 import Select from '../../../components/Select';
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -15,6 +16,7 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import { closeBadgeForm, selectBadgeForm, selectShowBadgeForm, updateBadgeType } from '../slice';
 
 function BadgeFormModal() {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const showBadgeForm = useAppSelector(selectShowBadgeForm);
 
@@ -22,7 +24,9 @@ function BadgeFormModal() {
     <Modal isOpen={showBadgeForm} onClose={() => dispatch(closeBadgeForm())}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add a new badge to your collection</ModalHeader>
+        <ModalHeader>
+          {intl.formatMessage({ id: 'badge-form-header', defaultMessage: 'Add a new badge to your collection' })}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <NewBadgeForm />
@@ -30,9 +34,9 @@ function BadgeFormModal() {
 
         <ModalFooter>
           <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeForm())}>
-            Cancel
+            {intl.formatMessage({ id: 'badge-form-close', defaultMessage: 'Cancel' })}
           </Button>
-          <Button colorScheme="brand">Add</Button>
+          <Button colorScheme="brand">{intl.formatMessage({ id: 'badge-form-submit', defaultMessage: 'Add' })}</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -42,6 +46,7 @@ function BadgeFormModal() {
 function NewBadgeForm() {
   const { type } = useAppSelector(selectBadgeForm);
   const dispatch = useAppDispatch();
+
   return (
     <Select
       id="select-badge-type"

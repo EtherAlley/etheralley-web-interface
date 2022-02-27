@@ -1,0 +1,140 @@
+{
+  "alpha": [
+    {
+      "type": 0,
+      "value": "Alpha"
+    }
+  ],
+  "badge-form-close": [
+    {
+      "type": 0,
+      "value": "Cancel"
+    }
+  ],
+  "badge-form-header": [
+    {
+      "type": 0,
+      "value": "Add a new badge to your collection"
+    }
+  ],
+  "badge-form-submit": [
+    {
+      "type": 0,
+      "value": "Add"
+    }
+  ],
+  "close-edit-button": [
+    {
+      "type": 0,
+      "value": "Close"
+    }
+  ],
+  "colors-form": [
+    {
+      "type": 0,
+      "value": "Colors"
+    }
+  ],
+  "connect-to-a-wallet": [
+    {
+      "type": 0,
+      "value": "Connect to a wallet"
+    }
+  ],
+  "edit-description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "edit-primary-color": [
+    {
+      "type": 0,
+      "value": "Primary"
+    }
+  ],
+  "edit-primary-text-color": [
+    {
+      "type": 0,
+      "value": "Primary Text"
+    }
+  ],
+  "edit-profile-button": [
+    {
+      "type": 0,
+      "value": "Edit Profile"
+    }
+  ],
+  "edit-profile-header": [
+    {
+      "type": 0,
+      "value": "Edit your profile"
+    }
+  ],
+  "edit-secondary-color": [
+    {
+      "type": 0,
+      "value": "Secondary"
+    }
+  ],
+  "edit-secondary-text-color": [
+    {
+      "type": 0,
+      "value": "Secondary Text"
+    }
+  ],
+  "edit-title": [
+    {
+      "type": 0,
+      "value": "Title"
+    }
+  ],
+  "enter-wallet-address": [
+    {
+      "type": 0,
+      "value": "Enter ENS name or Ethereum address..."
+    }
+  ],
+  "go-home-button": [
+    {
+      "type": 0,
+      "value": "Go Home"
+    }
+  ],
+  "groups-form": [
+    {
+      "type": 0,
+      "value": "Groups"
+    }
+  ],
+  "info-form": [
+    {
+      "type": 0,
+      "value": "Info"
+    }
+  ],
+  "my-profile": [
+    {
+      "type": 0,
+      "value": "My Profile"
+    }
+  ],
+  "save-edits-button": [
+    {
+      "type": 0,
+      "value": "Save"
+    }
+  ],
+  "search-aria-label": [
+    {
+      "type": 0,
+      "value": "Go to a profile"
+    }
+  ],
+  "welcome-message": [
+    {
+      "type": 0,
+      "value": "Welcome to Ether Alley"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "alpha": {
+    "defaultMessage": "Alpha"
+  },
+  "badge-form-close": {
+    "defaultMessage": "Cancel"
+  },
+  "badge-form-header": {
+    "defaultMessage": "Add a new badge to your collection"
+  },
+  "badge-form-submit": {
+    "defaultMessage": "Add"
+  },
+  "close-edit-button": {
+    "defaultMessage": "Close"
+  },
+  "colors-form": {
+    "defaultMessage": "Colors"
+  },
+  "connect-to-a-wallet": {
+    "defaultMessage": "Connect to a wallet"
+  },
+  "edit-description": {
+    "defaultMessage": "Description"
+  },
+  "edit-primary-color": {
+    "defaultMessage": "Primary"
+  },
+  "edit-primary-text-color": {
+    "defaultMessage": "Primary Text"
+  },
+  "edit-profile-button": {
+    "defaultMessage": "Edit Profile"
+  },
+  "edit-profile-header": {
+    "defaultMessage": "Edit your profile"
+  },
+  "edit-secondary-color": {
+    "defaultMessage": "Secondary"
+  },
+  "edit-secondary-text-color": {
+    "defaultMessage": "Secondary Text"
+  },
+  "edit-title": {
+    "defaultMessage": "Title"
+  },
+  "enter-wallet-address": {
+    "defaultMessage": "Enter ENS name or Ethereum address..."
+  },
+  "go-home-button": {
+    "defaultMessage": "Go Home"
+  },
+  "groups-form": {
+    "defaultMessage": "Groups"
+  },
+  "info-form": {
+    "defaultMessage": "Info"
+  },
+  "my-profile": {
+    "defaultMessage": "My Profile"
+  },
+  "save-edits-button": {
+    "defaultMessage": "Save"
+  },
+  "search-aria-label": {
+    "defaultMessage": "Go to a profile"
+  },
+  "welcome-message": {
+    "defaultMessage": "Welcome to Ether Alley"
+  }
+}

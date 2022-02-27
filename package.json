@@ -16,11 +16,13 @@
     "react-beautiful-dnd": "^13.1.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-intl": "^5.24.6",
     "react-redux": "^7.2.0",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0"
   },
   "devDependencies": {
+    "@formatjs/cli": "^4.8.2",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^7.1.2",
@@ -40,7 +42,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file lang/en.json",
+    "compile-folder": "formatjs compile-folder --ast lang src/containers/IntlProvider/lang",
+    "compile-pseudos": "formatjs compile lang/en.json --out-file src/containers/IntlProvider/lang/ro.json --ast --pseudo-locale xx-LS && formatjs compile lang/en.json --out-file src/containers/IntlProvider/lang/hr.json --ast --pseudo-locale en-XA",
+    "intl": "npm run extract && npm run compile-folder && npm run compile-pseudos"
   },
   "browserslist": {
     "production": [
