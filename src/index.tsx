@@ -7,9 +7,9 @@ import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
-import ThemeProvider from './containers/ThemeProvider';
-import DragDropProvider from './containers/DragDropProvider';
-import IntlProvider from './containers/IntlProvider';
+import ThemeProvider from './providers/ThemeProvider';
+import DragDropProvider from './providers/DragDropProvider';
+import IntlProvider from './providers/IntlProvider';
 
 const getLibrary = (provider: any, _connector: any) => {
   return new Web3Provider(provider);
@@ -18,8 +18,8 @@ const getLibrary = (provider: any, _connector: any) => {
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <IntlProvider>
-        <ThemeProvider>
+      <ThemeProvider>
+        <IntlProvider>
           <DragDropProvider>
             <Web3ReactProvider getLibrary={getLibrary}>
               <Router>
@@ -27,8 +27,8 @@ ReactDOM.render(
               </Router>
             </Web3ReactProvider>
           </DragDropProvider>
-        </ThemeProvider>
-      </IntlProvider>
+        </IntlProvider>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

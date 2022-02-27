@@ -16,8 +16,9 @@ import {
   updateGroupText,
 } from '../slice';
 import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
-import { StatisticTypes } from '../../../common/constants';
+import { Interfaces, StatisticTypes } from '../../../common/constants';
 import { ReactNode } from 'react';
+import { useIntl } from 'react-intl';
 
 function EditGroupsForm() {
   const dispatch = useAppDispatch();
@@ -173,33 +174,41 @@ function Item({
 }
 
 function NonFungibleLabel({ index }: { index: number }) {
+  const intl = useIntl();
   const nft = useAppSelector((state) => selectNonFungibleToken(state, index));
 
   if (!nft.metadata || !nft.metadata.name) {
-    return <Text isTruncated>Non Fungible Token</Text>;
+    return <Text isTruncated>{intl.formatMessage({ id: 'nft-fallback', defaultMessage: 'Non Fungible Token' })}</Text>;
   }
 
   return <Text isTruncated>{nft.metadata.name}</Text>;
 }
 
 function FungibleLabel({ index }: { index: number }) {
+  const intl = useIntl();
   const token = useAppSelector((state) => selectFungibleToken(state, index));
 
   if (!token.metadata.name) {
-    return <Text isTruncated>Fungible Token</Text>;
+    return <Text isTruncated>{intl.formatMessage({ id: 'token-fallback', defaultMessage: 'Fungible Token' })}</Text>;
   }
 
   return <Text isTruncated>{token.metadata.name}</Text>;
 }
 
 function StatisticLabel({ index }: { index: number }) {
+  const intl = useIntl();
   const stat = useAppSelector((state) => selectStatistic(state, index));
 
-  switch (stat.type) {
-    case StatisticTypes.SWAP:
-      return <Text isTruncated>Swaps {stat.contract.interface}</Text>;
+  switch (stat.contract.interface) {
+    case Interfaces.SUSHISWAP_EXCHANGE:
+      return (
+        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Sushiswap Stats' })}</Text>
+      );
+    case Interfaces.UNISWAP_V2_EXCHANGE:
+    case Interfaces.UNISWAP_V3_EXCHANGE:
+      return <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap Stats' })}</Text>;
     default:
-      return <Text isTruncated>stat.type</Text>;
+      return <Text isTruncated>{stat.contract.interface}</Text>;
   }
 }
 

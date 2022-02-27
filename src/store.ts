@@ -1,8 +1,8 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import homeReducer from './containers/HomePage/slice';
 import profileReducer from './containers/ProfilePage/slice';
-import themeReducer from './containers/ThemeProvider/slice';
-import dragDropReducer from './containers/DragDropProvider/slice';
+import themeReducer from './providers/ThemeProvider/slice';
+import dragDropReducer from './providers/DragDropProvider/slice';
 
 export const store = configureStore({
   reducer: {

@@ -6,6 +6,8 @@ function IntlProvider({ children }: { children: ReactChild }) {
   const locale = navigator.language;
   const messages = translations[locale];
 
+  console.log(locale);
+
   return (
     <IntlProviderComponent messages={messages} locale="en" defaultLocale="en">
       {children}

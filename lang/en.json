@@ -59,11 +59,23 @@
   "my-profile": {
     "defaultMessage": "My Profile"
   },
+  "nft-fallback": {
+    "defaultMessage": "Non Fungible Token"
+  },
   "save-edits-button": {
     "defaultMessage": "Save"
   },
   "search-aria-label": {
     "defaultMessage": "Go to a profile"
+  },
+  "select-badge-type": {
+    "defaultMessage": "Select badge type"
+  },
+  "sushi-swap-stats": {
+    "defaultMessage": "Sushiswap Stats"
+  },
+  "token-fallback": {
+    "defaultMessage": "Fungible Token"
   },
   "welcome-message": {
     "defaultMessage": "Welcome to Ether Alley"

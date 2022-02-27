@@ -2,139 +2,163 @@
   "alpha": [
     {
       "type": 0,
-      "value": "AlphaSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Alpha"
     }
   ],
   "badge-form-close": [
     {
       "type": 0,
-      "value": "CancelSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Cancel"
     }
   ],
   "badge-form-header": [
     {
       "type": 0,
-      "value": "Add a new badge to your collectionSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Add a new badge to your collection"
     }
   ],
   "badge-form-submit": [
     {
       "type": 0,
-      "value": "AddSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Add"
     }
   ],
   "close-edit-button": [
     {
       "type": 0,
-      "value": "CloseSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Close"
     }
   ],
   "colors-form": [
     {
       "type": 0,
-      "value": "ColorsSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Colors"
     }
   ],
   "connect-to-a-wallet": [
     {
       "type": 0,
-      "value": "Connect to a walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Connect to a wallet"
     }
   ],
   "edit-description": [
     {
       "type": 0,
-      "value": "DescriptionSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Description"
     }
   ],
   "edit-primary-color": [
     {
       "type": 0,
-      "value": "PrimarySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Primary"
     }
   ],
   "edit-primary-text-color": [
     {
       "type": 0,
-      "value": "Primary TextSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Primary Text"
     }
   ],
   "edit-profile-button": [
     {
       "type": 0,
-      "value": "Edit ProfileSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Edit Profile"
     }
   ],
   "edit-profile-header": [
     {
       "type": 0,
-      "value": "Edit your profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Edit your profile"
     }
   ],
   "edit-secondary-color": [
     {
       "type": 0,
-      "value": "SecondarySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Secondary"
     }
   ],
   "edit-secondary-text-color": [
     {
       "type": 0,
-      "value": "Secondary TextSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Secondary Text"
     }
   ],
   "edit-title": [
     {
       "type": 0,
-      "value": "TitleSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Title"
     }
   ],
   "enter-wallet-address": [
     {
       "type": 0,
-      "value": "Enter ENS name or Ethereum address...SSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Enter ENS name or Ethereum address..."
     }
   ],
   "go-home-button": [
     {
       "type": 0,
-      "value": "Go HomeSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Go Home"
     }
   ],
   "groups-form": [
     {
       "type": 0,
-      "value": "GroupsSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Groups"
     }
   ],
   "info-form": [
     {
       "type": 0,
-      "value": "InfoSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Info"
     }
   ],
   "my-profile": [
     {
       "type": 0,
-      "value": "My ProfileSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "My Profile"
+    }
+  ],
+  "nft-fallback": [
+    {
+      "type": 0,
+      "value": "Non Fungible Token"
     }
   ],
   "save-edits-button": [
     {
       "type": 0,
-      "value": "SaveSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Save"
     }
   ],
   "search-aria-label": [
     {
       "type": 0,
-      "value": "Go to a profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Go to a profile"
+    }
+  ],
+  "select-badge-type": [
+    {
+      "type": 0,
+      "value": "Select badge type"
+    }
+  ],
+  "sushi-swap-stats": [
+    {
+      "type": 0,
+      "value": "Sushiswap Stats"
+    }
+  ],
+  "token-fallback": [
+    {
+      "type": 0,
+      "value": "Fungible Token"
     }
   ],
   "welcome-message": [
     {
       "type": 0,
-      "value": "Welcome to Ether AlleySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Welcome to Ether Alley"
     }
   ]
 }

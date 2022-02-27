@@ -44,13 +44,14 @@ function BadgeFormModal() {
 }
 
 function NewBadgeForm() {
+  const intl = useIntl();
   const { type } = useAppSelector(selectBadgeForm);
   const dispatch = useAppDispatch();
 
   return (
     <Select
       id="select-badge-type"
-      label="Select Badge Type"
+      label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
       options={Object.entries(BadgeTypes).map(([_, value]) => ({ id: value, label: value }))}
       value={type}
       onChange={(event) => {

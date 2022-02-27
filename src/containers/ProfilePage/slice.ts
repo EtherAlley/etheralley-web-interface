@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { fetchAPI, fetchAPINoResponse } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from '../../common/types';
-import { onDragDrop } from '../DragDropProvider/slice';
+import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 
 export interface State {

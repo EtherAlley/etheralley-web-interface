@@ -6,7 +6,7 @@ import {
   updatePrimaryTextColor,
   updateSecondaryColor,
   updateSecondaryTextColor,
-} from '../ProfilePage/slice';
+} from '../../containers/ProfilePage/slice';
 
 export interface State {
   config: {

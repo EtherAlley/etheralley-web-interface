@@ -119,6 +119,12 @@
       "value": "Ḿẏ Ṕŕŏḟíĺè"
     }
   ],
+  "nft-fallback": [
+    {
+      "type": 0,
+      "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
+    }
+  ],
   "save-edits-button": [
     {
       "type": 0,
@@ -129,6 +135,24 @@
     {
       "type": 0,
       "value": "Ḡŏ ṭŏ â ṗŕŏḟíĺè"
+    }
+  ],
+  "select-badge-type": [
+    {
+      "type": 0,
+      "value": "Ṡèĺèćṭ ḃâḋĝè ṭẏṗè"
+    }
+  ],
+  "sushi-swap-stats": [
+    {
+      "type": 0,
+      "value": "Ṡůśḫíśẘâṗ Ṡṭâṭś"
+    }
+  ],
+  "token-fallback": [
+    {
+      "type": 0,
+      "value": "Ḟůńĝíḃĺè Ṯŏǩèń"
     }
   ],
   "welcome-message": [
