@@ -13,7 +13,7 @@ import {
 function EditColorsForm() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const { primary, secondary, primaryText, secondaryText } = useAppSelector(selectColors);
+  const { primary, secondary, primary_text, secondary_text } = useAppSelector(selectColors);
 
   return (
     <>
@@ -35,7 +35,7 @@ function EditColorsForm() {
       <Input
         id="primaryText"
         label={intl.formatMessage({ id: 'edit-primary-text-color', defaultMessage: 'Primary Text' })}
-        value={primaryText}
+        value={primary_text}
         maxLength={15}
         onChange={(event) => dispatch(updatePrimaryTextColor(event.target.value))}
         mt={4}
@@ -43,7 +43,7 @@ function EditColorsForm() {
       <Input
         id="secondaryText"
         label={intl.formatMessage({ id: 'edit-secondary-text-color', defaultMessage: 'Secondary Text' })}
-        value={secondaryText}
+        value={secondary_text}
         maxLength={15}
         onChange={(event) => dispatch(updateSecondaryTextColor(event.target.value))}
         mt={4}

@@ -24,8 +24,8 @@ export type DisplayConfig = {
   colors: {
     primary: string;
     secondary: string;
-    primaryText: string;
-    secondaryText: string;
+    primary_text: string;
+    secondary_text: string;
   };
   text: {
     title: string;

@@ -12,7 +12,7 @@ import { useWeb3React } from '@web3-react/core';
 import AccordionComponent from '../../../components/Accordion';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { closeEditBar, saveProfile, selectShowEditBar } from '../slice';
+import { closeEditBar, saveProfile, selectSaving, selectShowEditBar } from '../slice';
 import EditInfoForm from './EditInfoForm';
 import EditColorsForm from './EditColorsForm';
 import EditGroupsForm from './EditGroupsForm';
@@ -20,6 +20,7 @@ import EditGroupsForm from './EditGroupsForm';
 function ProfileEditDrawer() {
   const intl = useIntl();
   const showEditBar = useAppSelector(selectShowEditBar);
+  const saving = useAppSelector(selectSaving);
   const dispatch = useAppDispatch();
   const { account, library } = useWeb3React();
   const closeEdit = () => dispatch(closeEditBar());
@@ -47,7 +48,11 @@ function ProfileEditDrawer() {
           <Button variant="outline" colorScheme="red" mr={3} onClick={closeEdit}>
             {intl.formatMessage({ id: 'close-edit-button', defaultMessage: 'Close' })}
           </Button>
-          <Button colorScheme="brand" onClick={() => dispatch(saveProfile({ address: account!, library }))}>
+          <Button
+            colorScheme="brand"
+            onClick={() => dispatch(saveProfile({ address: account!, library }))}
+            isLoading={saving}
+          >
             {intl.formatMessage({ id: 'save-edits-button', defaultMessage: 'Save' })}
           </Button>
         </DrawerFooter>

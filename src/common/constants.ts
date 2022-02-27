@@ -6,6 +6,13 @@ export const Routes = {
   PROFILE: '/profiles/:address',
 };
 
+export enum AsyncStates {
+  READY = 'READY',
+  PENDING = 'PENDING',
+  REJECTED = 'REJECTED',
+  FULFILLED = 'FULFILLED',
+}
+
 export enum Blockchains {
   ETHEREUM = 'ethereum',
   POLYGON = 'polygon',

@@ -4,26 +4,20 @@ import { fetchAPI, fetchAPINoResponse } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
+import { AsyncStates } from '../../common/constants';
+import { getNonFungibleToken } from './BadgeFormModal/slice';
 
 export interface State {
-  loading: boolean;
-  error: boolean;
+  loadProfileState: AsyncStates;
+  saveProfileState: AsyncStates;
   showEditBar: boolean;
-  showBadgeForm: boolean;
-  badgeForm: {
-    type: BadgeTypes | undefined;
-  };
   profile: Profile;
 }
 
 const initialState: State = {
-  loading: true,
-  error: false,
+  loadProfileState: AsyncStates.PENDING,
+  saveProfileState: AsyncStates.READY,
   showEditBar: false,
-  showBadgeForm: false,
-  badgeForm: {
-    type: undefined,
-  },
   profile: {
     address: '',
     ens_name: '',
@@ -31,8 +25,8 @@ const initialState: State = {
       colors: {
         primary: '',
         secondary: '',
-        primaryText: '',
-        secondaryText: '',
+        primary_text: '',
+        secondary_text: '',
       },
       text: {
         title: '',
@@ -102,10 +96,10 @@ export const slice = createSlice({
       state.profile.display_config.colors.secondary = action.payload;
     },
     updatePrimaryTextColor: (state, action: PayloadAction<string>) => {
-      state.profile.display_config.colors.primaryText = action.payload;
+      state.profile.display_config.colors.primary_text = action.payload;
     },
     updateSecondaryTextColor: (state, action: PayloadAction<string>) => {
-      state.profile.display_config.colors.secondaryText = action.payload;
+      state.profile.display_config.colors.secondary_text = action.payload;
     },
     updateGroupText: (state, action: PayloadAction<{ index: number; text: string }>) => {
       state.profile.display_config.groups[action.payload.index].text = action.payload.text;
@@ -126,17 +120,6 @@ export const slice = createSlice({
       removeAssets(state, [group.items[action.payload.itemArrayIndex]]);
       group.items.splice(action.payload.itemArrayIndex, 1);
     },
-    openBadgeForm: (state) => {
-      state.showBadgeForm = true;
-      state.badgeForm = { ...initialState.badgeForm };
-    },
-    closeBadgeForm: (state) => {
-      state.showBadgeForm = false;
-    },
-    updateBadgeType: (state, action: PayloadAction<string>) => {
-      state.badgeForm = { ...initialState.badgeForm };
-      state.badgeForm.type = action.payload as BadgeTypes;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -144,18 +127,23 @@ export const slice = createSlice({
         return initialState;
       })
       .addCase(loadProfile.rejected, (state) => {
-        state.loading = false;
-        state.error = true;
+        state.loadProfileState = AsyncStates.REJECTED;
       })
       .addCase(loadProfile.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = false;
+        state.loadProfileState = AsyncStates.FULFILLED;
         state.profile = { ...state.profile, ...action.payload };
         if (!action.payload.display_config) {
           buildDefaultDisplayConfig(state.profile, action.payload); // TODO
         }
       })
+      .addCase(saveProfile.pending, (state, _) => {
+        state.saveProfileState = AsyncStates.PENDING;
+      })
+      .addCase(saveProfile.rejected, (state, _) => {
+        state.saveProfileState = AsyncStates.REJECTED;
+      })
       .addCase(saveProfile.fulfilled, (state, _) => {
+        state.saveProfileState = AsyncStates.FULFILLED;
         state.showEditBar = false;
       })
       .addCase(onDragDrop, (state, { payload }) => {
@@ -177,6 +165,24 @@ export const slice = createSlice({
           const [removed] = sourceGroup.splice(source.index, 1);
           destinationGroup.splice(destination.index, 0, removed);
         }
+      })
+      .addCase(getNonFungibleToken.fulfilled, (state, { payload }) => {
+        const groups = state.profile.display_config.groups;
+        const item = {
+          id: nanoid(),
+          index: state.profile.non_fungible_tokens.length,
+          type: BadgeTypes.NonFungibleToken,
+        };
+        state.profile.non_fungible_tokens.push(payload);
+        if (groups.length === 0) {
+          groups.push({
+            id: nanoid(),
+            text: '',
+            items: [item],
+          });
+        } else {
+          groups[0].items = [item, ...groups[0].items];
+        }
       });
   },
 });
@@ -191,8 +197,8 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
   stateProfile.display_config.colors = {
     primary: '#121212',
     secondary: '#1a1a1b',
-    primaryText: '#FFF',
-    secondaryText: '#FFF',
+    primary_text: '#FFF',
+    secondary_text: '#FFF',
   };
   stateProfile.display_config.groups = [];
 
@@ -291,9 +297,11 @@ function removeAssets(state: State, itemsBeingDeleted: DisplayItem[]) {
   }
 }
 
-export const selectLoading = (state: RootState) => state.profilePage.loading;
+export const selectLoading = (state: RootState) => state.profilePage.loadProfileState === AsyncStates.PENDING;
 
-export const selectError = (state: RootState) => state.profilePage.error;
+export const selectError = (state: RootState) => state.profilePage.loadProfileState === AsyncStates.REJECTED;
+
+export const selectSaving = (state: RootState) => state.profilePage.saveProfileState === AsyncStates.PENDING;
 
 export const selectShowEditBar = (state: RootState) => state.profilePage.showEditBar;
 
@@ -323,10 +331,6 @@ export const selectStatistic = (state: RootState, index: number) => state.profil
 
 export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
 
-export const selectShowBadgeForm = (state: RootState) => state.profilePage.showBadgeForm;
-
-export const selectBadgeForm = (state: RootState) => state.profilePage.badgeForm;
-
 export default slice.reducer;
 
 export const {
@@ -342,7 +346,4 @@ export const {
   addGroup,
   removeGroup,
   removeItem,
-  openBadgeForm,
-  closeBadgeForm,
-  updateBadgeType,
 } = slice.actions;

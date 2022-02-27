@@ -15,6 +15,7 @@ function Select({
   isInvalid,
   errorMessage,
   mb,
+  mt,
 }: {
   id: string;
   label?: string;
@@ -24,9 +25,10 @@ function Select({
   isInvalid?: boolean;
   errorMessage?: string;
   mb?: number;
+  mt?: number;
 }) {
   return (
-    <FormControl isInvalid={isInvalid}>
+    <FormControl isInvalid={isInvalid} mt={mt}>
       {label && <FormLabel htmlFor={id}>{label}</FormLabel>}
       <SelectComponent id={id} value={value} onChange={onChange} mb={mb}>
         {!value && <option key="undefined" value={undefined}></option>}

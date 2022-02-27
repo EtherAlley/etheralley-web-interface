@@ -6,7 +6,6 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import {
   addGroup,
-  openBadgeForm,
   removeGroup,
   removeItem,
   selectFungibleToken,
@@ -19,8 +18,10 @@ import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
 import { Interfaces } from '../../../common/constants';
 import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
+import { openBadgeForm } from '../BadgeFormModal/slice';
 
 function EditGroupsForm() {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const groups = useAppSelector(selectGroups);
 
@@ -29,13 +30,23 @@ function EditGroupsForm() {
       <Flex>
         <Box flexGrow={1} />
         <Button
+          onClick={() => dispatch(openBadgeForm())}
+          my={5}
+          mr={2}
+          colorScheme="green"
+          variant="outline"
+          rightIcon={<Icon as={MdAdd} />}
+        >
+          {intl.formatMessage({ id: 'add-badge', defaultMessage: 'Add Badge' })}
+        </Button>
+        <Button
           onClick={() => dispatch(addGroup())}
           my={5}
           colorScheme="green"
           variant="outline"
           rightIcon={<Icon as={MdAdd} />}
         >
-          Add Group
+          {intl.formatMessage({ id: 'add-group', defaultMessage: 'Add Group' })}
         </Button>
       </Flex>
       {groups.map((group, i) => {
@@ -58,16 +69,6 @@ function Group({ group, arrayIndex }: { group: DisplayGroup; arrayIndex: number 
           value={text}
           onChange={(event) => dispatch(updateGroupText({ index: arrayIndex, text: event.target.value }))}
           maxLength={30}
-        />
-        <IconButton
-          aria-label="Add Item"
-          tooltip="Add Item"
-          Icon={MdAdd}
-          onClick={() => dispatch(openBadgeForm())}
-          size="md"
-          variant="solid"
-          bg="gray.700"
-          iconColor="green.300"
         />
         <IconButton
           aria-label="Remove Group"

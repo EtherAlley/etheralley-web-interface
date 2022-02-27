@@ -11,20 +11,40 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
+import { Blockchains, Interfaces } from '../../../common/constants';
 import { BadgeTypes } from '../../../common/types';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { closeBadgeForm, selectBadgeForm, selectShowBadgeForm, updateBadgeType } from '../slice';
+import {
+  closeBadgeForm,
+  getNonFungibleToken,
+  selectFungibleForm,
+  selectNonFungibleForm,
+  selectShow,
+  selectStatForm,
+  selectSubmitting,
+  selectType,
+  updateBadgeType,
+  updateFungibleAddress,
+  updateFungibleBlockchain,
+  updateNonFungibleAddress,
+  updateNonFungibleBlockchain,
+  updateNonFungibleInterface,
+  updateNonFungibleTokenId,
+  updateStatBlockchain,
+  updateStatInterface,
+} from './slice';
 
 function BadgeFormModal() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const showBadgeForm = useAppSelector(selectShowBadgeForm);
+  const show = useAppSelector(selectShow);
+  const submitting = useAppSelector(selectSubmitting);
 
   return (
-    <Modal isOpen={showBadgeForm} onClose={() => dispatch(closeBadgeForm())}>
+    <Modal isOpen={show} onClose={() => dispatch(closeBadgeForm())}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
@@ -39,7 +59,9 @@ function BadgeFormModal() {
           <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeForm())}>
             {intl.formatMessage({ id: 'badge-form-close', defaultMessage: 'Cancel' })}
           </Button>
-          <Button colorScheme="brand">{intl.formatMessage({ id: 'badge-form-submit', defaultMessage: 'Add' })}</Button>
+          <Button colorScheme="brand" onClick={() => dispatch(getNonFungibleToken())} isLoading={submitting}>
+            {intl.formatMessage({ id: 'badge-form-submit', defaultMessage: 'Add' })}
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -48,46 +70,35 @@ function BadgeFormModal() {
 
 function NewBadgeForm() {
   const intl = useIntl();
-  const { type } = useAppSelector(selectBadgeForm);
+  const type = useAppSelector(selectType);
   const dispatch = useAppDispatch();
-
-  const options: { id: string; label: string }[] = [];
-  for (const [, value] of Object.entries(BadgeTypes)) {
-    switch (value) {
-      case BadgeTypes.FungibleToken:
-        options.push({
-          id: value,
-          label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
-        });
-        break;
-      case BadgeTypes.NonFungibleToken:
-        options.push({
-          id: value,
-          label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
-        });
-        break;
-      case BadgeTypes.Statistics:
-        options.push({
-          id: value,
-          label: intl.formatMessage({ id: 'statistic-option', defaultMessage: 'Statistic' }),
-        });
-        break;
-    }
-  }
 
   return (
     <Box>
       <Select
         id="select-badge-type"
         label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
-        options={options}
+        options={[
+          {
+            id: BadgeTypes.NonFungibleToken,
+            label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
+          },
+          {
+            id: BadgeTypes.FungibleToken,
+            label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
+          },
+          {
+            id: BadgeTypes.Statistics,
+            label: intl.formatMessage({ id: 'statistic-option', defaultMessage: 'Statistic' }),
+          },
+        ]}
         value={type}
         onChange={(event) => {
           dispatch(updateBadgeType(event.target.value));
         }}
-        mb={5}
+        mt={5}
       />
-      <Divider mb={5} />
+      <Divider mt={5} />
       <NonFungibleForm />
       <FungibleForm />
       <StatForm />
@@ -97,51 +108,193 @@ function NewBadgeForm() {
 
 function NonFungibleForm() {
   const intl = useIntl();
-  const { type } = useAppSelector(selectBadgeForm);
+  const type = useAppSelector(selectType);
+  const { blockchain, interface: interfaceName, address, token_id } = useAppSelector(selectNonFungibleForm);
   const dispatch = useAppDispatch();
 
   if (type !== BadgeTypes.NonFungibleToken) {
     return <></>;
   }
+
   return (
     <Box>
-      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
-      <Select id="interface" label="Interface" value={undefined} options={[]} onChange={() => {}} />
-      <Input id="contract-address" value="" label="Address" />
-      <Input id="token-id" value="" label="Token Id" />
+      <Select
+        id="blockchain"
+        label={intl.formatMessage({ id: 'select-blockchain', defaultMessage: 'Blockchain' })}
+        value={blockchain}
+        options={[
+          {
+            id: Blockchains.ETHEREUM,
+            label: 'Ethereum',
+          },
+          {
+            id: Blockchains.POLYGON,
+            label: 'Polygon',
+          },
+          {
+            id: Blockchains.ARBITRUM,
+            label: 'Arbitrum',
+          },
+          {
+            id: Blockchains.OPTIMISM,
+            label: 'Optimism',
+          },
+        ]}
+        onChange={(event) => dispatch(updateNonFungibleBlockchain(event.target.value))}
+        mt={5}
+      />
+      <Select
+        id="interface"
+        label={intl.formatMessage({ id: 'select-interface', defaultMessage: 'Interface' })}
+        value={interfaceName}
+        options={[
+          {
+            id: Interfaces.ERC721,
+            label: 'ERC721',
+          },
+          {
+            id: Interfaces.ERC1155,
+            label: 'ERC1155',
+          },
+          {
+            id: Interfaces.ENS_REGISTRAR,
+            label: 'ENS Name',
+          },
+        ]}
+        onChange={(event) => dispatch(updateNonFungibleInterface(event.target.value))}
+        mt={5}
+      />
+      <Input
+        id="contract-address"
+        value={address}
+        label={intl.formatMessage({ id: 'input-contract-address', defaultMessage: 'Address' })}
+        onChange={(event) => dispatch(updateNonFungibleAddress(event.target.value))}
+        mt={5}
+      />
+      <Input
+        id="token-id"
+        value={token_id}
+        label={intl.formatMessage({ id: 'input-token-id', defaultMessage: 'Token Id' })}
+        onChange={(event) => dispatch(updateNonFungibleTokenId(event.target.value))}
+        mt={5}
+      />
     </Box>
   );
 }
 
 function FungibleForm() {
   const intl = useIntl();
-  const { type } = useAppSelector(selectBadgeForm);
+  const type = useAppSelector(selectType);
+  const { blockchain, address } = useAppSelector(selectFungibleForm);
   const dispatch = useAppDispatch();
 
   if (type !== BadgeTypes.FungibleToken) {
     return <></>;
   }
+
   return (
     <Box>
-      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
-      <Input id="token-symbol" value="" label="Token Symbol" />
-      <Input id="contract-address" value="" label="Address" />
+      <Select
+        id="blockchain"
+        label={intl.formatMessage({ id: 'select-blockchain', defaultMessage: 'Blockchain' })}
+        value={blockchain}
+        options={[
+          {
+            id: Blockchains.ETHEREUM,
+            label: 'Ethereum',
+          },
+          {
+            id: Blockchains.POLYGON,
+            label: 'Polygon',
+          },
+          {
+            id: Blockchains.ARBITRUM,
+            label: 'Arbitrum',
+          },
+          {
+            id: Blockchains.OPTIMISM,
+            label: 'Optimism',
+          },
+        ]}
+        onChange={(event) => dispatch(updateFungibleBlockchain(event.target.value))}
+        mt={5}
+      />
+      <Input
+        id="token-symbol"
+        value=""
+        label={intl.formatMessage({ id: 'input-token-symbol', defaultMessage: 'Token Symbol' })}
+        onChange={() => {}}
+        mt={5}
+      />
+      <Input
+        id="contract-address"
+        value={address}
+        label={intl.formatMessage({ id: 'input-contract-address', defaultMessage: 'Address' })}
+        onChange={(event) => dispatch(updateFungibleAddress(event.target.value))}
+        mt={5}
+      />
     </Box>
   );
 }
 
 function StatForm() {
   const intl = useIntl();
-  const { type } = useAppSelector(selectBadgeForm);
+  const type = useAppSelector(selectType);
+  const { blockchain, interface: interfaceName } = useAppSelector(selectStatForm);
   const dispatch = useAppDispatch();
 
   if (type !== BadgeTypes.Statistics) {
     return <></>;
   }
+
   return (
     <Box>
-      <Select id="blockchain" label="Blockchain" value={undefined} options={[]} onChange={() => {}} />
-      <Select id="interface" label="Stat Type" value={undefined} options={[]} onChange={() => {}} />
+      <Select
+        id="blockchain"
+        label={intl.formatMessage({ id: 'select-blockchain', defaultMessage: 'Blockchain' })}
+        value={blockchain}
+        options={[
+          {
+            id: Blockchains.ETHEREUM,
+            label: 'Ethereum',
+          },
+          {
+            id: Blockchains.POLYGON,
+            label: 'Polygon',
+          },
+          {
+            id: Blockchains.ARBITRUM,
+            label: 'Arbitrum',
+          },
+          {
+            id: Blockchains.OPTIMISM,
+            label: 'Optimism',
+          },
+        ]}
+        onChange={(event) => dispatch(updateStatBlockchain(event.target.value))}
+        mt={5}
+      />
+      <Select
+        id="interface"
+        label={intl.formatMessage({ id: 'select-stat-type', defaultMessage: 'Statistic Type' })}
+        value={interfaceName}
+        options={[
+          {
+            id: Interfaces.SUSHISWAP_EXCHANGE,
+            label: intl.formatMessage({ id: 'sushiswap-exchange', defaultMessage: 'Sushiswap Swaps' }),
+          },
+          {
+            id: Interfaces.ERC1155,
+            label: intl.formatMessage({ id: 'uniswap-v2-exchange', defaultMessage: 'Uniswap V2 Swaps' }),
+          },
+          {
+            id: Interfaces.ENS_REGISTRAR,
+            label: intl.formatMessage({ id: 'uniswap-v3-exchange', defaultMessage: 'Uniswap V3 Swaps' }),
+          },
+        ]}
+        onChange={(event) => dispatch(updateStatInterface(event.target.value))}
+        mt={5}
+      />
     </Box>
   );
 }
