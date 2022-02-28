@@ -1,8 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { BadgeTypes, NonFungibleToken } from '../../../common/types';
-import { Blockchains, Interfaces, AsyncStates } from '../../../common/constants';
+import { BadgeTypes, FungibleToken, NonFungibleToken, Statistic } from '../../../common/types';
+import {
+  Blockchains,
+  Interfaces,
+  AsyncStates,
+  StatisticTypes,
+  Toasts,
+  ToastStatuses,
+  ZeroAddress,
+} from '../../../common/constants';
 import { fetchAPI } from '../../../common/http';
+import { showToast } from '../../App/slice';
 
 export interface State {
   show: boolean;
@@ -21,6 +30,7 @@ export interface State {
   statForm: {
     blockchain: Blockchains | undefined;
     interface: Interfaces | undefined;
+    type: StatisticTypes | undefined;
   };
 }
 
@@ -41,12 +51,30 @@ const initialState: State = {
   statForm: {
     blockchain: undefined,
     interface: undefined,
+    type: undefined,
   },
 };
 
+export const submitForm = createAsyncThunk<void, BadgeTypes | undefined, { state: RootState }>(
+  'badgeForm/submitForm',
+  async (type, { dispatch }) => {
+    switch (type) {
+      case BadgeTypes.NonFungibleToken:
+        dispatch(getNonFungibleToken());
+        break;
+      case BadgeTypes.FungibleToken:
+        dispatch(getFungibleToken());
+        break;
+      case BadgeTypes.Statistics:
+        dispatch(getStatistic());
+        break;
+    }
+  }
+);
+
 export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined, { state: RootState }>(
   'badgeForm/getNonFungibleToken',
-  async (_, { getState }) => {
+  async (_, { getState, dispatch }) => {
     const {
       badgeForm: {
         nonFungibleForm: { blockchain, interface: interfaceName, address, token_id },
@@ -54,9 +82,59 @@ export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined,
       profilePage: { profile },
     } = getState();
 
-    return await fetchAPI<NonFungibleToken>(
-      `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
-    );
+    try {
+      const nft = await fetchAPI<NonFungibleToken>(
+        `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
+      );
+      return nft;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
+  }
+);
+
+export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { state: RootState }>(
+  'badgeForm/getFungibleToken',
+  async (_, { getState, dispatch }) => {
+    const {
+      badgeForm: {
+        fungibleForm: { blockchain, address },
+      },
+      profilePage: { profile },
+    } = getState();
+
+    try {
+      const token = await fetchAPI<FungibleToken>(
+        `/contracts/token?blockchain=${blockchain}&interface=${Interfaces.ERC20}&contract=${address}&user_address=${profile.address}`
+      );
+      return token;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
+  }
+);
+
+export const getStatistic = createAsyncThunk<Statistic, undefined, { state: RootState }>(
+  'badgeForm/getStatistic',
+  async (_, { getState, dispatch }) => {
+    const {
+      badgeForm: {
+        statForm: { blockchain, interface: interfaceName, type },
+      },
+      profilePage: { profile },
+    } = getState();
+
+    try {
+      const stat = await fetchAPI<Statistic>(
+        `/contracts/statistic?blockchain=${blockchain}&interface=${interfaceName}&type=${type}&user_address=${profile.address}&contract=${ZeroAddress}`
+      );
+      return stat;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
   }
 );
 
@@ -100,6 +178,13 @@ export const slice = createSlice({
     },
     updateStatInterface: (state, action: PayloadAction<string>) => {
       state.statForm.interface = action.payload as Interfaces;
+      switch (action.payload) {
+        case Interfaces.SUSHISWAP_EXCHANGE:
+        case Interfaces.UNISWAP_V2_EXCHANGE:
+        case Interfaces.UNISWAP_V3_EXCHANGE:
+          state.statForm.type = StatisticTypes.SWAP;
+          break;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -112,6 +197,28 @@ export const slice = createSlice({
       state.submitState = AsyncStates.FULFILLED;
     });
     builder.addCase(getNonFungibleToken.rejected, (state) => {
+      state.submitState = AsyncStates.REJECTED;
+    });
+    builder.addCase(getFungibleToken.pending, (state) => {
+      state.submitState = AsyncStates.PENDING;
+    });
+    builder.addCase(getFungibleToken.fulfilled, (state) => {
+      Object.assign(state, initialState);
+      state.show = false;
+      state.submitState = AsyncStates.FULFILLED;
+    });
+    builder.addCase(getFungibleToken.rejected, (state) => {
+      state.submitState = AsyncStates.REJECTED;
+    });
+    builder.addCase(getStatistic.pending, (state) => {
+      state.submitState = AsyncStates.PENDING;
+    });
+    builder.addCase(getStatistic.fulfilled, (state) => {
+      Object.assign(state, initialState);
+      state.show = false;
+      state.submitState = AsyncStates.FULFILLED;
+    });
+    builder.addCase(getStatistic.rejected, (state) => {
       state.submitState = AsyncStates.REJECTED;
     });
   },

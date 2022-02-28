@@ -5,7 +5,7 @@ import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 import { AsyncStates } from '../../common/constants';
-import { getNonFungibleToken } from './BadgeFormModal/slice';
+import { getFungibleToken, getNonFungibleToken, getStatistic } from './BadgeFormModal/slice';
 
 export interface State {
   loadProfileState: AsyncStates;
@@ -174,6 +174,42 @@ export const slice = createSlice({
           type: BadgeTypes.NonFungibleToken,
         };
         state.profile.non_fungible_tokens.push(payload);
+        if (groups.length === 0) {
+          groups.push({
+            id: nanoid(),
+            text: '',
+            items: [item],
+          });
+        } else {
+          groups[0].items = [item, ...groups[0].items];
+        }
+      })
+      .addCase(getFungibleToken.fulfilled, (state, { payload }) => {
+        const groups = state.profile.display_config.groups;
+        const item = {
+          id: nanoid(),
+          index: state.profile.fungible_tokens.length,
+          type: BadgeTypes.FungibleToken,
+        };
+        state.profile.fungible_tokens.push(payload);
+        if (groups.length === 0) {
+          groups.push({
+            id: nanoid(),
+            text: '',
+            items: [item],
+          });
+        } else {
+          groups[0].items = [item, ...groups[0].items];
+        }
+      })
+      .addCase(getStatistic.fulfilled, (state, { payload }) => {
+        const groups = state.profile.display_config.groups;
+        const item = {
+          id: nanoid(),
+          index: state.profile.statistics.length,
+          type: BadgeTypes.Statistics,
+        };
+        state.profile.statistics.push(payload);
         if (groups.length === 0) {
           groups.push({
             id: nanoid(),

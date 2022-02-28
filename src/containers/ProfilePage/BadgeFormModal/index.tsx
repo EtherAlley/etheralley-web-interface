@@ -19,7 +19,7 @@ import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import {
   closeBadgeForm,
-  getNonFungibleToken,
+  submitForm,
   selectFungibleForm,
   selectNonFungibleForm,
   selectShow,
@@ -41,6 +41,7 @@ function BadgeFormModal() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const show = useAppSelector(selectShow);
+  const type = useAppSelector(selectType);
   const submitting = useAppSelector(selectSubmitting);
 
   return (
@@ -59,7 +60,12 @@ function BadgeFormModal() {
           <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeForm())}>
             {intl.formatMessage({ id: 'badge-form-close', defaultMessage: 'Cancel' })}
           </Button>
-          <Button colorScheme="brand" onClick={() => dispatch(getNonFungibleToken())} isLoading={submitting}>
+          <Button
+            colorScheme="brand"
+            onClick={() => dispatch(submitForm(type))}
+            isLoading={submitting}
+            disabled={!type}
+          >
             {intl.formatMessage({ id: 'badge-form-submit', defaultMessage: 'Add' })}
           </Button>
         </ModalFooter>
@@ -284,11 +290,11 @@ function StatForm() {
             label: intl.formatMessage({ id: 'sushiswap-exchange', defaultMessage: 'Sushiswap Swaps' }),
           },
           {
-            id: Interfaces.ERC1155,
+            id: Interfaces.UNISWAP_V2_EXCHANGE,
             label: intl.formatMessage({ id: 'uniswap-v2-exchange', defaultMessage: 'Uniswap V2 Swaps' }),
           },
           {
-            id: Interfaces.ENS_REGISTRAR,
+            id: Interfaces.UNISWAP_V3_EXCHANGE,
             label: intl.formatMessage({ id: 'uniswap-v3-exchange', defaultMessage: 'Uniswap V3 Swaps' }),
           },
         ]}

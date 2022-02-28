@@ -6,12 +6,7 @@ export const Routes = {
   PROFILE: '/profiles/:address',
 };
 
-export enum AsyncStates {
-  READY = 'READY',
-  PENDING = 'PENDING',
-  REJECTED = 'REJECTED',
-  FULFILLED = 'FULFILLED',
-}
+export const ZeroAddress = '0x0000000000000000000000000000000000000000';
 
 export enum Blockchains {
   ETHEREUM = 'ethereum',
@@ -37,4 +32,22 @@ export enum InteractionTypes {
 
 export enum StatisticTypes {
   SWAP = 'SWAP',
+}
+
+export enum AsyncStates {
+  READY = 'READY',
+  PENDING = 'PENDING',
+  REJECTED = 'REJECTED',
+  FULFILLED = 'FULFILLED',
+}
+
+export enum Toasts {
+  ADDING_BADGE = 'ADDING_BADGE',
+}
+
+export enum ToastStatuses {
+  INFO = 'info',
+  WARNING = 'warning',
+  SUCCESS = 'success',
+  ERROR = 'error',
 }

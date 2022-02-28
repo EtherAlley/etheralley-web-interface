@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import appReducer from './containers/App/slice';
 import themeReducer from './providers/ThemeProvider/slice';
 import dragDropReducer from './providers/DragDropProvider/slice';
 import homeReducer from './containers/HomePage/slice';
@@ -7,6 +8,7 @@ import badgeFormReducer from './containers/ProfilePage/BadgeFormModal/slice';
 
 export const store = configureStore({
   reducer: {
+    app: appReducer,
     home: homeReducer,
     profilePage: profileReducer,
     theme: themeReducer,
