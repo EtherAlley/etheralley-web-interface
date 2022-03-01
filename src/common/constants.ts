@@ -43,6 +43,7 @@ export enum AsyncStates {
 
 export enum Toasts {
   ADDING_BADGE = 'ADDING_BADGE',
+  ADDING_PROFILE_PICTURE = 'ADDING_PROFILE_PICTURE',
 }
 
 export enum ToastStatuses {

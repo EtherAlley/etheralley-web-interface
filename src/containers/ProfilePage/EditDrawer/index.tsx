@@ -16,6 +16,7 @@ import { closeEditBar, saveProfile, selectSaving, selectShowEditBar } from '../s
 import EditInfoForm from './EditInfoForm';
 import EditColorsForm from './EditColorsForm';
 import EditBadgesForm from './EditBadgesForm';
+import EditProfilePictureForm from './EditProfilePictureForm';
 
 function ProfileEditDrawer() {
   const intl = useIntl();
@@ -37,6 +38,10 @@ function ProfileEditDrawer() {
         <DrawerBody>
           <AccordionComponent
             items={[
+              {
+                header: intl.formatMessage({ id: 'profile-picture-form', defaultMessage: 'Profile Picture' }),
+                body: <EditProfilePictureForm />,
+              },
               { header: intl.formatMessage({ id: 'info-form', defaultMessage: 'Info' }), body: <EditInfoForm /> },
               { header: intl.formatMessage({ id: 'colors-form', defaultMessage: 'Colors' }), body: <EditColorsForm /> },
               { header: intl.formatMessage({ id: 'badges-form', defaultMessage: 'Badges' }), body: <EditBadgesForm /> },

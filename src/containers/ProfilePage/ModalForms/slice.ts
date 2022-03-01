@@ -14,9 +14,16 @@ import { fetchAPI } from '../../../common/http';
 import { showToast } from '../../App/slice';
 
 export interface State {
-  show: boolean;
-  submitState: AsyncStates;
-  type: BadgeTypes | undefined;
+  badgeModal: {
+    show: boolean;
+    submitState: AsyncStates;
+    type: BadgeTypes | undefined;
+  };
+  profilePictureModal: {
+    show: boolean;
+    submitState: AsyncStates;
+    type: BadgeTypes | undefined;
+  };
   nonFungibleForm: {
     blockchain: Blockchains | undefined;
     interface: Interfaces | undefined;
@@ -34,10 +41,17 @@ export interface State {
   };
 }
 
-const initialState: State = {
-  show: false,
-  submitState: AsyncStates.READY,
-  type: undefined,
+const initialState = (): State => ({
+  badgeModal: {
+    show: false,
+    submitState: AsyncStates.READY,
+    type: undefined,
+  },
+  profilePictureModal: {
+    show: false,
+    submitState: AsyncStates.READY,
+    type: undefined,
+  },
   nonFungibleForm: {
     blockchain: undefined,
     interface: undefined,
@@ -53,10 +67,10 @@ const initialState: State = {
     interface: undefined,
     type: undefined,
   },
-};
+});
 
-export const submitForm = createAsyncThunk<void, BadgeTypes | undefined, { state: RootState }>(
-  'badgeForm/submitForm',
+export const submitBadge = createAsyncThunk<void, BadgeTypes | undefined, { state: RootState }>(
+  'forms/submitBadge',
   async (type, { dispatch }) => {
     switch (type) {
       case BadgeTypes.NonFungibleToken:
@@ -73,10 +87,10 @@ export const submitForm = createAsyncThunk<void, BadgeTypes | undefined, { state
 );
 
 export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined, { state: RootState }>(
-  'badgeForm/getNonFungibleToken',
+  'forms/getNonFungibleToken',
   async (_, { getState, dispatch }) => {
     const {
-      badgeForm: {
+      modalForms: {
         nonFungibleForm: { blockchain, interface: interfaceName, address, token_id },
       },
       profilePage: { profile },
@@ -95,10 +109,10 @@ export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined,
 );
 
 export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { state: RootState }>(
-  'badgeForm/getFungibleToken',
+  'forms/getFungibleToken',
   async (_, { getState, dispatch }) => {
     const {
-      badgeForm: {
+      modalForms: {
         fungibleForm: { blockchain, address },
       },
       profilePage: { profile },
@@ -117,10 +131,10 @@ export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { sta
 );
 
 export const getStatistic = createAsyncThunk<Statistic, undefined, { state: RootState }>(
-  'badgeForm/getStatistic',
+  'forms/getStatistic',
   async (_, { getState, dispatch }) => {
     const {
-      badgeForm: {
+      modalForms: {
         statForm: { blockchain, interface: interfaceName, type },
       },
       profilePage: { profile },
@@ -138,22 +152,57 @@ export const getStatistic = createAsyncThunk<Statistic, undefined, { state: Root
   }
 );
 
+export const getProfilePicture = createAsyncThunk<NonFungibleToken, undefined, { state: RootState }>(
+  'forms/getProfilePicture',
+  async (_, { getState, dispatch }) => {
+    const {
+      modalForms: {
+        nonFungibleForm: { blockchain, interface: interfaceName, address, token_id },
+      },
+      profilePage: { profile },
+    } = getState();
+
+    try {
+      const nft = await fetchAPI<NonFungibleToken>(
+        `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
+      );
+      return nft;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_PROFILE_PICTURE, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
+  }
+);
+
 export const slice = createSlice({
-  name: 'badgeForm',
-  initialState,
+  name: 'modalForms',
+  initialState: initialState(),
   reducers: {
-    openBadgeForm: (state) => {
-      Object.assign(state, initialState);
-      state.show = true;
+    openBadgeModal: () => {
+      const state = initialState();
+      state.badgeModal.show = true;
+      return state;
     },
-    closeBadgeForm: (state) => {
-      Object.assign(state, initialState);
-      state.show = false;
+    closeBadgeModal: () => {
+      const state = initialState();
+      state.badgeModal.show = false;
+      return state;
     },
-    updateBadgeType: (state, action: PayloadAction<string>) => {
-      Object.assign(state, initialState);
-      state.show = true;
-      state.type = action.payload as BadgeTypes;
+    updateBadgeType: (_, action: PayloadAction<string>) => {
+      const state = initialState();
+      state.badgeModal.show = true;
+      state.badgeModal.type = action.payload as BadgeTypes;
+      return state;
+    },
+    openProfilePictureModal: () => {
+      const state = initialState();
+      state.profilePictureModal.show = true;
+      return state;
+    },
+    closeProfilePictureModal: () => {
+      const state = initialState();
+      state.profilePictureModal.show = false;
+      return state;
     },
     updateNonFungibleBlockchain: (state, action: PayloadAction<string>) => {
       state.nonFungibleForm.blockchain = action.payload as Blockchains;
@@ -189,59 +238,74 @@ export const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getNonFungibleToken.pending, (state) => {
-      state.submitState = AsyncStates.PENDING;
+      state.badgeModal.submitState = AsyncStates.PENDING;
     });
     builder.addCase(getNonFungibleToken.fulfilled, (state) => {
-      Object.assign(state, initialState);
-      state.show = false;
-      state.submitState = AsyncStates.FULFILLED;
+      state.badgeModal.show = false;
+      state.badgeModal.submitState = AsyncStates.FULFILLED;
     });
     builder.addCase(getNonFungibleToken.rejected, (state) => {
-      state.submitState = AsyncStates.REJECTED;
+      state.badgeModal.submitState = AsyncStates.REJECTED;
     });
     builder.addCase(getFungibleToken.pending, (state) => {
-      state.submitState = AsyncStates.PENDING;
+      state.badgeModal.submitState = AsyncStates.PENDING;
     });
     builder.addCase(getFungibleToken.fulfilled, (state) => {
-      Object.assign(state, initialState);
-      state.show = false;
-      state.submitState = AsyncStates.FULFILLED;
+      state.badgeModal.show = false;
+      state.badgeModal.submitState = AsyncStates.FULFILLED;
     });
     builder.addCase(getFungibleToken.rejected, (state) => {
-      state.submitState = AsyncStates.REJECTED;
+      state.badgeModal.submitState = AsyncStates.REJECTED;
     });
     builder.addCase(getStatistic.pending, (state) => {
-      state.submitState = AsyncStates.PENDING;
+      state.badgeModal.submitState = AsyncStates.PENDING;
     });
     builder.addCase(getStatistic.fulfilled, (state) => {
-      Object.assign(state, initialState);
-      state.show = false;
-      state.submitState = AsyncStates.FULFILLED;
+      state.badgeModal.show = false;
+      state.badgeModal.submitState = AsyncStates.FULFILLED;
     });
     builder.addCase(getStatistic.rejected, (state) => {
-      state.submitState = AsyncStates.REJECTED;
+      state.badgeModal.submitState = AsyncStates.REJECTED;
+    });
+    builder.addCase(getProfilePicture.pending, (state) => {
+      state.profilePictureModal.submitState = AsyncStates.PENDING;
+    });
+    builder.addCase(getProfilePicture.fulfilled, (state) => {
+      state.profilePictureModal.show = false;
+      state.profilePictureModal.submitState = AsyncStates.FULFILLED;
+    });
+    builder.addCase(getProfilePicture.rejected, (state) => {
+      state.profilePictureModal.submitState = AsyncStates.REJECTED;
     });
   },
 });
 
-export const selectShow = (state: RootState) => state.badgeForm.show;
+export const selectShowBadgeModal = (state: RootState) => state.modalForms.badgeModal.show;
 
-export const selectSubmitting = (state: RootState) => state.badgeForm.submitState === AsyncStates.PENDING;
+export const selectBadgeSubmitting = (state: RootState) =>
+  state.modalForms.badgeModal.submitState === AsyncStates.PENDING;
 
-export const selectType = (state: RootState) => state.badgeForm.type;
+export const selectShowProfilePictureModal = (state: RootState) => state.modalForms.profilePictureModal.show;
 
-export const selectNonFungibleForm = (state: RootState) => state.badgeForm.nonFungibleForm;
+export const selectProfilePictureSubmitting = (state: RootState) =>
+  state.modalForms.profilePictureModal.submitState === AsyncStates.PENDING;
 
-export const selectFungibleForm = (state: RootState) => state.badgeForm.fungibleForm;
+export const selectBadgeType = (state: RootState) => state.modalForms.badgeModal.type;
 
-export const selectStatForm = (state: RootState) => state.badgeForm.statForm;
+export const selectNonFungibleForm = (state: RootState) => state.modalForms.nonFungibleForm;
+
+export const selectFungibleForm = (state: RootState) => state.modalForms.fungibleForm;
+
+export const selectStatForm = (state: RootState) => state.modalForms.statForm;
 
 export default slice.reducer;
 
 export const {
-  openBadgeForm,
-  closeBadgeForm,
+  openBadgeModal,
+  closeBadgeModal,
   updateBadgeType,
+  openProfilePictureModal,
+  closeProfilePictureModal,
   updateNonFungibleBlockchain,
   updateNonFungibleInterface,
   updateNonFungibleAddress,

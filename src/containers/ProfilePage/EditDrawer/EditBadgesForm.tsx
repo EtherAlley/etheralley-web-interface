@@ -18,7 +18,7 @@ import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
 import { Interfaces } from '../../../common/constants';
 import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
-import { openBadgeForm } from '../BadgeFormModal/slice';
+import { openBadgeModal } from '../ModalForms/slice';
 
 function EditBadgesForm() {
   const intl = useIntl();
@@ -30,10 +30,10 @@ function EditBadgesForm() {
       <Flex>
         <Box flexGrow={1} />
         <Button
-          onClick={() => dispatch(openBadgeForm())}
+          onClick={() => dispatch(openBadgeModal())}
           my={5}
           mr={2}
-          colorScheme="green"
+          colorScheme="brand"
           variant="outline"
           rightIcon={<Icon as={MdAdd} />}
         >
@@ -42,7 +42,7 @@ function EditBadgesForm() {
         <Button
           onClick={() => dispatch(addGroup())}
           my={5}
-          colorScheme="green"
+          colorScheme="brand"
           variant="outline"
           rightIcon={<Icon as={MdAdd} />}
         >

@@ -35,6 +35,12 @@ function useToasts() {
         case Toasts.ADDING_BADGE:
           description = intl.formatMessage({ id: 'adding-badge-description', defaultMessage: 'Error adding badge' });
           break;
+        case Toasts.ADDING_PROFILE_PICTURE:
+          description = intl.formatMessage({
+            id: 'adding-profile-picture-description',
+            defaultMessage: 'Error adding profile picture',
+          });
+          break;
       }
       showToast({
         description,

@@ -18,14 +18,11 @@ import Select from '../../../components/Select';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import {
-  closeBadgeForm,
-  submitForm,
+  closeBadgeModal,
+  submitBadge,
   selectFungibleForm,
   selectNonFungibleForm,
-  selectShow,
   selectStatForm,
-  selectSubmitting,
-  selectType,
   updateBadgeType,
   updateFungibleAddress,
   updateFungibleBlockchain,
@@ -35,38 +32,83 @@ import {
   updateNonFungibleTokenId,
   updateStatBlockchain,
   updateStatInterface,
+  selectShowBadgeModal,
+  selectBadgeType,
+  selectBadgeSubmitting,
+  selectProfilePictureSubmitting,
+  selectShowProfilePictureModal,
+  closeProfilePictureModal,
+  getProfilePicture,
 } from './slice';
 
-function BadgeFormModal() {
+export function AddBadgeModal() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const show = useAppSelector(selectShow);
-  const type = useAppSelector(selectType);
-  const submitting = useAppSelector(selectSubmitting);
+  const show = useAppSelector(selectShowBadgeModal);
+  const type = useAppSelector(selectBadgeType);
+  const submitting = useAppSelector(selectBadgeSubmitting);
+
+  let form;
+  switch (type) {
+    case BadgeTypes.FungibleToken:
+      form = <FungibleForm />;
+      break;
+    case BadgeTypes.NonFungibleToken:
+      form = <NonFungibleForm />;
+      break;
+    case BadgeTypes.Statistics:
+      form = <StatForm />;
+      break;
+  }
 
   return (
-    <Modal isOpen={show} onClose={() => dispatch(closeBadgeForm())}>
+    <Modal isOpen={show} onClose={() => dispatch(closeBadgeModal())}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          {intl.formatMessage({ id: 'badge-form-header', defaultMessage: 'Add a new badge to your collection' })}
+          {intl.formatMessage({ id: 'add-badge-form-header', defaultMessage: 'Add a new badge to your collection' })}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <NewBadgeForm />
+          <Box>
+            <Select
+              id="select-badge-type"
+              label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
+              options={[
+                {
+                  id: BadgeTypes.NonFungibleToken,
+                  label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
+                },
+                {
+                  id: BadgeTypes.FungibleToken,
+                  label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
+                },
+                {
+                  id: BadgeTypes.Statistics,
+                  label: intl.formatMessage({ id: 'statistic-option', defaultMessage: 'Statistic' }),
+                },
+              ]}
+              value={type}
+              onChange={(event) => {
+                dispatch(updateBadgeType(event.target.value));
+              }}
+              mt={5}
+            />
+            <Divider mt={5} />
+            {form}
+          </Box>
         </ModalBody>
-
         <ModalFooter>
-          <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeForm())}>
-            {intl.formatMessage({ id: 'badge-form-close', defaultMessage: 'Cancel' })}
+          <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeModal())}>
+            {intl.formatMessage({ id: 'add-badge-form-close', defaultMessage: 'Cancel' })}
           </Button>
           <Button
             colorScheme="brand"
-            onClick={() => dispatch(submitForm(type))}
+            onClick={() => dispatch(submitBadge(type))}
             isLoading={submitting}
             disabled={!type}
           >
-            {intl.formatMessage({ id: 'badge-form-submit', defaultMessage: 'Add' })}
+            {intl.formatMessage({ id: 'add-badge-form-submit', defaultMessage: 'Add' })}
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -74,54 +116,39 @@ function BadgeFormModal() {
   );
 }
 
-function NewBadgeForm() {
+export function AddProfilePictureModal() {
   const intl = useIntl();
-  const type = useAppSelector(selectType);
   const dispatch = useAppDispatch();
-
+  const show = useAppSelector(selectShowProfilePictureModal);
+  const submitting = useAppSelector(selectProfilePictureSubmitting);
   return (
-    <Box>
-      <Select
-        id="select-badge-type"
-        label={intl.formatMessage({ id: 'select-badge-type', defaultMessage: 'Select badge type' })}
-        options={[
-          {
-            id: BadgeTypes.NonFungibleToken,
-            label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
-          },
-          {
-            id: BadgeTypes.FungibleToken,
-            label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
-          },
-          {
-            id: BadgeTypes.Statistics,
-            label: intl.formatMessage({ id: 'statistic-option', defaultMessage: 'Statistic' }),
-          },
-        ]}
-        value={type}
-        onChange={(event) => {
-          dispatch(updateBadgeType(event.target.value));
-        }}
-        mt={5}
-      />
-      <Divider mt={5} />
-      <NonFungibleForm />
-      <FungibleForm />
-      <StatForm />
-    </Box>
+    <Modal isOpen={show} onClose={() => dispatch(closeProfilePictureModal())}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {intl.formatMessage({ id: 'add-profile-picture-form-header', defaultMessage: 'Add a Profile Picture' })}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <NonFungibleForm />
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeProfilePictureModal())}>
+            {intl.formatMessage({ id: 'add-profile-picture-form-close', defaultMessage: 'Cancel' })}
+          </Button>
+          <Button colorScheme="brand" onClick={() => dispatch(getProfilePicture())} isLoading={submitting}>
+            {intl.formatMessage({ id: 'add-profile-picture-form-submit', defaultMessage: 'Add' })}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
 
-function NonFungibleForm() {
+export function NonFungibleForm() {
   const intl = useIntl();
-  const type = useAppSelector(selectType);
   const { blockchain, interface: interfaceName, address, token_id } = useAppSelector(selectNonFungibleForm);
   const dispatch = useAppDispatch();
-
-  if (type !== BadgeTypes.NonFungibleToken) {
-    return <></>;
-  }
-
   return (
     <Box>
       <Select
@@ -188,15 +215,10 @@ function NonFungibleForm() {
   );
 }
 
-function FungibleForm() {
+export function FungibleForm() {
   const intl = useIntl();
-  const type = useAppSelector(selectType);
   const { blockchain, address } = useAppSelector(selectFungibleForm);
   const dispatch = useAppDispatch();
-
-  if (type !== BadgeTypes.FungibleToken) {
-    return <></>;
-  }
 
   return (
     <Box>
@@ -243,15 +265,10 @@ function FungibleForm() {
   );
 }
 
-function StatForm() {
+export function StatForm() {
   const intl = useIntl();
-  const type = useAppSelector(selectType);
   const { blockchain, interface: interfaceName } = useAppSelector(selectStatForm);
   const dispatch = useAppDispatch();
-
-  if (type !== BadgeTypes.Statistics) {
-    return <></>;
-  }
 
   return (
     <Box>
@@ -304,5 +321,3 @@ function StatForm() {
     </Box>
   );
 }
-
-export default BadgeFormModal;

@@ -10,7 +10,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import EditDrawer from './EditDrawer';
 import Profile from './Profile';
-import BadgeFormModal from './BadgeFormModal';
+import { AddBadgeModal, AddProfilePictureModal } from './ModalForms';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (
@@ -47,7 +47,8 @@ function ProfilePage() {
       <>
         <Profile />
         <EditDrawer />
-        <BadgeFormModal />
+        <AddBadgeModal />
+        <AddProfilePictureModal />
       </>
     </PageWrapper>
   );

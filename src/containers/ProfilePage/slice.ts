@@ -5,7 +5,7 @@ import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 import { AsyncStates } from '../../common/constants';
-import { getFungibleToken, getNonFungibleToken, getStatistic } from './BadgeFormModal/slice';
+import { getFungibleToken, getNonFungibleToken, getProfilePicture, getStatistic } from './ModalForms/slice';
 
 export interface State {
   loadProfileState: AsyncStates;
@@ -14,6 +14,12 @@ export interface State {
   profile: Profile;
 }
 
+// some pre-amble about the relationship between display_config and interactions/non_fungible_tokens/fungible_tokens/statistics:
+//
+// picture, groups and achievements maintain pointers to objects within the above mentioned arrays
+// with the current code, no two items within the display config should point to the same item in the arrays
+// that means that a picture pointing to an nft and a group item pointing to the same nft should be two distinct objects in the non_fungible_tokens array
+// this design is because the logic for adding/removing items from the arrays does not account for shared pointers and is more complicated than I want to support right now
 const initialState: State = {
   loadProfileState: AsyncStates.PENDING,
   saveProfileState: AsyncStates.READY,
@@ -89,6 +95,9 @@ export const slice = createSlice({
     updateProfileDescription: (state, action: PayloadAction<string>) => {
       state.profile.display_config.text.description = action.payload;
     },
+    removeProfilePicture: (state) => {
+      state.profile.display_config.picture.item = undefined;
+    },
     updatePrimaryColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.primary = action.payload;
     },
@@ -112,12 +121,14 @@ export const slice = createSlice({
     },
     removeGroup: (state, action: PayloadAction<number>) => {
       const groups = state.profile.display_config.groups;
-      removeAssets(state, groups[action.payload].items);
+      for (const itemBeingDeleted of groups[action.payload].items) {
+        removeBadge(state, itemBeingDeleted);
+      }
       groups.splice(action.payload, 1);
     },
     removeItem: (state, action: PayloadAction<{ groupArrayIndex: number; itemArrayIndex: number }>) => {
       const group = state.profile.display_config.groups[action.payload.groupArrayIndex];
-      removeAssets(state, [group.items[action.payload.itemArrayIndex]]);
+      removeBadge(state, group.items[action.payload.itemArrayIndex]);
       group.items.splice(action.payload.itemArrayIndex, 1);
     },
   },
@@ -167,58 +178,25 @@ export const slice = createSlice({
         }
       })
       .addCase(getNonFungibleToken.fulfilled, (state, { payload }) => {
-        const groups = state.profile.display_config.groups;
-        const item = {
-          id: nanoid(),
-          index: state.profile.non_fungible_tokens.length,
-          type: BadgeTypes.NonFungibleToken,
-        };
-        state.profile.non_fungible_tokens.push(payload);
-        if (groups.length === 0) {
-          groups.push({
-            id: nanoid(),
-            text: '',
-            items: [item],
-          });
-        } else {
-          groups[0].items = [item, ...groups[0].items];
-        }
+        addBadge(state, BadgeTypes.NonFungibleToken, payload);
       })
       .addCase(getFungibleToken.fulfilled, (state, { payload }) => {
-        const groups = state.profile.display_config.groups;
-        const item = {
-          id: nanoid(),
-          index: state.profile.fungible_tokens.length,
-          type: BadgeTypes.FungibleToken,
-        };
-        state.profile.fungible_tokens.push(payload);
-        if (groups.length === 0) {
-          groups.push({
-            id: nanoid(),
-            text: '',
-            items: [item],
-          });
-        } else {
-          groups[0].items = [item, ...groups[0].items];
-        }
+        addBadge(state, BadgeTypes.FungibleToken, payload);
       })
       .addCase(getStatistic.fulfilled, (state, { payload }) => {
-        const groups = state.profile.display_config.groups;
-        const item = {
-          id: nanoid(),
-          index: state.profile.statistics.length,
-          type: BadgeTypes.Statistics,
-        };
-        state.profile.statistics.push(payload);
-        if (groups.length === 0) {
-          groups.push({
-            id: nanoid(),
-            text: '',
-            items: [item],
-          });
-        } else {
-          groups[0].items = [item, ...groups[0].items];
+        addBadge(state, BadgeTypes.Statistics, payload);
+      })
+      .addCase(getProfilePicture.fulfilled, (state, { payload }) => {
+        // remove the old profile picture config
+        if (state.profile.display_config.picture.item) {
+          removeBadge(state, state.profile.display_config.picture.item);
         }
+        state.profile.non_fungible_tokens.push(payload);
+        state.profile.display_config.picture.item = {
+          id: nanoid(),
+          index: state.profile.non_fungible_tokens.length - 1,
+          type: BadgeTypes.NonFungibleToken,
+        };
       });
   },
 });
@@ -272,7 +250,8 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
       text: 'Non Fungibles',
       items: [],
     };
-    for (let i = 0; i < actionProfile.non_fungible_tokens.length; i++) {
+    // we start at 1 because the profile picture has claimed item 0 in the display config
+    for (let i = 1; i < actionProfile.non_fungible_tokens.length; i++) {
       group.items.push({
         id: nanoid(),
         index: i,
@@ -299,37 +278,38 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
   }
 }
 
-function removeAssets(state: State, itemsBeingDeleted: DisplayItem[]) {
-  for (const itemBeingDeleted of itemsBeingDeleted) {
-    // dont remove the asset if the picture still points to it
-    if (
-      itemBeingDeleted.type === BadgeTypes.NonFungibleToken &&
-      itemBeingDeleted.index === state.profile.display_config.picture.item?.index
-    ) {
-      continue;
-    }
-
-    // fix the pointers of all other items that are affected by the asset type being removed from the array
-    for (const group of state.profile.display_config.groups) {
-      for (const item of group.items) {
-        if (item.type === itemBeingDeleted.type && item.index > itemBeingDeleted.index) {
-          item.index--;
-        }
+// fix the pointers of all other items that are affected by the badge type being removed from the array
+// splice the item being deleted out of the array for the given badge type
+function removeBadge(state: State, itemBeingDeleted: DisplayItem) {
+  for (const group of state.profile.display_config.groups) {
+    for (const item of group.items) {
+      if (item.type === itemBeingDeleted.type && item.index > itemBeingDeleted.index) {
+        item.index--;
       }
     }
+  }
+  state.profile[itemBeingDeleted.type].splice(itemBeingDeleted.index, 1);
+}
 
-    // remove the assets from the array
-    switch (itemBeingDeleted.type) {
-      case BadgeTypes.FungibleToken:
-        state.profile.fungible_tokens.splice(itemBeingDeleted.index, 1);
-        break;
-      case BadgeTypes.NonFungibleToken:
-        state.profile.non_fungible_tokens.splice(itemBeingDeleted.index, 1);
-        break;
-      case BadgeTypes.Statistics:
-        state.profile.statistics.splice(itemBeingDeleted.index, 1);
-        break;
-    }
+// add the badge to the bottom of the specified badge type array
+// add an item at the front of the first group
+// if the group does not exist, create one
+function addBadge(state: State, type: BadgeTypes, badge: any) {
+  state.profile[type].push(badge);
+  const groups = state.profile.display_config.groups;
+  const item = {
+    id: nanoid(),
+    index: state.profile[type].length - 1,
+    type,
+  };
+  if (groups.length === 0) {
+    groups.push({
+      id: nanoid(),
+      text: '',
+      items: [item],
+    });
+  } else {
+    groups[0].items = [item, ...groups[0].items];
   }
 }
 
