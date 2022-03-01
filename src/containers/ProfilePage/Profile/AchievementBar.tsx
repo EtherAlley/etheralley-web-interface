@@ -13,13 +13,14 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
+import { useIntl } from 'react-intl';
 import { ReactNode } from 'react';
 import { InteractionTypes } from '../../../common/constants';
 import LinkComponent from '../../../components/Link';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
+import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
-import Trophy from '../../../icons/Trophy';
 import { selectAchievements, selectInteraction } from '../slice';
 
 function AchievementBar() {
@@ -67,6 +68,7 @@ const iconStyling = {
 };
 
 function Achievement({ index }: { index: number }) {
+  const intl = useIntl();
   const { type } = useAppSelector((state) => selectInteraction(state, index));
 
   switch (type) {
@@ -74,15 +76,26 @@ function Achievement({ index }: { index: number }) {
       return (
         <AchievementPopover
           trigger={<Rocket {...iconStyling} />}
-          header={<AchievementHeader text="Deployed a Smart Contract!" />}
+          header={
+            <AchievementHeader
+              text={intl.formatMessage({
+                id: 'deployed-achievement-header',
+                defaultMessage: 'Deployed a smart contract!',
+              })}
+            />
+          }
           body={<AchievementBody index={index} />}
         />
       );
     case InteractionTypes.SEND_ETHER:
       return (
         <AchievementPopover
-          trigger={<Trophy {...iconStyling} />}
-          header={<AchievementHeader text="Sent Ether!" />}
+          trigger={<Handshake {...iconStyling} />}
+          header={
+            <AchievementHeader
+              text={intl.formatMessage({ id: 'sent-ether-achievement-header', defaultMessage: 'Sent Ether!' })}
+            />
+          }
           body={<AchievementBody index={index} />}
         />
       );

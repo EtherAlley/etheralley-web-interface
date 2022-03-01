@@ -5,7 +5,13 @@ import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 import { AsyncStates } from '../../common/constants';
-import { getFungibleToken, getNonFungibleToken, getProfilePicture, getStatistic } from './ModalForms/slice';
+import {
+  getAchievement,
+  getFungibleToken,
+  getNonFungibleToken,
+  getProfilePicture,
+  getStatistic,
+} from './ModalForms/slice';
 
 export interface State {
   loadProfileState: AsyncStates;
@@ -131,6 +137,17 @@ export const slice = createSlice({
       removeBadge(state, group.items[action.payload.itemArrayIndex]);
       group.items.splice(action.payload.itemArrayIndex, 1);
     },
+    removeAchievement: (state, action: PayloadAction<number>) => {
+      const achievements = state.profile.display_config.achievements;
+      const achievementBeingDeleted = achievements[action.payload];
+      for (const achievement of achievements) {
+        if (achievement.type === achievementBeingDeleted.type && achievement.index > achievementBeingDeleted.index) {
+          achievement.index--;
+        }
+      }
+      achievements.splice(action.payload, 1);
+      state.profile[achievementBeingDeleted.type].splice(achievementBeingDeleted.index, 1);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -197,6 +214,14 @@ export const slice = createSlice({
           index: state.profile.non_fungible_tokens.length - 1,
           type: BadgeTypes.NonFungibleToken,
         };
+      })
+      .addCase(getAchievement.fulfilled, (state, { payload }) => {
+        state.profile.interactions.push(payload);
+        state.profile.display_config.achievements.push({
+          id: nanoid(),
+          index: state.profile.interactions.length - 1,
+          type: AchievementTypes.Interactions,
+        });
       });
   },
 });
@@ -218,6 +243,7 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
 
   for (let i = 0; i < actionProfile.interactions.length; i++) {
     stateProfile.display_config.achievements.push({
+      id: nanoid(),
       index: i,
       type: AchievementTypes.Interactions,
     });
@@ -372,4 +398,5 @@ export const {
   addGroup,
   removeGroup,
   removeItem,
+  removeAchievement,
 } = slice.actions;

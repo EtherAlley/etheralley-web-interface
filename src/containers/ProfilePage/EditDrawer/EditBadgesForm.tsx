@@ -111,6 +111,7 @@ function Item({
   itemArrayIndex: number;
   groupArrayIndex: number;
 }) {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const { id, type, index } = item;
 
@@ -157,8 +158,8 @@ function Item({
             {label}
             <Box flexGrow={1}></Box>
             <IconButton
-              aria-label="Remove Item"
-              tooltip="Remove Item"
+              aria-label={intl.formatMessage({ id: 'aria-remove-item', defaultMessage: 'Remove Item' })}
+              tooltip={intl.formatMessage({ id: 'remove-item', defaultMessage: 'Remove Item' })}
               Icon={MdRemove}
               onClick={() => dispatch(removeItem({ groupArrayIndex, itemArrayIndex }))}
               size="md"

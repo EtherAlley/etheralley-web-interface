@@ -41,6 +41,12 @@ function useToasts() {
             defaultMessage: 'Error adding profile picture',
           });
           break;
+        case Toasts.ADDING_ACHIEVEMENT:
+          description = intl.formatMessage({
+            id: 'adding-achievemenet-description',
+            defaultMessage: 'Error adding achievement',
+          });
+          break;
       }
       showToast({
         description,
@@ -49,7 +55,7 @@ function useToasts() {
         isClosable: true,
       });
     }
-  }, [toastId, toast, status, showToast]);
+  }, [toastId, toast, status, showToast, intl]);
 }
 
 export default App;

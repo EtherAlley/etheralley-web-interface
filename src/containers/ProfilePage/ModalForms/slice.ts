@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { BadgeTypes, FungibleToken, NonFungibleToken, Statistic } from '../../../common/types';
+import { BadgeTypes, FungibleToken, Interaction, NonFungibleToken, Statistic } from '../../../common/types';
 import {
   Blockchains,
   Interfaces,
@@ -9,6 +9,7 @@ import {
   Toasts,
   ToastStatuses,
   ZeroAddress,
+  InteractionTypes,
 } from '../../../common/constants';
 import { fetchAPI } from '../../../common/http';
 import { showToast } from '../../App/slice';
@@ -22,7 +23,10 @@ export interface State {
   profilePictureModal: {
     show: boolean;
     submitState: AsyncStates;
-    type: BadgeTypes | undefined;
+  };
+  achievementModal: {
+    show: boolean;
+    submitState: AsyncStates;
   };
   nonFungibleForm: {
     blockchain: Blockchains | undefined;
@@ -39,6 +43,11 @@ export interface State {
     interface: Interfaces | undefined;
     type: StatisticTypes | undefined;
   };
+  interactionForm: {
+    blockchain: Blockchains | undefined;
+    transactionId: string;
+    type: InteractionTypes | undefined;
+  };
 }
 
 const initialState = (): State => ({
@@ -50,7 +59,10 @@ const initialState = (): State => ({
   profilePictureModal: {
     show: false,
     submitState: AsyncStates.READY,
-    type: undefined,
+  },
+  achievementModal: {
+    show: false,
+    submitState: AsyncStates.READY,
   },
   nonFungibleForm: {
     blockchain: undefined,
@@ -67,11 +79,21 @@ const initialState = (): State => ({
     interface: undefined,
     type: undefined,
   },
+  interactionForm: {
+    blockchain: undefined,
+    transactionId: '',
+    type: undefined,
+  },
 });
 
-export const submitBadge = createAsyncThunk<void, BadgeTypes | undefined, { state: RootState }>(
+export const submitBadge = createAsyncThunk<void, undefined, { state: RootState }>(
   'forms/submitBadge',
-  async (type, { dispatch }) => {
+  async (_, { dispatch, getState }) => {
+    const {
+      modalForms: {
+        badgeModal: { type },
+      },
+    } = getState();
     switch (type) {
       case BadgeTypes.NonFungibleToken:
         dispatch(getNonFungibleToken());
@@ -174,6 +196,28 @@ export const getProfilePicture = createAsyncThunk<NonFungibleToken, undefined, {
   }
 );
 
+export const getAchievement = createAsyncThunk<Interaction, undefined, { state: RootState }>(
+  'forms/getAchievement',
+  async (_, { getState, dispatch }) => {
+    const {
+      modalForms: {
+        interactionForm: { blockchain, type, transactionId },
+      },
+      profilePage: { profile },
+    } = getState();
+
+    try {
+      const interaction = await fetchAPI<Interaction>(
+        `/transactions/interaction?blockchain=${blockchain}&type=${type}&tx_id=${transactionId}&user_address=${profile.address}`
+      );
+      return interaction;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_ACHIEVEMENT, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
+  }
+);
+
 export const slice = createSlice({
   name: 'modalForms',
   initialState: initialState(),
@@ -183,26 +227,27 @@ export const slice = createSlice({
       state.badgeModal.show = true;
       return state;
     },
-    closeBadgeModal: () => {
-      const state = initialState();
+    closeBadgeModal: (state) => {
       state.badgeModal.show = false;
-      return state;
     },
-    updateBadgeType: (_, action: PayloadAction<string>) => {
-      const state = initialState();
-      state.badgeModal.show = true;
+    updateBadgeType: (state, action: PayloadAction<string>) => {
       state.badgeModal.type = action.payload as BadgeTypes;
-      return state;
     },
     openProfilePictureModal: () => {
       const state = initialState();
       state.profilePictureModal.show = true;
       return state;
     },
-    closeProfilePictureModal: () => {
-      const state = initialState();
+    closeProfilePictureModal: (state) => {
       state.profilePictureModal.show = false;
+    },
+    openAchievementModal: () => {
+      const state = initialState();
+      state.achievementModal.show = true;
       return state;
+    },
+    closeAchievementModal: (state) => {
+      state.achievementModal.show = false;
     },
     updateNonFungibleBlockchain: (state, action: PayloadAction<string>) => {
       state.nonFungibleForm.blockchain = action.payload as Blockchains;
@@ -234,6 +279,15 @@ export const slice = createSlice({
           state.statForm.type = StatisticTypes.SWAP;
           break;
       }
+    },
+    updateInteractionBlockchain: (state, action: PayloadAction<string>) => {
+      state.interactionForm.blockchain = action.payload as Blockchains;
+    },
+    updateInteractionType: (state, action: PayloadAction<string>) => {
+      state.interactionForm.type = action.payload as InteractionTypes;
+    },
+    updateInteractionTransactionId: (state, action: PayloadAction<string>) => {
+      state.interactionForm.transactionId = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -277,6 +331,16 @@ export const slice = createSlice({
     builder.addCase(getProfilePicture.rejected, (state) => {
       state.profilePictureModal.submitState = AsyncStates.REJECTED;
     });
+    builder.addCase(getAchievement.pending, (state) => {
+      state.achievementModal.submitState = AsyncStates.PENDING;
+    });
+    builder.addCase(getAchievement.fulfilled, (state) => {
+      state.achievementModal.show = false;
+      state.achievementModal.submitState = AsyncStates.FULFILLED;
+    });
+    builder.addCase(getAchievement.rejected, (state) => {
+      state.achievementModal.submitState = AsyncStates.REJECTED;
+    });
   },
 });
 
@@ -290,6 +354,11 @@ export const selectShowProfilePictureModal = (state: RootState) => state.modalFo
 export const selectProfilePictureSubmitting = (state: RootState) =>
   state.modalForms.profilePictureModal.submitState === AsyncStates.PENDING;
 
+export const selectShowAchievementModal = (state: RootState) => state.modalForms.achievementModal.show;
+
+export const selectAchievementSubmitting = (state: RootState) =>
+  state.modalForms.achievementModal.submitState === AsyncStates.PENDING;
+
 export const selectBadgeType = (state: RootState) => state.modalForms.badgeModal.type;
 
 export const selectNonFungibleForm = (state: RootState) => state.modalForms.nonFungibleForm;
@@ -297,6 +366,8 @@ export const selectNonFungibleForm = (state: RootState) => state.modalForms.nonF
 export const selectFungibleForm = (state: RootState) => state.modalForms.fungibleForm;
 
 export const selectStatForm = (state: RootState) => state.modalForms.statForm;
+
+export const selectInteractionForm = (state: RootState) => state.modalForms.interactionForm;
 
 export default slice.reducer;
 
@@ -306,6 +377,8 @@ export const {
   updateBadgeType,
   openProfilePictureModal,
   closeProfilePictureModal,
+  openAchievementModal,
+  closeAchievementModal,
   updateNonFungibleBlockchain,
   updateNonFungibleInterface,
   updateNonFungibleAddress,
@@ -314,4 +387,7 @@ export const {
   updateFungibleAddress,
   updateStatBlockchain,
   updateStatInterface,
+  updateInteractionBlockchain,
+  updateInteractionType,
+  updateInteractionTransactionId,
 } = slice.actions;

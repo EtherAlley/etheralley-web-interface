@@ -39,6 +39,7 @@ export type DisplayConfig = {
 };
 
 export type DisplayAchievement = {
+  id: string;
   index: number;
   type: AchievementTypes;
 };

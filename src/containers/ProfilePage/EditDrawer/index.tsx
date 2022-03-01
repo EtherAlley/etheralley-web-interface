@@ -17,6 +17,7 @@ import EditInfoForm from './EditInfoForm';
 import EditColorsForm from './EditColorsForm';
 import EditBadgesForm from './EditBadgesForm';
 import EditProfilePictureForm from './EditProfilePictureForm';
+import EditAchievementForm from './EditAchievementForm';
 
 function ProfileEditDrawer() {
   const intl = useIntl();
@@ -45,6 +46,10 @@ function ProfileEditDrawer() {
               { header: intl.formatMessage({ id: 'info-form', defaultMessage: 'Info' }), body: <EditInfoForm /> },
               { header: intl.formatMessage({ id: 'colors-form', defaultMessage: 'Colors' }), body: <EditColorsForm /> },
               { header: intl.formatMessage({ id: 'badges-form', defaultMessage: 'Badges' }), body: <EditBadgesForm /> },
+              {
+                header: intl.formatMessage({ id: 'achievement-form', defaultMessage: 'Achievements' }),
+                body: <EditAchievementForm />,
+              },
             ]}
           />
         </DrawerBody>

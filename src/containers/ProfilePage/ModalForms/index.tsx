@@ -11,7 +11,7 @@ import {
   Divider,
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
-import { Blockchains, Interfaces } from '../../../common/constants';
+import { Blockchains, InteractionTypes, Interfaces } from '../../../common/constants';
 import { BadgeTypes } from '../../../common/types';
 import Input from '../../../components/Input';
 import Select from '../../../components/Select';
@@ -39,6 +39,14 @@ import {
   selectShowProfilePictureModal,
   closeProfilePictureModal,
   getProfilePicture,
+  selectShowAchievementModal,
+  selectAchievementSubmitting,
+  closeAchievementModal,
+  selectInteractionForm,
+  updateInteractionTransactionId,
+  updateInteractionBlockchain,
+  updateInteractionType,
+  getAchievement,
 } from './slice';
 
 export function AddBadgeModal() {
@@ -100,15 +108,10 @@ export function AddBadgeModal() {
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeBadgeModal())}>
-            {intl.formatMessage({ id: 'add-badge-form-close', defaultMessage: 'Cancel' })}
+            {intl.formatMessage({ id: 'add-badge-modal-close', defaultMessage: 'Cancel' })}
           </Button>
-          <Button
-            colorScheme="brand"
-            onClick={() => dispatch(submitBadge(type))}
-            isLoading={submitting}
-            disabled={!type}
-          >
-            {intl.formatMessage({ id: 'add-badge-form-submit', defaultMessage: 'Add' })}
+          <Button colorScheme="brand" onClick={() => dispatch(submitBadge())} isLoading={submitting} disabled={!type}>
+            {intl.formatMessage({ id: 'add-badge-modal-submit', defaultMessage: 'Add' })}
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -121,12 +124,13 @@ export function AddProfilePictureModal() {
   const dispatch = useAppDispatch();
   const show = useAppSelector(selectShowProfilePictureModal);
   const submitting = useAppSelector(selectProfilePictureSubmitting);
+
   return (
     <Modal isOpen={show} onClose={() => dispatch(closeProfilePictureModal())}>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          {intl.formatMessage({ id: 'add-profile-picture-form-header', defaultMessage: 'Add a Profile Picture' })}
+          {intl.formatMessage({ id: 'add-profile-picture-modal-header', defaultMessage: 'Add a Profile Picture' })}
         </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -134,10 +138,91 @@ export function AddProfilePictureModal() {
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeProfilePictureModal())}>
-            {intl.formatMessage({ id: 'add-profile-picture-form-close', defaultMessage: 'Cancel' })}
+            {intl.formatMessage({ id: 'add-profile-picture-modal-close', defaultMessage: 'Cancel' })}
           </Button>
           <Button colorScheme="brand" onClick={() => dispatch(getProfilePicture())} isLoading={submitting}>
-            {intl.formatMessage({ id: 'add-profile-picture-form-submit', defaultMessage: 'Add' })}
+            {intl.formatMessage({ id: 'add-profile-picture-modal-submit', defaultMessage: 'Add' })}
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  );
+}
+
+export function AddAchievementModal() {
+  const intl = useIntl();
+  const dispatch = useAppDispatch();
+  const show = useAppSelector(selectShowAchievementModal);
+  const submitting = useAppSelector(selectAchievementSubmitting);
+  const { blockchain, type, transactionId } = useAppSelector(selectInteractionForm);
+
+  return (
+    <Modal isOpen={show} onClose={() => dispatch(closeAchievementModal())}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          {intl.formatMessage({ id: 'add-achievement-modal-header', defaultMessage: 'Add a new achievement' })}
+        </ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Box>
+            <Select
+              id="blockchain"
+              label={intl.formatMessage({ id: 'select-blockchain', defaultMessage: 'Blockchain' })}
+              value={blockchain}
+              options={[
+                {
+                  id: Blockchains.ETHEREUM,
+                  label: 'Ethereum',
+                },
+                {
+                  id: Blockchains.POLYGON,
+                  label: 'Polygon',
+                },
+                {
+                  id: Blockchains.ARBITRUM,
+                  label: 'Arbitrum',
+                },
+                {
+                  id: Blockchains.OPTIMISM,
+                  label: 'Optimism',
+                },
+              ]}
+              onChange={(event) => dispatch(updateInteractionBlockchain(event.target.value))}
+              mt={5}
+            />
+            <Select
+              id="interaction-type"
+              label={intl.formatMessage({ id: 'select-interaction-type', defaultMessage: 'Type' })}
+              value={type}
+              options={[
+                {
+                  id: InteractionTypes.CONTRACT_CREATION,
+                  label: 'Deployed a Smart Contract',
+                },
+                {
+                  id: InteractionTypes.SEND_ETHER,
+                  label: 'Sent Ether',
+                },
+              ]}
+              onChange={(event) => dispatch(updateInteractionType(event.target.value))}
+              mt={5}
+            />
+            <Input
+              id="transaction-id"
+              value={transactionId}
+              label={intl.formatMessage({ id: 'input-transaction-id', defaultMessage: 'Transaction Id' })}
+              onChange={(event) => dispatch(updateInteractionTransactionId(event.target.value))}
+              mt={5}
+            />
+          </Box>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="red" variant="outline" mr={3} onClick={() => dispatch(closeAchievementModal())}>
+            {intl.formatMessage({ id: 'add-achievement-modal-close', defaultMessage: 'Cancel' })}
+          </Button>
+          <Button colorScheme="brand" onClick={() => dispatch(getAchievement())} isLoading={submitting}>
+            {intl.formatMessage({ id: 'add-achievement-modal-submit', defaultMessage: 'Add' })}
           </Button>
         </ModalFooter>
       </ModalContent>
