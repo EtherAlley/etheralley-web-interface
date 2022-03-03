@@ -24,22 +24,22 @@ import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction } from '../slice';
 
 function AchievementBar() {
-  const achievements = useAppSelector(selectAchievements);
+  const { items, text } = useAppSelector(selectAchievements);
   const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
   const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
 
-  if (achievements.length <= 0) {
+  if (items.length <= 0) {
     return <></>;
   }
 
   return (
     <Box mt={10}>
       <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
-        Achievements
+        {text}
       </Heading>
       <Divider />
       <Flex p={3} justifyContent={justifyContent}>
-        {achievements.map(({ index }) => (
+        {items.map(({ index }) => (
           <Box mr={3} key={index}>
             <Achievement index={index} />
           </Box>

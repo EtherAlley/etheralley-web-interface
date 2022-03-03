@@ -1,15 +1,66 @@
 {
+  "achievement-form": {
+    "defaultMessage": "Achievements"
+  },
+  "add-achievement-button": {
+    "defaultMessage": "Add Achievement"
+  },
+  "add-achievement-modal-close": {
+    "defaultMessage": "Cancel"
+  },
+  "add-achievement-modal-header": {
+    "defaultMessage": "Add a new achievement"
+  },
+  "add-achievement-modal-submit": {
+    "defaultMessage": "Add"
+  },
+  "add-badge": {
+    "defaultMessage": "Add Badge"
+  },
+  "add-badge-form-header": {
+    "defaultMessage": "Add a new badge to your collection"
+  },
+  "add-badge-modal-close": {
+    "defaultMessage": "Cancel"
+  },
+  "add-badge-modal-submit": {
+    "defaultMessage": "Add"
+  },
+  "add-group": {
+    "defaultMessage": "Add Group"
+  },
+  "add-profile-picture": {
+    "defaultMessage": "Add Profile Picture"
+  },
+  "add-profile-picture-modal-close": {
+    "defaultMessage": "Cancel"
+  },
+  "add-profile-picture-modal-header": {
+    "defaultMessage": "Add an NFT Profile Picture"
+  },
+  "add-profile-picture-modal-submit": {
+    "defaultMessage": "Add"
+  },
+  "adding-achievemenet-description": {
+    "defaultMessage": "Error adding achievement"
+  },
+  "adding-badge-description": {
+    "defaultMessage": "Error adding badge"
+  },
+  "adding-profile-picture-description": {
+    "defaultMessage": "Error adding profile picture"
+  },
   "alpha": {
     "defaultMessage": "Alpha"
   },
-  "badge-form-close": {
-    "defaultMessage": "Cancel"
+  "aria-remove-item": {
+    "defaultMessage": "Remove Item"
   },
-  "badge-form-header": {
-    "defaultMessage": "Add a new badge to your collection"
+  "badges-form": {
+    "defaultMessage": "Badges"
   },
-  "badge-form-submit": {
-    "defaultMessage": "Add"
+  "change-profile-picture": {
+    "defaultMessage": "Change Profile Picture"
   },
   "close-edit-button": {
     "defaultMessage": "Close"
@@ -19,6 +70,15 @@
   },
   "connect-to-a-wallet": {
     "defaultMessage": "Connect to a wallet"
+  },
+  "contract-creation-label": {
+    "defaultMessage": "Deployed Smart Contract Achievement"
+  },
+  "deployed-achievement-header": {
+    "defaultMessage": "Deployed a smart contract!"
+  },
+  "deployed-smart-contract": {
+    "defaultMessage": "Deployed a Smart Contract"
   },
   "edit-description": {
     "defaultMessage": "Description"
@@ -47,14 +107,23 @@
   "enter-wallet-address": {
     "defaultMessage": "Enter ENS name or Ethereum address..."
   },
+  "fungible-token-option": {
+    "defaultMessage": "Fungible Token"
+  },
   "go-home-button": {
     "defaultMessage": "Go Home"
   },
-  "groups-form": {
-    "defaultMessage": "Groups"
-  },
   "info-form": {
     "defaultMessage": "Info"
+  },
+  "input-contract-address": {
+    "defaultMessage": "Address"
+  },
+  "input-token-id": {
+    "defaultMessage": "Token Id"
+  },
+  "input-transaction-id": {
+    "defaultMessage": "Transaction Id"
   },
   "my-profile": {
     "defaultMessage": "My Profile"
@@ -62,17 +131,62 @@
   "nft-fallback": {
     "defaultMessage": "Non Fungible Token"
   },
+  "non-fungible-token-option": {
+    "defaultMessage": "Non Fungible Token"
+  },
+  "profile-picture-form": {
+    "defaultMessage": "Profile Picture"
+  },
+  "remove-achievement": {
+    "defaultMessage": "Remove achievement"
+  },
+  "remove-group": {
+    "defaultMessage": "Remove Group"
+  },
+  "remove-item": {
+    "defaultMessage": "Remove Item"
+  },
   "save-edits-button": {
     "defaultMessage": "Save"
   },
   "search-aria-label": {
     "defaultMessage": "Go to a profile"
   },
+  "search-tokens": {
+    "defaultMessage": "Search Tokens"
+  },
   "select-badge-type": {
     "defaultMessage": "Select badge type"
   },
-  "sushi-swap-stats": {
-    "defaultMessage": "Sushiswap Stats"
+  "select-blockchain": {
+    "defaultMessage": "Blockchain"
+  },
+  "select-interaction-type": {
+    "defaultMessage": "Type"
+  },
+  "select-interface": {
+    "defaultMessage": "Interface"
+  },
+  "select-stat-type": {
+    "defaultMessage": "Statistic Type"
+  },
+  "send-ether-label": {
+    "defaultMessage": "Sent Ether Achievement"
+  },
+  "sent-ether": {
+    "defaultMessage": "Sent Ether"
+  },
+  "sent-ether-achievement-header": {
+    "defaultMessage": "Sent Ether!"
+  },
+  "statistic-option": {
+    "defaultMessage": "Statistic"
+  },
+  "stats": {
+    "defaultMessage": "Stats"
+  },
+  "swaps": {
+    "defaultMessage": "Swaps"
   },
   "token-fallback": {
     "defaultMessage": "Fungible Token"

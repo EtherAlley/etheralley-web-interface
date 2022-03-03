@@ -57,6 +57,7 @@ function EditBadgesForm() {
 }
 
 function Group({ group, arrayIndex }: { group: DisplayGroup; arrayIndex: number }) {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const { id, items, text } = group;
 
@@ -65,14 +66,13 @@ function Group({ group, arrayIndex }: { group: DisplayGroup; arrayIndex: number 
       <Flex alignItems="end" mr={2}>
         <Input
           id={id}
-          label={`Group ${arrayIndex + 1}`}
           value={text}
           onChange={(event) => dispatch(updateGroupText({ index: arrayIndex, text: event.target.value }))}
           maxLength={30}
         />
         <IconButton
-          aria-label="Remove Group"
-          tooltip="Remove Group"
+          aria-label={intl.formatMessage({ id: 'remove-group', defaultMessage: 'Remove Group' })}
+          tooltip={intl.formatMessage({ id: 'remove-group', defaultMessage: 'Remove Group' })}
           Icon={MdRemove}
           onClick={() => dispatch(removeGroup(arrayIndex))}
           size="md"
@@ -203,17 +203,11 @@ function StatisticLabel({ index }: { index: number }) {
 
   switch (stat.contract.interface) {
     case Interfaces.SUSHISWAP_EXCHANGE:
-      return (
-        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Sushiswap Stats' })}</Text>
-      );
+      return <Text isTruncated>Sushiswap {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.UNISWAP_V2_EXCHANGE:
-      return (
-        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap V2 Stats' })}</Text>
-      );
+      return <Text isTruncated>Uniswap V2 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.UNISWAP_V3_EXCHANGE:
-      return (
-        <Text isTruncated>{intl.formatMessage({ id: 'sushi-swap-stats', defaultMessage: 'Uniswap V3 Stats' })}</Text>
-      );
+      return <Text isTruncated>Uniswap V3 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     default:
       return <Text isTruncated>{stat.contract.interface}</Text>;
   }

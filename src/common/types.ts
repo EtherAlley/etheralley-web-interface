@@ -34,7 +34,10 @@ export type DisplayConfig = {
   picture: {
     item: DisplayItem | undefined;
   };
-  achievements: DisplayAchievement[];
+  achievements: {
+    text: string;
+    items: DisplayAchievement[];
+  };
   groups: DisplayGroup[];
 };
 
@@ -43,6 +46,7 @@ export type DisplayAchievement = {
   index: number;
   type: AchievementTypes;
 };
+
 export type DisplayGroup = {
   id: string;
   text: string;

@@ -4,19 +4,21 @@ import { useIntl } from 'react-intl';
 import { InteractionTypes } from '../../../common/constants';
 import { AchievementTypes } from '../../../common/types';
 import IconButton from '../../../components/IconButton';
+import Input from '../../../components/Input';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { openAchievementModal } from '../ModalForms/slice';
-import { removeAchievement, selectAchievements, selectInteraction } from '../slice';
+import { removeAchievement, selectAchievements, selectInteraction, updateAchievementText } from '../slice';
 
 function EditAchievementForm() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const achievements = useAppSelector(selectAchievements);
+  const { items, text } = useAppSelector(selectAchievements);
 
   return (
     <Box>
       <Flex my={5}>
+        <Box flexGrow={1} />
         <Button
           id="add-achievement-button"
           onClick={() => dispatch(openAchievementModal())}
@@ -26,7 +28,14 @@ function EditAchievementForm() {
           {intl.formatMessage({ id: 'add-achievement-button', defaultMessage: 'Add Achievement' })}
         </Button>
       </Flex>
-      {achievements.map(({ index, type, id }) => {
+      <Input
+        id="update-achievements-title"
+        value={text}
+        onChange={(event) => dispatch(updateAchievementText(event.target.value))}
+        maxLength={30}
+        mb={3}
+      />
+      {items.map(({ index, type, id }) => {
         let label;
         switch (type) {
           case AchievementTypes.Interactions:
@@ -38,7 +47,7 @@ function EditAchievementForm() {
         }
         return (
           <Flex key={id} alignItems="center" mb={2}>
-            {label}
+            <Box ml={4}>{label}</Box>
             <Box flexGrow={1} />
             <IconButton
               Icon={MdRemove}

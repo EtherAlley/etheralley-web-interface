@@ -10,7 +10,9 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import EditDrawer from './EditDrawer';
 import Profile from './Profile';
-import { AddAchievementModal, AddBadgeModal, AddProfilePictureModal } from './ModalForms';
+import AddBadgeModal from './ModalForms/AddBadgeModal';
+import AddProfilePictureModal from './ModalForms/AddProfilePictureModal';
+import AddAchievementModal from './ModalForms/AddAchievementModal';
 
 const PageWrapper = ({ children }: { children: ReactChild }) => {
   return (

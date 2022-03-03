@@ -37,6 +37,8 @@ export interface State {
   fungibleForm: {
     blockchain: Blockchains | undefined;
     address: string;
+    keyword: string;
+    submitted: boolean;
   };
   statForm: {
     blockchain: Blockchains | undefined;
@@ -73,6 +75,8 @@ const initialState = (): State => ({
   fungibleForm: {
     blockchain: undefined,
     address: '',
+    keyword: '',
+    submitted: false,
   },
   statForm: {
     blockchain: undefined,
@@ -266,9 +270,20 @@ export const slice = createSlice({
     },
     updateFungibleAddress: (state, action: PayloadAction<string>) => {
       state.fungibleForm.address = action.payload;
+      state.fungibleForm.keyword = '';
+    },
+    updateFungibleKeyword: (state, action: PayloadAction<string>) => {
+      state.fungibleForm.keyword = action.payload;
+      state.fungibleForm.submitted = false;
+    },
+    submitFungibleSearch: (state, action: PayloadAction<{ address: string; name: string }>) => {
+      state.fungibleForm.address = action.payload.address;
+      state.fungibleForm.keyword = action.payload.name;
+      state.fungibleForm.submitted = true;
     },
     updateStatBlockchain: (state, action: PayloadAction<string>) => {
       state.statForm.blockchain = action.payload as Blockchains;
+      state.statForm.interface = undefined;
     },
     updateStatInterface: (state, action: PayloadAction<string>) => {
       state.statForm.interface = action.payload as Interfaces;
@@ -385,9 +400,11 @@ export const {
   updateNonFungibleTokenId,
   updateFungibleBlockchain,
   updateFungibleAddress,
+  updateFungibleKeyword,
   updateStatBlockchain,
   updateStatInterface,
   updateInteractionBlockchain,
   updateInteractionType,
   updateInteractionTransactionId,
+  submitFungibleSearch,
 } = slice.actions;

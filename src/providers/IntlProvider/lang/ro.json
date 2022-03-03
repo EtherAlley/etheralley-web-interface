@@ -1,26 +1,128 @@
 {
+  "achievement-form": [
+    {
+      "type": 0,
+      "value": "AchievementsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-achievement-button": [
+    {
+      "type": 0,
+      "value": "Add AchievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-achievement-modal-close": [
+    {
+      "type": 0,
+      "value": "CancelSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-achievement-modal-header": [
+    {
+      "type": 0,
+      "value": "Add a new achievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-achievement-modal-submit": [
+    {
+      "type": 0,
+      "value": "AddSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-badge": [
+    {
+      "type": 0,
+      "value": "Add BadgeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-badge-form-header": [
+    {
+      "type": 0,
+      "value": "Add a new badge to your collectionSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-badge-modal-close": [
+    {
+      "type": 0,
+      "value": "CancelSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-badge-modal-submit": [
+    {
+      "type": 0,
+      "value": "AddSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-group": [
+    {
+      "type": 0,
+      "value": "Add GroupSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-profile-picture": [
+    {
+      "type": 0,
+      "value": "Add Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-profile-picture-modal-close": [
+    {
+      "type": 0,
+      "value": "CancelSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-profile-picture-modal-header": [
+    {
+      "type": 0,
+      "value": "Add an NFT Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "add-profile-picture-modal-submit": [
+    {
+      "type": 0,
+      "value": "AddSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "adding-achievemenet-description": [
+    {
+      "type": 0,
+      "value": "Error adding achievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "adding-badge-description": [
+    {
+      "type": 0,
+      "value": "Error adding badgeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "adding-profile-picture-description": [
+    {
+      "type": 0,
+      "value": "Error adding profile pictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "alpha": [
     {
       "type": 0,
       "value": "AlphaSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "badge-form-close": [
+  "aria-remove-item": [
     {
       "type": 0,
-      "value": "CancelSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Remove ItemSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "badge-form-header": [
+  "badges-form": [
     {
       "type": 0,
-      "value": "Add a new badge to your collectionSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "BadgesSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "badge-form-submit": [
+  "change-profile-picture": [
     {
       "type": 0,
-      "value": "AddSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Change Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "close-edit-button": [
@@ -39,6 +141,24 @@
     {
       "type": 0,
       "value": "Connect to a walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "contract-creation-label": [
+    {
+      "type": 0,
+      "value": "Deployed Smart Contract AchievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "deployed-achievement-header": [
+    {
+      "type": 0,
+      "value": "Deployed a smart contract!SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "deployed-smart-contract": [
+    {
+      "type": 0,
+      "value": "Deployed a Smart ContractSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "edit-description": [
@@ -95,22 +215,40 @@
       "value": "Enter ENS name or Ethereum address...SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "fungible-token-option": [
+    {
+      "type": 0,
+      "value": "Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "go-home-button": [
     {
       "type": 0,
       "value": "Go HomeSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "groups-form": [
-    {
-      "type": 0,
-      "value": "GroupsSSSSSSSSSSSSSSSSSSSSSSSSS"
-    }
-  ],
   "info-form": [
     {
       "type": 0,
       "value": "InfoSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "input-contract-address": [
+    {
+      "type": 0,
+      "value": "AddressSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "input-token-id": [
+    {
+      "type": 0,
+      "value": "Token IdSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "input-transaction-id": [
+    {
+      "type": 0,
+      "value": "Transaction IdSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "my-profile": [
@@ -125,6 +263,36 @@
       "value": "Non Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "non-fungible-token-option": [
+    {
+      "type": 0,
+      "value": "Non Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profile-picture-form": [
+    {
+      "type": 0,
+      "value": "Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "remove-achievement": [
+    {
+      "type": 0,
+      "value": "Remove achievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "remove-group": [
+    {
+      "type": 0,
+      "value": "Remove GroupSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "remove-item": [
+    {
+      "type": 0,
+      "value": "Remove ItemSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "save-edits-button": [
     {
       "type": 0,
@@ -137,16 +305,76 @@
       "value": "Go to a profileSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "search-tokens": [
+    {
+      "type": 0,
+      "value": "Search TokensSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "select-badge-type": [
     {
       "type": 0,
       "value": "Select badge typeSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "sushi-swap-stats": [
+  "select-blockchain": [
     {
       "type": 0,
-      "value": "Sushiswap StatsSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "BlockchainSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "select-interaction-type": [
+    {
+      "type": 0,
+      "value": "TypeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "select-interface": [
+    {
+      "type": 0,
+      "value": "InterfaceSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "select-stat-type": [
+    {
+      "type": 0,
+      "value": "Statistic TypeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "send-ether-label": [
+    {
+      "type": 0,
+      "value": "Sent Ether AchievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "sent-ether": [
+    {
+      "type": 0,
+      "value": "Sent EtherSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "sent-ether-achievement-header": [
+    {
+      "type": 0,
+      "value": "Sent Ether!SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "statistic-option": [
+    {
+      "type": 0,
+      "value": "StatisticSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "stats": [
+    {
+      "type": 0,
+      "value": "StatsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "swaps": [
+    {
+      "type": 0,
+      "value": "SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "token-fallback": [

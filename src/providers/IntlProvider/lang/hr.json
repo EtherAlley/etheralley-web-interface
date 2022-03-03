@@ -1,26 +1,128 @@
 {
+  "achievement-form": [
+    {
+      "type": 0,
+      "value": "Ḁćḫíèṿèṁèńṭś"
+    }
+  ],
+  "add-achievement-button": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ Ḁćḫíèṿèṁèńṭ"
+    }
+  ],
+  "add-achievement-modal-close": [
+    {
+      "type": 0,
+      "value": "Ḉâńćèĺ"
+    }
+  ],
+  "add-achievement-modal-header": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ â ńèẘ âćḫíèṿèṁèńṭ"
+    }
+  ],
+  "add-achievement-modal-submit": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ"
+    }
+  ],
+  "add-badge": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ Ḃâḋĝè"
+    }
+  ],
+  "add-badge-form-header": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ â ńèẘ ḃâḋĝè ṭŏ ẏŏůŕ ćŏĺĺèćṭíŏń"
+    }
+  ],
+  "add-badge-modal-close": [
+    {
+      "type": 0,
+      "value": "Ḉâńćèĺ"
+    }
+  ],
+  "add-badge-modal-submit": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ"
+    }
+  ],
+  "add-group": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ Ḡŕŏůṗ"
+    }
+  ],
+  "add-profile-picture": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ Ṕŕŏḟíĺè Ṕíćṭůŕè"
+    }
+  ],
+  "add-profile-picture-modal-close": [
+    {
+      "type": 0,
+      "value": "Ḉâńćèĺ"
+    }
+  ],
+  "add-profile-picture-modal-header": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ âń ŊḞṮ Ṕŕŏḟíĺè Ṕíćṭůŕè"
+    }
+  ],
+  "add-profile-picture-modal-submit": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋ"
+    }
+  ],
+  "adding-achievemenet-description": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ âḋḋíńĝ âćḫíèṿèṁèńṭ"
+    }
+  ],
+  "adding-badge-description": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ âḋḋíńĝ ḃâḋĝè"
+    }
+  ],
+  "adding-profile-picture-description": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ âḋḋíńĝ ṗŕŏḟíĺè ṗíćṭůŕè"
+    }
+  ],
   "alpha": [
     {
       "type": 0,
       "value": "Ḁĺṗḫâ"
     }
   ],
-  "badge-form-close": [
+  "aria-remove-item": [
     {
       "type": 0,
-      "value": "Ḉâńćèĺ"
+      "value": "Ŕèṁŏṿè Ḭṭèṁ"
     }
   ],
-  "badge-form-header": [
+  "badges-form": [
     {
       "type": 0,
-      "value": "Ḁḋḋ â ńèẘ ḃâḋĝè ṭŏ ẏŏůŕ ćŏĺĺèćṭíŏń"
+      "value": "Ḃâḋĝèś"
     }
   ],
-  "badge-form-submit": [
+  "change-profile-picture": [
     {
       "type": 0,
-      "value": "Ḁḋḋ"
+      "value": "Ḉḫâńĝè Ṕŕŏḟíĺè Ṕíćṭůŕè"
     }
   ],
   "close-edit-button": [
@@ -39,6 +141,24 @@
     {
       "type": 0,
       "value": "Ḉŏńńèćṭ ṭŏ â ẘâĺĺèṭ"
+    }
+  ],
+  "contract-creation-label": [
+    {
+      "type": 0,
+      "value": "Ḋèṗĺŏẏèḋ Ṡṁâŕṭ Ḉŏńṭŕâćṭ Ḁćḫíèṿèṁèńṭ"
+    }
+  ],
+  "deployed-achievement-header": [
+    {
+      "type": 0,
+      "value": "Ḋèṗĺŏẏèḋ â śṁâŕṭ ćŏńṭŕâćṭ!"
+    }
+  ],
+  "deployed-smart-contract": [
+    {
+      "type": 0,
+      "value": "Ḋèṗĺŏẏèḋ â Ṡṁâŕṭ Ḉŏńṭŕâćṭ"
     }
   ],
   "edit-description": [
@@ -95,22 +215,40 @@
       "value": "Ḕńṭèŕ ḔŊṠ ńâṁè ŏŕ Ḕṭḫèŕèůṁ âḋḋŕèśś..."
     }
   ],
+  "fungible-token-option": [
+    {
+      "type": 0,
+      "value": "Ḟůńĝíḃĺè Ṯŏǩèń"
+    }
+  ],
   "go-home-button": [
     {
       "type": 0,
       "value": "Ḡŏ Ḣŏṁè"
     }
   ],
-  "groups-form": [
-    {
-      "type": 0,
-      "value": "Ḡŕŏůṗś"
-    }
-  ],
   "info-form": [
     {
       "type": 0,
       "value": "Ḭńḟŏ"
+    }
+  ],
+  "input-contract-address": [
+    {
+      "type": 0,
+      "value": "Ḁḋḋŕèśś"
+    }
+  ],
+  "input-token-id": [
+    {
+      "type": 0,
+      "value": "Ṯŏǩèń Ḭḋ"
+    }
+  ],
+  "input-transaction-id": [
+    {
+      "type": 0,
+      "value": "Ṯŕâńśâćṭíŏń Ḭḋ"
     }
   ],
   "my-profile": [
@@ -125,6 +263,36 @@
       "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
     }
   ],
+  "non-fungible-token-option": [
+    {
+      "type": 0,
+      "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
+    }
+  ],
+  "profile-picture-form": [
+    {
+      "type": 0,
+      "value": "Ṕŕŏḟíĺè Ṕíćṭůŕè"
+    }
+  ],
+  "remove-achievement": [
+    {
+      "type": 0,
+      "value": "Ŕèṁŏṿè âćḫíèṿèṁèńṭ"
+    }
+  ],
+  "remove-group": [
+    {
+      "type": 0,
+      "value": "Ŕèṁŏṿè Ḡŕŏůṗ"
+    }
+  ],
+  "remove-item": [
+    {
+      "type": 0,
+      "value": "Ŕèṁŏṿè Ḭṭèṁ"
+    }
+  ],
   "save-edits-button": [
     {
       "type": 0,
@@ -137,16 +305,76 @@
       "value": "Ḡŏ ṭŏ â ṗŕŏḟíĺè"
     }
   ],
+  "search-tokens": [
+    {
+      "type": 0,
+      "value": "Ṡèâŕćḫ Ṯŏǩèńś"
+    }
+  ],
   "select-badge-type": [
     {
       "type": 0,
       "value": "Ṡèĺèćṭ ḃâḋĝè ṭẏṗè"
     }
   ],
-  "sushi-swap-stats": [
+  "select-blockchain": [
     {
       "type": 0,
-      "value": "Ṡůśḫíśẘâṗ Ṡṭâṭś"
+      "value": "Ḃĺŏćǩćḫâíń"
+    }
+  ],
+  "select-interaction-type": [
+    {
+      "type": 0,
+      "value": "Ṯẏṗè"
+    }
+  ],
+  "select-interface": [
+    {
+      "type": 0,
+      "value": "Ḭńṭèŕḟâćè"
+    }
+  ],
+  "select-stat-type": [
+    {
+      "type": 0,
+      "value": "Ṡṭâṭíśṭíć Ṯẏṗè"
+    }
+  ],
+  "send-ether-label": [
+    {
+      "type": 0,
+      "value": "Ṡèńṭ Ḕṭḫèŕ Ḁćḫíèṿèṁèńṭ"
+    }
+  ],
+  "sent-ether": [
+    {
+      "type": 0,
+      "value": "Ṡèńṭ Ḕṭḫèŕ"
+    }
+  ],
+  "sent-ether-achievement-header": [
+    {
+      "type": 0,
+      "value": "Ṡèńṭ Ḕṭḫèŕ!"
+    }
+  ],
+  "statistic-option": [
+    {
+      "type": 0,
+      "value": "Ṡṭâṭíśṭíć"
+    }
+  ],
+  "stats": [
+    {
+      "type": 0,
+      "value": "Ṡṭâṭś"
+    }
+  ],
+  "swaps": [
+    {
+      "type": 0,
+      "value": "Ṡẘâṗś"
     }
   ],
   "token-fallback": [

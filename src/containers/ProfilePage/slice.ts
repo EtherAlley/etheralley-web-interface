@@ -26,6 +26,7 @@ export interface State {
 // with the current code, no two items within the display config should point to the same item in the arrays
 // that means that a picture pointing to an nft and a group item pointing to the same nft should be two distinct objects in the non_fungible_tokens array
 // this design is because the logic for adding/removing items from the arrays does not account for shared pointers and is more complicated than I want to support right now
+// it is slightly less optimal for us on the backend because we have to make external calls to validate/hydrate the same nft twice but I'm okay with this for now.
 const initialState: State = {
   loadProfileState: AsyncStates.PENDING,
   saveProfileState: AsyncStates.READY,
@@ -47,7 +48,10 @@ const initialState: State = {
       picture: {
         item: undefined,
       },
-      achievements: [],
+      achievements: {
+        text: '',
+        items: [],
+      },
       groups: [],
     },
     interactions: [],
@@ -137,8 +141,11 @@ export const slice = createSlice({
       removeBadge(state, group.items[action.payload.itemArrayIndex]);
       group.items.splice(action.payload.itemArrayIndex, 1);
     },
+    updateAchievementText: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.achievements.text = action.payload;
+    },
     removeAchievement: (state, action: PayloadAction<number>) => {
-      const achievements = state.profile.display_config.achievements;
+      const achievements = state.profile.display_config.achievements.items;
       const achievementBeingDeleted = achievements[action.payload];
       for (const achievement of achievements) {
         if (achievement.type === achievementBeingDeleted.type && achievement.index > achievementBeingDeleted.index) {
@@ -217,7 +224,7 @@ export const slice = createSlice({
       })
       .addCase(getAchievement.fulfilled, (state, { payload }) => {
         state.profile.interactions.push(payload);
-        state.profile.display_config.achievements.push({
+        state.profile.display_config.achievements.items.push({
           id: nanoid(),
           index: state.profile.interactions.length - 1,
           type: AchievementTypes.Interactions,
@@ -226,6 +233,7 @@ export const slice = createSlice({
   },
 });
 
+// build a pleasant display config when the user does not have one configured
 function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile): void {
   stateProfile.display_config.text.title = '💎 My Profile 💎';
   stateProfile.display_config.text.description = `
@@ -242,7 +250,8 @@ function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile
   stateProfile.display_config.groups = [];
 
   for (let i = 0; i < actionProfile.interactions.length; i++) {
-    stateProfile.display_config.achievements.push({
+    stateProfile.display_config.achievements.text = 'Achievements';
+    stateProfile.display_config.achievements.items.push({
       id: nanoid(),
       index: i,
       type: AchievementTypes.Interactions,
@@ -398,5 +407,6 @@ export const {
   addGroup,
   removeGroup,
   removeItem,
+  updateAchievementText,
   removeAchievement,
 } = slice.actions;
