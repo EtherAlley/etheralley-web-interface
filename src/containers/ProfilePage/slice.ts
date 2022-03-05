@@ -164,11 +164,18 @@ export const slice = createSlice({
       .addCase(loadProfile.rejected, (state) => {
         state.loadProfileState = AsyncStates.REJECTED;
       })
-      .addCase(loadProfile.fulfilled, (state, action) => {
+      .addCase(loadProfile.fulfilled, (state, { payload: profile }) => {
         state.loadProfileState = AsyncStates.FULFILLED;
-        state.profile = { ...state.profile, ...action.payload };
-        if (!action.payload.display_config) {
-          buildDefaultDisplayConfig(state.profile, action.payload); // TODO
+        state.profile.address = profile.address;
+        state.profile.ens_name = profile.ens_name;
+        state.profile.non_fungible_tokens = profile.non_fungible_tokens;
+        state.profile.fungible_tokens = profile.fungible_tokens;
+        state.profile.statistics = profile.statistics;
+        state.profile.interactions = profile.interactions;
+        if (!profile.display_config) {
+          buildDefaultDisplayConfig(state.profile, profile);
+        } else {
+          state.profile.display_config = profile.display_config;
         }
       })
       .addCase(saveProfile.pending, (state, _) => {
