@@ -16,7 +16,7 @@ import {
 import { useIntl } from 'react-intl';
 import { ReactNode } from 'react';
 import { InteractionTypes } from '../../../common/constants';
-import LinkComponent from '../../../components/Link';
+import Link from '../../../components/Link';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import Handshake from '../../../icons/Handshake';
@@ -119,7 +119,9 @@ function AchievementBody({ index }: { index: number }) {
   return (
     <>
       <Text>Timestamp: {timestamp}</Text>
-      <LinkComponent url={url} text="Etherscan" />
+      <Link href={url} isExternal>
+        Etherscan
+      </Link>
     </>
   );
 }

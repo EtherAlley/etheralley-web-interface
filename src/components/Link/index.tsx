@@ -1,13 +1,24 @@
-import { Icon, Link } from '@chakra-ui/react';
+import { Icon, Link as LinkComponent } from '@chakra-ui/react';
+import { ReactChild } from 'react';
 import { RiExternalLinkLine } from 'react-icons/ri';
+import { Link as RouterLink } from 'react-router-dom';
 
-function LinkComponent({ url, text }: { url: string; text: string }) {
+function Link({ href, isExternal, children }: { href: string; isExternal?: boolean; children: ReactChild }) {
+  const externalProps = {
+    isExternal,
+    href: href,
+    to: '',
+  };
+  const props = {
+    as: RouterLink,
+    to: href,
+  };
   return (
-    <Link color="blue.500" href={url} isExternal>
-      {text}
-      <Icon as={RiExternalLinkLine} ml={2}></Icon>
-    </Link>
+    <LinkComponent color="blue.500" {...(isExternal ? externalProps : props)}>
+      {children}
+      {isExternal && <Icon as={RiExternalLinkLine} ml={2}></Icon>}
+    </LinkComponent>
   );
 }
 
-export default LinkComponent;
+export default Link;

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router';
-import Container from '../../components/Container';
+import ContainerComponent from '../../components/Container';
 import Input from '../../components/Input';
 import Paper from '../../components/Paper';
 import { Routes } from '../../common/constants';
@@ -9,6 +9,7 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
+import TopProfiles from './TopProfiles';
 
 function HomePage() {
   const intl = useIntl();
@@ -16,9 +17,10 @@ function HomePage() {
   const dispatch = useAppDispatch();
   const { address } = useAppSelector(selectHome);
   const search = () => navigate(Routes.PROFILE.replace(':address', address));
+
   return (
     <>
-      <Container>
+      <ContainerComponent>
         <>
           <Text
             bgGradient="linear(to-l, #FFF, #1dc9a2)"
@@ -29,10 +31,12 @@ function HomePage() {
           >
             {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to Ether Alley' })}
           </Text>
-          <Paper mt={5}>
+          <Paper mt={5} mb={20}>
             <form
               onSubmit={() => {
-                if (address) search();
+                if (address) {
+                  search();
+                }
               }}
             >
               <Input
@@ -55,8 +59,9 @@ function HomePage() {
               />
             </form>
           </Paper>
+          <TopProfiles />
         </>
-      </Container>
+      </ContainerComponent>
     </>
   );
 }

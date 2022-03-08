@@ -4,7 +4,7 @@ import Badge from '../../../components/Badge';
 import useOpenSeaUrl from '../../../hooks/useOpenSeaUrl';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectNonFungibleToken } from './../slice';
-import LinkComponent from '../../../components/Link';
+import Link from '../../../components/Link';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
   return (
@@ -68,7 +68,11 @@ function NonFungibleTokenComponent({
       DialogBody={
         <>
           <ImageWrapper image={image} alt={name} fallbackText={interfaceName} />
-          {openSeaUrl && <LinkComponent url={openSeaUrl} text="Opensea" />}
+          {openSeaUrl && (
+            <Link href={openSeaUrl} isExternal>
+              Opensea
+            </Link>
+          )}
           <Text fontSize="md" noOfLines={3} mt={3}>
             {description}
           </Text>

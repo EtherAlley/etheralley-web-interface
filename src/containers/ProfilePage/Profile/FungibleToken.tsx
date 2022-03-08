@@ -8,7 +8,7 @@ import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import Coin from '../../../icons/Coin';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectFungibleToken } from './../slice';
-import LinkComponent from '../../../components/Link';
+import Link from '../../../components/Link';
 
 const coinStyling = {
   width: 85,
@@ -56,7 +56,9 @@ function FungibleTokenComponent({ index }: { index: number }) {
       DialogBody={
         <>
           <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
-          <LinkComponent url={etherscanUrl} text="Etherscan" />
+          <Link href={etherscanUrl} isExternal>
+            Etherscan
+          </Link>
           <Text fontSize="md" noOfLines={3} mt={3}>
             Name: {name}
           </Text>

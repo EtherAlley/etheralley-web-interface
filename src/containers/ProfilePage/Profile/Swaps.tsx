@@ -17,7 +17,7 @@ import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
-import LinkComponent from '../../../components/Link';
+import Link from '../../../components/Link';
 
 const logoStyling = {
   width: 100,
@@ -81,7 +81,9 @@ function SwapItem({
     <ListItem>
       <UnorderedList>
         <ListItem key={0}>
-          <LinkComponent url={etherscanUrl} text="Etherscan" />
+          <Link href={etherscanUrl} isExternal>
+            Etherscan
+          </Link>
         </ListItem>
         <ListItem key={1}>
           <Text>{timestamp}</Text>
