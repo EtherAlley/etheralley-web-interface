@@ -1,6 +1,7 @@
-import { Table, TableCaption, Thead, Tr, Th, Tbody, Td, Text } from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
+import { Profile } from '../../common/types';
 import Link from '../../components/Link';
 import Loading from '../../components/Loading';
 import Paper from '../../components/Paper';
@@ -23,39 +24,51 @@ function TopProfiles() {
   }
 
   return (
-    <Paper>
-      <Table>
-        <TableCaption placement="top">
-          <Text>{intl.formatMessage({ id: 'top-profiles-caption', defaultMessage: 'Top Profiles' })}</Text>
-        </TableCaption>
-        <Thead>
-          <Tr>
-            <Th>
-              <Text>{intl.formatMessage({ id: 'top-profiles-rank-column', defaultMessage: 'Rank' })}</Text>
-            </Th>
-            <Th>
-              <Text>{intl.formatMessage({ id: 'top-profiles-address-column', defaultMessage: 'Address' })}</Text>
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+    <Box>
+      <Heading fontSize="xl" textAlign="center" mb={5}>
+        {intl.formatMessage({ id: 'top-profiles-caption', defaultMessage: 'Top Profiles Today' })}
+      </Heading>
+      <Paper>
+        <Box m={2}>
           {profiles.map((profile, i) => {
-            const profileId = profile.ens_name || profile.address;
-            return (
-              <Tr>
-                <Td>
-                  <Text>{i + 1}</Text>
-                </Td>
-                <Td>
-                  <Link href={`/profiles/${profileId}`}>{profileId}</Link>
-                </Td>
-              </Tr>
-            );
+            return <Row profile={profile} rank={i + 1} />;
           })}
-        </Tbody>
-      </Table>
-    </Paper>
+        </Box>
+      </Paper>
+    </Box>
   );
+}
+
+function Row({ profile, rank }: { profile: Profile; rank: number }) {
+  const maxWidth = useBreakpointValue({ base: 200, sm: 400 });
+  const profileId = profile.ens_name || profile.address;
+  return (
+    <Flex my={1} alignItems="center">
+      <Box width="40px" mx={3}>
+        <Text fontWeight="bold" mr={2} fontSize="xl" textAlign="center">
+          {medal(rank)}
+        </Text>
+      </Box>
+      <Link href={`/profiles/${profileId}`}>
+        <Text fontWeight="bold" isTruncated maxWidth={maxWidth}>
+          {profileId}
+        </Text>
+      </Link>
+    </Flex>
+  );
+}
+
+function medal(rank: number): string {
+  switch (rank) {
+    case 1:
+      return '🥇';
+    case 2:
+      return '🥈';
+    case 3:
+      return '🥉';
+    default:
+      return `${rank}`;
+  }
 }
 
 export default TopProfiles;

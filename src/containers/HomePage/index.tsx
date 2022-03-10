@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import ContainerComponent from '../../components/Container';
 import Input from '../../components/Input';
 import Paper from '../../components/Paper';
 import { Routes } from '../../common/constants';
@@ -7,7 +6,7 @@ import { selectHome, setAddress } from './slice';
 import { MdSearch } from 'react-icons/md';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import { Text } from '@chakra-ui/react';
+import { Box, Container, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import TopProfiles from './TopProfiles';
 
@@ -20,8 +19,8 @@ function HomePage() {
 
   return (
     <>
-      <ContainerComponent>
-        <>
+      <Container>
+        <Box mt="30vh">
           <Text
             bgGradient="linear(to-l, #FFF, #1dc9a2)"
             bgClip="text"
@@ -59,9 +58,11 @@ function HomePage() {
               />
             </form>
           </Paper>
+        </Box>
+        <Box mt="17vh">
           <TopProfiles />
-        </>
-      </ContainerComponent>
+        </Box>
+      </Container>
     </>
   );
 }
