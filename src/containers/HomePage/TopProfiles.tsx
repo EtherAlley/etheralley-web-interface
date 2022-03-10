@@ -1,4 +1,4 @@
-import { Text, Heading, useBreakpointValue, Flex, Box } from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { Profile } from '../../common/types';
@@ -28,13 +28,16 @@ function TopProfiles() {
       <Heading fontSize="xl" textAlign="center" mb={5}>
         {intl.formatMessage({ id: 'top-profiles-caption', defaultMessage: 'Top Profiles Today' })}
       </Heading>
-      <Paper>
+      <Center>
+        <Divider w={250} />
+      </Center>
+      <Box>
         <Box m={2}>
           {profiles.map((profile, i) => {
             return <Row key={profile.address} profile={profile} rank={i + 1} />;
           })}
         </Box>
-      </Paper>
+      </Box>
     </Box>
   );
 }
