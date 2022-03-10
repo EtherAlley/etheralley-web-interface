@@ -31,7 +31,7 @@ function TopProfiles() {
       <Paper>
         <Box m={2}>
           {profiles.map((profile, i) => {
-            return <Row profile={profile} rank={i + 1} />;
+            return <Row key={profile.address} profile={profile} rank={i + 1} />;
           })}
         </Box>
       </Paper>
