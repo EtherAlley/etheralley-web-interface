@@ -1,19 +1,28 @@
-import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center } from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center, Container } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { Profile } from '../../common/types';
 import Link from '../../components/Link';
 import Loading from '../../components/Loading';
-import Paper from '../../components/Paper';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import { getTopProfiles, selectLoadingTopProfiles, selectTopProfiles } from './slice';
+import { getTopProfiles, selectLoadingTopProfiles, selectProfiles } from './slice';
 
-function TopProfiles() {
+function TopProfilesPageWrapper() {
+  return (
+    <Container>
+      <Box mt="10vh">
+        <TopProfilesPage />
+      </Box>
+    </Container>
+  );
+}
+
+function TopProfilesPage() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingTopProfiles);
-  const profiles = useAppSelector(selectTopProfiles);
+  const profiles = useAppSelector(selectProfiles);
 
   useEffect(() => {
     dispatch(getTopProfiles());
@@ -74,4 +83,4 @@ function medal(rank: number): string {
   }
 }
 
-export default TopProfiles;
+export default TopProfilesPageWrapper;

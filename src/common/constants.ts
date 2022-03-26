@@ -3,6 +3,8 @@ export const BADGE_HEIGHT = 220;
 
 export const Routes = {
   HOME: '/',
+  TOP_PROFILES: '/top-profiles',
+  SHOP: '/shop',
   PROFILE: '/profiles/:address',
 };
 
