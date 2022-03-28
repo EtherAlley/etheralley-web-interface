@@ -6,16 +6,19 @@ export default function useOpenSeaUrl(address: string, token_id: string, blockch
   const [url, setUrl] = useState('');
 
   useEffect(() => {
-    switch (blockchain) {
-      case Blockchains.ETHEREUM:
-      case Blockchains.POLYGON:
-        setUrl(`${Settings.OPENSEA_URL}/assets/${address}/${token_id}`);
-        break;
-      default:
-        setUrl('');
-        break;
-    }
+    setUrl(`${Settings.OPENSEA_URL}/assets${infixFromBlockchain(blockchain)}/${address}/${token_id}`);
   }, [blockchain, address, token_id]);
 
   return url;
+}
+
+function infixFromBlockchain(blockchain: Blockchains): string {
+  switch (blockchain) {
+    case Blockchains.ETHEREUM:
+      return Settings.IS_DEV ? '/goerli' : '';
+    case Blockchains.POLYGON:
+      return Settings.IS_DEV ? '/mumbai' : '/matic';
+    default:
+      return '';
+  }
 }

@@ -1,6 +1,8 @@
-function Coin({ width, height }: { width: string; height: string }) {
+import { SVGProps } from 'react';
+
+function Coin(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={width} height={height} x="0px" y="0px" viewBox="0 0 44 44">
+    <svg x="0px" y="0px" viewBox="0 0 44 44" {...props}>
       <g>
         <path
           style={{ fill: '#F0C419' }}

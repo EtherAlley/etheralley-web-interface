@@ -1,6 +1,8 @@
-function ProfileUser({ width, height }: { width: number; height: number }) {
+import { SVGProps } from 'react';
+
+function ProfileUser(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg version="1.1" x="0px" y="0px" width={width} height={height} viewBox="0 0 45.916 45.916">
+    <svg x="0px" y="0px" viewBox="0 0 45.916 45.916" {...props}>
       <g>
         <g>
           <path

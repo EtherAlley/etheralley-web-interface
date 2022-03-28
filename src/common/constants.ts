@@ -1,14 +1,19 @@
 export const BADGE_WIDTH = 185;
 export const BADGE_HEIGHT = 220;
 
-export const Routes = {
-  HOME: '/',
-  TOP_PROFILES: '/top-profiles',
-  SHOP: '/shop',
-  PROFILE: '/profiles/:address',
-};
+export enum Routes {
+  HOME = '/',
+  TOP_PROFILES = '/top-profiles',
+  SHOP = '/shop',
+  PROFILE = '/profiles/:address',
+}
 
 export const ZeroAddress = '0x0000000000000000000000000000000000000000';
+
+export enum StoreAssets {
+  PREMIUM = '1',
+  BETA_TESTER = '2',
+}
 
 export enum Blockchains {
   ETHEREUM = 'ethereum',

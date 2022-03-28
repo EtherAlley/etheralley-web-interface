@@ -1,13 +1,8 @@
-function Handshake({ width, height }: { width: string; height: string }) {
+import { SVGProps } from 'react';
+
+function Handshake(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 128 128"
-      aria-hidden="true"
-      role="img"
-      preserveAspectRatio="xMidYMid meet"
-    >
+    <svg viewBox="0 0 128 128" {...props}>
       <path
         d="M10.1 23.35C6.37 26.2 4.45 34.16 4.05 45.42c-.4 11.26 1.72 17.38 2.46 19.23s6.3 4.61 12.56 9.45c4.59 3.55 40.63 28.64 44.9 30.59c6.79 3.09 11.11-3.16 11.11-3.16s3.6 2.06 7.08 0c4.25-2.52 3.75-5.65 3.75-5.65s4.38 1.01 6.61-.96c2.23-1.97 3.22-6.7 3.22-6.7s2.95 1.34 5.45-.89s4.4-5.25 1.75-9.37c-2.65-4.12-13.43-17.1-16.23-20.74c-2.8-3.64-10-24.4-16.93-26.47s-13.77-1.54-21.01.6s-14.01 1.94-22.05-.34s-16.62-7.66-16.62-7.66z"
         fill="#ffca28"
