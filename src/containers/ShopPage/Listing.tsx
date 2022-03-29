@@ -1,32 +1,28 @@
-import { Box, UnorderedList, ListItem, Text, Center, Flex, Heading, Image, Button } from '@chakra-ui/react';
+import {
+  Box,
+  UnorderedList,
+  ListItem,
+  Text,
+  Flex,
+  Heading,
+  Image,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
+import { useState } from 'react';
 import { useIntl } from 'react-intl';
+import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
-import Badge from '../../components/Badge';
-import BlockcahinChip from '../../components/BlockchainChip';
 import Link from '../../components/Link';
 import Paper from '../../components/Paper';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
-
-function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
-  return (
-    <Flex>
-      <Image
-        alt={alt}
-        fallback={
-          <Center width="100%">
-            <Heading size="md">{fallbackText}</Heading>
-          </Center>
-        }
-        src={image}
-        margin="auto"
-        width={150}
-        height={150}
-        borderRadius={8}
-      />
-    </Flex>
-  );
-}
 
 function ListingComponent({ listing }: { listing: Listing }) {
   const {
@@ -38,83 +34,94 @@ function ListingComponent({ listing }: { listing: Listing }) {
   const intl = useIntl();
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
   const formatPrice = useDisplayNumber(price, 18);
+  const [isOpen, setIsOpen] = useState(false);
+  const onClose = () => setIsOpen(false);
 
   return (
-    <Paper p={3}>
-      <Box>
-        <ImageWrapper image={image} alt={name} fallbackText={name} />
-        <Heading size="sm" textAlign="center" my={2} mx={2}>
-          {name}
-        </Heading>
-        <Flex justifyContent="center">
-          <BlockcahinChip text={`${formatPrice} MATIC`} blockchain={blockchain} />
-        </Flex>
-        <Button colorScheme="brand" mt={3} width="100%">
-          <Text fontWeight="bold">
-            {price === '0'
-              ? intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' })
-              : intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}
-          </Text>
-        </Button>
-      </Box>
-    </Paper>
+    <>
+      <Paper p={3}>
+        <Box>
+          <Heading size="sm" textAlign="center" my={2} mx={2}>
+            {name}
+          </Heading>
+          <Flex justifyContent="center">
+            <Box as="button" onClick={() => setIsOpen(true)}>
+              <Image alt={name} src={image} width={150} height={150} />
+            </Box>
+          </Flex>
+          <Flex alignItems="center" justifyContent="center" ml={6}>
+            <Text fontWeight="bold" textAlign="center">
+              {`${formatPrice} MATIC`}
+            </Text>
+            <Image
+              alt={blockchain}
+              src={`${Settings.PUBLIC_URL}/blockchains/${blockchain.toLowerCase()}.svg`}
+              ml={2}
+              height={6}
+              width={6}
+            />
+          </Flex>
+          <Button colorScheme="brand" mt={3} width="100%">
+            <Text fontWeight="bold">
+              {price === '0'
+                ? intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' })
+                : intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}
+            </Text>
+          </Button>
+        </Box>
+      </Paper>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent backgroundColor="profile.primary">
+          <ModalHeader fontSize="lg" fontWeight="bold">
+            {name}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <>
+              <Image alt={name} src={image} width={150} height={150} />
+              {openSeaUrl && (
+                <Link href={openSeaUrl} isExternal>
+                  Opensea
+                </Link>
+              )}
+              <Text fontSize="md" noOfLines={3} mt={3}>
+                {description}
+              </Text>
+              {attributes && attributes.length > 0 && (
+                <>
+                  <Text fontSize="md" mt={3}>
+                    Attributes:
+                  </Text>
+                  <UnorderedList>
+                    {attributes.map(({ trait_type, value }, i) => (
+                      <ListItem key={i}>
+                        <Text>
+                          {trait_type}: {value}
+                        </Text>
+                      </ListItem>
+                    ))}
+                  </UnorderedList>
+                </>
+              )}
+              <Text fontSize="md" noOfLines={3} mt={3}>
+                Address: {address}
+              </Text>
+              <Text fontSize="md" noOfLines={3} mt={3}>
+                Blockchain: {blockchain}
+              </Text>
+              <Text fontSize="md" noOfLines={3} mt={3}>
+                Interface: {interfaceName}
+              </Text>
+            </>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={onClose}>Close</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
-
-  // return (
-  //   <Badge
-  //     width={200}
-  //     height={260}
-  //     useHover={false}
-  //     Display={
-  //       <Box maxHeight="100%" maxWidth="100%">
-  //         <ImageWrapper image={image} alt={name} fallbackText={interfaceName} />
-  //         <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2} mb={3}>
-  //           {name}
-  //         </Heading>
-  //         <Button colorScheme="brand">Purchase</Button>
-  //       </Box>
-  //     }
-  //     DialogHeader={name}
-  //     DialogBody={
-  //       <>
-  //         <ImageWrapper image={image} alt={name} fallbackText={interfaceName} />
-  //         {openSeaUrl && (
-  //           <Link href={openSeaUrl} isExternal>
-  //             Opensea
-  //           </Link>
-  //         )}
-  //         <Text fontSize="md" noOfLines={3} mt={3}>
-  //           {description}
-  //         </Text>
-  //         {attributes && attributes.length > 0 && (
-  //           <>
-  //             <Text fontSize="md" mt={3}>
-  //               Attributes:
-  //             </Text>
-  //             <UnorderedList>
-  //               {attributes.map(({ trait_type, value }, i) => (
-  //                 <ListItem key={i}>
-  //                   <Text>
-  //                     {trait_type}: {value}
-  //                   </Text>
-  //                 </ListItem>
-  //               ))}
-  //             </UnorderedList>
-  //           </>
-  //         )}
-  //         <Text fontSize="md" noOfLines={3} mt={3}>
-  //           Address: {address}
-  //         </Text>
-  //         <Text fontSize="md" noOfLines={3} mt={3}>
-  //           Blockchain: {blockchain}
-  //         </Text>
-  //         <Text fontSize="md" noOfLines={3} mt={3}>
-  //           Interface: {interfaceName}
-  //         </Text>
-  //       </>
-  //     }
-  //   />
-  //);
 }
 
 export default ListingComponent;

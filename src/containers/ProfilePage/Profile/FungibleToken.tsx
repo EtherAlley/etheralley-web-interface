@@ -9,7 +9,7 @@ import Coin from '../../../icons/Coin';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
-import BlockcahinChip from '../../../components/BlockchainChip';
+import BlockchainChip from './BlockchainChip';
 
 const coinStyling = {
   width: 85,
@@ -46,7 +46,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
               <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
             )}
           </Flex>
-          <BlockcahinChip text={`${displayBalance} ${symbol}`} blockchain={blockchain} />
+          <BlockchainChip text={`${displayBalance} ${symbol}`} blockchain={blockchain} />
         </Box>
       }
       DialogHeader={name}

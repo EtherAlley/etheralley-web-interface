@@ -8,7 +8,7 @@ import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
-import BlockcahinChip from '../../../components/BlockchainChip';
+import BlockchainChip from './BlockchainChip';
 
 const logoStyling = {
   width: 100,
@@ -35,7 +35,7 @@ function SwapComponent({ index }: { index: number }) {
           <Flex justifyContent="center" mb={5}>
             <Image alt={key} src={`${Settings.PUBLIC_URL}/interfaces/${key.toLowerCase()}.svg`} {...logoStyling} />
           </Flex>
-          <BlockcahinChip text={`${swaps.length} SWAPS`} blockchain={contract.blockchain} />
+          <BlockchainChip text={`${swaps.length} SWAPS`} blockchain={contract.blockchain} />
         </Box>
       }
       DialogHeader={'Top Swaps'}

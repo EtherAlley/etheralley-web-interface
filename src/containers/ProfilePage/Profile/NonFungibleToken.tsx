@@ -8,7 +8,7 @@ import Link from '../../../components/Link';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
   return (
-    <Flex height={BADGE_WIDTH} widht={BADGE_WIDTH}>
+    <Flex height={BADGE_WIDTH} width={BADGE_WIDTH}>
       <Image
         alt={alt}
         fallback={
