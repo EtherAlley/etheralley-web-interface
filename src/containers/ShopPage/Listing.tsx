@@ -2,6 +2,7 @@ import { Box, UnorderedList, ListItem, Text, Center, Flex, Heading, Image, Butto
 import { useIntl } from 'react-intl';
 import { Listing } from '../../common/types';
 import Badge from '../../components/Badge';
+import BlockcahinChip from '../../components/BlockchainChip';
 import Link from '../../components/Link';
 import Paper from '../../components/Paper';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
@@ -40,12 +41,14 @@ function ListingComponent({ listing }: { listing: Listing }) {
 
   return (
     <Paper p={3}>
-      <>
+      <Box>
         <ImageWrapper image={image} alt={name} fallbackText={name} />
         <Heading size="sm" textAlign="center" my={2} mx={2}>
           {name}
         </Heading>
-        <Text fontWeight="bold" textAlign="center">{`${formatPrice} MATIC`}</Text>
+        <Flex justifyContent="center">
+          <BlockcahinChip text={`${formatPrice} MATIC`} blockchain={blockchain} />
+        </Flex>
         <Button colorScheme="brand" mt={3} width="100%">
           <Text fontWeight="bold">
             {price === '0'
@@ -53,7 +56,7 @@ function ListingComponent({ listing }: { listing: Listing }) {
               : intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}
           </Text>
         </Button>
-      </>
+      </Box>
     </Paper>
   );
 

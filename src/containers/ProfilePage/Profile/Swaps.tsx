@@ -1,14 +1,4 @@
-import {
-  Heading,
-  Box,
-  Badge as ChakraBadge,
-  Flex,
-  UnorderedList,
-  OrderedList,
-  ListItem,
-  Text,
-  Image,
-} from '@chakra-ui/react';
+import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image } from '@chakra-ui/react';
 import Badge from '../../../components/Badge';
 import { Contract, Swap } from '../../../common/types';
 import Settings from '../../../common/settings';
@@ -18,6 +8,7 @@ import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
+import BlockcahinChip from '../../../components/BlockchainChip';
 
 const logoStyling = {
   width: 100,
@@ -44,11 +35,7 @@ function SwapComponent({ index }: { index: number }) {
           <Flex justifyContent="center" mb={5}>
             <Image alt={key} src={`${Settings.PUBLIC_URL}/interfaces/${key.toLowerCase()}.svg`} {...logoStyling} />
           </Flex>
-          <ChakraBadge borderRadius={8} py={1} px={2} mt={3}>
-            <Heading as="h3" size="md" noOfLines={2}>
-              {swaps.length} SWAPS
-            </Heading>
-          </ChakraBadge>
+          <BlockcahinChip text={`${swaps.length} SWAPS`} blockchain={contract.blockchain} />
         </Box>
       }
       DialogHeader={'Top Swaps'}

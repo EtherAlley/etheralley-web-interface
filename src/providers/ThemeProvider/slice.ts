@@ -33,6 +33,18 @@ export interface State {
       primaryText: string;
       secondaryText: string;
     };
+    polygon: {
+      [x: number]: string;
+    };
+    arbitrum: {
+      [x: number]: string;
+    };
+    optimism: {
+      [x: number]: string;
+    };
+    ethereum: {
+      [x: number]: string;
+    };
   };
 }
 
@@ -71,6 +83,18 @@ const initialState: State = {
       secondary: '#1a1a1b',
       primaryText: '#FFF',
       secondaryText: '#FFF',
+    },
+    polygon: {
+      200: '#8247e5',
+    },
+    arbitrum: {
+      200: '#3182CE',
+    },
+    optimism: {
+      200: '#E53E3E',
+    },
+    ethereum: {
+      200: '#ecf0f1',
     },
   },
 };
