@@ -1,6 +1,6 @@
 import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex } from '@chakra-ui/react';
 import Badge from '../../../components/Badge';
-import useDisplayBalance from '../../../hooks/useDisplayBalance';
+import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useTokenKey from '../../../hooks/useTokenKey';
 import Settings from '../../../common/settings';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
@@ -26,7 +26,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
     contract: { address, blockchain, interface: interfaceName },
     balance,
   } = useAppSelector((state) => selectFungibleToken(state, index));
-  const displayBalance = useDisplayBalance(balance, decimals);
+  const displayBalance = useDisplayNumber(balance, decimals);
   const key = useTokenKey(address, blockchain);
   const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
 

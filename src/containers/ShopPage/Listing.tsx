@@ -4,6 +4,7 @@ import { Listing } from '../../common/types';
 import Badge from '../../components/Badge';
 import Link from '../../components/Link';
 import Paper from '../../components/Paper';
+import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 
 function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string; fallbackText: string }) {
@@ -35,6 +36,7 @@ function ListingComponent({ listing }: { listing: Listing }) {
   } = listing;
   const intl = useIntl();
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
+  const formatPrice = useDisplayNumber(price, 18);
 
   return (
     <Paper p={3}>
@@ -43,8 +45,13 @@ function ListingComponent({ listing }: { listing: Listing }) {
         <Heading size="sm" textAlign="center" my={2} mx={2}>
           {name}
         </Heading>
+        <Text fontWeight="bold" textAlign="center">{`${formatPrice} MATIC`}</Text>
         <Button colorScheme="brand" mt={3} width="100%">
-          <Text fontWeight="bold">{intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}</Text>
+          <Text fontWeight="bold">
+            {price === '0'
+              ? intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' })
+              : intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}
+          </Text>
         </Button>
       </>
     </Paper>

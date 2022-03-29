@@ -31,8 +31,8 @@ function ShopPage() {
 
   return (
     <SimpleGrid columns={[1, 2]} spacing={150}>
-      {listings.map((listing: Listing) => (
-        <GridItem>
+      {listings.map((listing: Listing, i: number) => (
+        <GridItem key={i}>
           <ListingComponent listing={listing} />
         </GridItem>
       ))}
