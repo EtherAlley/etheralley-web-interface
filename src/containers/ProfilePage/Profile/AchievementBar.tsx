@@ -21,33 +21,8 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
-import { selectAchievements, selectInteraction } from '../slice';
-
-function AchievementBar() {
-  const { items, text } = useAppSelector(selectAchievements);
-  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
-  const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
-
-  if (items.length <= 0) {
-    return <></>;
-  }
-
-  return (
-    <Box mt={10}>
-      <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
-        {text}
-      </Heading>
-      <Divider />
-      <Flex p={3} justifyContent={justifyContent}>
-        {items.map(({ index }) => (
-          <Box mr={3} key={index}>
-            <Achievement index={index} />
-          </Box>
-        ))}
-      </Flex>
-    </Box>
-  );
-}
+import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
+import Beaker from '../../../icons/Beaker';
 
 const badgeStyling: any = {
   justifyContent: 'center',
@@ -67,36 +42,87 @@ const iconStyling = {
   height: '25px',
 };
 
-function Achievement({ index }: { index: number }) {
+function AchievementBar() {
   const intl = useIntl();
-  const { type } = useAppSelector((state) => selectInteraction(state, index));
+  const { beta_tester } = useAppSelector(selectStoreAssets);
+  const { items, text } = useAppSelector(selectAchievements);
+  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
+  const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
+
+  if (items.length <= 0) {
+    return <></>;
+  }
+
+  return (
+    <Box mt={10}>
+      <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
+        {text}
+      </Heading>
+      <Divider />
+      <Flex p={3} justifyContent={justifyContent}>
+        {beta_tester && (
+          <Box mr={3} key={0}>
+            <AchievementPopover
+              trigger={<Beaker {...iconStyling} />}
+              header={intl.formatMessage({
+                id: 'beta-tester',
+                defaultMessage: 'Participated in the Ether Alley Beta!',
+              })}
+              body={intl.formatMessage({
+                id: 'beta-tester',
+                defaultMessage:
+                  'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
+              })}
+            />
+          </Box>
+        )}
+        {items.map(({ index }) => (
+          <Box mr={3} key={index + 1}>
+            <InteractionAchievement index={index} />
+          </Box>
+        ))}
+      </Flex>
+    </Box>
+  );
+}
+
+function InteractionAchievement({ index }: { index: number }) {
+  const intl = useIntl();
+  const { type, transaction, timestamp } = useAppSelector((state) => selectInteraction(state, index));
+  const url = useEtherscanUrl(transaction.blockchain, 'tx', transaction.id);
 
   switch (type) {
     case InteractionTypes.CONTRACT_CREATION:
       return (
         <AchievementPopover
           trigger={<Rocket {...iconStyling} />}
-          header={
-            <AchievementHeader
-              text={intl.formatMessage({
-                id: 'deployed-achievement-header',
-                defaultMessage: 'Deployed a smart contract!',
-              })}
-            />
+          header={intl.formatMessage({
+            id: 'deployed-achievement-header',
+            defaultMessage: 'Deployed a smart contract!',
+          })}
+          body={
+            <>
+              <Text>Timestamp: {timestamp}</Text>
+              <Link href={url} isExternal>
+                Etherscan
+              </Link>
+            </>
           }
-          body={<AchievementBody index={index} />}
         />
       );
     case InteractionTypes.SEND_ETHER:
       return (
         <AchievementPopover
           trigger={<Handshake {...iconStyling} />}
-          header={
-            <AchievementHeader
-              text={intl.formatMessage({ id: 'sent-ether-achievement-header', defaultMessage: 'Sent Ether!' })}
-            />
+          header={intl.formatMessage({ id: 'sent-ether-achievement-header', defaultMessage: 'Sent Ether!' })}
+          body={
+            <>
+              <Text>Timestamp: {timestamp}</Text>
+              <Link href={url} isExternal>
+                Etherscan
+              </Link>
+            </>
           }
-          body={<AchievementBody index={index} />}
         />
       );
     default:
@@ -104,29 +130,7 @@ function Achievement({ index }: { index: number }) {
   }
 }
 
-function AchievementHeader({ text }: { text: string }) {
-  return (
-    <Heading as="h4" size="md">
-      {text}
-    </Heading>
-  );
-}
-
-function AchievementBody({ index }: { index: number }) {
-  const { transaction, timestamp } = useAppSelector((state) => selectInteraction(state, index));
-  const url = useEtherscanUrl(transaction.blockchain, 'tx', transaction.id);
-
-  return (
-    <>
-      <Text>Timestamp: {timestamp}</Text>
-      <Link href={url} isExternal>
-        Etherscan
-      </Link>
-    </>
-  );
-}
-
-function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; header: ReactNode; body: ReactNode }) {
+function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; header: string; body: ReactNode }) {
   return (
     <Popover>
       <PopoverTrigger>
@@ -135,7 +139,11 @@ function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; hea
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>{header}</PopoverHeader>
+        <PopoverHeader>
+          <Heading as="h4" size="sm">
+            {header}
+          </Heading>
+        </PopoverHeader>
         <PopoverBody>{body}</PopoverBody>
       </PopoverContent>
     </Popover>

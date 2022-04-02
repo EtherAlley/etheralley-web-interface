@@ -1,6 +1,6 @@
-import { Image, Text, Heading, Box, Badge as ChakraBadge, Flex } from '@chakra-ui/react';
+import { Image, Text, Box, Flex } from '@chakra-ui/react';
 import Badge from '../../../components/Badge';
-import useDisplayBalance from '../../../hooks/useDisplayBalance';
+import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useTokenKey from '../../../hooks/useTokenKey';
 import Settings from '../../../common/settings';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
@@ -9,6 +9,7 @@ import Coin from '../../../icons/Coin';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
+import BlockchainChip from './BlockchainChip';
 
 const coinStyling = {
   width: 85,
@@ -26,7 +27,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
     contract: { address, blockchain, interface: interfaceName },
     balance,
   } = useAppSelector((state) => selectFungibleToken(state, index));
-  const displayBalance = useDisplayBalance(balance, decimals);
+  const displayBalance = useDisplayNumber(balance, decimals);
   const key = useTokenKey(address, blockchain);
   const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
 
@@ -45,11 +46,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
               <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
             )}
           </Flex>
-          <ChakraBadge borderRadius={8} py={1} px={2} mt={3}>
-            <Heading as="h3" size="md" noOfLines={2}>
-              {displayBalance + ' ' + symbol}
-            </Heading>
-          </ChakraBadge>
+          <BlockchainChip text={`${displayBalance} ${symbol}`} blockchain={blockchain} />
         </Box>
       }
       DialogHeader={name}

@@ -34,6 +34,10 @@ const initialState: State = {
   profile: {
     address: '',
     ens_name: '',
+    store_assets: {
+      premium: false,
+      beta_tester: false,
+    },
     display_config: {
       colors: {
         primary: '',
@@ -168,6 +172,7 @@ export const slice = createSlice({
         state.loadProfileState = AsyncStates.FULFILLED;
         state.profile.address = profile.address;
         state.profile.ens_name = profile.ens_name;
+        state.profile.store_assets = profile.store_assets;
         state.profile.non_fungible_tokens = profile.non_fungible_tokens;
         state.profile.fungible_tokens = profile.fungible_tokens;
         state.profile.statistics = profile.statistics;
@@ -386,6 +391,8 @@ export const selectAchievements = (state: RootState) => state.profilePage.profil
 export const selectAddress = (state: RootState) => state.profilePage.profile.address;
 
 export const selectENSName = (state: RootState) => state.profilePage.profile.ens_name;
+
+export const selectStoreAssets = (state: RootState) => state.profilePage.profile.store_assets;
 
 export const selectNonFungibleTokens = (state: RootState) => state.profilePage.profile.non_fungible_tokens;
 

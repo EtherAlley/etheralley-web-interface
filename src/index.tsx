@@ -4,15 +4,10 @@ import { HashRouter as Router } from 'react-router-dom';
 import App from './containers/App';
 import { store } from './store';
 import { Provider } from 'react-redux';
-import { Web3ReactProvider } from '@web3-react/core';
-import { Web3Provider } from '@ethersproject/providers';
 import ThemeProvider from './providers/ThemeProvider';
 import DragDropProvider from './providers/DragDropProvider';
 import IntlProvider from './providers/IntlProvider';
-
-const getLibrary = (provider: any, _connector: any) => {
-  return new Web3Provider(provider);
-};
+import { DAppProvider } from '@usedapp/core';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -20,11 +15,11 @@ ReactDOM.render(
       <ThemeProvider>
         <IntlProvider>
           <DragDropProvider>
-            <Web3ReactProvider getLibrary={getLibrary}>
+            <DAppProvider config={{}}>
               <Router>
                 <App />
               </Router>
-            </Web3ReactProvider>
+            </DAppProvider>
           </DragDropProvider>
         </IntlProvider>
       </ThemeProvider>

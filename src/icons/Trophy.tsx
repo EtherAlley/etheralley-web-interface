@@ -1,6 +1,8 @@
-function Trophy({ width, height }: { width: string; height: string }) {
+import { SVGProps } from 'react';
+
+function Trophy(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={width} height={height} x="0px" y="0px" viewBox="0 0 512 512" enableBackground="new 0 0 512 512">
+    <svg x="0px" y="0px" viewBox="0 0 512 512" {...props}>
       <path
         style={{ fill: '#F4AD47' }}
         d="M389.711,10.751v184.777c0,19.942-4.367,38.864-12.202,55.877

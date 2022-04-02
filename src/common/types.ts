@@ -10,14 +10,35 @@ export enum BadgeTypes {
   Statistics = 'statistics',
 }
 
+export type Listing = {
+  contract: Contract;
+  token_id: string;
+  info: ListingInfo;
+  metadata: NonFungibleMetadata;
+};
+
+export type ListingInfo = {
+  purchasable: boolean;
+  transferable: boolean;
+  price: string;
+  balance_limit: string;
+  supply_limit: string;
+};
+
 export type Profile = {
   address: string;
   display_config: DisplayConfig;
+  store_assets: StoreAssets;
   ens_name: string;
   interactions: Interaction[];
   [BadgeTypes.NonFungibleToken]: NonFungibleToken[];
   [BadgeTypes.FungibleToken]: FungibleToken[];
   [BadgeTypes.Statistics]: Statistic[];
+};
+
+export type StoreAssets = {
+  premium: boolean;
+  beta_tester: boolean;
 };
 
 export type DisplayConfig = {

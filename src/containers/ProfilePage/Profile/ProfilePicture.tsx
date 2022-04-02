@@ -1,10 +1,11 @@
-import { Box, Skeleton, Text } from '@chakra-ui/react';
+import { Box, Flex, Skeleton, Text } from '@chakra-ui/react';
 import Paper from '../../../components/Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../../icons/ProfileUser';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectAddress, selectENSName, selectLoading, selectPicture } from './../slice';
+import { selectAddress, selectENSName, selectLoading, selectPicture, selectStoreAssets } from './../slice';
 import { BADGE_WIDTH } from '../../../common/constants';
+import Verified from '../../../icons/Verified';
 
 function ProfilePicture() {
   return (
@@ -36,6 +37,7 @@ function Info() {
   const ens_name = useAppSelector(selectENSName);
   const address = useAppSelector(selectAddress);
   const loading = useAppSelector(selectLoading);
+  const { premium } = useAppSelector(selectStoreAssets);
 
   if (loading) {
     return (
@@ -48,9 +50,12 @@ function Info() {
 
   return (
     <>
-      <Text fontWeight="bold" isTruncated textAlign="center" height={8} mt={2}>
-        {ens_name}
-      </Text>
+      <Flex alignItems="center" justifyContent="center">
+        <Text fontWeight="bold" isTruncated height={8} mt={2} mr={premium ? 2 : 0}>
+          {ens_name}
+        </Text>
+        {premium && <Verified width="20px" height="20px" display="inline" />}
+      </Flex>
       <Text textAlign="center" isTruncated height={8} mt={2}>
         {address}
       </Text>

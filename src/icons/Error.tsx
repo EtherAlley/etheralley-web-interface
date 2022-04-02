@@ -1,6 +1,8 @@
-function Error({ width, height }: { width: string | number | undefined; height: string | number | undefined }) {
+import { SVGProps } from 'react';
+
+function Error(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg width={width} height={height} viewBox="0 0 24 24">
+    <svg viewBox="0 0 24 24" {...props}>
       <g transform="translate(0 -1028.4)">
         <path
           d="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z"
