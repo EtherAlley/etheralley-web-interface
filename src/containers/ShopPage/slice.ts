@@ -17,8 +17,8 @@ export interface State {
 }
 
 const initialState: State = {
-  getListingsState: AsyncStates.PENDING,
-  getBalancesState: AsyncStates.PENDING,
+  getListingsState: AsyncStates.READY,
+  getBalancesState: AsyncStates.READY,
   purchaseState: AsyncStates.READY,
   listings: [],
   balances: [],

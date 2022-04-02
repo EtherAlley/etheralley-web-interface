@@ -1,8 +1,5 @@
-import { MouseEventHandler, ReactNode, useState } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import { MouseEventHandler, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
-import useEagerConnect from '../../hooks/useEagerConnect';
-import useInjectedListener from '../../hooks/useInjectedListener';
 import { Routes } from '../../common/constants';
 import { useNavigate, useMatch, Link as RouterLink } from 'react-router-dom';
 import {
@@ -17,9 +14,9 @@ import {
   useDisclosure,
   Stack,
 } from '@chakra-ui/react';
-import { injectedConnector } from '../../common/connectors';
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose } from 'react-icons/md';
+import { useEthers } from '@usedapp/core';
 
 function Navbar() {
   const intl = useIntl();
@@ -118,24 +115,11 @@ function NavLink({
 function UserButton() {
   const intl = useIntl();
   const navigate = useNavigate();
-  const { activate, active, account } = useWeb3React();
-  const [activating, setActivating] = useState(false);
-  // handle logic to eagerly connect to the injected ethereum provider, if it exists and has granted access already
-  const triedEager = useEagerConnect();
-  // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
-  useInjectedListener(!triedEager || activating);
+  const { activateBrowserWallet, account } = useEthers();
 
-  if (!active || !account) {
+  if (!account) {
     return (
-      <Button
-        colorScheme="brand"
-        variant="outline"
-        onClick={() => {
-          setActivating(true);
-          activate(injectedConnector);
-        }}
-        disabled={!triedEager || activating}
-      >
+      <Button colorScheme="brand" variant="outline" onClick={activateBrowserWallet}>
         {intl.formatMessage({ id: 'connect-wallet', defaultMessage: 'Connect wallet' })}
       </Button>
     );

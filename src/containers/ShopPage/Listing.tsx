@@ -15,9 +15,9 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { useWeb3React } from '@web3-react/core';
+import { useEthers } from '@usedapp/core';
 import { useState } from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
@@ -35,14 +35,17 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
     info: { price },
     token_id,
   } = listing;
+
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
   const formatPrice = useDisplayNumber(price, 18);
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const balances = useAppSelector(selectBalances);
+  const { chainId } = useEthers();
 
-  const hasPurchased = !loadingBalances && balances[index] !== '0';
+  const hasPurchased = !loadingBalances && !!balances[index] && balances[index] !== '0';
+  const correctChainId = chainId === Settings.STORE_CHAIN_ID;
 
   return (
     <>
@@ -68,7 +71,13 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
               width={6}
             />
           </Flex>
-          <PurchaseButton price={price} tokenId={token_id} quantity="1" hasPurchased={hasPurchased} />
+          <PurchaseButton
+            price={price}
+            tokenId={token_id}
+            quantity="1"
+            hasPurchased={hasPurchased}
+            correctChainId={correctChainId}
+          />
         </Box>
       </Paper>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -130,15 +139,16 @@ function PurchaseButton({
   tokenId,
   quantity,
   hasPurchased,
+  correctChainId,
 }: {
   price: string;
   tokenId: string;
   quantity: string;
   hasPurchased: boolean;
+  correctChainId: boolean;
 }) {
-  const intl = useIntl();
   const dispatch = useDispatch();
-  const { library, account } = useWeb3React();
+  const { library, account } = useEthers();
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const submittingPurchase = useAppSelector(selectSubmittingPurchase);
 
@@ -148,38 +158,45 @@ function PurchaseButton({
       colorScheme="brand"
       mt={3}
       width="100%"
-      disabled={!account || hasPurchased}
+      disabled={!account || hasPurchased || !correctChainId}
       onClick={() => dispatch(purchase({ library, account: account!, tokenId, price, quantity }))}
     >
-      <Text fontWeight="bold">{buttonLabel({ price, account, intl, hasPurchased })}</Text>
+      <Text fontWeight="bold">
+        <ButtonLabel price={price} hasPurchased={hasPurchased} correctChainId={correctChainId} />
+      </Text>
     </Button>
   );
 }
 
-function buttonLabel({
+function ButtonLabel({
   price,
-  account,
-  intl,
   hasPurchased,
+  correctChainId,
 }: {
   price: string;
-  account: string | null | undefined;
-  intl: IntlShape;
   hasPurchased: boolean;
+  correctChainId: boolean;
 }) {
+  const intl = useIntl();
+  const { account } = useEthers();
+
   if (!account) {
-    return intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' });
+    return <>{intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' })}</>;
+  }
+
+  if (!correctChainId) {
+    return <>{intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to Polygon' })}</>;
   }
 
   if (hasPurchased) {
-    return intl.formatMessage({ id: 'purchased-item', defaultMessage: 'Purchased' });
+    return <>{intl.formatMessage({ id: 'item-owned', defaultMessage: 'Owned' })}</>;
   }
 
   if (price === '0') {
-    return intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' });
+    return <>{intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' })}</>;
   }
 
-  return intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' });
+  return <>{intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}</>;
 }
 
 export default ListingComponent;

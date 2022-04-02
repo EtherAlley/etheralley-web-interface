@@ -1,6 +1,7 @@
 import { Box, Center, GridItem, SimpleGrid, Spinner } from '@chakra-ui/react';
-import { useWeb3React } from '@web3-react/core';
+import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
+import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -21,15 +22,17 @@ function ShopPage() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingListings);
   const listings = useAppSelector(selectListings);
-  const { library, account } = useWeb3React();
+  const { library, account, chainId } = useEthers();
 
   useEffect(() => {
     dispatch(getListings());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getBalances({ library, account }));
-  }, [dispatch, account, library]);
+    if (chainId === Settings.STORE_CHAIN_ID) {
+      dispatch(getBalances({ library, account }));
+    }
+  }, [dispatch, account, library, chainId]);
 
   if (loading) {
     return <Spinner />;

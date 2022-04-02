@@ -8,7 +8,6 @@ import {
   Button,
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
-import { useWeb3React } from '@web3-react/core';
 import AccordionComponent from '../../../components/Accordion';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -18,13 +17,14 @@ import EditColorsForm from './EditColorsForm';
 import EditBadgesForm from './EditBadgesForm';
 import EditProfilePictureForm from './EditProfilePictureForm';
 import EditAchievementForm from './EditAchievementForm';
+import { useEthers } from '@usedapp/core';
 
 function ProfileEditDrawer() {
   const intl = useIntl();
   const showEditBar = useAppSelector(selectShowEditBar);
   const saving = useAppSelector(selectSaving);
   const dispatch = useAppDispatch();
-  const { account, library } = useWeb3React();
+  const { account, library } = useEthers();
   const closeEdit = () => dispatch(closeEditBar());
 
   return (
