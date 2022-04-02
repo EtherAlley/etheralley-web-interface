@@ -3,6 +3,8 @@ const Settings = {
   IS_DEV: process.env.NODE_ENV === 'development',
   PUBLIC_URL: process.env.PUBLIC_URL ?? '',
   CORE_API_URL: process.env.REACT_APP_CORE_API_URL ?? '',
+  STORE_ADDRESS: process.env.REACT_APP_STORE_ADDRESS ?? '',
+  STORE_BLOCKCHAIN: process.env.REACT_APP_STORE_BLOCKCHAIN ?? '',
   ETHERSCAN_ETHEREUM_URL: process.env.REACT_APP_ETHERSCAN_ETHEREUM_URL ?? '',
   ETHERSCAN_POLYGON_URL: process.env.REACT_APP_ETHERSCAN_POLYGON_URL ?? '',
   ETHERSCAN_OPTIMISM_URL: process.env.REACT_APP_ETHERSCAN_OPTIMISM_URL ?? '',

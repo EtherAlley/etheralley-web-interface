@@ -1,5 +1,5 @@
 {
-  "name": "etheralley-interface",
+  "name": "etheralley-web-interface",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

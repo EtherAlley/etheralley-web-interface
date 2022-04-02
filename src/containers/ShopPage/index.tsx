@@ -1,10 +1,11 @@
 import { Box, Center, GridItem, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { useWeb3React } from '@web3-react/core';
 import { useEffect } from 'react';
 import { Listing } from '../../common/types';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import ListingComponent from './Listing';
-import { getListings, selectListings, selectLoadingListings } from './slice';
+import { getBalances, getListings, selectListings, selectLoadingListings } from './slice';
 
 function ShopPageWrapper() {
   return (
@@ -20,10 +21,15 @@ function ShopPage() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingListings);
   const listings = useAppSelector(selectListings);
+  const { library, account } = useWeb3React();
 
   useEffect(() => {
     dispatch(getListings());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getBalances({ library, account }));
+  }, [dispatch, account, library]);
 
   if (loading) {
     return <Spinner />;
@@ -33,7 +39,7 @@ function ShopPage() {
     <SimpleGrid columns={[1, 2]} spacing={150}>
       {listings.map((listing: Listing, i: number) => (
         <GridItem key={i}>
-          <ListingComponent listing={listing} />
+          <ListingComponent listing={listing} index={i} />
         </GridItem>
       ))}
     </SimpleGrid>

@@ -15,27 +15,34 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import { useWeb3React } from '@web3-react/core';
 import { useState } from 'react';
-import { useIntl } from 'react-intl';
+import { IntlShape, useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Link from '../../components/Link';
 import Paper from '../../components/Paper';
+import useAppSelector from '../../hooks/useAppSelector';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
+import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 
-function ListingComponent({ listing }: { listing: Listing }) {
+function ListingComponent({ listing, index }: { listing: Listing; index: number }) {
   const {
     contract: { blockchain, interface: interfaceName, address },
     metadata: { name, description, image, attributes },
-    info: { purchasable, transferable, price, supply_limit, balance_limit },
+    info: { price },
     token_id,
   } = listing;
-  const intl = useIntl();
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
   const formatPrice = useDisplayNumber(price, 18);
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
+  const loadingBalances = useAppSelector(selectLoadingBalances);
+  const balances = useAppSelector(selectBalances);
+
+  const hasPurchased = !loadingBalances && balances[index] !== '0';
 
   return (
     <>
@@ -61,13 +68,7 @@ function ListingComponent({ listing }: { listing: Listing }) {
               width={6}
             />
           </Flex>
-          <Button colorScheme="brand" mt={3} width="100%">
-            <Text fontWeight="bold">
-              {price === '0'
-                ? intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' })
-                : intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' })}
-            </Text>
-          </Button>
+          <PurchaseButton price={price} tokenId={token_id} quantity="1" hasPurchased={hasPurchased} />
         </Box>
       </Paper>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -122,6 +123,63 @@ function ListingComponent({ listing }: { listing: Listing }) {
       </Modal>
     </>
   );
+}
+
+function PurchaseButton({
+  price,
+  tokenId,
+  quantity,
+  hasPurchased,
+}: {
+  price: string;
+  tokenId: string;
+  quantity: string;
+  hasPurchased: boolean;
+}) {
+  const intl = useIntl();
+  const dispatch = useDispatch();
+  const { library, account } = useWeb3React();
+  const loadingBalances = useAppSelector(selectLoadingBalances);
+  const submittingPurchase = useAppSelector(selectSubmittingPurchase);
+
+  return (
+    <Button
+      isLoading={!!account && (loadingBalances || submittingPurchase)}
+      colorScheme="brand"
+      mt={3}
+      width="100%"
+      disabled={!account || hasPurchased}
+      onClick={() => dispatch(purchase({ library, account: account!, tokenId, price, quantity }))}
+    >
+      <Text fontWeight="bold">{buttonLabel({ price, account, intl, hasPurchased })}</Text>
+    </Button>
+  );
+}
+
+function buttonLabel({
+  price,
+  account,
+  intl,
+  hasPurchased,
+}: {
+  price: string;
+  account: string | null | undefined;
+  intl: IntlShape;
+  hasPurchased: boolean;
+}) {
+  if (!account) {
+    return intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' });
+  }
+
+  if (hasPurchased) {
+    return intl.formatMessage({ id: 'purchased-item', defaultMessage: 'Purchased' });
+  }
+
+  if (price === '0') {
+    return intl.formatMessage({ id: 'claim', defaultMessage: 'Claim' });
+  }
+
+  return intl.formatMessage({ id: 'purchase', defaultMessage: 'Purchase' });
 }
 
 export default ListingComponent;

@@ -124,6 +124,7 @@ function UserButton() {
   const triedEager = useEagerConnect();
   // handle logic to connect in reaction to certain events on the injected ethereum provider, if it exists
   useInjectedListener(!triedEager || activating);
+
   if (!active || !account) {
     return (
       <Button
@@ -135,7 +136,7 @@ function UserButton() {
         }}
         disabled={!triedEager || activating}
       >
-        {intl.formatMessage({ id: 'connect-to-a-wallet', defaultMessage: 'Connect to a wallet' })}
+        {intl.formatMessage({ id: 'connect-wallet', defaultMessage: 'Connect wallet' })}
       </Button>
     );
   }

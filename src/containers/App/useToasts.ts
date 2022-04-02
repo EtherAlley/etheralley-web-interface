@@ -32,6 +32,18 @@ function useToasts() {
             defaultMessage: 'Error adding achievement',
           });
           break;
+        case Toasts.SUCCESS_SUBMITTING_PURCHASE:
+          description = intl.formatMessage({
+            id: 'success-making-purchase-description',
+            defaultMessage: 'Successfully processed purchase',
+          });
+          break;
+        case Toasts.ERROR_SUBMITTING_PURCHASE:
+          description = intl.formatMessage({
+            id: 'error-making-purchase-description',
+            defaultMessage: 'Error processing purchase',
+          });
+          break;
       }
       showToast({
         description,
