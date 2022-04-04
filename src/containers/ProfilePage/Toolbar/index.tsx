@@ -1,6 +1,5 @@
 import { useIntl } from 'react-intl';
 import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage/slice';
-import { Routes } from '../../../common/constants';
 import { useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../../components/IconButton';
@@ -46,7 +45,7 @@ function ProfileBar() {
             aria-label={buttonLabel}
             tooltip={buttonLabel}
             Icon={MdKeyboardBackspace}
-            onClick={() => navigate(Routes.HOME)}
+            onClick={() => navigate(-1)}
           />
           <EditButton />
         </Flex>

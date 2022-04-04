@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { fetchAPI, fetchAPINoResponse } from '../../common/http';
-import { AchievementTypes, BadgeTypes, DisplayGroup, DisplayItem, Profile } from '../../common/types';
+import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 import { AsyncStates } from '../../common/constants';
@@ -13,11 +13,13 @@ import {
   getStatistic,
 } from './ModalForms/slice';
 
+export type StateProfile = Profile & { display_config: DisplayConfig }; // display config is never undefined in the state so we override the typing
+
 export interface State {
   loadProfileState: AsyncStates;
   saveProfileState: AsyncStates;
   showEditBar: boolean;
-  profile: Profile;
+  profile: StateProfile;
 }
 
 // some pre-amble about the relationship between display_config and interactions/non_fungible_tokens/fungible_tokens/statistics:
@@ -246,7 +248,7 @@ export const slice = createSlice({
 });
 
 // build a pleasant display config when the user does not have one configured
-function buildDefaultDisplayConfig(stateProfile: Profile, actionProfile: Profile): void {
+function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Profile): void {
   stateProfile.display_config.text.title = '💎 My Profile 💎';
   stateProfile.display_config.text.description = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore

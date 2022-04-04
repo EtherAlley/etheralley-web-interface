@@ -27,7 +27,7 @@ export type ListingInfo = {
 
 export type Profile = {
   address: string;
-  display_config: DisplayConfig;
+  display_config: DisplayConfig | undefined;
   store_assets: StoreAssets;
   ens_name: string;
   interactions: Interaction[];
