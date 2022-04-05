@@ -33,7 +33,7 @@ function SwapComponent({ index }: { index: number }) {
       Display={
         <Box maxWidth="100%" maxHeight="100%">
           <Flex justifyContent="center" mb={5}>
-            <Image alt={key} src={`${Settings.PUBLIC_URL}/interfaces/${key.toLowerCase()}.svg`} {...logoStyling} />
+            <Image alt={key} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.svg`} {...logoStyling} />
           </Flex>
           <BlockchainChip text={`${swaps.length} SWAPS`} blockchain={contract.blockchain} />
         </Box>

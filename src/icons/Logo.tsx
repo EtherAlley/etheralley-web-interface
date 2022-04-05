@@ -1,6 +1,6 @@
 import { SVGProps } from 'react';
 
-function Beaker(props: SVGProps<SVGSVGElement>) {
+function Logo(props: SVGProps<SVGSVGElement>) {
   return (
     <svg x="0px" y="0px" viewBox="0 0 512 512" {...props}>
       <path
@@ -98,4 +98,4 @@ function Beaker(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-export default Beaker;
+export default Logo;

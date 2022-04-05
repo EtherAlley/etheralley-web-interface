@@ -17,6 +17,7 @@ import {
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose } from 'react-icons/md';
 import { useEthers } from '@usedapp/core';
+import Logo from '../../icons/Logo';
 
 function Navbar() {
   const intl = useIntl();
@@ -47,14 +48,17 @@ function Navbar() {
           />
           <HStack alignItems={'center'}>
             <LinkBox mr={0}>
-              <Heading size="md" as="span">
+              <Flex alignItems="center">
+                <Logo width={30} height={30} />
                 <LinkOverlay to="/" as={RouterLink}>
-                  Ether Alley
+                  <Heading size="md" as="span" ml={3}>
+                    EtherAlley
+                  </Heading>
                 </LinkOverlay>
-              </Heading>
-              <Badge colorScheme="brand" mb={1} ml={3}>
-                {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
-              </Badge>
+                <Badge colorScheme="brand" ml={3}>
+                  {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
+                </Badge>
+              </Flex>
             </LinkBox>
             <Box>
               <HStack as={'nav'} display={{ base: 'none', md: 'flex' }} ml={7}>

@@ -43,7 +43,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
                 <Coin width="85px" height="85px" />
               </Box>
             ) : (
-              <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
+              <Image alt={symbol} src={`${Settings.PUBLIC_URL}/tokens/${key.toLowerCase()}.png`} {...coinStyling} />
             )}
           </Flex>
           <BlockchainChip text={`${displayBalance} ${symbol}`} blockchain={blockchain} />
@@ -52,7 +52,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
       DialogHeader={name}
       DialogBody={
         <>
-          <Image alt={symbol} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.png`} {...coinStyling} />
+          <Image alt={symbol} src={`${Settings.PUBLIC_URL}/tokens/${key.toLowerCase()}.png`} {...coinStyling} />
           <Link href={etherscanUrl} isExternal>
             Etherscan
           </Link>

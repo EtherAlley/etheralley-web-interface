@@ -22,7 +22,7 @@ import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
-import Beaker from '../../../icons/Beaker';
+import Logo from '../../../icons/Logo';
 
 const badgeStyling: any = {
   justifyContent: 'center',
@@ -63,7 +63,7 @@ function AchievementBar() {
         {beta_tester && (
           <Box mr={3} key={0}>
             <AchievementPopover
-              trigger={<Beaker {...iconStyling} />}
+              trigger={<Logo {...iconStyling} />}
               header={intl.formatMessage({
                 id: 'beta-tester',
                 defaultMessage: 'Participated in the Ether Alley Beta!',

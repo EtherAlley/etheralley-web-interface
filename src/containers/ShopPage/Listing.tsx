@@ -63,13 +63,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
             <Text fontWeight="bold" textAlign="center">
               {`${formatPrice} MATIC`}
             </Text>
-            <Image
-              alt={blockchain}
-              src={`${Settings.PUBLIC_URL}/blockchains/${blockchain.toLowerCase()}.svg`}
-              ml={2}
-              height={6}
-              width={6}
-            />
+            <Image alt={blockchain} src={`${Settings.PUBLIC_URL}/logos/polygon.svg`} ml={2} height={6} width={6} />
           </Flex>
           <PurchaseButton
             price={price}
