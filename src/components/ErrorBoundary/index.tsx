@@ -1,7 +1,8 @@
 import { Component } from 'react';
+import { injectIntl, IntlShape } from 'react-intl';
 import Error from '../Error';
 
-type Props = { message: string; width: number; height: number };
+type Props = { intl: IntlShape };
 
 type State = { hasError: boolean };
 
@@ -18,12 +19,13 @@ class ErrorBoundary extends Component<Props, State> {
   componentDidCatch() {}
 
   render() {
+    const { children, intl } = this.props;
     if (!this.state.hasError) {
-      return this.props.children;
+      return children;
     }
 
-    return <Error {...this.props} />;
+    return <Error message={intl.formatMessage({ id: 'page-wrapper-error', defaultMessage: 'Unexpected Error' })} />;
   }
 }
 
-export default ErrorBoundary;
+export default injectIntl(ErrorBoundary);

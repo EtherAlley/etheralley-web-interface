@@ -6,7 +6,7 @@ import { selectHome, setAddress } from './slice';
 import { MdSearch } from 'react-icons/md';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import { Box, Container, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 
 function HomePage() {
@@ -17,47 +17,45 @@ function HomePage() {
   const search = () => navigate(Routes.PROFILE.replace(':address', address));
 
   return (
-    <Container>
-      <Box mt="30vh">
-        <Text
-          bgGradient="linear(to-l, #FFF, #1dc9a2)"
-          bgClip="text"
-          fontSize="4xl"
-          fontWeight="extrabold"
-          textAlign="center"
+    <Box mt="20vh">
+      <Text
+        bgGradient="linear(to-l, #FFF, #1dc9a2)"
+        bgClip="text"
+        fontSize="4xl"
+        fontWeight="extrabold"
+        textAlign="center"
+      >
+        {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to Ether Alley' })}
+      </Text>
+      <Paper mt={5} mb={20}>
+        <form
+          onSubmit={() => {
+            if (address) {
+              search();
+            }
+          }}
         >
-          {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to Ether Alley' })}
-        </Text>
-        <Paper mt={5} mb={20}>
-          <form
-            onSubmit={() => {
-              if (address) {
-                search();
-              }
+          <Input
+            id="searchbar"
+            size="lg"
+            variant="filled"
+            placeholder={intl.formatMessage({
+              id: 'enter-wallet-address',
+              defaultMessage: 'Enter ENS name or Ethereum address...',
+            })}
+            value={address}
+            onChange={(event) => dispatch(setAddress(event.target.value))}
+            iconProps={{
+              'aria-label': intl.formatMessage({ id: 'search-aria-label', defaultMessage: 'Go to a profile' }),
+              tooltip: 'Search',
+              Icon: MdSearch,
+              onClick: search,
+              disabled: !address,
             }}
-          >
-            <Input
-              id="searchbar"
-              size="lg"
-              variant="filled"
-              placeholder={intl.formatMessage({
-                id: 'enter-wallet-address',
-                defaultMessage: 'Enter ENS name or Ethereum address...',
-              })}
-              value={address}
-              onChange={(event) => dispatch(setAddress(event.target.value))}
-              iconProps={{
-                'aria-label': intl.formatMessage({ id: 'search-aria-label', defaultMessage: 'Go to a profile' }),
-                tooltip: 'Search',
-                Icon: MdSearch,
-                onClick: search,
-                disabled: !address,
-              }}
-            />
-          </form>
-        </Paper>
-      </Box>
-    </Container>
+          />
+        </form>
+      </Paper>
+    </Box>
   );
 }
 

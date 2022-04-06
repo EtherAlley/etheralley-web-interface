@@ -1,9 +1,8 @@
-import { ReactChild, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Box, Container } from '@chakra-ui/react';
 
 import { loadProfile, selectError } from './slice';
-import Error from '../../components/Error';
 import Toolbar from './Toolbar';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -13,19 +12,25 @@ import Profile from './Profile';
 import AddBadgeModal from './ModalForms/AddBadgeModal';
 import AddProfilePictureModal from './ModalForms/AddProfilePictureModal';
 import AddAchievementModal from './ModalForms/AddAchievementModal';
+import Error from '../../components/Error';
+import { useIntl } from 'react-intl';
 
-const PageWrapper = ({ children }: { children: ReactChild }) => {
+function PageWrapper() {
   return (
     <Box backgroundColor="profile.primary">
-      <ErrorBoundary message="Something went wrong" width={250} height={180}>
-        <Toolbar />
-        <Container maxW="container.lg">{children}</Container>
-      </ErrorBoundary>
+      <Toolbar />
+      <Container maxW="container.lg">
+        <Box height="10vh" />
+        <ErrorBoundary>
+          <ProfilePage />
+        </ErrorBoundary>
+      </Container>
     </Box>
   );
-};
+}
 
 function ProfilePage() {
+  const intl = useIntl();
   const { address } = useParams<{ address: string }>();
   const error = useAppSelector(selectError);
   const dispatch = useAppDispatch();
@@ -38,23 +43,21 @@ function ProfilePage() {
 
   if (error) {
     return (
-      <PageWrapper>
-        <Error message="Could not load profile" width={250} height={180} />
-      </PageWrapper>
+      <Error
+        message={intl.formatMessage({ id: 'profiles-page-load-error', defaultMessage: 'Error Loading Profile' })}
+      />
     );
   }
 
   return (
-    <PageWrapper>
-      <>
-        <Profile />
-        <EditDrawer />
-        <AddBadgeModal />
-        <AddProfilePictureModal />
-        <AddAchievementModal />
-      </>
-    </PageWrapper>
+    <>
+      <Profile />
+      <EditDrawer />
+      <AddBadgeModal />
+      <AddProfilePictureModal />
+      <AddAchievementModal />
+    </>
   );
 }
 
-export default ProfilePage;
+export default PageWrapper;

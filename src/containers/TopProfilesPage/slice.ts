@@ -39,6 +39,9 @@ export const slice = createSlice({
 export const selectLoadingTopProfiles = (state: RootState) =>
   state.topProfilesPage.getTopProfilesState === AsyncStates.PENDING;
 
+export const selectErrorLoadingTopProfiles = (state: RootState) =>
+  state.topProfilesPage.getTopProfilesState === AsyncStates.REJECTED;
+
 export const selectProfiles = (state: RootState) => state.topProfilesPage.profiles;
 
 export default slice.reducer;

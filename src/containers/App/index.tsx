@@ -6,6 +6,7 @@ import ShopPage from '../ShopPage';
 import { Routes as RouteStrings } from '../../common/constants';
 import NavBar from './NavBar';
 import useToasts from './useToasts';
+import PageWrapper from '../../components/PageWrapper';
 
 function App() {
   useToasts();
@@ -15,9 +16,30 @@ function App() {
       <NavBar />
       <Routes>
         <Route path={RouteStrings.PROFILE} element={<ProfilePage />} />
-        <Route path={RouteStrings.TOP_PROFILES} element={<TopProfilesPage />} />
-        <Route path={RouteStrings.SHOP} element={<ShopPage />} />
-        <Route path={RouteStrings.HOME} element={<HomePage />} />
+        <Route
+          path={RouteStrings.TOP_PROFILES}
+          element={
+            <PageWrapper>
+              <TopProfilesPage />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path={RouteStrings.SHOP}
+          element={
+            <PageWrapper>
+              <ShopPage />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path={RouteStrings.HOME}
+          element={
+            <PageWrapper>
+              <HomePage />
+            </PageWrapper>
+          }
+        />
       </Routes>
     </>
   );

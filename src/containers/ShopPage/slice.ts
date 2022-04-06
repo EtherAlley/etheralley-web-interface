@@ -75,13 +75,13 @@ export const purchase = createAsyncThunk<
 
     await tx.wait();
 
-    await fetchAPINoResponse(`/profiles/${account}/refresh`);
-
     dispatch(showToast({ toast: Toasts.SUCCESS_SUBMITTING_PURCHASE, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_SUBMITTING_PURCHASE, status: ToastStatuses.ERROR }));
     throw ex;
   }
+
+  await fetchAPINoResponse(`/profiles/${account}/refresh`);
 });
 
 export const slice = createSlice({
@@ -97,7 +97,7 @@ export const slice = createSlice({
       state.listings = action.payload;
     });
     builder.addCase(getListings.rejected, (state, action) => {
-      state.getBalancesState = AsyncStates.REJECTED;
+      state.getListingsState = AsyncStates.REJECTED;
     });
     builder.addCase(getBalances.pending, (state, action) => {
       state.getBalancesState = AsyncStates.PENDING;
@@ -123,6 +123,9 @@ export const slice = createSlice({
 });
 
 export const selectLoadingListings = (state: RootState) => state.shopPage.getListingsState === AsyncStates.PENDING;
+
+export const selectErrorLoadingListings = (state: RootState) =>
+  state.shopPage.getListingsState === AsyncStates.REJECTED;
 
 export const selectLoadingBalances = (state: RootState) => state.shopPage.getBalancesState === AsyncStates.PENDING;
 

@@ -49,7 +49,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
 
   return (
     <>
-      <Paper p={3}>
+      <Paper p={3} width="210px">
         <Box>
           <Heading size="sm" textAlign="center" my={2} mx={2}>
             {name}

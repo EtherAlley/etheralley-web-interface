@@ -86,7 +86,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
             return (
               <GridItem key={id}>
                 <Center>
-                  <ErrorBoundary message="Something went wrong" width={BADGE_WIDTH} height={BADGE_HEIGHT}>
+                  <ErrorBoundary>
                     <GroupItem type={type} index={index} />
                   </ErrorBoundary>
                 </Center>

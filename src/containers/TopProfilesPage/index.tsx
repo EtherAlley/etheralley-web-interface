@@ -1,30 +1,22 @@
-import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center, Container, Image } from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center, Image } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { BadgeTypes, NonFungibleToken, Profile } from '../../common/types';
 import Link from '../../components/Link';
-import Loading from '../../components/Loading';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import ProfileUser from '../../icons/ProfileUser';
 import Verified from '../../icons/Verified';
-import { getTopProfiles, selectLoadingTopProfiles, selectProfiles } from './slice';
-
-function TopProfilesPageWrapper() {
-  return (
-    <Container maxW="xl">
-      <Box mt="10vh">
-        <TopProfilesPage />
-      </Box>
-    </Container>
-  );
-}
+import { getTopProfiles, selectErrorLoadingTopProfiles, selectLoadingTopProfiles, selectProfiles } from './slice';
+import Error from '../../components/Error';
+import Loading from '../../components/Loading';
 
 function TopProfilesPage() {
   const intl = useIntl();
-  const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingTopProfiles);
   const profiles = useAppSelector(selectProfiles);
+  const dispatch = useAppDispatch();
+  const error = useAppSelector(selectErrorLoadingTopProfiles);
 
   useEffect(() => {
     dispatch(getTopProfiles());
@@ -32,6 +24,14 @@ function TopProfilesPage() {
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <Error
+        message={intl.formatMessage({ id: 'top-profiles-load-error', defaultMessage: 'Error Loading Top Profiles' })}
+      />
+    );
   }
 
   return (
@@ -92,22 +92,23 @@ function medal(rank: number): string {
 function Picture({ src, premium }: { src: string | undefined; premium: boolean }) {
   return (
     <Box position="relative">
-      <Flex>
-        {src ? (
-          <Image src={src} width="50px" height="50px" borderRadius="50%" maxWidth="inherit" />
-        ) : (
-          <Flex
-            width="50px"
-            height="50px"
-            borderRadius="50%"
-            backgroundColor="gray.700"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <ProfileUser width="35px" height="35px" />
-          </Flex>
-        )}
-      </Flex>
+      {src ? (
+        <Flex>
+          <Image src={src} width="50px" height="50px" borderRadius="50%" maxWidth="inherit" boxShadow="dark-lg" />
+        </Flex>
+      ) : (
+        <Flex
+          width="50px"
+          height="50px"
+          borderRadius="50%"
+          backgroundColor="gray.700"
+          alignItems="center"
+          justifyContent="center"
+          boxShadow="dark-lg"
+        >
+          <ProfileUser width="35px" height="35px" />
+        </Flex>
+      )}
       <Box position="absolute" right="0%" bottom="0%">
         {premium && <Verified width="20px" height="20px" />}
       </Box>
@@ -145,4 +146,4 @@ function getProfileImage(profile: Profile): string | undefined {
   return nft.metadata.image;
 }
 
-export default TopProfilesPageWrapper;
+export default TopProfilesPage;

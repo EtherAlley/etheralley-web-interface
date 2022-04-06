@@ -1,26 +1,21 @@
-import { Box, Center, GridItem, SimpleGrid, Spinner } from '@chakra-ui/react';
+import { GridItem, SimpleGrid } from '@chakra-ui/react';
 import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
+import Loading from '../../components/Loading';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
+import Error from '../../components/Error';
 import ListingComponent from './Listing';
-import { getBalances, getListings, selectListings, selectLoadingListings } from './slice';
-
-function ShopPageWrapper() {
-  return (
-    <Center>
-      <Box mt="10vh">
-        <ShopPage />
-      </Box>
-    </Center>
-  );
-}
+import { getBalances, getListings, selectErrorLoadingListings, selectListings, selectLoadingListings } from './slice';
+import { useIntl } from 'react-intl';
 
 function ShopPage() {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingListings);
+  const error = useAppSelector(selectErrorLoadingListings);
   const listings = useAppSelector(selectListings);
   const { library, account, chainId } = useEthers();
 
@@ -35,7 +30,11 @@ function ShopPage() {
   }, [dispatch, account, library, chainId]);
 
   if (loading) {
-    return <Spinner />;
+    return <Loading />;
+  }
+
+  if (error) {
+    return <Error message={intl.formatMessage({ id: 'shop-load-error', defaultMessage: 'Error Loading Shop' })} />;
   }
 
   return (
@@ -49,4 +48,4 @@ function ShopPage() {
   );
 }
 
-export default ShopPageWrapper;
+export default ShopPage;

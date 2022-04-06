@@ -55,7 +55,7 @@ function Navbar() {
                     EtherAlley
                   </Heading>
                 </LinkOverlay>
-                <Badge colorScheme="brand" ml={3}>
+                <Badge colorScheme="brand" ml={3} display={['none', 'inherit']}>
                   {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
                 </Badge>
               </Flex>

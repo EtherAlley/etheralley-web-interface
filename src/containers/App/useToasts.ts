@@ -44,6 +44,18 @@ function useToasts() {
             defaultMessage: 'Error processing purchase',
           });
           break;
+        case Toasts.ERROR_SAVING_PROFILE:
+          description = intl.formatMessage({
+            id: 'error-saving-profile',
+            defaultMessage: 'Error saving profile',
+          });
+          break;
+        case Toasts.ERROR_LOADING_PAGE:
+          description = intl.formatMessage({
+            id: 'error-loading-page',
+            defaultMessage: 'Error loading page',
+          });
+          break;
       }
       showToast({
         description,
