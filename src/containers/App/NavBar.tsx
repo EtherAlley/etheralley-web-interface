@@ -1,4 +1,3 @@
-import { MouseEventHandler, ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import { Routes } from '../../common/constants';
 import { useNavigate, useMatch, Link as RouterLink } from 'react-router-dom';
@@ -8,29 +7,67 @@ import {
   Heading,
   Button,
   Badge,
+  Link,
   LinkOverlay,
   LinkBox,
   HStack,
   useDisclosure,
   Stack,
+  Collapse,
+  Icon,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
 } from '@chakra-ui/react';
 import IconButtonComponent from '../../components/IconButton';
-import { MdMenu, MdClose } from 'react-icons/md';
+import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
 import { useEthers } from '@usedapp/core';
 import Logo from '../../icons/Logo';
+
+interface NavItem {
+  label: string;
+  subLabel?: string;
+  children?: Array<NavItem>;
+  href: string;
+  isExternal?: boolean;
+}
 
 function Navbar() {
   const intl = useIntl();
   const isOnProfilePage = useMatch('/profiles/*');
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen, onToggle } = useDisclosure();
 
   if (isOnProfilePage) {
     return <></>;
   }
 
-  const Links = [
-    [intl.formatMessage({ id: 'top-profiles', defaultMessage: 'Top Profiles' }), Routes.TOP_PROFILES],
-    [intl.formatMessage({ id: 'shop', defaultMessage: 'Shop' }), Routes.SHOP],
+  const NAV_ITEMS: Array<NavItem> = [
+    {
+      label: intl.formatMessage({ id: 'top-profiles', defaultMessage: 'Top Profiles' }),
+      href: Routes.TOP_PROFILES,
+    },
+    {
+      label: intl.formatMessage({ id: 'shop', defaultMessage: 'Shop' }),
+      href: Routes.SHOP,
+    },
+    {
+      label: intl.formatMessage({ id: 'more', defaultMessage: 'More' }),
+      href: '#',
+      children: [
+        {
+          label: intl.formatMessage({ id: 'about', defaultMessage: 'About' }),
+          subLabel: 'Learn more about EtherAlley',
+          href: '#',
+        },
+        {
+          label: intl.formatMessage({ id: 'github', defaultMessage: 'GitHub' }),
+          subLabel: 'View the source code on GitHub',
+          href: 'https://github.com/EtherAlley',
+          isExternal: true,
+        },
+      ],
+    },
   ];
 
   return (
@@ -42,12 +79,12 @@ function Navbar() {
             bg="inherit"
             Icon={isOpen ? MdClose : MdMenu}
             display={{ md: !isOpen ? 'none' : 'inherit' }}
-            onClick={isOpen ? onClose : onOpen}
+            onClick={onToggle}
             tooltip={intl.formatMessage({ id: 'open-menu', defaultMessage: 'Open Menu' })}
             aria-label="open-menu"
           />
           <HStack alignItems={'center'}>
-            <LinkBox mr={0}>
+            <LinkBox>
               <Flex alignItems="center">
                 <Logo width={30} height={30} />
                 <LinkOverlay to="/" as={RouterLink}>
@@ -60,61 +97,168 @@ function Navbar() {
                 </Badge>
               </Flex>
             </LinkBox>
-            <Box>
-              <HStack as={'nav'} display={{ base: 'none', md: 'flex' }} ml={7}>
-                {Links.map(([label, href]) => (
-                  <NavLink key={href} href={href}>
-                    {label}
-                  </NavLink>
-                ))}
-              </HStack>
-            </Box>
+            <Flex display={{ base: 'none', md: 'flex' }}>
+              <DesktopNav navItems={NAV_ITEMS} />
+            </Flex>
           </HStack>
           <UserButton />
         </Flex>
-        {isOpen ? (
-          <Box pb={4}>
-            <Stack as={'nav'}>
-              {Links.map(([label, href]) => (
-                <NavLink key={href} href={href} onClick={onClose}>
-                  {label}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
+        <Collapse in={isOpen} animateOpacity>
+          <MobileNav navItems={NAV_ITEMS} onToggleMenu={onToggle} />
+        </Collapse>
       </Box>
       <Box h="7vh"></Box>
     </>
   );
 }
 
-function NavLink({
-  children,
-  href,
-  onClick,
-}: {
-  children: ReactNode;
-  href: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}) {
-  const navigate = useNavigate();
+const DesktopNav = ({ navItems }: { navItems: NavItem[] }) => {
+  return (
+    <Stack direction={'row'} spacing={4} ml={10}>
+      {navItems.map((navItem) => (
+        <Box key={navItem.label}>
+          <Popover trigger={'hover'} placement={'bottom-start'}>
+            <PopoverTrigger>
+              <Link
+                as={RouterLink}
+                p={2}
+                to={navItem.href}
+                fontSize={'md'}
+                fontWeight={500}
+                color={'gray.200'}
+                _hover={{
+                  textDecoration: 'none',
+                  color: 'brand.400',
+                }}
+              >
+                {navItem.label}
+              </Link>
+            </PopoverTrigger>
+
+            {navItem.children && (
+              <PopoverContent border={0} boxShadow={'xl'} bg={'gray.800'} p={4} rounded={'xl'} minW={'sm'}>
+                <Stack>
+                  {navItem.children.map((child) => (
+                    <DesktopSubNav key={child.label} {...child} />
+                  ))}
+                </Stack>
+              </PopoverContent>
+            )}
+          </Popover>
+        </Box>
+      ))}
+    </Stack>
+  );
+};
+
+const DesktopSubNav = ({ label, href, subLabel, isExternal }: NavItem) => {
+  const linkProps: any = isExternal ? { href } : { as: RouterLink, to: href };
+  return (
+    <Link
+      role={'group'}
+      display={'block'}
+      p={2}
+      rounded={'md'}
+      _hover={{ bg: 'gray.900' }}
+      isExternal={isExternal}
+      {...linkProps}
+    >
+      <Stack direction={'row'} align={'center'}>
+        <Box>
+          <Text transition={'all .3s ease'} _groupHover={{ color: 'brand.400' }} fontWeight={500}>
+            {label}
+          </Text>
+          <Text fontSize={'sm'}>{subLabel}</Text>
+        </Box>
+        <Flex
+          transition={'all .3s ease'}
+          transform={'translateX(-10px)'}
+          opacity={0}
+          _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+          justify={'flex-end'}
+          align={'center'}
+          flex={1}
+        >
+          <Icon color={'brand.400'} w={5} h={5} as={MdKeyboardArrowRight} />
+        </Flex>
+      </Stack>
+    </Link>
+  );
+};
+
+const MobileNav = ({ navItems, onToggleMenu }: { navItems: NavItem[]; onToggleMenu: () => void }) => {
+  return (
+    <Stack bg={'gray.800'} p={4} display={{ md: 'none' }}>
+      {navItems.map((navItem) => (
+        <MobileNavItem key={navItem.label} {...navItem} onToggleMenu={onToggleMenu} />
+      ))}
+    </Stack>
+  );
+};
+
+const MobileNavItem = ({ label, children, href, onToggleMenu }: NavItem & { onToggleMenu: () => void }) => {
+  const { isOpen, onToggle } = useDisclosure();
 
   return (
-    <Button
-      colorScheme="brand"
-      variant="ghost"
-      onClick={(event) => {
-        if (onClick) {
-          onClick(event);
+    <Stack
+      spacing={4}
+      onClick={() => {
+        if (children) {
+          onToggle();
+        } else {
+          onToggleMenu();
         }
-        navigate(href);
       }}
     >
-      {children}
-    </Button>
+      <Flex
+        py={2}
+        as={RouterLink}
+        to={href}
+        justify={'space-between'}
+        align={'center'}
+        _hover={{
+          textDecoration: 'none',
+          color: 'brand.400',
+        }}
+      >
+        <Text fontWeight={600}>{label}</Text>
+        {children && (
+          <Icon
+            as={MdKeyboardArrowDown}
+            transition={'all .25s ease-in-out'}
+            transform={isOpen ? 'rotate(180deg)' : ''}
+            w={6}
+            h={6}
+          />
+        )}
+      </Flex>
+
+      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+        <Stack mt={2} pl={4} borderLeft={1} borderStyle={'solid'} borderColor={'gray.700'} align={'start'}>
+          {children &&
+            children.map((child) => {
+              const linkProps: any = child.isExternal ? { href: child.href } : { as: RouterLink, to: child.href };
+              return (
+                <Link
+                  key={child.label}
+                  py={2}
+                  onClick={onToggleMenu}
+                  _hover={{
+                    textDecoration: 'none',
+                    color: 'brand.400',
+                  }}
+                  isExternal={child.isExternal}
+                  {...linkProps}
+                >
+                  {child.label}
+                </Link>
+              );
+            })}
+        </Stack>
+      </Collapse>
+    </Stack>
   );
-}
+};
 
 function UserButton() {
   const intl = useIntl();
@@ -123,14 +267,14 @@ function UserButton() {
 
   if (!account) {
     return (
-      <Button colorScheme="brand" variant="outline" onClick={activateBrowserWallet}>
+      <Button colorScheme="brand" variant="solid" onClick={activateBrowserWallet}>
         {intl.formatMessage({ id: 'connect-wallet', defaultMessage: 'Connect wallet' })}
       </Button>
     );
   }
 
   return (
-    <Button colorScheme="brand" variant="outline" onClick={() => navigate(Routes.PROFILE.replace(':address', account))}>
+    <Button colorScheme="brand" variant="solid" onClick={() => navigate(Routes.PROFILE.replace(':address', account))}>
       {intl.formatMessage({ id: 'my-profile', defaultMessage: 'My Profile' })}
     </Button>
   );

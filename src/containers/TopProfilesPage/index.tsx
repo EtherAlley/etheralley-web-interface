@@ -1,8 +1,19 @@
-import { Text, Heading, useBreakpointValue, Flex, Box, Divider, Center, Image } from '@chakra-ui/react';
+import {
+  Text,
+  Heading,
+  useBreakpointValue,
+  Flex,
+  Box,
+  Divider,
+  Center,
+  Image,
+  LinkOverlay,
+  LinkBox,
+} from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { BadgeTypes, NonFungibleToken, Profile } from '../../common/types';
-import Link from '../../components/Link';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import ProfileUser from '../../icons/ProfileUser';
@@ -36,7 +47,7 @@ function TopProfilesPage() {
 
   return (
     <Box>
-      <Heading fontSize="xl" textAlign="center" mb={5}>
+      <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
         {intl.formatMessage({ id: 'top-ten-profiles-caption', defaultMessage: 'Top 10 Profiles Today' })}
       </Heading>
       <Center>
@@ -58,21 +69,30 @@ function Row({ profile, rank }: { profile: Profile; rank: number }) {
   const profileImage = getProfileImage(profile);
 
   return (
-    <Flex my={3} alignItems="center">
-      <Box minWidth="60px">
-        <Text fontWeight="bold" fontSize="xl" textAlign="center">
-          {medal(rank)}
-        </Text>
-      </Box>
-      <Picture premium={premium} src={profileImage} />
-      <Box ml={5}>
-        <Link href={`/profiles/${profileId}`}>
-          <Text fontWeight="bold" isTruncated maxWidth={maxWidth}>
-            {profileId}
+    <LinkBox as={RouterLink} to={`/profiles/${profileId}`}>
+      <Flex
+        alignItems="center"
+        _hover={{
+          bg: 'gray.700',
+        }}
+        borderRadius="8px"
+        py={3}
+      >
+        <Box minWidth="60px">
+          <Text fontWeight="bold" fontSize="xl" textAlign="center">
+            {medal(rank)}
           </Text>
-        </Link>
-      </Box>
-    </Flex>
+        </Box>
+        <Picture premium={premium} src={profileImage} />
+        <Box ml={5} mr={2}>
+          <LinkOverlay>
+            <Text color="blue.400" fontWeight="bold" isTruncated maxWidth={maxWidth}>
+              {profileId}
+            </Text>
+          </LinkOverlay>
+        </Box>
+      </Flex>
+    </LinkBox>
   );
 }
 
