@@ -7,6 +7,7 @@ import { Routes as RouteStrings } from '../../common/constants';
 import NavBar from './NavBar';
 import useToasts from './useToasts';
 import PageWrapper from '../../components/PageWrapper';
+import NotFound from '../../components/NotFound';
 
 function App() {
   useToasts();
@@ -37,6 +38,14 @@ function App() {
           element={
             <PageWrapper>
               <HomePage />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <PageWrapper>
+              <NotFound />
             </PageWrapper>
           }
         />

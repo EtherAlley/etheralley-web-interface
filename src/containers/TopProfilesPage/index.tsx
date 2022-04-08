@@ -40,7 +40,14 @@ function TopProfilesPage() {
   if (error) {
     return (
       <Error
-        message={intl.formatMessage({ id: 'top-profiles-load-error', defaultMessage: 'Error Loading Top Profiles' })}
+        message={intl.formatMessage({
+          id: 'top-profiles-load-error',
+          defaultMessage: 'Error Loading Top Profiles Page',
+        })}
+        subtext={intl.formatMessage({
+          id: 'top-profiles-load-error-subtext',
+          defaultMessage: "We couldn't seem to load the page at this time",
+        })}
       />
     );
   }

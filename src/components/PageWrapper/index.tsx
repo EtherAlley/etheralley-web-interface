@@ -5,7 +5,7 @@ import ErrorBoundary from '../ErrorBoundary';
 function PageWrapper({ children }: { children: ReactChild }) {
   return (
     <Container>
-      <Box mt="10vh" />
+      <Box mt="20vh" />
       <Center>
         <ErrorBoundary>{children}</ErrorBoundary>
       </Center>

@@ -2,27 +2,36 @@ import { SVGProps } from 'react';
 
 function Error(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 24 24" {...props}>
-      <g transform="translate(0 -1028.4)">
-        <path
-          d="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z"
-          transform="translate(0 1029.4)"
-          fill="#c0392b"
-        />
-        <path
-          d="m22 12c0 5.523-4.477 10-10 10-5.5228 0-10-4.477-10-10 0-5.5228 4.4772-10 10-10 5.523 0 10 4.4772 10 10z"
-          transform="translate(0 1028.4)"
-          fill="#e74c3c"
-        />
-        <path
-          d="m7.0503 1037.8 3.5357 3.6-3.5357 3.5 1.4142 1.4 3.5355-3.5 3.536 3.5 1.414-1.4-3.536-3.5 3.536-3.6-1.414-1.4-3.536 3.5-3.5355-3.5-1.4142 1.4z"
-          fill="#c0392b"
-        />
-        <path
-          d="m7.0503 1036.8 3.5357 3.6-3.5357 3.5 1.4142 1.4 3.5355-3.5 3.536 3.5 1.414-1.4-3.536-3.5 3.536-3.6-1.414-1.4-3.536 3.5-3.5355-3.5-1.4142 1.4z"
-          fill="#ecf0f1"
-        />
-      </g>
+    <svg viewBox="157.62 158.879 50 50" {...props}>
+      <circle
+        style={{ fill: '#D75A4A' }}
+        cx="25"
+        cy="25"
+        r="25"
+        transform="matrix(1, 0, 0, 1, 157.619644, 158.879089)"
+      />
+      <polyline
+        style={{
+          fill: 'none',
+          stroke: 'rgb(255, 255, 255)',
+          strokeLinecap: 'round',
+          strokeMiterlimit: 10,
+          strokeWidth: '4px',
+        }}
+        points="16,34 25,25 34,16 &#10;&#9;"
+        transform="matrix(1, 0, 0, 1, 157.619644, 158.879089)"
+      />
+      <polyline
+        style={{
+          fill: 'none',
+          stroke: 'rgb(255, 255, 255)',
+          strokeLinecap: 'round',
+          strokeMiterlimit: 10,
+          strokeWidth: '4px',
+        }}
+        points="16,16 25,25 34,34 &#10;&#9;"
+        transform="matrix(1, 0, 0, 1, 157.619644, 158.879089)"
+      />
     </svg>
   );
 }

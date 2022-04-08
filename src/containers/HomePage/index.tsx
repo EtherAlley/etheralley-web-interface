@@ -17,7 +17,7 @@ function HomePage() {
   const search = () => navigate(Routes.PROFILE.replace(':address', address));
 
   return (
-    <Box mt="20vh">
+    <Box mt="10vh">
       <Text
         bgGradient="linear(to-l, #FFF, #1dc9a2)"
         bgClip="text"

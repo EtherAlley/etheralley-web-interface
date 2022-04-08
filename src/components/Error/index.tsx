@@ -1,15 +1,20 @@
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import ErrorSvg from '../../icons/Error';
 
-function Error({ message }: { message: string }) {
+function Error({ message, subtext }: { message: string; subtext?: string }) {
   return (
     <Box>
       <Flex justifyContent="center">
-        <ErrorSvg width={70} height={70} />
+        <ErrorSvg width={50} height={50} />
       </Flex>
-      <Heading as="h1" size="md" textAlign="center" mt={4}>
+      <Heading as="h1" size="md" textAlign="center" mt={4} mb={2}>
         {message}
       </Heading>
+      {subtext && (
+        <Text color={'gray.500'} textAlign="center">
+          {subtext}
+        </Text>
+      )}
     </Box>
   );
 }

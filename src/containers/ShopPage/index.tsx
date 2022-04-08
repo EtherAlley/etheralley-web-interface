@@ -34,7 +34,15 @@ function ShopPage() {
   }
 
   if (error) {
-    return <Error message={intl.formatMessage({ id: 'shop-load-error', defaultMessage: 'Error Loading Shop' })} />;
+    return (
+      <Error
+        message={intl.formatMessage({ id: 'shop-load-error', defaultMessage: 'Error Loading Shop Page' })}
+        subtext={intl.formatMessage({
+          id: 'shop-load-error-subtext',
+          defaultMessage: "We couldn't seem to load the page at this time",
+        })}
+      />
+    );
   }
 
   return (

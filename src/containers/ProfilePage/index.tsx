@@ -45,6 +45,10 @@ function ProfilePage() {
     return (
       <Error
         message={intl.formatMessage({ id: 'profiles-page-load-error', defaultMessage: 'Error Loading Profile' })}
+        subtext={intl.formatMessage({
+          id: 'profiles-page-load-error-subtext',
+          defaultMessage: "We couldn't seem to load the profile at this time",
+        })}
       />
     );
   }
