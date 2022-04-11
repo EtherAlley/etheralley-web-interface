@@ -100,7 +100,7 @@ export type Interaction = {
 export type NonFungibleToken = {
   contract: Contract;
   token_id: string;
-  balance: string;
+  balance: string | undefined;
   metadata: NonFungibleMetadata | undefined;
 };
 
@@ -113,20 +113,20 @@ export type NonFungibleMetadata = {
 
 export type FungibleToken = {
   contract: Contract;
-  balance: string;
+  balance: string | undefined;
   metadata: FungibleMetadata;
 };
 
 export type FungibleMetadata = {
-  name: string;
-  symbol: string;
-  decimals: number;
+  name: string | undefined;
+  symbol: string | undefined;
+  decimals: number | undefined;
 };
 
 export type Statistic = {
   type: StatisticTypes;
   contract: Contract;
-  data: Swap[] | any;
+  data: Swap[] | undefined;
 };
 
 export type SwapToken = {

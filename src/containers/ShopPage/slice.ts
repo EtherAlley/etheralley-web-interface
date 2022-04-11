@@ -91,6 +91,7 @@ export const slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getListings.pending, (state, action) => {
       state.getListingsState = AsyncStates.PENDING;
+      state.listings = [];
     });
     builder.addCase(getListings.fulfilled, (state, action) => {
       state.getListingsState = AsyncStates.FULFILLED;

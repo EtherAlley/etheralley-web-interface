@@ -43,7 +43,7 @@ function NonFungibleTokenComponent({
   } = useAppSelector((state) => selectNonFungibleToken(state, index));
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
 
-  if (!metadata || balance === '0') {
+  if (!metadata || !balance || balance === '0') {
     return <></>;
   }
 

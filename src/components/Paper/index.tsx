@@ -5,10 +5,10 @@ function Paper({ children, ...props }: { children: ReactChild; [x: string]: any 
   return (
     <Box
       borderRadius="lg"
-      background="profile.secondary"
+      background="gray.800"
       boxShadow="dark-lg"
       borderWidth="1px"
-      borderColor="profile.secondary"
+      borderColor="gray.800"
       {...props}
     >
       {children}

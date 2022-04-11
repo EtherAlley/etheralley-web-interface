@@ -24,7 +24,10 @@ const logoStyling = {
 function SwapComponent({ index }: { index: number }) {
   const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
   const key = useInterfaceKey(contract.interface);
-  const swaps = data as Swap[];
+
+  if (!data) {
+    return <></>;
+  }
 
   return (
     <Badge
@@ -35,11 +38,11 @@ function SwapComponent({ index }: { index: number }) {
           <Flex justifyContent="center" mb={5}>
             <Image alt={key} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.svg`} {...logoStyling} />
           </Flex>
-          <BlockchainChip text={`${swaps.length} SWAPS`} blockchain={contract.blockchain} />
+          <BlockchainChip text={`${data.length} SWAPS`} blockchain={contract.blockchain} />
         </Box>
       }
       DialogHeader={'Top Swaps'}
-      DialogBody={<SwapBody swaps={swaps} contract={contract} />}
+      DialogBody={<SwapBody swaps={data} contract={contract} />}
     />
   );
 }

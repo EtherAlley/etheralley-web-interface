@@ -40,7 +40,7 @@ const minimum = new Decimal(0.0001);
 /**
  * Turn a big integer and decimals into a short display format
  */
-function useDisplayNumber(value: string, decimals: number): string {
+function useDisplayNumber(value: string | undefined, decimals: number | undefined): string {
   const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
@@ -51,7 +51,14 @@ function useDisplayNumber(value: string, decimals: number): string {
   return displayValue;
 }
 
-function formatValue(value: string, decimals: number): { prefix: string; suffix: string; infix: string } {
+function formatValue(
+  value: string | undefined,
+  decimals: number | undefined
+): { prefix: string; suffix: string; infix: string } {
+  if (!value || !decimals) {
+    return { prefix: '', infix: 'nil', suffix: '' };
+  }
+
   const val = new Decimal(value);
 
   if (val.equals(zero)) {

@@ -26,6 +26,10 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getTopProfiles.pending, (state, action) => {
+      state.getTopProfilesState = AsyncStates.PENDING;
+      state.profiles = [];
+    });
     builder.addCase(getTopProfiles.fulfilled, (state, action) => {
       state.getTopProfilesState = AsyncStates.FULFILLED;
       state.profiles = action.payload;

@@ -76,7 +76,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
       </Paper>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent backgroundColor="profile.primary">
+        <ModalContent backgroundColor="gray.900">
           <ModalHeader fontSize="lg" fontWeight="bold">
             {name}
           </ModalHeader>
