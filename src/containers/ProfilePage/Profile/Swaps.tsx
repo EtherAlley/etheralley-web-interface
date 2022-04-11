@@ -1,5 +1,5 @@
 import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image } from '@chakra-ui/react';
-import Badge from '../../../components/Badge';
+import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import Settings from '../../../common/settings';
 import useInterfaceKey from '../../../hooks/useInterfaceKey';
@@ -9,6 +9,21 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
 import BlockchainChip from './BlockchainChip';
+import { useIntl } from 'react-intl';
+
+function SwapComponent({ index }: { index: number }) {
+  const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
+
+  return (
+    <Badge
+      width={BADGE_WIDTH}
+      height={BADGE_HEIGHT}
+      Display={<SwapDisplay swaps={data} contract={contract} />}
+      DialogHeader={<SwapHeader />}
+      DialogBody={<SwapBody swaps={data} contract={contract} />}
+    />
+  );
+}
 
 const logoStyling = {
   width: 100,
@@ -21,33 +36,34 @@ const logoStyling = {
   borderWidth: '1px',
 };
 
-function SwapComponent({ index }: { index: number }) {
-  const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
+function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
   const key = useInterfaceKey(contract.interface);
-
-  if (!data) {
-    return <></>;
-  }
+  const intl = useIntl();
 
   return (
-    <Badge
-      width={BADGE_WIDTH}
-      height={BADGE_HEIGHT}
-      Display={
-        <Box maxWidth="100%" maxHeight="100%">
-          <Flex justifyContent="center" mb={5}>
-            <Image alt={key} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.svg`} {...logoStyling} />
-          </Flex>
-          <BlockchainChip text={`${data.length} SWAPS`} blockchain={contract.blockchain} />
-        </Box>
-      }
-      DialogHeader={'Top Swaps'}
-      DialogBody={<SwapBody swaps={data} contract={contract} />}
-    />
+    <Box maxWidth="100%" maxHeight="100%">
+      <Flex justifyContent="center" mb={5}>
+        <Image alt={key} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.svg`} {...logoStyling} />
+      </Flex>
+      <BlockchainChip
+        text={`${swaps ? swaps.length : 0} ${intl.formatMessage({ id: 'swaps', defaultMessage: 'SWAPS' })}`}
+        blockchain={contract.blockchain}
+      />
+    </Box>
   );
 }
 
-function SwapBody({ swaps, contract }: { swaps: Swap[]; contract: Contract }) {
+function SwapHeader() {
+  const intl = useIntl();
+
+  return <Text>{intl.formatMessage({ id: 'top-swaps', defaultMessage: 'Top Swaps' })}</Text>;
+}
+
+function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
+  if (!swaps) {
+    return <></>;
+  }
+
   return (
     <OrderedList>
       {swaps.map((swap, i) => (

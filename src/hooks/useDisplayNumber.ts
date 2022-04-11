@@ -44,8 +44,12 @@ function useDisplayNumber(value: string | undefined, decimals: number | undefine
   const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
-    const { infix, prefix, suffix } = formatValue(value, decimals);
-    setDisplayValue(`${prefix} ${Number.parseFloat(infix)}${suffix}`); // infix is a safe size to parse
+    const { prefix, infix, suffix } = formatValue(value, decimals);
+    if (!infix) {
+      setDisplayValue('');
+    } else {
+      setDisplayValue(`${prefix} ${Number.parseFloat(infix)}${suffix}`); // infix is a safe size to parse
+    }
   }, [value, decimals]);
 
   return displayValue;
@@ -56,7 +60,7 @@ function formatValue(
   decimals: number | undefined
 ): { prefix: string; suffix: string; infix: string } {
   if (!value || !decimals) {
-    return { prefix: '', infix: 'nil', suffix: '' };
+    return { prefix: '', infix: '', suffix: '' };
   }
 
   const val = new Decimal(value);

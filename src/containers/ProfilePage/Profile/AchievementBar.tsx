@@ -23,6 +23,7 @@ import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
 import Logo from '../../../icons/Logo';
+import ErrorBoundary from '../../../components/ErrorBoundary';
 
 const badgeStyling: any = {
   justifyContent: 'center',
@@ -62,23 +63,27 @@ function AchievementBar() {
       <Flex p={3} justifyContent={justifyContent}>
         {beta_tester && (
           <Box mr={3} key={0}>
-            <AchievementPopover
-              trigger={<Logo {...iconStyling} />}
-              header={intl.formatMessage({
-                id: 'beta-tester',
-                defaultMessage: 'Participated in the Ether Alley Beta!',
-              })}
-              body={intl.formatMessage({
-                id: 'beta-tester',
-                defaultMessage:
-                  'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
-              })}
-            />
+            <ErrorBoundary>
+              <AchievementPopover
+                trigger={<Logo {...iconStyling} />}
+                header={intl.formatMessage({
+                  id: 'beta-tester',
+                  defaultMessage: 'Participated in the Ether Alley Beta!',
+                })}
+                body={intl.formatMessage({
+                  id: 'beta-tester',
+                  defaultMessage:
+                    'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
+                })}
+              />
+            </ErrorBoundary>
           </Box>
         )}
         {items.map(({ index }) => (
           <Box mr={3} key={index + 1}>
-            <InteractionAchievement index={index} />
+            <ErrorBoundary>
+              <InteractionAchievement index={index} />
+            </ErrorBoundary>
           </Box>
         ))}
       </Flex>

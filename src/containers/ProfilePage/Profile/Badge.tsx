@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import Paper from '../Paper';
+import Paper from '../../../components/Paper';
 
 function Badge({
   width,
