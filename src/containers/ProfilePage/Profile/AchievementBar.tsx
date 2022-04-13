@@ -67,11 +67,11 @@ function AchievementBar() {
               <AchievementPopover
                 trigger={<Logo {...iconStyling} />}
                 header={intl.formatMessage({
-                  id: 'beta-tester',
+                  id: 'beta-tester-header',
                   defaultMessage: 'Participated in the Ether Alley Beta!',
                 })}
                 body={intl.formatMessage({
-                  id: 'beta-tester',
+                  id: 'beta-tester-body',
                   defaultMessage:
                     'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
                 })}

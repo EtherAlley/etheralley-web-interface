@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store';
-import { BadgeTypes, FungibleToken, Interaction, NonFungibleToken, Statistic } from '../../../common/types';
+import { BadgeTypes, Currency, FungibleToken, Interaction, NonFungibleToken, Statistic } from '../../../common/types';
 import {
   Blockchains,
   Interfaces,
@@ -50,6 +50,9 @@ export interface State {
     transactionId: string;
     type: InteractionTypes | undefined;
   };
+  currencyForm: {
+    blockchain: Blockchains | undefined;
+  };
 }
 
 const initialState = (): State => ({
@@ -88,6 +91,9 @@ const initialState = (): State => ({
     transactionId: '',
     type: undefined,
   },
+  currencyForm: {
+    blockchain: undefined,
+  },
 });
 
 export const submitBadge = createAsyncThunk<void, undefined, { state: RootState }>(
@@ -107,6 +113,9 @@ export const submitBadge = createAsyncThunk<void, undefined, { state: RootState 
         break;
       case BadgeTypes.Statistics:
         dispatch(getStatistic());
+        break;
+      case BadgeTypes.Currencies:
+        dispatch(getCurrency());
         break;
     }
   }
@@ -149,6 +158,26 @@ export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { sta
         `/contracts/token?blockchain=${blockchain}&interface=${Interfaces.ERC20}&contract=${address}&user_address=${profile.address}`
       );
       return token;
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
+      throw ex;
+    }
+  }
+);
+
+export const getCurrency = createAsyncThunk<Currency, undefined, { state: RootState }>(
+  'forms/getCurrency',
+  async (_, { getState, dispatch }) => {
+    const {
+      modalForms: {
+        currencyForm: { blockchain },
+      },
+      profilePage: { profile },
+    } = getState();
+
+    try {
+      const currency = await fetchAPI<Currency>(`/currency?blockchain=${blockchain}&address=${profile.address}`);
+      return currency;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -304,6 +333,9 @@ export const slice = createSlice({
     updateInteractionTransactionId: (state, action: PayloadAction<string>) => {
       state.interactionForm.transactionId = action.payload;
     },
+    updateCurrencyBlockchain: (state, action: PayloadAction<string>) => {
+      state.currencyForm.blockchain = action.payload as Blockchains;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getNonFungibleToken.pending, (state) => {
@@ -334,6 +366,16 @@ export const slice = createSlice({
       state.badgeModal.submitState = AsyncStates.FULFILLED;
     });
     builder.addCase(getStatistic.rejected, (state) => {
+      state.badgeModal.submitState = AsyncStates.REJECTED;
+    });
+    builder.addCase(getCurrency.pending, (state) => {
+      state.badgeModal.submitState = AsyncStates.PENDING;
+    });
+    builder.addCase(getCurrency.fulfilled, (state) => {
+      state.badgeModal.show = false;
+      state.badgeModal.submitState = AsyncStates.FULFILLED;
+    });
+    builder.addCase(getCurrency.rejected, (state) => {
       state.badgeModal.submitState = AsyncStates.REJECTED;
     });
     builder.addCase(getProfilePicture.pending, (state) => {
@@ -384,6 +426,8 @@ export const selectStatForm = (state: RootState) => state.modalForms.statForm;
 
 export const selectInteractionForm = (state: RootState) => state.modalForms.interactionForm;
 
+export const selectCurrencyForm = (state: RootState) => state.modalForms.currencyForm;
+
 export default slice.reducer;
 
 export const {
@@ -406,5 +450,6 @@ export const {
   updateInteractionBlockchain,
   updateInteractionType,
   updateInteractionTransactionId,
+  updateCurrencyBlockchain,
   submitFungibleSearch,
 } = slice.actions;

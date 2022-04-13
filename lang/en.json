@@ -1,4 +1,7 @@
 {
+  "about": {
+    "defaultMessage": "About"
+  },
   "achievement-form": {
     "defaultMessage": "Achievements"
   },
@@ -59,8 +62,17 @@
   "badges-form": {
     "defaultMessage": "Badges"
   },
+  "beta-tester-body": {
+    "defaultMessage": "This achievement is earned by claiming the Beta Tester token from the Ether Alley store"
+  },
+  "beta-tester-header": {
+    "defaultMessage": "Participated in the Ether Alley Beta!"
+  },
   "change-profile-picture": {
     "defaultMessage": "Change Profile Picture"
+  },
+  "claim": {
+    "defaultMessage": "Claim"
   },
   "close-edit-button": {
     "defaultMessage": "Close"
@@ -68,11 +80,17 @@
   "colors-form": {
     "defaultMessage": "Colors"
   },
-  "connect-to-a-wallet": {
-    "defaultMessage": "Connect to a wallet"
+  "connect-to-wallet": {
+    "defaultMessage": "Connect wallet"
+  },
+  "connect-wallet": {
+    "defaultMessage": "Connect wallet"
   },
   "contract-creation-label": {
     "defaultMessage": "Deployed Smart Contract Achievement"
+  },
+  "currency-option": {
+    "defaultMessage": "Currency"
   },
   "deployed-achievement-header": {
     "defaultMessage": "Deployed a smart contract!"
@@ -107,8 +125,20 @@
   "enter-wallet-address": {
     "defaultMessage": "Enter ENS name or Ethereum address..."
   },
+  "error-loading-page": {
+    "defaultMessage": "Error loading page"
+  },
+  "error-making-purchase-description": {
+    "defaultMessage": "Error processing purchase"
+  },
+  "error-saving-profile": {
+    "defaultMessage": "Error saving profile"
+  },
   "fungible-token-option": {
-    "defaultMessage": "Fungible Token"
+    "defaultMessage": "Token"
+  },
+  "github": {
+    "defaultMessage": "GitHub"
   },
   "go-home-button": {
     "defaultMessage": "Go Home"
@@ -125,17 +155,44 @@
   "input-transaction-id": {
     "defaultMessage": "Transaction Id"
   },
+  "item-owned": {
+    "defaultMessage": "Owned"
+  },
+  "more": {
+    "defaultMessage": "More"
+  },
   "my-profile": {
     "defaultMessage": "My Profile"
   },
   "nft-fallback": {
     "defaultMessage": "Non Fungible Token"
   },
+  "non-existent-page": {
+    "defaultMessage": "The page you're looking for does not seem to exist"
+  },
   "non-fungible-token-option": {
-    "defaultMessage": "Non Fungible Token"
+    "defaultMessage": "NFT"
+  },
+  "open-menu": {
+    "defaultMessage": "Open Menu"
+  },
+  "page-not-found": {
+    "defaultMessage": "Page Not Found"
+  },
+  "page-wrapper-error": {
+    "defaultMessage": "Unexpected Error"
   },
   "profile-picture-form": {
     "defaultMessage": "Profile Picture"
+  },
+  "profiles-page-load-error": {
+    "defaultMessage": "Error Loading Profile"
+  },
+  "profiles-page-load-error-subtext": {
+    "defaultMessage": "We couldn't seem to load the profile at this time"
+  },
+  "purchase": {
+    "defaultMessage": "Purchase"
   },
   "remove-achievement": {
     "defaultMessage": "Remove achievement"
@@ -179,17 +236,47 @@
   "sent-ether-achievement-header": {
     "defaultMessage": "Sent Ether!"
   },
+  "shop": {
+    "defaultMessage": "Shop"
+  },
+  "shop-load-error": {
+    "defaultMessage": "Error Loading Shop Page"
+  },
+  "shop-load-error-subtext": {
+    "defaultMessage": "We couldn't seem to load the page at this time"
+  },
   "statistic-option": {
     "defaultMessage": "Statistic"
   },
   "stats": {
     "defaultMessage": "Stats"
   },
+  "success-making-purchase-description": {
+    "defaultMessage": "Successfully processed purchase"
+  },
   "swaps": {
-    "defaultMessage": "Swaps"
+    "defaultMessage": "SWAPS"
+  },
+  "switch-chains": {
+    "defaultMessage": "Switch to Polygon"
   },
   "token-fallback": {
     "defaultMessage": "Fungible Token"
+  },
+  "top-profiles": {
+    "defaultMessage": "Top Profiles"
+  },
+  "top-profiles-load-error": {
+    "defaultMessage": "Error Loading Top Profiles Page"
+  },
+  "top-profiles-load-error-subtext": {
+    "defaultMessage": "We couldn't seem to load the page at this time"
+  },
+  "top-swaps": {
+    "defaultMessage": "Top Swaps"
+  },
+  "top-ten-profiles-caption": {
+    "defaultMessage": "Top 10 Profiles Today"
   },
   "welcome-message": {
     "defaultMessage": "Welcome to Ether Alley"

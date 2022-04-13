@@ -1,4 +1,10 @@
 {
+  "about": [
+    {
+      "type": 0,
+      "value": "AboutSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "achievement-form": [
     {
       "type": 0,
@@ -119,10 +125,28 @@
       "value": "BadgesSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "beta-tester-body": [
+    {
+      "type": 0,
+      "value": "This achievement is earned by claiming the Beta Tester token from the Ether Alley storeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "beta-tester-header": [
+    {
+      "type": 0,
+      "value": "Participated in the Ether Alley Beta!SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "change-profile-picture": [
     {
       "type": 0,
       "value": "Change Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "claim": [
+    {
+      "type": 0,
+      "value": "ClaimSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "close-edit-button": [
@@ -137,16 +161,28 @@
       "value": "ColorsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "connect-to-a-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
-      "value": "Connect to a walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Connect walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "connect-wallet": [
+    {
+      "type": 0,
+      "value": "Connect walletSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "contract-creation-label": [
     {
       "type": 0,
       "value": "Deployed Smart Contract AchievementSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "currency-option": [
+    {
+      "type": 0,
+      "value": "CurrencySSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "deployed-achievement-header": [
@@ -215,10 +251,34 @@
       "value": "Enter ENS name or Ethereum address...SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "error-loading-page": [
+    {
+      "type": 0,
+      "value": "Error loading pageSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "error-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Error processing purchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "error-saving-profile": [
+    {
+      "type": 0,
+      "value": "Error saving profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "fungible-token-option": [
     {
       "type": 0,
-      "value": "Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "github": [
+    {
+      "type": 0,
+      "value": "GitHubSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "go-home-button": [
@@ -251,6 +311,18 @@
       "value": "Transaction IdSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "item-owned": [
+    {
+      "type": 0,
+      "value": "OwnedSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "more": [
+    {
+      "type": 0,
+      "value": "MoreSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "my-profile": [
     {
       "type": 0,
@@ -263,16 +335,58 @@
       "value": "Non Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "non-existent-page": [
+    {
+      "type": 0,
+      "value": "The page you're looking for does not seem to existSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "non-fungible-token-option": [
     {
       "type": 0,
-      "value": "Non Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "NFTSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "open-menu": [
+    {
+      "type": 0,
+      "value": "Open MenuSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "page-not-found": [
+    {
+      "type": 0,
+      "value": "Page Not FoundSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "page-wrapper-error": [
+    {
+      "type": 0,
+      "value": "Unexpected ErrorSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "profile-picture-form": [
     {
       "type": 0,
       "value": "Profile PictureSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profiles-page-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading ProfileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profiles-page-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the profile at this timeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "purchase": [
+    {
+      "type": 0,
+      "value": "PurchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "remove-achievement": [
@@ -359,6 +473,24 @@
       "value": "Sent Ether!SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "shop": [
+    {
+      "type": 0,
+      "value": "ShopSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "shop-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading Shop PageSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "shop-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the page at this timeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -371,16 +503,58 @@
       "value": "StatsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "success-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Successfully processed purchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "swaps": [
     {
       "type": 0,
-      "value": "SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "SWAPSSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "switch-chains": [
+    {
+      "type": 0,
+      "value": "Switch to PolygonSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "token-fallback": [
     {
       "type": 0,
       "value": "Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-profiles": [
+    {
+      "type": 0,
+      "value": "Top ProfilesSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-profiles-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading Top Profiles PageSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-profiles-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the page at this timeSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-swaps": [
+    {
+      "type": 0,
+      "value": "Top SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-ten-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Top 10 Profiles TodaySSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "welcome-message": [

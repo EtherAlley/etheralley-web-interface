@@ -26,6 +26,7 @@ import {
   selectBadgeType,
   selectBadgeSubmitting,
 } from './slice';
+import CurrencyForm from './CurrencyForm';
 
 function AddBadgeModal() {
   const intl = useIntl();
@@ -45,6 +46,12 @@ function AddBadgeModal() {
     case BadgeTypes.Statistics:
       form = <StatForm />;
       break;
+    case BadgeTypes.Currencies:
+      form = <CurrencyForm />;
+      break;
+    default:
+      form = <></>;
+      break;
   }
 
   return (
@@ -63,11 +70,15 @@ function AddBadgeModal() {
               options={[
                 {
                   id: BadgeTypes.NonFungibleToken,
-                  label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'Non Fungible Token' }),
+                  label: intl.formatMessage({ id: 'non-fungible-token-option', defaultMessage: 'NFT' }),
                 },
                 {
                   id: BadgeTypes.FungibleToken,
-                  label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Fungible Token' }),
+                  label: intl.formatMessage({ id: 'fungible-token-option', defaultMessage: 'Token' }),
+                },
+                {
+                  id: BadgeTypes.Currencies,
+                  label: intl.formatMessage({ id: 'currency-option', defaultMessage: 'Currency' }),
                 },
                 {
                   id: BadgeTypes.Statistics,

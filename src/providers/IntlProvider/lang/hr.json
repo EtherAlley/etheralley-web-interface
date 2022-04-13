@@ -1,4 +1,10 @@
 {
+  "about": [
+    {
+      "type": 0,
+      "value": "Ḁḃŏůṭ"
+    }
+  ],
   "achievement-form": [
     {
       "type": 0,
@@ -119,10 +125,28 @@
       "value": "Ḃâḋĝèś"
     }
   ],
+  "beta-tester-body": [
+    {
+      "type": 0,
+      "value": "Ṯḫíś âćḫíèṿèṁèńṭ íś èâŕńèḋ ḃẏ ćĺâíṁíńĝ ṭḫè Ḃèṭâ Ṯèśṭèŕ ṭŏǩèń ḟŕŏṁ ṭḫè Ḕṭḫèŕ Ḁĺĺèẏ śṭŏŕè"
+    }
+  ],
+  "beta-tester-header": [
+    {
+      "type": 0,
+      "value": "Ṕâŕṭíćíṗâṭèḋ íń ṭḫè Ḕṭḫèŕ Ḁĺĺèẏ Ḃèṭâ!"
+    }
+  ],
   "change-profile-picture": [
     {
       "type": 0,
       "value": "Ḉḫâńĝè Ṕŕŏḟíĺè Ṕíćṭůŕè"
+    }
+  ],
+  "claim": [
+    {
+      "type": 0,
+      "value": "Ḉĺâíṁ"
     }
   ],
   "close-edit-button": [
@@ -137,16 +161,28 @@
       "value": "Ḉŏĺŏŕś"
     }
   ],
-  "connect-to-a-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
-      "value": "Ḉŏńńèćṭ ṭŏ â ẘâĺĺèṭ"
+      "value": "Ḉŏńńèćṭ ẘâĺĺèṭ"
+    }
+  ],
+  "connect-wallet": [
+    {
+      "type": 0,
+      "value": "Ḉŏńńèćṭ ẘâĺĺèṭ"
     }
   ],
   "contract-creation-label": [
     {
       "type": 0,
       "value": "Ḋèṗĺŏẏèḋ Ṡṁâŕṭ Ḉŏńṭŕâćṭ Ḁćḫíèṿèṁèńṭ"
+    }
+  ],
+  "currency-option": [
+    {
+      "type": 0,
+      "value": "Ḉůŕŕèńćẏ"
     }
   ],
   "deployed-achievement-header": [
@@ -215,10 +251,34 @@
       "value": "Ḕńṭèŕ ḔŊṠ ńâṁè ŏŕ Ḕṭḫèŕèůṁ âḋḋŕèśś..."
     }
   ],
+  "error-loading-page": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ ĺŏâḋíńĝ ṗâĝè"
+    }
+  ],
+  "error-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ ṗŕŏćèśśíńĝ ṗůŕćḫâśè"
+    }
+  ],
+  "error-saving-profile": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ śâṿíńĝ ṗŕŏḟíĺè"
+    }
+  ],
   "fungible-token-option": [
     {
       "type": 0,
-      "value": "Ḟůńĝíḃĺè Ṯŏǩèń"
+      "value": "Ṯŏǩèń"
+    }
+  ],
+  "github": [
+    {
+      "type": 0,
+      "value": "ḠíṭḢůḃ"
     }
   ],
   "go-home-button": [
@@ -251,6 +311,18 @@
       "value": "Ṯŕâńśâćṭíŏń Ḭḋ"
     }
   ],
+  "item-owned": [
+    {
+      "type": 0,
+      "value": "Õẘńèḋ"
+    }
+  ],
+  "more": [
+    {
+      "type": 0,
+      "value": "Ḿŏŕè"
+    }
+  ],
   "my-profile": [
     {
       "type": 0,
@@ -263,16 +335,58 @@
       "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
     }
   ],
+  "non-existent-page": [
+    {
+      "type": 0,
+      "value": "Ṯḫè ṗâĝè ẏŏů'ŕè ĺŏŏǩíńĝ ḟŏŕ ḋŏèś ńŏṭ śèèṁ ṭŏ èẋíśṭ"
+    }
+  ],
   "non-fungible-token-option": [
     {
       "type": 0,
-      "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
+      "value": "ŊḞṮ"
+    }
+  ],
+  "open-menu": [
+    {
+      "type": 0,
+      "value": "Õṗèń Ḿèńů"
+    }
+  ],
+  "page-not-found": [
+    {
+      "type": 0,
+      "value": "Ṕâĝè Ŋŏṭ Ḟŏůńḋ"
+    }
+  ],
+  "page-wrapper-error": [
+    {
+      "type": 0,
+      "value": "Ũńèẋṗèćṭèḋ Ḕŕŕŏŕ"
     }
   ],
   "profile-picture-form": [
     {
       "type": 0,
       "value": "Ṕŕŏḟíĺè Ṕíćṭůŕè"
+    }
+  ],
+  "profiles-page-load-error": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ Ļŏâḋíńĝ Ṕŕŏḟíĺè"
+    }
+  ],
+  "profiles-page-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "Ẅè ćŏůĺḋń'ṭ śèèṁ ṭŏ ĺŏâḋ ṭḫè ṗŕŏḟíĺè âṭ ṭḫíś ṭíṁè"
+    }
+  ],
+  "purchase": [
+    {
+      "type": 0,
+      "value": "Ṕůŕćḫâśè"
     }
   ],
   "remove-achievement": [
@@ -359,6 +473,24 @@
       "value": "Ṡèńṭ Ḕṭḫèŕ!"
     }
   ],
+  "shop": [
+    {
+      "type": 0,
+      "value": "Ṡḫŏṗ"
+    }
+  ],
+  "shop-load-error": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ Ļŏâḋíńĝ Ṡḫŏṗ Ṕâĝè"
+    }
+  ],
+  "shop-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "Ẅè ćŏůĺḋń'ṭ śèèṁ ṭŏ ĺŏâḋ ṭḫè ṗâĝè âṭ ṭḫíś ṭíṁè"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -371,16 +503,58 @@
       "value": "Ṡṭâṭś"
     }
   ],
+  "success-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Ṡůććèśśḟůĺĺẏ ṗŕŏćèśśèḋ ṗůŕćḫâśè"
+    }
+  ],
   "swaps": [
     {
       "type": 0,
-      "value": "Ṡẘâṗś"
+      "value": "ṠẄḀṔṠ"
+    }
+  ],
+  "switch-chains": [
+    {
+      "type": 0,
+      "value": "Ṡẘíṭćḫ ṭŏ Ṕŏĺẏĝŏń"
     }
   ],
   "token-fallback": [
     {
       "type": 0,
       "value": "Ḟůńĝíḃĺè Ṯŏǩèń"
+    }
+  ],
+  "top-profiles": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ Ṕŕŏḟíĺèś"
+    }
+  ],
+  "top-profiles-load-error": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ Ļŏâḋíńĝ Ṯŏṗ Ṕŕŏḟíĺèś Ṕâĝè"
+    }
+  ],
+  "top-profiles-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "Ẅè ćŏůĺḋń'ṭ śèèṁ ṭŏ ĺŏâḋ ṭḫè ṗâĝè âṭ ṭḫíś ṭíṁè"
+    }
+  ],
+  "top-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ Ṡẘâṗś"
+    }
+  ],
+  "top-ten-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ 10 Ṕŕŏḟíĺèś Ṯŏḋâẏ"
     }
   ],
   "welcome-message": [
