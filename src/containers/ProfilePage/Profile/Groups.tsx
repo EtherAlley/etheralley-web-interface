@@ -9,6 +9,7 @@ import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import { selectGroups, selectLoading } from './../slice';
 import Statistic from './Statistic';
+import Currency from './Currency';
 
 function Groups() {
   const groups = useAppSelector(selectGroups);
@@ -127,6 +128,8 @@ function GroupItem({ type, index }: { type: BadgeTypes | undefined; index: numbe
       return <FungibleTokenComponent index={index} />;
     case BadgeTypes.Statistics:
       return <Statistic index={index} />;
+    case BadgeTypes.Currencies:
+      return <Currency index={index} />;
     default:
       return <></>;
   }

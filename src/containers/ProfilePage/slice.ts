@@ -7,6 +7,7 @@ import { nanoid } from 'nanoid';
 import { AsyncStates } from '../../common/constants';
 import {
   getAchievement,
+  getCurrency,
   getFungibleToken,
   getNonFungibleToken,
   getProfilePicture,
@@ -64,6 +65,7 @@ const initialState: State = {
     non_fungible_tokens: [],
     fungible_tokens: [],
     statistics: [],
+    currencies: [],
   },
 };
 
@@ -179,6 +181,7 @@ export const slice = createSlice({
         state.profile.fungible_tokens = profile.fungible_tokens;
         state.profile.statistics = profile.statistics;
         state.profile.interactions = profile.interactions;
+        state.profile.currencies = profile.currencies;
         if (!profile.display_config) {
           buildDefaultDisplayConfig(state.profile, profile);
         } else {
@@ -223,6 +226,9 @@ export const slice = createSlice({
       })
       .addCase(getStatistic.fulfilled, (state, { payload }) => {
         addBadge(state, BadgeTypes.Statistics, payload);
+      })
+      .addCase(getCurrency.fulfilled, (state, { payload }) => {
+        addBadge(state, BadgeTypes.Currencies, payload);
       })
       .addCase(getProfilePicture.fulfilled, (state, { payload }) => {
         // remove the old profile picture config
@@ -407,6 +413,8 @@ export const selectFungibleToken = (state: RootState, index: number) =>
 export const selectStatistic = (state: RootState, index: number) => state.profilePage.profile.statistics[index];
 
 export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
+
+export const selectCurrency = (state: RootState, index: number) => state.profilePage.profile.currencies[index];
 
 export default slice.reducer;
 

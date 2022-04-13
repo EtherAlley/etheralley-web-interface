@@ -8,6 +8,7 @@ export enum BadgeTypes {
   NonFungibleToken = 'non_fungible_tokens',
   FungibleToken = 'fungible_tokens',
   Statistics = 'statistics',
+  Currencies = 'currencies',
 }
 
 export type Listing = {
@@ -34,6 +35,7 @@ export type Profile = {
   [BadgeTypes.NonFungibleToken]: NonFungibleToken[];
   [BadgeTypes.FungibleToken]: FungibleToken[];
   [BadgeTypes.Statistics]: Statistic[];
+  [BadgeTypes.Currencies]: Currency[];
 };
 
 export type StoreAssets = {
@@ -121,6 +123,11 @@ export type FungibleMetadata = {
   name: string | undefined;
   symbol: string | undefined;
   decimals: number | undefined;
+};
+
+export type Currency = {
+  blockchain: Blockchains;
+  balance: string | undefined;
 };
 
 export type Statistic = {

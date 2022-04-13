@@ -8,6 +8,7 @@ import {
   addGroup,
   removeGroup,
   removeItem,
+  selectCurrency,
   selectFungibleToken,
   selectGroups,
   selectNonFungibleToken,
@@ -15,7 +16,7 @@ import {
   updateGroupText,
 } from '../slice';
 import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
-import { Interfaces } from '../../../common/constants';
+import { Blockchains, Interfaces } from '../../../common/constants';
 import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import { openBadgeModal } from '../ModalForms/slice';
@@ -126,6 +127,9 @@ function Item({
     case BadgeTypes.Statistics:
       label = <StatisticLabel index={index} />;
       break;
+    case BadgeTypes.Currencies:
+      label = <CurrencyLabel index={index} />;
+      break;
     default:
       label = <Text isTruncated>{type}</Text>;
       break;
@@ -210,6 +214,23 @@ function StatisticLabel({ index }: { index: number }) {
       return <Text isTruncated>Uniswap V3 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     default:
       return <Text isTruncated>{stat.contract.interface}</Text>;
+  }
+}
+
+function CurrencyLabel({ index }: { index: number }) {
+  const currency = useAppSelector((state) => selectCurrency(state, index));
+
+  switch (currency.blockchain) {
+    case Blockchains.ETHEREUM:
+      return <Text isTruncated>Mainnet Ether</Text>;
+    case Blockchains.ARBITRUM:
+      return <Text isTruncated>Arbitrum Ether</Text>;
+    case Blockchains.OPTIMISM:
+      return <Text isTruncated>Optimism Ether</Text>;
+    case Blockchains.POLYGON:
+      return <Text isTruncated>Matic</Text>;
+    default:
+      return <Text isTruncated>{currency.blockchain}</Text>;
   }
 }
 

@@ -1,8 +1,6 @@
 import { Image, Text, Box, Flex } from '@chakra-ui/react';
 import Badge from './Badge';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
-import useTokenKey from '../../../hooks/useTokenKey';
-import Settings from '../../../common/settings';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
 import Coin from '../../../icons/Coin';
@@ -11,6 +9,7 @@ import { selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
 import BlockchainChip from './BlockchainChip';
 import { Contract, FungibleMetadata } from '../../../common/types';
+import useLogo from '../../../hooks/useLogo';
 
 function FungibleTokenComponent({ index }: { index: number }) {
   const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
@@ -103,13 +102,13 @@ function FungibleLogo({
   blockchain: Blockchains;
   symbol: string | undefined;
 }) {
-  const key = useTokenKey(address, blockchain);
-  return !key ? (
+  const url = useLogo({ contractAddress: address, blockchain });
+  return !url ? (
     <Box {...coinStyling}>
       <Coin width="85px" height="85px" />
     </Box>
   ) : (
-    <Image alt={symbol} src={`${Settings.PUBLIC_URL}/tokens/${key.toLowerCase()}.png`} {...coinStyling} />
+    <Image alt={symbol} src={url} {...coinStyling} />
   );
 }
 

@@ -1,8 +1,6 @@
 import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image } from '@chakra-ui/react';
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
-import Settings from '../../../common/settings';
-import useInterfaceKey from '../../../hooks/useInterfaceKey';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -10,6 +8,7 @@ import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
 import BlockchainChip from './BlockchainChip';
 import { useIntl } from 'react-intl';
+import useLogo from '../../../hooks/useLogo';
 
 function SwapComponent({ index }: { index: number }) {
   const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
@@ -37,13 +36,13 @@ const logoStyling = {
 };
 
 function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
-  const key = useInterfaceKey(contract.interface);
   const intl = useIntl();
+  const url = useLogo({ interfaceName: contract.interface });
 
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={5}>
-        <Image alt={key} src={`${Settings.PUBLIC_URL}/logos/${key.toLowerCase()}.svg`} {...logoStyling} />
+        <Image alt={contract.interface} src={url} {...logoStyling} />
       </Flex>
       <BlockchainChip
         text={`${swaps ? swaps.length : 0} ${intl.formatMessage({ id: 'swaps', defaultMessage: 'SWAPS' })}`}

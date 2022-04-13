@@ -25,6 +25,7 @@ import Link from '../../components/Link';
 import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
+import useLogo from '../../hooks/useLogo';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 
@@ -43,6 +44,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const balances = useAppSelector(selectBalances);
   const { chainId } = useEthers();
+  const url = useLogo({ blockchain });
 
   const hasPurchased = !loadingBalances && !!balances[index] && balances[index] !== '0';
   const correctChainId = chainId === Settings.STORE_CHAIN_ID;
@@ -63,7 +65,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
             <Text fontWeight="bold" textAlign="center">
               {`${formatPrice} MATIC`}
             </Text>
-            <Image alt={blockchain} src={`${Settings.PUBLIC_URL}/logos/polygon.svg`} ml={2} height={6} width={6} />
+            <Image alt={blockchain} src={url} ml={2} height={6} width={6} />
           </Flex>
           <PurchaseButton
             price={price}
