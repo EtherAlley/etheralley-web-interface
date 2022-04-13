@@ -2,7 +2,7 @@ import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { BADGE_HEIGHT } from '../../../common/constants';
 import Paper from '../../../components/Paper';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectLoading, selectText } from './../slice';
+import { selectLoading, selectInfo } from './../slice';
 
 function ProfileText() {
   return (
@@ -15,7 +15,7 @@ function ProfileText() {
 }
 
 function TextArea() {
-  const { title, description } = useAppSelector(selectText);
+  const { title, description } = useAppSelector(selectInfo);
   const loading = useAppSelector(selectLoading);
 
   if (loading) {

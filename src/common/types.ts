@@ -50,9 +50,10 @@ export type DisplayConfig = {
     primary_text: string;
     secondary_text: string;
   };
-  text: {
+  info: {
     title: string;
     description: string;
+    twitter_handle: string;
   };
   picture: {
     item: DisplayItem | undefined;

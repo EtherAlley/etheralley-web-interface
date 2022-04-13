@@ -20,7 +20,7 @@ function PageWrapper() {
     <Box backgroundColor="profile.primary">
       <Toolbar />
       <Container maxW="container.lg">
-        <Box height="10vh" />
+        <Box height="15vh" />
         <ErrorBoundary>
           <ProfilePage />
         </ErrorBoundary>

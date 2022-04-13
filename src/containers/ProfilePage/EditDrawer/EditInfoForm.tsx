@@ -3,12 +3,12 @@ import Input from '../../../components/Input';
 import TextArea from '../../../components/TextArea';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectText, updateProfileTitle, updateProfileDescription } from '../slice';
+import { selectInfo, updateProfileTitle, updateProfileDescription, updateProfileTwitterhandle } from '../slice';
 
 function EditInfoForm() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const { title, description } = useAppSelector(selectText);
+  const { title, description, twitter_handle } = useAppSelector(selectInfo);
 
   return (
     <>
@@ -26,6 +26,13 @@ function EditInfoForm() {
         onChange={(event) => dispatch(updateProfileDescription(event.target.value))}
         maxLength={500}
         height={400}
+      />
+      <Input
+        id="twitter-handle"
+        label={intl.formatMessage({ id: 'edit-twitter-handle', defaultMessage: 'Twitter Handle' })}
+        value={twitter_handle}
+        onChange={(event) => dispatch(updateProfileTwitterhandle(event.target.value))}
+        maxLength={15}
       />
     </>
   );

@@ -48,9 +48,10 @@ const initialState: State = {
         primary_text: '',
         secondary_text: '',
       },
-      text: {
+      info: {
         title: '',
         description: '',
+        twitter_handle: '',
       },
       picture: {
         item: undefined,
@@ -108,10 +109,13 @@ export const slice = createSlice({
       state.showEditBar = false;
     },
     updateProfileTitle: (state, action: PayloadAction<string>) => {
-      state.profile.display_config.text.title = action.payload;
+      state.profile.display_config.info.title = action.payload;
     },
     updateProfileDescription: (state, action: PayloadAction<string>) => {
-      state.profile.display_config.text.description = action.payload;
+      state.profile.display_config.info.description = action.payload;
+    },
+    updateProfileTwitterhandle: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.info.twitter_handle = action.payload;
     },
     removeProfilePicture: (state) => {
       state.profile.display_config.picture.item = undefined;
@@ -255,8 +259,8 @@ export const slice = createSlice({
 
 // build a pleasant display config when the user does not have one configured
 function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Profile): void {
-  stateProfile.display_config.text.title = '💎 My Profile 💎';
-  stateProfile.display_config.text.description = `
+  stateProfile.display_config.info.title = '💎 My Profile 💎';
+  stateProfile.display_config.info.description = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
     magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
     consequat.
@@ -402,7 +406,7 @@ export const selectSaving = (state: RootState) => state.profilePage.saveProfileS
 
 export const selectShowEditBar = (state: RootState) => state.profilePage.showEditBar;
 
-export const selectText = (state: RootState) => state.profilePage.profile.display_config.text;
+export const selectInfo = (state: RootState) => state.profilePage.profile.display_config.info;
 
 export const selectColors = (state: RootState) => state.profilePage.profile.display_config.colors;
 
@@ -439,6 +443,7 @@ export const {
   closeEditBar,
   updateProfileTitle,
   updateProfileDescription,
+  updateProfileTwitterhandle,
   updatePrimaryColor,
   updateSecondaryColor,
   updatePrimaryTextColor,
