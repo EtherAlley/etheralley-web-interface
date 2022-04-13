@@ -1,4 +1,10 @@
 {
+  "about": [
+    {
+      "type": 0,
+      "value": "About"
+    }
+  ],
   "achievement-form": [
     {
       "type": 0,
@@ -119,10 +125,28 @@
       "value": "Badges"
     }
   ],
+  "beta-tester-body": [
+    {
+      "type": 0,
+      "value": "This achievement is earned by claiming the Beta Tester token from the Ether Alley store"
+    }
+  ],
+  "beta-tester-header": [
+    {
+      "type": 0,
+      "value": "Participated in the Ether Alley Beta!"
+    }
+  ],
   "change-profile-picture": [
     {
       "type": 0,
       "value": "Change Profile Picture"
+    }
+  ],
+  "claim": [
+    {
+      "type": 0,
+      "value": "Claim"
     }
   ],
   "close-edit-button": [
@@ -137,16 +161,28 @@
       "value": "Colors"
     }
   ],
-  "connect-to-a-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
-      "value": "Connect to a wallet"
+      "value": "Connect wallet"
+    }
+  ],
+  "connect-wallet": [
+    {
+      "type": 0,
+      "value": "Connect wallet"
     }
   ],
   "contract-creation-label": [
     {
       "type": 0,
       "value": "Deployed Smart Contract Achievement"
+    }
+  ],
+  "currency-option": [
+    {
+      "type": 0,
+      "value": "Currency"
     }
   ],
   "deployed-achievement-header": [
@@ -215,10 +251,34 @@
       "value": "Enter ENS name or Ethereum address..."
     }
   ],
+  "error-loading-page": [
+    {
+      "type": 0,
+      "value": "Error loading page"
+    }
+  ],
+  "error-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Error processing purchase"
+    }
+  ],
+  "error-saving-profile": [
+    {
+      "type": 0,
+      "value": "Error saving profile"
+    }
+  ],
   "fungible-token-option": [
     {
       "type": 0,
-      "value": "Fungible Token"
+      "value": "Token"
+    }
+  ],
+  "github": [
+    {
+      "type": 0,
+      "value": "GitHub"
     }
   ],
   "go-home-button": [
@@ -251,6 +311,18 @@
       "value": "Transaction Id"
     }
   ],
+  "item-owned": [
+    {
+      "type": 0,
+      "value": "Owned"
+    }
+  ],
+  "more": [
+    {
+      "type": 0,
+      "value": "More"
+    }
+  ],
   "my-profile": [
     {
       "type": 0,
@@ -263,16 +335,58 @@
       "value": "Non Fungible Token"
     }
   ],
+  "non-existent-page": [
+    {
+      "type": 0,
+      "value": "The page you're looking for does not seem to exist"
+    }
+  ],
   "non-fungible-token-option": [
     {
       "type": 0,
-      "value": "Non Fungible Token"
+      "value": "NFT"
+    }
+  ],
+  "open-menu": [
+    {
+      "type": 0,
+      "value": "Open Menu"
+    }
+  ],
+  "page-not-found": [
+    {
+      "type": 0,
+      "value": "Page Not Found"
+    }
+  ],
+  "page-wrapper-error": [
+    {
+      "type": 0,
+      "value": "Unexpected Error"
     }
   ],
   "profile-picture-form": [
     {
       "type": 0,
       "value": "Profile Picture"
+    }
+  ],
+  "profiles-page-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading Profile"
+    }
+  ],
+  "profiles-page-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the profile at this time"
+    }
+  ],
+  "purchase": [
+    {
+      "type": 0,
+      "value": "Purchase"
     }
   ],
   "remove-achievement": [
@@ -359,6 +473,24 @@
       "value": "Sent Ether!"
     }
   ],
+  "shop": [
+    {
+      "type": 0,
+      "value": "Shop"
+    }
+  ],
+  "shop-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading Shop Page"
+    }
+  ],
+  "shop-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the page at this time"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -371,16 +503,58 @@
       "value": "Stats"
     }
   ],
+  "success-making-purchase-description": [
+    {
+      "type": 0,
+      "value": "Successfully processed purchase"
+    }
+  ],
   "swaps": [
     {
       "type": 0,
-      "value": "Swaps"
+      "value": "SWAPS"
+    }
+  ],
+  "switch-chains": [
+    {
+      "type": 0,
+      "value": "Switch to Polygon"
     }
   ],
   "token-fallback": [
     {
       "type": 0,
       "value": "Fungible Token"
+    }
+  ],
+  "top-profiles": [
+    {
+      "type": 0,
+      "value": "Top Profiles"
+    }
+  ],
+  "top-profiles-load-error": [
+    {
+      "type": 0,
+      "value": "Error Loading Top Profiles Page"
+    }
+  ],
+  "top-profiles-load-error-subtext": [
+    {
+      "type": 0,
+      "value": "We couldn't seem to load the page at this time"
+    }
+  ],
+  "top-swaps": [
+    {
+      "type": 0,
+      "value": "Top Swaps"
+    }
+  ],
+  "top-ten-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Top 10 Profiles Today"
     }
   ],
   "welcome-message": [

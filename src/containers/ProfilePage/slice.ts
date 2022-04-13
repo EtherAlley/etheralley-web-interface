@@ -302,7 +302,7 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
     };
     const group: DisplayGroup = {
       id: nanoid(),
-      text: 'Non Fungibles',
+      text: 'NFTs',
       items: [],
     };
     // we start at 1 because the profile picture has claimed item 0 in the display config
@@ -311,6 +311,22 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
         id: nanoid(),
         index: i,
         type: BadgeTypes.NonFungibleToken,
+      });
+    }
+    stateProfile.display_config.groups.push(group);
+  }
+
+  if (actionProfile.currencies.length > 0) {
+    const group: DisplayGroup = {
+      id: nanoid(),
+      text: 'Currencies',
+      items: [],
+    };
+    for (let i = 0; i < actionProfile.currencies.length; i++) {
+      group.items.push({
+        id: nanoid(),
+        index: i,
+        type: BadgeTypes.Currencies,
       });
     }
     stateProfile.display_config.groups.push(group);
