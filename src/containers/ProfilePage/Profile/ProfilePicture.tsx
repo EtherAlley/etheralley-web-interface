@@ -53,24 +53,23 @@ function Info() {
   return (
     <>
       <Flex alignItems="center" justifyContent="center">
-        <Text fontWeight="bold" isTruncated height={8} mt={2} mr={premium ? 2 : 0}>
-          {ens_name}
+        <Text fontWeight="bold" isTruncated height={8} mt={2} mr={premium ? 2 : 0} maxWidth="160px">
+          {ens_name || address}
         </Text>
         {premium && <Verified width="20px" height="20px" display="inline" />}
       </Flex>
-      <LinkBox>
-        <Flex alignItems="center" justifyContent="center">
-          <Text size="md">
-            <LinkOverlay href={`https://twitter.com/${twitter_handle}`} isExternal>
-              @{twitter_handle}
-            </LinkOverlay>
-          </Text>
-          <Icon as={FaTwitter} w={4} height={4} ml={1} />
-        </Flex>
-      </LinkBox>
-      <Text textAlign="center" isTruncated height={8} mt={2}>
-        {address}
-      </Text>
+      {twitter_handle && (
+        <LinkBox>
+          <Flex alignItems="center" justifyContent="center">
+            <Text size="md">
+              <LinkOverlay href={`https://twitter.com/${twitter_handle}`} isExternal>
+                @{twitter_handle}
+              </LinkOverlay>
+            </Text>
+            <Icon as={FaTwitter} w={4} height={4} ml={1} />
+          </Flex>
+        </LinkBox>
+      )}
     </>
   );
 }
