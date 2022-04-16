@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AsyncStates } from '../../common/constants';
-import { fetchAPI } from '../../common/http';
+import { FetchCoreAPI } from '../../common/http';
 import { Profile } from '../../common/types';
 import { RootState } from '../../store';
 
@@ -17,7 +17,13 @@ const initialState: State = {
 export const getTopProfiles = createAsyncThunk<Profile[], undefined, { state: RootState }>(
   'home/getTopProfiles',
   async () => {
-    return fetchAPI<Profile[]>('/profiles/top');
+    const { data, error } = await FetchCoreAPI<Profile[]>('/profiles/top');
+
+    if (error || !data) {
+      throw new Error('error fetching top profiles');
+    }
+
+    return data;
   }
 );
 

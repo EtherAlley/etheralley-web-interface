@@ -1,8 +1,8 @@
-import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image } from '@chakra-ui/react';
+import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image, Heading } from '@chakra-ui/react';
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
+import { BADGE_HEIGHT, BADGE_WIDTH, Interfaces } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
@@ -39,15 +39,40 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
   const intl = useIntl();
   const url = useLogo({ interfaceName: contract.interface });
 
+  let title: string = '';
+  switch (contract.interface) {
+    case Interfaces.SUSHISWAP_EXCHANGE:
+      title = intl.formatMessage({ id: 'sushiswap', defaultMessage: 'Sushiswap' });
+      break;
+    case Interfaces.UNISWAP_V2_EXCHANGE:
+      title = intl.formatMessage({ id: 'uniswap-v2', defaultMessage: 'Uniswap V2' });
+      break;
+    case Interfaces.UNISWAP_V3_EXCHANGE:
+      title = intl.formatMessage({ id: 'uniswap-v3', defaultMessage: 'Uniswap V3' });
+      break;
+  }
+
+  let text: string = '';
+  if (!swaps || !swaps.length) {
+    text = intl.formatMessage({ id: 'no-swaps', defaultMessage: 'NO SWAPS' });
+  } else if (swaps.length === 1) {
+    text = intl.formatMessage({ id: 'first-swap', defaultMessage: 'FIRST SWAP' });
+  } else {
+    text = intl.formatMessage(
+      { id: 'top-n-swaps', defaultMessage: 'TOP {swapcount} SWAPS' },
+      { swapcount: swaps ? swaps.length : 0 }
+    );
+  }
+
   return (
     <Box maxWidth="100%" maxHeight="100%">
-      <Flex justifyContent="center" mb={5}>
+      <Flex justifyContent="center" mb={3}>
         <Image alt={contract.interface} src={url} {...logoStyling} />
       </Flex>
-      <BlockchainChip
-        text={`${swaps ? swaps.length : 0} ${intl.formatMessage({ id: 'swaps', defaultMessage: 'SWAPS' })}`}
-        blockchain={contract.blockchain}
-      />
+      <Heading as="h4" size="md" mt={2}>
+        {title}
+      </Heading>
+      <BlockchainChip text={text} blockchain={contract.blockchain} />
     </Box>
   );
 }

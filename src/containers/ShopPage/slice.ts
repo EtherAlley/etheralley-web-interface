@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BigNumber, Contract, utils } from 'ethers';
 import EtherAlleyStoreAbi from '../../abi/EtherAlleyStore';
 import { AsyncStates, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
-import { fetchAPI, fetchAPINoResponse } from '../../common/http';
+import { FetchCoreAPI } from '../../common/http';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import { RootState } from '../../store';
@@ -27,7 +27,7 @@ const initialState: State = {
 export const getListings = createAsyncThunk<Listing[], undefined, { state: RootState }>(
   'shopPage/getListings',
   async () => {
-    return fetchAPI<Listing[]>('/listings', {
+    const { data, error } = await FetchCoreAPI<Listing[]>('/listings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,6 +36,12 @@ export const getListings = createAsyncThunk<Listing[], undefined, { state: RootS
         token_ids: [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER],
       }),
     });
+
+    if (error || !data) {
+      throw new Error('error fetching listings');
+    }
+
+    return data;
   }
 );
 
@@ -81,7 +87,11 @@ export const purchase = createAsyncThunk<
     throw ex;
   }
 
-  await fetchAPINoResponse(`/profiles/${account}/refresh`);
+  const { error } = await FetchCoreAPI(`/profiles/${account}/refresh`);
+
+  if (error) {
+    throw new Error('error refreshing profile');
+  }
 });
 
 export const slice = createSlice({

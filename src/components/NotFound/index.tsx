@@ -1,7 +1,7 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 
-export default function NotFound() {
+export default function NotFound({ title, subtitle }: { title?: string; subtitle?: string }) {
   const intl = useIntl();
 
   return (
@@ -16,13 +16,14 @@ export default function NotFound() {
         404
       </Heading>
       <Text fontSize="18px" mt={3} mb={2}>
-        {intl.formatMessage({ id: 'page-not-found', defaultMessage: 'Page Not Found' })}
+        {title ?? intl.formatMessage({ id: 'page-not-found', defaultMessage: 'Page Not Found' })}
       </Text>
       <Text color={'gray.500'} mb={6}>
-        {intl.formatMessage({
-          id: 'non-existent-page',
-          defaultMessage: "The page you're looking for does not seem to exist",
-        })}
+        {subtitle ??
+          intl.formatMessage({
+            id: 'non-existent-page',
+            defaultMessage: "The page you're looking for does not seem to exist",
+          })}
       </Text>
     </Box>
   );

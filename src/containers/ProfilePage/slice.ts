@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { fetchAPI, fetchAPINoResponse } from '../../common/http';
+import { FetchCoreAPI } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
@@ -18,6 +18,7 @@ export type StateProfile = Profile & { display_config: DisplayConfig }; // displ
 
 export interface State {
   loadProfileState: AsyncStates;
+  profileNotFound: boolean;
   saveProfileState: AsyncStates;
   showEditBar: boolean;
   profile: StateProfile;
@@ -32,6 +33,7 @@ export interface State {
 // it is slightly less optimal for us on the backend because we have to make external calls to validate/hydrate the same nft twice but I'm okay with this for now.
 const initialState: State = {
   loadProfileState: AsyncStates.PENDING,
+  profileNotFound: false,
   saveProfileState: AsyncStates.READY,
   showEditBar: false,
   profile: {
@@ -70,10 +72,20 @@ const initialState: State = {
   },
 };
 
-export const loadProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
+export const loadProfile = createAsyncThunk<Profile | undefined, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
-    return fetchAPI<Profile>(`/profiles/${address}`);
+    const { data, error } = await FetchCoreAPI<Profile>(`/profiles/${address}`);
+
+    if (error && error.status === 404) {
+      return undefined;
+    }
+
+    if (error || !data) {
+      throw new Error('error loading profile');
+    }
+
+    return data;
   }
 );
 
@@ -82,12 +94,16 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
   async ({ address, library }, { getState }) => {
     const { profilePage } = getState();
 
-    const { message } = await fetchAPI<{ message: string }>(`/challenges/${address}`);
+    const { data, error } = await FetchCoreAPI<{ message: string }>(`/challenges/${address}`);
+
+    if (error || !data) {
+      throw new Error('error getting challenge message');
+    }
 
     const signer = library.getSigner(address);
-    const signature = await signer.signMessage(message);
+    const signature = await signer.signMessage(data.message);
 
-    await fetchAPINoResponse(`/profiles/${address}`, {
+    const result = await FetchCoreAPI<void>(`/profiles/${address}`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${signature}`,
@@ -95,6 +111,10 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
       method: 'PUT',
       body: JSON.stringify(profilePage.profile),
     });
+
+    if (result.error) {
+      throw new Error('error saving profile');
+    }
   }
 );
 
@@ -173,10 +193,17 @@ export const slice = createSlice({
       .addCase(loadProfile.pending, () => {
         return initialState;
       })
-      .addCase(loadProfile.rejected, (state) => {
+      .addCase(loadProfile.rejected, (state, action) => {
+        console.log(action);
         state.loadProfileState = AsyncStates.REJECTED;
       })
       .addCase(loadProfile.fulfilled, (state, { payload: profile }) => {
+        if (!profile) {
+          state.loadProfileState = AsyncStates.REJECTED;
+          state.profileNotFound = true;
+          return;
+        }
+
         state.loadProfileState = AsyncStates.FULFILLED;
         state.profile.address = profile.address;
         state.profile.ens_name = profile.ens_name;
@@ -401,6 +428,8 @@ function addBadge(state: State, type: BadgeTypes, badge: any) {
 export const selectLoading = (state: RootState) => state.profilePage.loadProfileState === AsyncStates.PENDING;
 
 export const selectError = (state: RootState) => state.profilePage.loadProfileState === AsyncStates.REJECTED;
+
+export const selectProfileNotFound = (state: RootState) => state.profilePage.profileNotFound;
 
 export const selectSaving = (state: RootState) => state.profilePage.saveProfileState === AsyncStates.PENDING;
 

@@ -20,26 +20,56 @@ function StatForm() {
       interfaceOptions = [
         {
           id: Interfaces.SUSHISWAP_EXCHANGE,
-          label: `Sushiswap ${intl.formatMessage({ id: 'swaps', defaultMessage: 'Swaps' })}`,
+          label: intl.formatMessage(
+            { id: 'top-eth-sushi-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Sushiswap' }
+          ),
         },
         {
           id: Interfaces.UNISWAP_V2_EXCHANGE,
-          label: `Uniswap V2 ${intl.formatMessage({ id: 'swaps', defaultMessage: 'Swaps' })}`,
+          label: intl.formatMessage(
+            { id: 'top-eth-uni-v2-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Uniswap V2' }
+          ),
         },
         {
           id: Interfaces.UNISWAP_V3_EXCHANGE,
-          label: `Uniswap V3 ${intl.formatMessage({ id: 'swaps', defaultMessage: 'Swaps' })}`,
+          label: intl.formatMessage(
+            { id: 'top-eth-uni-v3-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Uniswap V3' }
+          ),
         },
       ];
       break;
     case Blockchains.POLYGON:
+      interfaceOptions = [
+        {
+          id: Interfaces.UNISWAP_V3_EXCHANGE,
+          label: intl.formatMessage(
+            { id: 'top-polygon-uni-v3-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Uniswap V3' }
+          ),
+        },
+        {
+          id: Interfaces.SUSHISWAP_EXCHANGE,
+          label: intl.formatMessage(
+            { id: 'top-polygon-sushi-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Sushiswap' }
+          ),
+        },
+      ];
+      break;
     case Blockchains.ARBITRUM:
       interfaceOptions = [
         {
           id: Interfaces.SUSHISWAP_EXCHANGE,
-          label: `Sushiswap ${intl.formatMessage({ id: 'swaps', defaultMessage: 'Swaps' })}`,
+          label: intl.formatMessage(
+            { id: 'top-arbitrum-sushi-swaps', defaultMessage: 'Top {dex} Swaps' },
+            { dex: 'Sushiswap' }
+          ),
         },
       ];
+      break;
   }
 
   return (

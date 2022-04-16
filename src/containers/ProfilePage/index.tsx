@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Box, Container } from '@chakra-ui/react';
 
-import { loadProfile, selectError } from './slice';
+import { loadProfile, selectError, selectProfileNotFound } from './slice';
 import Toolbar from './Toolbar';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -13,6 +13,7 @@ import AddBadgeModal from './ModalForms/AddBadgeModal';
 import AddProfilePictureModal from './ModalForms/AddProfilePictureModal';
 import AddAchievementModal from './ModalForms/AddAchievementModal';
 import Error from '../../components/Error';
+import NotFound from '../../components/NotFound';
 import { useIntl } from 'react-intl';
 
 function PageWrapper() {
@@ -33,6 +34,7 @@ function ProfilePage() {
   const intl = useIntl();
   const { address } = useParams<{ address: string }>();
   const error = useAppSelector(selectError);
+  const profileNotFound = useAppSelector(selectProfileNotFound);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -40,6 +42,18 @@ function ProfilePage() {
       dispatch(loadProfile({ address }));
     }
   }, [address, dispatch]);
+
+  if (error && profileNotFound) {
+    return (
+      <NotFound
+        title={intl.formatMessage({ id: 'profile-not-found', defaultMessage: 'Profile Not Found' })}
+        subtitle={intl.formatMessage({
+          id: 'non-existent-profile',
+          defaultMessage: "The profile you're looking for does not seem to exist",
+        })}
+      />
+    );
+  }
 
   if (error) {
     return (

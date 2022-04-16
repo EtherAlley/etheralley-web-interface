@@ -11,7 +11,7 @@ import {
   ZeroAddress,
   InteractionTypes,
 } from '../../../common/constants';
-import { fetchAPI } from '../../../common/http';
+import { FetchCoreAPI } from '../../../common/http';
 import { showToast } from '../../App/slice';
 
 export interface State {
@@ -132,10 +132,15 @@ export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined,
     } = getState();
 
     try {
-      const nft = await fetchAPI<NonFungibleToken>(
+      const { data, error } = await FetchCoreAPI<NonFungibleToken>(
         `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
       );
-      return nft;
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -154,10 +159,15 @@ export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { sta
     } = getState();
 
     try {
-      const token = await fetchAPI<FungibleToken>(
+      const { data, error } = await FetchCoreAPI<FungibleToken>(
         `/contracts/token?blockchain=${blockchain}&interface=${Interfaces.ERC20}&contract=${address}&user_address=${profile.address}`
       );
-      return token;
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -176,8 +186,15 @@ export const getCurrency = createAsyncThunk<Currency, undefined, { state: RootSt
     } = getState();
 
     try {
-      const currency = await fetchAPI<Currency>(`/currency?blockchain=${blockchain}&address=${profile.address}`);
-      return currency;
+      const { data, error } = await FetchCoreAPI<Currency>(
+        `/currency?blockchain=${blockchain}&address=${profile.address}`
+      );
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -196,10 +213,15 @@ export const getStatistic = createAsyncThunk<Statistic, undefined, { state: Root
     } = getState();
 
     try {
-      const stat = await fetchAPI<Statistic>(
+      const { data, error } = await FetchCoreAPI<Statistic>(
         `/contracts/statistic?blockchain=${blockchain}&interface=${interfaceName}&type=${type}&user_address=${profile.address}&contract=${ZeroAddress}`
       );
-      return stat;
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_BADGE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -218,10 +240,15 @@ export const getProfilePicture = createAsyncThunk<NonFungibleToken, undefined, {
     } = getState();
 
     try {
-      const nft = await fetchAPI<NonFungibleToken>(
+      const { data, error } = await FetchCoreAPI<NonFungibleToken>(
         `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
       );
-      return nft;
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_PROFILE_PICTURE, status: ToastStatuses.ERROR }));
       throw ex;
@@ -240,10 +267,15 @@ export const getAchievement = createAsyncThunk<Interaction, undefined, { state: 
     } = getState();
 
     try {
-      const interaction = await fetchAPI<Interaction>(
+      const { data, error } = await FetchCoreAPI<Interaction>(
         `/transactions/interaction?blockchain=${blockchain}&type=${type}&tx_id=${transactionId}&user_address=${profile.address}`
       );
-      return interaction;
+
+      if (error || !data) {
+        throw new Error('error fetching nft');
+      }
+
+      return data;
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ADDING_ACHIEVEMENT, status: ToastStatuses.ERROR }));
       throw ex;

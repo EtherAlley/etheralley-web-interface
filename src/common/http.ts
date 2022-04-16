@@ -1,24 +1,36 @@
 import Settings from './settings';
 
-export type RequestConfig = {
-  resource: string;
-  options?: RequestInit;
+export type Result<T> = {
+  data?: T;
+  error?: ResultError;
 };
 
-export const fetchAPI = async <T>(resource: string, options?: RequestInit): Promise<T> => {
-  const response = await fetchInternal(resource, options);
-  return response.json();
+export type ResultError = {
+  status: number;
+  message: string;
 };
 
-export const fetchAPINoResponse = async (resource: string, options?: RequestInit): Promise<void> => {
-  await fetchInternal(resource, options);
-  return;
-};
-
-const fetchInternal = async (resource: string, options: RequestInit = { method: 'GET' }): Promise<Response> => {
+export const FetchCoreAPI = async <T>(
+  resource: string,
+  options: RequestInit = { method: 'GET' }
+): Promise<Result<T>> => {
   const response = await fetch(`${Settings.CORE_API_URL}${resource}`, options);
+
+  const textBody = await response.text();
+
   if (response.status < 200 || response.status >= 400) {
-    throw new Error('invalid status code');
+    return { error: { status: response.status, message: textBody } };
   }
-  return response;
+
+  // if there is text in the response, we assume its valid json
+  if (textBody) {
+    try {
+      const data = JSON.parse(textBody);
+      return { data };
+    } catch (ex) {
+      return { error: { status: response.status, message: 'error parsing json' } };
+    }
+  }
+
+  return {};
 };

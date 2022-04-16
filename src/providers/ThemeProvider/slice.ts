@@ -108,17 +108,17 @@ export const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(loadProfile.pending, (state) => {
+      state.colors.profile = { ...initialState.colors.profile };
+    });
     builder.addCase(loadProfile.fulfilled, (state, { payload }) => {
-      if (!payload.display_config || !payload.display_config.colors) {
+      if (!payload || !payload.display_config || !payload.display_config.colors) {
         return;
       }
       state.colors.profile.primary = payload.display_config.colors.primary;
       state.colors.profile.secondary = payload.display_config.colors.secondary;
       state.colors.profile.primaryText = payload.display_config.colors.primary_text;
       state.colors.profile.secondaryText = payload.display_config.colors.secondary_text;
-    });
-    builder.addCase(loadProfile.pending, (state) => {
-      state.colors.profile = { ...initialState.colors.profile };
     });
     builder.addCase(updatePrimaryColor, (state, { payload }) => {
       state.colors.profile.primary = payload;
