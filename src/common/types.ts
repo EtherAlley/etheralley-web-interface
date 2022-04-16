@@ -134,7 +134,11 @@ export type Currency = {
 export type Statistic = {
   type: StatisticTypes;
   contract: Contract;
-  data: Swap[] | undefined;
+  data: Swap[] | Stake | undefined;
+};
+
+export type Stake = {
+  total_rewards: string;
 };
 
 export type SwapToken = {

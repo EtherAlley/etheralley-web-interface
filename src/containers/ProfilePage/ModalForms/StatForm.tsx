@@ -39,6 +39,10 @@ function StatForm() {
             { dex: 'Uniswap V3' }
           ),
         },
+        {
+          id: Interfaces.ROCKET_POOL,
+          label: intl.formatMessage({ id: 'rocket-pool-rewards', defaultMessage: 'Rocket Pool Rewards' }),
+        },
       ];
       break;
     case Blockchains.POLYGON:

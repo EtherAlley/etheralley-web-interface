@@ -11,7 +11,9 @@ import { useIntl } from 'react-intl';
 import useLogo from '../../../hooks/useLogo';
 
 function SwapComponent({ index }: { index: number }) {
-  const { data, contract } = useAppSelector((state) => selectStatistic(state, index));
+  const stat = useAppSelector((state) => selectStatistic(state, index));
+  const data = stat.data as Swap[] | undefined;
+  const contract = stat.contract;
 
   return (
     <Badge

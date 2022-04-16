@@ -61,6 +61,8 @@ function getInterfaceKey(interfaceName: Interfaces): string | undefined {
     case Interfaces.UNISWAP_V2_EXCHANGE:
     case Interfaces.UNISWAP_V3_EXCHANGE:
       return 'logos/uniswap.svg';
+    case Interfaces.ROCKET_POOL:
+      return 'logos/rocketpool.png';
     default:
       return undefined;
   }

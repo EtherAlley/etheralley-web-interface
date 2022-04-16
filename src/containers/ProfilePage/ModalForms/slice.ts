@@ -354,6 +354,9 @@ export const slice = createSlice({
         case Interfaces.UNISWAP_V3_EXCHANGE:
           state.statForm.type = StatisticTypes.SWAP;
           break;
+        case Interfaces.ROCKET_POOL:
+          state.statForm.type = StatisticTypes.STAKE;
+          break;
       }
     },
     updateInteractionBlockchain: (state, action: PayloadAction<string>) => {

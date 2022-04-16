@@ -212,6 +212,8 @@ function StatisticLabel({ index }: { index: number }) {
       return <Text isTruncated>Uniswap V2 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.UNISWAP_V3_EXCHANGE:
       return <Text isTruncated>Uniswap V3 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
+    case Interfaces.ROCKET_POOL:
+      return <Text isTruncated>Rocket Pool {intl.formatMessage({ id: 'rewards', defaultMessage: 'Rewards' })}</Text>;
     default:
       return <Text isTruncated>{stat.contract.interface}</Text>;
   }

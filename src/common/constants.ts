@@ -30,6 +30,7 @@ export enum Interfaces {
   SUSHISWAP_EXCHANGE = 'SUSHISWAP_EXCHANGE',
   UNISWAP_V2_EXCHANGE = 'UNISWAP_V2_EXCHANGE',
   UNISWAP_V3_EXCHANGE = 'UNISWAP_V3_EXCHANGE',
+  ROCKET_POOL = 'ROCKET_POOL',
 }
 
 export enum InteractionTypes {
@@ -39,6 +40,7 @@ export enum InteractionTypes {
 
 export enum StatisticTypes {
   SWAP = 'SWAP',
+  STAKE = 'STAKE',
 }
 
 export enum AsyncStates {
