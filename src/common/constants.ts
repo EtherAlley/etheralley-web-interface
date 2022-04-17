@@ -1,6 +1,9 @@
 export const BADGE_WIDTH = 185;
 export const BADGE_HEIGHT = 220;
 
+export const REGULAR_TOTAL_BADGE_COUNT = 25; // this number should never be lower than the total count returned by default profile, so that new users can always save their initial profile
+export const PREMIUM_TOTAL_BADGE_COUNT = 50;
+
 export enum Routes {
   HOME = '/',
   TOP_PROFILES = '/top-profiles',

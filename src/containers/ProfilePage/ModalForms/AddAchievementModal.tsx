@@ -15,6 +15,7 @@ import Input from '../../../components/Input';
 import Select from '../../../components/Select';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import { selectInteractions } from '../slice';
 import {
   selectShowAchievementModal,
   selectAchievementSubmitting,
@@ -32,6 +33,7 @@ function AddAchievementModal() {
   const show = useAppSelector(selectShowAchievementModal);
   const submitting = useAppSelector(selectAchievementSubmitting);
   const { blockchain, type, transactionId } = useAppSelector(selectInteractionForm);
+  const interactions = useAppSelector(selectInteractions);
 
   return (
     <Modal isOpen={show} onClose={() => dispatch(closeAchievementModal())}>
@@ -84,7 +86,7 @@ function AddAchievementModal() {
                   id: InteractionTypes.SEND_ETHER,
                   label: intl.formatMessage({ id: 'sent-ether', defaultMessage: 'Sent Ether' }),
                 },
-              ]}
+              ].filter((option) => !interactions.some((interaction) => interaction.type === option.id))}
               onChange={(event) => dispatch(updateInteractionType(event.target.value))}
               mt={5}
             />

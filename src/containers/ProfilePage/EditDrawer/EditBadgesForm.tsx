@@ -1,4 +1,4 @@
-import { Box, Flex, Button, Icon, Input, Text } from '@chakra-ui/react';
+import { Box, Flex, Button, Icon, Input, Text, Tooltip } from '@chakra-ui/react';
 import { MdAdd, MdRemove, MdDragIndicator } from 'react-icons/md';
 import { Droppable, Draggable, DraggingStyle } from 'react-beautiful-dnd';
 import IconButton from '../../../components/IconButton';
@@ -8,15 +8,22 @@ import {
   addGroup,
   removeGroup,
   removeItem,
+  selectBadgeCount,
   selectCurrency,
   selectFungibleToken,
   selectGroups,
   selectNonFungibleToken,
   selectStatistic,
+  selectStoreAssets,
   updateGroupText,
 } from '../slice';
 import { BadgeTypes, DisplayGroup, DisplayItem } from '../../../common/types';
-import { Blockchains, Interfaces } from '../../../common/constants';
+import {
+  Blockchains,
+  Interfaces,
+  PREMIUM_TOTAL_BADGE_COUNT,
+  REGULAR_TOTAL_BADGE_COUNT,
+} from '../../../common/constants';
 import { ReactNode } from 'react';
 import { useIntl } from 'react-intl';
 import { openBadgeModal } from '../ModalForms/slice';
@@ -25,21 +32,43 @@ function EditBadgesForm() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const groups = useAppSelector(selectGroups);
+  const badgeCount = useAppSelector(selectBadgeCount);
+  const { premium } = useAppSelector(selectStoreAssets);
+
+  const maxBadgeCountReached =
+    (!premium && badgeCount >= REGULAR_TOTAL_BADGE_COUNT) || (premium && badgeCount >= PREMIUM_TOTAL_BADGE_COUNT);
+  const label =
+    premium && badgeCount >= PREMIUM_TOTAL_BADGE_COUNT
+      ? intl.formatMessage(
+          { id: 'premium-max-badge-count', defaultMessage: '{max} badges is the maximum number for a premium account' },
+          { max: PREMIUM_TOTAL_BADGE_COUNT }
+        )
+      : intl.formatMessage(
+          {
+            id: 'regular-max-badge-count',
+            defaultMessage:
+              '{max} badges is the maximum number for a regular account. Purchase premium from the store to access a higher badge count',
+          },
+          { max: REGULAR_TOTAL_BADGE_COUNT }
+        );
 
   return (
     <Box>
       <Flex>
         <Box flexGrow={1} />
-        <Button
-          onClick={() => dispatch(openBadgeModal())}
-          my={5}
-          mr={2}
-          colorScheme="brand"
-          variant="outline"
-          rightIcon={<Icon as={MdAdd} />}
-        >
-          {intl.formatMessage({ id: 'add-badge', defaultMessage: 'Add Badge' })}
-        </Button>
+        <Tooltip label={label} shouldWrapChildren isDisabled={!maxBadgeCountReached}>
+          <Button
+            onClick={() => dispatch(openBadgeModal())}
+            my={5}
+            mr={2}
+            colorScheme="brand"
+            variant="outline"
+            rightIcon={<Icon as={MdAdd} />}
+            disabled={maxBadgeCountReached}
+          >
+            {intl.formatMessage({ id: 'add-badge', defaultMessage: 'Add Badge' })}
+          </Button>
+        </Tooltip>
         <Button
           onClick={() => dispatch(addGroup())}
           my={5}

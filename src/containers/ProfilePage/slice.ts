@@ -4,7 +4,7 @@ import { FetchCoreAPI } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
-import { AsyncStates } from '../../common/constants';
+import { AsyncStates, Toasts, ToastStatuses } from '../../common/constants';
 import {
   getAchievement,
   getCurrency,
@@ -13,6 +13,7 @@ import {
   getProfilePicture,
   getStatistic,
 } from './ModalForms/slice';
+import { showToast } from '../App/slice';
 
 export type StateProfile = Profile & { display_config: DisplayConfig }; // display config is never undefined in the state so we override the typing
 
@@ -91,29 +92,34 @@ export const loadProfile = createAsyncThunk<Profile | undefined, { address: stri
 
 export const saveProfile = createAsyncThunk<void, { address: string; library: any }, { state: RootState }>(
   'profile/save',
-  async ({ address, library }, { getState }) => {
-    const { profilePage } = getState();
+  async ({ address, library }, { getState, dispatch }) => {
+    try {
+      const { profilePage } = getState();
 
-    const { data, error } = await FetchCoreAPI<{ message: string }>(`/challenges/${address}`);
+      const { data, error } = await FetchCoreAPI<{ message: string }>(`/challenges/${address}`);
 
-    if (error || !data) {
-      throw new Error('error getting challenge message');
-    }
+      if (error || !data) {
+        throw new Error('error getting challenge message');
+      }
 
-    const signer = library.getSigner(address);
-    const signature = await signer.signMessage(data.message);
+      const signer = library.getSigner(address);
+      const signature = await signer.signMessage(data.message);
 
-    const result = await FetchCoreAPI<void>(`/profiles/${address}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${signature}`,
-      },
-      method: 'PUT',
-      body: JSON.stringify(profilePage.profile),
-    });
+      const result = await FetchCoreAPI<void>(`/profiles/${address}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${signature}`,
+        },
+        method: 'PUT',
+        body: JSON.stringify(profilePage.profile),
+      });
 
-    if (result.error) {
-      throw new Error('error saving profile');
+      if (result.error) {
+        throw new Error('error saving profile');
+      }
+    } catch (ex) {
+      dispatch(showToast({ toast: Toasts.ERROR_SAVING_PROFILE, status: ToastStatuses.ERROR }));
+      throw ex;
     }
   }
 );
@@ -464,6 +470,14 @@ export const selectStatistic = (state: RootState, index: number) => state.profil
 export const selectInteraction = (state: RootState, index: number) => state.profilePage.profile.interactions[index];
 
 export const selectCurrency = (state: RootState, index: number) => state.profilePage.profile.currencies[index];
+
+export const selectBadgeCount = (state: RootState) =>
+  state.profilePage.profile.fungible_tokens.length +
+  state.profilePage.profile.non_fungible_tokens.length +
+  state.profilePage.profile.currencies.length +
+  state.profilePage.profile.statistics.length;
+
+export const selectInteractions = (state: RootState) => state.profilePage.profile.interactions;
 
 export default slice.reducer;
 
