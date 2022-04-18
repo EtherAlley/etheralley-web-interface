@@ -25,6 +25,7 @@ function PageWrapper() {
         <ErrorBoundary>
           <ProfilePage />
         </ErrorBoundary>
+        <Box height="15vh" />
       </Container>
     </Box>
   );

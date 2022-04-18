@@ -47,6 +47,8 @@ export type DisplayConfig = {
   colors: {
     primary: string;
     secondary: string;
+    accent: string;
+    shadow: string;
     primary_text: string;
     secondary_text: string;
   };

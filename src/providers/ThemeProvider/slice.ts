@@ -30,6 +30,8 @@ export interface State {
     profile: {
       primary: string;
       secondary: string;
+      accent: string;
+      shadow: string;
       primaryText: string;
       secondaryText: string;
     };
@@ -81,6 +83,8 @@ const initialState: State = {
     profile: {
       primary: '#121212',
       secondary: '#1a1a1b',
+      accent: '#36e2bc',
+      shadow: '#000000',
       primaryText: '#FFF',
       secondaryText: '#FFF',
     },
@@ -117,6 +121,8 @@ export const slice = createSlice({
       }
       state.colors.profile.primary = payload.display_config.colors.primary;
       state.colors.profile.secondary = payload.display_config.colors.secondary;
+      state.colors.profile.accent = payload.display_config.colors.accent;
+      state.colors.profile.shadow = payload.display_config.colors.shadow;
       state.colors.profile.primaryText = payload.display_config.colors.primary_text;
       state.colors.profile.secondaryText = payload.display_config.colors.secondary_text;
     });

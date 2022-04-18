@@ -6,7 +6,7 @@ function Paper({ children, ...props }: { children: ReactChild; [x: string]: any 
     <Box
       borderRadius="lg"
       background="gray.800"
-      boxShadow="dark-lg"
+      boxShadow={`dark-lg`}
       borderWidth="1px"
       borderColor="gray.800"
       {...props}

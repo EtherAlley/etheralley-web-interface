@@ -1,4 +1,4 @@
-import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Center, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
 import { nanoid } from '@reduxjs/toolkit';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../../common/types';
@@ -10,6 +10,7 @@ import NonFungibleTokenComponent from './NonFungibleToken';
 import { selectGroups, selectLoading } from './../slice';
 import Statistic from './Statistic';
 import Currency from './Currency';
+import Divider from './Divider';
 
 function Groups() {
   const groups = useAppSelector(selectGroups);
@@ -76,7 +77,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   return (
     <>
       <GroupTitle text={text} />
-      <Divider mb={10} />
+      <Divider />
       {items.length > 0 && (
         <Grid
           templateColumns={[`repeat(1, 100%)`, `repeat(2, ${BADGE_WIDTH}px)`, `repeat(3, ${BADGE_WIDTH}px)`]}

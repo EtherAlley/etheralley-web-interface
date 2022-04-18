@@ -71,7 +71,7 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
       <Flex justifyContent="center" mb={3}>
         <Image alt={contract.interface} src={url} {...logoStyling} />
       </Flex>
-      <Heading as="h4" size="md" mt={2}>
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {title}
       </Heading>
       <BlockchainChip text={text} blockchain={contract.blockchain} />

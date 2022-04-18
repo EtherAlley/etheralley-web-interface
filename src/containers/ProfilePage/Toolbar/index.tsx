@@ -1,5 +1,5 @@
 import { useIntl } from 'react-intl';
-import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage/slice';
+import { openEditBar, selectAddress, selectColors, selectShowEditBar } from '../../ProfilePage/slice';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../../components/IconButton';
@@ -36,6 +36,8 @@ function HomeButton() {
       tooltip={goHomeLabel}
       Icon={MdKeyboardBackspace}
       onClick={() => navigate(-1)}
+      iconColor="profile.accent"
+      bgColor="profile.secondary"
     />
   );
 }
@@ -53,6 +55,8 @@ function TweetButton() {
       onClick={() =>
         window.open(`https://twitter.com/intent/tweet?text=${getTweetContent()}&url=${getTweetUrl(pathname)}`, '_blank')
       }
+      iconColor="profile.accent"
+      bgColor="profile.secondary"
     />
   );
 }
@@ -85,6 +89,8 @@ function EditButton() {
       Icon={MdModeEdit}
       onClick={() => dispatch(openEditBar())}
       mr={2}
+      iconColor="profile.accent"
+      bgColor="profile.secondary"
     />
   );
 }

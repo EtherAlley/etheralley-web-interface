@@ -56,10 +56,10 @@ function AchievementBar() {
 
   return (
     <Box mt={10}>
-      <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
+      <Heading as="h3" size="lg" mb={5} textAlign={textAlign} textColor="profile.primaryText">
         {text}
       </Heading>
-      <Divider />
+      <Divider color="profile.secondary" />
       <Flex p={3} justifyContent={justifyContent}>
         {beta_tester && (
           <Box mr={3} key={0}>
@@ -68,7 +68,7 @@ function AchievementBar() {
                 trigger={<Logo {...iconStyling} />}
                 header={intl.formatMessage({
                   id: 'beta-tester-header',
-                  defaultMessage: 'Participated in the Ether Alley Beta!',
+                  defaultMessage: 'EtherAlley Beta Tester!',
                 })}
                 body={intl.formatMessage({
                   id: 'beta-tester-body',
@@ -141,15 +141,17 @@ function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; hea
       <PopoverTrigger>
         <Flex {...badgeStyling}>{trigger}</Flex>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent backgroundColor="profile.secondary">
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>
-          <Heading as="h4" size="sm">
+          <Heading as="h4" size="sm" textColor="profile.secondaryText">
             {header}
           </Heading>
         </PopoverHeader>
-        <PopoverBody>{body}</PopoverBody>
+        <PopoverBody>
+          <Text textColor="profile.secondaryText">{body}</Text>
+        </PopoverBody>
       </PopoverContent>
     </Popover>
   );

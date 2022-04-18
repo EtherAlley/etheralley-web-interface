@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
@@ -29,6 +29,9 @@ function CurrencyDisplay({ blockchain, balance }: { blockchain: Blockchains; bal
       <Flex justifyContent="center" mb={5}>
         <CurrencyLogo blockchain={blockchain} />
       </Flex>
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
+        {blockchainLabel(blockchain)}
+      </Heading>
       {displayBalance && (
         <BlockchainChip text={`${displayBalance} ${currencyAbbreviation(blockchain)}`} blockchain={blockchain} />
       )}
@@ -59,8 +62,8 @@ const coinStyling = {
   width: 85,
   height: 85,
   p: 2,
-  backgroundColor: 'profile.primary',
-  borderColor: 'profile.primary',
+  backgroundColor: 'gray.900',
+  borderColor: 'gray.900',
   borderRadius: '50%',
   boxShadow: 'dark-lg',
   borderWidth: '1px',
@@ -75,6 +78,20 @@ function CurrencyLogo({ blockchain }: { blockchain: Blockchains }) {
   ) : (
     <Image alt={blockchain} src={url} {...coinStyling} />
   );
+}
+
+function blockchainLabel(blockchain: Blockchains): string {
+  switch (blockchain) {
+    case Blockchains.POLYGON:
+      return 'Polygon';
+    case Blockchains.OPTIMISM:
+      return 'Optimism';
+    case Blockchains.ARBITRUM:
+      return 'Arbitrum';
+    case Blockchains.ETHEREUM:
+    default:
+      return 'Ethereum';
+  }
 }
 
 function currencyAbbreviation(blockchain: Blockchains): string {

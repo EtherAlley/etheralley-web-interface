@@ -1,5 +1,5 @@
 import { Box, Flex, Icon, LinkBox, LinkOverlay, Skeleton, Text } from '@chakra-ui/react';
-import Paper from '../../../components/Paper';
+import Paper from './Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../../icons/ProfileUser';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -53,7 +53,15 @@ function Info() {
   return (
     <>
       <Flex alignItems="center" justifyContent="center">
-        <Text fontWeight="bold" isTruncated height={8} mt={2} mr={premium ? 2 : 0} maxWidth="160px">
+        <Text
+          fontWeight="bold"
+          isTruncated
+          height={8}
+          mt={2}
+          mr={premium ? 2 : 0}
+          maxWidth="160px"
+          textColor="profile.secondaryText"
+        >
           {ens_name || address}
         </Text>
         {premium && <Verified width="20px" height="20px" display="inline" />}
@@ -61,12 +69,12 @@ function Info() {
       {twitter_handle && (
         <LinkBox>
           <Flex alignItems="center" justifyContent="center">
-            <Text size="md">
+            <Text size="md" textColor="profile.secondaryText">
               <LinkOverlay href={`https://twitter.com/${twitter_handle}`} isExternal>
                 @{twitter_handle}
               </LinkOverlay>
             </Text>
-            <Icon as={FaTwitter} w={4} height={4} ml={1} />
+            <Icon color="profile.secondaryText" as={FaTwitter} w={4} height={4} ml={1} />
           </Flex>
         </LinkBox>
       )}

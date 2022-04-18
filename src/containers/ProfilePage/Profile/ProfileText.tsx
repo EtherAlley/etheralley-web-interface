@@ -1,6 +1,6 @@
 import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
 import { BADGE_HEIGHT } from '../../../common/constants';
-import Paper from '../../../components/Paper';
+import Paper from './Paper';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectLoading, selectInfo } from './../slice';
 
@@ -33,10 +33,10 @@ function TextArea() {
 
   return (
     <Stack>
-      <Heading size="lg" mb={5} noOfLines={1}>
+      <Heading size="lg" mb={5} noOfLines={1} textColor="profile.secondaryText">
         {title}
       </Heading>
-      <Text size="md" noOfLines={7}>
+      <Text size="md" noOfLines={7} textColor="profile.secondaryText">
         {description}
       </Text>
     </Stack>

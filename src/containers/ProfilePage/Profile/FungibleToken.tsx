@@ -1,4 +1,4 @@
-import { Image, Text, Box, Flex } from '@chakra-ui/react';
+import { Image, Text, Box, Flex, Heading } from '@chakra-ui/react';
 import Badge from './Badge';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
@@ -26,7 +26,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
 }
 
 function FungibleDisplay({
-  metadata: { symbol, decimals },
+  metadata: { symbol, decimals, name },
   contract: { address, blockchain },
   balance,
 }: {
@@ -40,6 +40,9 @@ function FungibleDisplay({
       <Flex justifyContent="center" mb={5}>
         <FungibleLogo address={address} blockchain={blockchain} symbol={symbol} />
       </Flex>
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
+        {name}
+      </Heading>
       {displayBalance && <BlockchainChip text={`${displayBalance} ${symbol ?? ''}`} blockchain={blockchain} />}
     </Box>
   );
@@ -86,11 +89,8 @@ function FungibleDialog({
 const coinStyling = {
   width: 85,
   height: 85,
-  backgroundColor: 'profile.primary',
-  borderColor: 'profile.primary',
   borderRadius: '50%',
-  boxShadow: 'dark-lg',
-  borderWidth: '1px',
+  borderWidth: '0px',
 };
 
 function FungibleLogo({

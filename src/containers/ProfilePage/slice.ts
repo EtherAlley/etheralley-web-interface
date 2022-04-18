@@ -48,6 +48,8 @@ const initialState: State = {
       colors: {
         primary: '',
         secondary: '',
+        accent: '',
+        shadow: '',
         primary_text: '',
         secondary_text: '',
       },
@@ -152,6 +154,12 @@ export const slice = createSlice({
     updateSecondaryColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.secondary = action.payload;
     },
+    updateAccentColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.accent = action.payload;
+    },
+    updateShadowColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.shadow = action.payload;
+    },
     updatePrimaryTextColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.primary_text = action.payload;
     },
@@ -223,6 +231,9 @@ export const slice = createSlice({
           buildDefaultDisplayConfig(state.profile, profile);
         } else {
           state.profile.display_config = profile.display_config;
+          // TODO: remove this
+          state.profile.display_config.colors.accent = '#36e2bc';
+          state.profile.display_config.colors.shadow = '#000000';
         }
       })
       .addCase(saveProfile.pending, (state, _) => {
@@ -301,6 +312,8 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
   stateProfile.display_config.colors = {
     primary: '#121212',
     secondary: '#1a1a1b',
+    accent: '#36e2bc',
+    shadow: '#000000',
     primary_text: '#FFF',
     secondary_text: '#FFF',
   };
@@ -489,6 +502,8 @@ export const {
   updateProfileTwitterhandle,
   updatePrimaryColor,
   updateSecondaryColor,
+  updateAccentColor,
+  updateShadowColor,
   updatePrimaryTextColor,
   updateSecondaryTextColor,
   updateGroupText,

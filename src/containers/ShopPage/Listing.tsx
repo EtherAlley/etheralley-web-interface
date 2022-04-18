@@ -61,7 +61,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
               <Image alt={name} src={image} width={150} height={150} />
             </Box>
           </Flex>
-          <Flex alignItems="center" justifyContent="center" ml={6}>
+          <Flex alignItems="center" justifyContent="center" ml={6} mt={2}>
             <Text fontWeight="bold" textAlign="center">
               {`${formatPrice} MATIC`}
             </Text>
