@@ -44,8 +44,8 @@ function Navbar() {
 
   const NAV_ITEMS: Array<NavItem> = [
     {
-      label: intl.formatMessage({ id: 'top-profiles', defaultMessage: 'Top Profiles' }),
-      href: Routes.TOP_PROFILES,
+      label: intl.formatMessage({ id: 'trending', defaultMessage: 'Trending' }),
+      href: Routes.TRENDING,
     },
     {
       label: intl.formatMessage({ id: 'shop', defaultMessage: 'Shop' }),

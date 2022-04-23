@@ -36,7 +36,7 @@ function TextArea() {
       <Heading size="lg" mb={5} noOfLines={1} textColor="profile.secondaryText">
         {title}
       </Heading>
-      <Text size="md" noOfLines={7} textColor="profile.secondaryText">
+      <Text size="md" fontWeight="semibold" noOfLines={7} textColor="profile.secondaryText">
         {description}
       </Text>
     </Stack>

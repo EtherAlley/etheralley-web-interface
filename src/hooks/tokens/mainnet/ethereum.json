@@ -5,6 +5,11 @@
         "address": "0xdac17f958d2ee523a2206206994597c13d831ec7"
     },
     {
+        "name": "Wrapped Ether (WETH)",
+        "symbol": "WETH",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+    },
+    {
         "name": "BNB (BNB)",
         "symbol": "BNB",
         "address": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52"

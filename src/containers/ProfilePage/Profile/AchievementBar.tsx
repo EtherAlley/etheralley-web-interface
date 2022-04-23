@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Flex,
   Heading,
   Popover,
@@ -24,6 +23,8 @@ import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
 import Logo from '../../../icons/Logo';
 import ErrorBoundary from '../../../components/ErrorBoundary';
+import Divider from './Divider';
+import { Transaction } from '../../../common/types';
 
 const badgeStyling: any = {
   justifyContent: 'center',
@@ -59,7 +60,7 @@ function AchievementBar() {
       <Heading as="h3" size="lg" mb={5} textAlign={textAlign} textColor="profile.primaryText">
         {text}
       </Heading>
-      <Divider color="profile.secondary" />
+      <Divider mb={5} />
       <Flex p={3} justifyContent={justifyContent}>
         {beta_tester && (
           <Box mr={3} key={0}>
@@ -70,11 +71,15 @@ function AchievementBar() {
                   id: 'beta-tester-header',
                   defaultMessage: 'EtherAlley Beta Tester!',
                 })}
-                body={intl.formatMessage({
-                  id: 'beta-tester-body',
-                  defaultMessage:
-                    'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
-                })}
+                body={
+                  <Text textColor="profile.secondaryText">
+                    {intl.formatMessage({
+                      id: 'beta-tester-body',
+                      defaultMessage:
+                        'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
+                    })}
+                  </Text>
+                }
               />
             </ErrorBoundary>
           </Box>
@@ -94,7 +99,6 @@ function AchievementBar() {
 function InteractionAchievement({ index }: { index: number }) {
   const intl = useIntl();
   const { type, transaction, timestamp } = useAppSelector((state) => selectInteraction(state, index));
-  const url = useEtherscanUrl(transaction.blockchain, 'tx', transaction.id);
 
   switch (type) {
     case InteractionTypes.CONTRACT_CREATION:
@@ -105,14 +109,7 @@ function InteractionAchievement({ index }: { index: number }) {
             id: 'deployed-achievement-header',
             defaultMessage: 'Deployed a smart contract!',
           })}
-          body={
-            <>
-              <Text>Timestamp: {timestamp}</Text>
-              <Link href={url} isExternal>
-                Etherscan
-              </Link>
-            </>
-          }
+          body={<InteractionPopoverBody transaction={transaction} timestamp={timestamp} />}
         />
       );
     case InteractionTypes.SEND_ETHER:
@@ -120,19 +117,38 @@ function InteractionAchievement({ index }: { index: number }) {
         <AchievementPopover
           trigger={<Handshake {...iconStyling} />}
           header={intl.formatMessage({ id: 'sent-ether-achievement-header', defaultMessage: 'Sent Ether!' })}
-          body={
-            <>
-              <Text>Timestamp: {timestamp}</Text>
-              <Link href={url} isExternal>
-                Etherscan
-              </Link>
-            </>
-          }
+          body={<InteractionPopoverBody transaction={transaction} timestamp={timestamp} />}
         />
       );
     default:
       return <></>;
   }
+}
+
+function InteractionPopoverBody({
+  transaction: { blockchain, id },
+  timestamp,
+}: {
+  transaction: Transaction;
+  timestamp: number;
+}) {
+  const intl = useIntl();
+  const url = useEtherscanUrl(blockchain, 'tx', id);
+
+  return (
+    <>
+      <Flex>
+        <Text color="profile.secondaryText" fontWeight="semibold">
+          {intl.formatMessage({ id: 'interaction-earned', defaultMessage: 'Earned' })}:{' '}
+          {intl.formatDate(timestamp * 1000)}
+        </Text>
+        <Box flexGrow={1} />
+        <Link href={url} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+    </>
+  );
 }
 
 function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; header: string; body: ReactNode }) {
@@ -141,16 +157,16 @@ function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; hea
       <PopoverTrigger>
         <Flex {...badgeStyling}>{trigger}</Flex>
       </PopoverTrigger>
-      <PopoverContent backgroundColor="profile.secondary">
+      <PopoverContent backgroundColor="profile.secondary" borderColor="profile.secondary">
         <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>
+        <PopoverCloseButton color="profile.accent" />
+        <PopoverHeader borderColor="profile.secondaryText">
           <Heading as="h4" size="sm" textColor="profile.secondaryText">
             {header}
           </Heading>
         </PopoverHeader>
-        <PopoverBody>
-          <Text textColor="profile.secondaryText">{body}</Text>
+        <PopoverBody textColor="profile.secondaryText" fontWeight="semibold">
+          {body}
         </PopoverBody>
       </PopoverContent>
     </Popover>

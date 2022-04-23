@@ -21,7 +21,7 @@ function NonFungibleTokenComponent({
 }) {
   const { metadata, contract, token_id, balance } = useAppSelector((state) => selectNonFungibleToken(state, index));
 
-  // user does not own this nft. we should not display it as if they own it and instead display something slightly more aggressive
+  // user does not own this nft. we should not display it and imply they own it
   if (balance === '0') {
     return <Paper width={BADGE_WIDTH} height={useHeader ? BADGE_HEIGHT : BADGE_WIDTH} />;
   }
@@ -110,7 +110,7 @@ function NonFungibleDialog({
           Opensea
         </Link>
       </Flex>
-      <Text fontSize="md" noOfLines={3} mt={3} textColor="profile.secondaryText">
+      <Text fontWeight="semibold" fontSize="md" noOfLines={3} mt={3} textColor="profile.secondaryText">
         {description}
       </Text>
       {attributes && attributes.length > 0 && (
@@ -119,40 +119,65 @@ function NonFungibleDialog({
             {intl.formatMessage({ id: 'nft-dialog-attributes', defaultMessage: 'Attributes' })}
           </Heading>
           <SimpleGrid columns={3} spacing={3}>
-            {attributes.map(({ trait_type, value }, i) => (
+            {attributes.map(({ trait_type, value, display_type }, i) => (
               <GridItem
                 key={i}
-                border={`1px solid rgb(${rgbAccent})`}
+                border={`1px solid ${accent}`}
                 backgroundColor={`rgba(${rgbAccent},0.05)`}
                 borderRadius="5px"
                 p={2}
               >
-                <Text textAlign="center" textColor="profile.accent">
+                <Text fontWeight="bold" textAlign="center" textColor="profile.accent">
                   {trait_type}
                 </Text>
-                <Text textAlign="center" textColor="profile.secondaryText">
-                  {value.toString()}
-                </Text>
+                <AttributeValue value={value} display_type={display_type} />
               </GridItem>
             ))}
           </SimpleGrid>
         </>
       )}
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Balance: {balance}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Contract Address: {address}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Token Id: {token_id}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Blockchain: {blockchain}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Token Standard: {interfaceName}
-      </Text>
+      <Box mt={3}>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-balance', defaultMessage: 'Balance' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {balance}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-contract-address', defaultMessage: 'Contract Address' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {address.replace(address.substring(6, address.length - 4), '...')}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-token-id', defaultMessage: 'Token Id' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {token_id.length > 10 ? token_id.replace(token_id.substring(6, token_id.length - 4), '...') : token_id}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-blockchain', defaultMessage: 'Blockchain' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {blockchain}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-token-standard', defaultMessage: 'Token Standard' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {interfaceName}
+          </Text>
+        </Flex>
+      </Box>
     </Box>
   );
 }
@@ -174,6 +199,30 @@ function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string
         borderRadius={8}
       />
     </Flex>
+  );
+}
+
+function AttributeValue({
+  value,
+  display_type,
+}: {
+  value: string | number | boolean | undefined;
+  display_type: string | number | boolean | undefined;
+}) {
+  const intl = useIntl();
+
+  if (!!display_type && display_type === 'date' && typeof value === 'number') {
+    return (
+      <Text fontWeight="semibold" textAlign="center" textColor="profile.secondaryText">
+        {intl.formatDate(value)}
+      </Text>
+    );
+  }
+
+  return (
+    <Text fontWeight="semibold" textAlign="center" textColor="profile.secondaryText">
+      {value}
+    </Text>
   );
 }
 

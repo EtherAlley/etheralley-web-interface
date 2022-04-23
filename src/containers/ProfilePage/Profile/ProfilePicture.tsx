@@ -69,7 +69,7 @@ function Info() {
       {twitter_handle && (
         <LinkBox>
           <Flex alignItems="center" justifyContent="center">
-            <Text size="md" textColor="profile.secondaryText">
+            <Text fontWeight="semibold" size="md" textColor="profile.secondaryText">
               <LinkOverlay href={`https://twitter.com/${twitter_handle}`} isExternal>
                 @{twitter_handle}
               </LinkOverlay>

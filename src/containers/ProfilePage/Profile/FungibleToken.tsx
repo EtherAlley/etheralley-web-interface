@@ -5,11 +5,12 @@ import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
 import Coin from '../../../icons/Coin';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectFungibleToken } from './../slice';
+import { selectAddress, selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 import { Contract, FungibleMetadata } from '../../../common/types';
 import useLogo from '../../../hooks/useLogo';
+import { useIntl } from 'react-intl';
 
 function FungibleTokenComponent({ index }: { index: number }) {
   const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
@@ -20,7 +21,7 @@ function FungibleTokenComponent({ index }: { index: number }) {
       height={BADGE_HEIGHT}
       Display={<FungibleDisplay metadata={metadata} contract={contract} balance={balance} />}
       DialogHeader={<FungibleHeader name={metadata.name} />}
-      DialogBody={<FungibleDialog metadata={metadata} contract={contract} />}
+      DialogBody={<FungibleDialog metadata={metadata} contract={contract} balance={balance} />}
     />
   );
 }
@@ -43,46 +44,77 @@ function FungibleDisplay({
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {name}
       </Heading>
-      {displayBalance && <BlockchainChip text={`${displayBalance} ${symbol ?? ''}`} blockchain={blockchain} />}
+      {displayBalance && <Chip text={`${displayBalance} ${symbol ?? ''}`} />}
     </Box>
   );
 }
 
 function FungibleHeader({ name }: { name: string | undefined }) {
-  return <Text>{name ?? ''}</Text>;
+  return (
+    <Text textAlign="center" textColor="profile.secondaryText">
+      {name ?? ''}
+    </Text>
+  );
 }
 
 function FungibleDialog({
-  metadata: { symbol, name },
-  contract: { address, blockchain, interface: interfaceName },
+  metadata: { symbol, decimals },
+  contract: { address: contractAddress, blockchain, interface: interfaceName },
+  balance,
 }: {
   contract: Contract;
   metadata: FungibleMetadata;
+  balance: string | undefined;
 }) {
-  const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
+  const intl = useIntl();
+  const address = useAppSelector(selectAddress);
+  const etherscanUrl = useEtherscanUrl(blockchain, 'token', `${contractAddress}?a=${address}`);
+  const displayBalance = useDisplayNumber(balance, decimals);
 
   return (
-    <>
-      <FungibleLogo address={address} blockchain={blockchain} symbol={symbol} />
-      <Link href={etherscanUrl} isExternal>
-        Etherscan
-      </Link>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Name: {name}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Symbol: {symbol}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Address: {address}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Blockchain: {blockchain}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Interface: {interfaceName}
-      </Text>
-    </>
+    <Box>
+      <Flex justifyContent="center">
+        <FungibleLogo address={contractAddress} blockchain={blockchain} symbol={symbol} />
+      </Flex>
+      <Flex alignItems="center" mt={3} mb={3}>
+        <Box flexGrow={1} />
+        <Link href={etherscanUrl} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-balance', defaultMessage: 'Balance' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {`${displayBalance} ${symbol}`}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-contract-address', defaultMessage: 'Contract Address' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {contractAddress.replace(contractAddress.substring(6, 38), '...')}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-blockchain', defaultMessage: 'Blockchain' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {blockchain}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-token-standard', defaultMessage: 'Token Standard' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {interfaceName}
+        </Text>
+      </Flex>
+    </Box>
   );
 }
 

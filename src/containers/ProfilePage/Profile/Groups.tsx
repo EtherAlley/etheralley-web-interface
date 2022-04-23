@@ -77,7 +77,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   return (
     <>
       <GroupTitle text={text} />
-      <Divider />
+      <Divider mb={10} />
       {items.length > 0 && (
         <Grid
           templateColumns={[`repeat(1, 100%)`, `repeat(2, ${BADGE_WIDTH}px)`, `repeat(3, ${BADGE_WIDTH}px)`]}

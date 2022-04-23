@@ -314,8 +314,8 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
     secondary: '#1a1a1b',
     accent: '#36e2bc',
     shadow: '#000000',
-    primary_text: '#FFF',
-    secondary_text: '#FFF',
+    primary_text: '#F7F5F2',
+    secondary_text: '#F7F5F2',
   };
   stateProfile.display_config.groups = [];
 

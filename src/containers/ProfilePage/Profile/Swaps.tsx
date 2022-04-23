@@ -2,11 +2,11 @@ import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image, Heading }
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH, Interfaces } from '../../../common/constants';
+import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains, Interfaces } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 import { useIntl } from 'react-intl';
 import useLogo from '../../../hooks/useLogo';
 
@@ -31,10 +31,7 @@ const logoStyling = {
   height: 100,
   padding: 2,
   backgroundColor: 'gray.900',
-  borderColor: 'gray.900',
   borderRadius: '50%',
-  boxShadow: 'dark-lg',
-  borderWidth: '1px',
 };
 
 function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
@@ -74,7 +71,7 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {title}
       </Heading>
-      <BlockchainChip text={text} blockchain={contract.blockchain} />
+      <Chip text={text} />
     </Box>
   );
 }
@@ -108,33 +105,65 @@ function SwapItem({
   swap: Swap;
   contract: Contract;
 }) {
+  const intl = useIntl();
   const etherscanUrl = useEtherscanUrl(blockchain, 'tx', id);
+
   return (
     <ListItem>
       <UnorderedList>
         <ListItem key={0}>
-          <Link href={etherscanUrl} isExternal>
+          <Link href={etherscanUrl} isExternal color="profile.accent">
             Etherscan
           </Link>
         </ListItem>
         <ListItem key={1}>
-          <Text>{timestamp}</Text>
+          <Text>{intl.formatDate(Number.parseInt(timestamp) * 1000)}</Text>
         </ListItem>
         <ListItem key={2}>
-          <Text>Amount: {amountUSD} USD</Text>
+          <Text>Amount: {intl.formatNumber(Number.parseFloat(amountUSD), { style: 'currency', currency: 'USD' })}</Text>
         </ListItem>
         <ListItem key={3}>
-          <Text>
-            Input: {input.amount} {input.symbol}
-          </Text>
+          <SwapToken amount={input.amount} symbol={input.symbol} contractAddress={input.id} blockchain={blockchain} />
         </ListItem>
         <ListItem key={4}>
-          <Text>
-            Output: {output.amount} {output.symbol}
-          </Text>
+          <SwapToken
+            amount={output.amount}
+            symbol={output.symbol}
+            contractAddress={output.id}
+            blockchain={blockchain}
+          />
         </ListItem>
       </UnorderedList>
     </ListItem>
+  );
+}
+
+function SwapToken({
+  amount,
+  symbol,
+  contractAddress,
+  blockchain,
+}: {
+  amount: string;
+  symbol: string;
+  contractAddress: string;
+  blockchain: Blockchains;
+}) {
+  const intl = useIntl();
+  const logo = useLogo({ contractAddress, blockchain });
+
+  console.log(contractAddress);
+  console.log(logo);
+
+  return (
+    <Box>
+      <Flex alignItems="center">
+        {logo && <Image borderRadius="50%" src={logo} width="30px" height="30px" mr={2} />}
+        <Text>
+          {intl.formatNumber(amount as any)} {symbol}
+        </Text>
+      </Flex>
+    </Box>
   );
 }
 

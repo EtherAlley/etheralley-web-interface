@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Box, Container } from '@chakra-ui/react';
-
+import { useIntl } from 'react-intl';
 import { loadProfile, selectError, selectProfileNotFound } from './slice';
 import Toolbar from './Toolbar';
 import useAppSelector from '../../hooks/useAppSelector';
@@ -14,7 +14,6 @@ import AddProfilePictureModal from './ModalForms/AddProfilePictureModal';
 import AddAchievementModal from './ModalForms/AddAchievementModal';
 import Error from '../../components/Error';
 import NotFound from '../../components/NotFound';
-import { useIntl } from 'react-intl';
 
 function PageWrapper() {
   return (

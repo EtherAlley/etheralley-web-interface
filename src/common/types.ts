@@ -113,7 +113,7 @@ export type NonFungibleMetadata = {
   name: string;
   description: string;
   image: string;
-  attributes?: { [x: string]: string }[];
+  attributes?: { [x: string]: string | number | boolean | undefined }[];
 };
 
 export type FungibleToken = {

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import {
   loadProfile,
+  updateAccentColor,
   updatePrimaryColor,
   updatePrimaryTextColor,
   updateSecondaryColor,
@@ -85,8 +86,8 @@ const initialState: State = {
       secondary: '#1a1a1b',
       accent: '#36e2bc',
       shadow: '#000000',
-      primaryText: '#FFF',
-      secondaryText: '#FFF',
+      primaryText: '#F7F5F2',
+      secondaryText: '#F7F5F2',
     },
     polygon: {
       200: '#8247e5',
@@ -137,6 +138,9 @@ export const slice = createSlice({
     });
     builder.addCase(updateSecondaryTextColor, (state, { payload }) => {
       state.colors.profile.secondaryText = payload;
+    });
+    builder.addCase(updateAccentColor, (state, { payload }) => {
+      state.colors.profile.accent = payload;
     });
   },
 });

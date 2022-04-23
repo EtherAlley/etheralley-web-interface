@@ -1,7 +1,7 @@
 import { useIntl } from 'react-intl';
-import { openEditBar, selectAddress, selectColors, selectShowEditBar } from '../../ProfilePage/slice';
+import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage/slice';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Container, Flex } from '@chakra-ui/react';
 import IconButton from '../../../components/IconButton';
 import { MdKeyboardBackspace, MdModeEdit } from 'react-icons/md';
 import { FaTwitter } from 'react-icons/fa';
@@ -14,12 +14,14 @@ function ProfileBar() {
   return (
     <>
       <Box position="fixed" width="100%" mt={4}>
-        <Flex alignItems={'center'} mx={4}>
-          <HomeButton />
-          <Box flexGrow={1} />
-          <EditButton />
-          <TweetButton />
-        </Flex>
+        <Container maxW="container.xl">
+          <Flex alignItems={'center'}>
+            <HomeButton />
+            <Box flexGrow={1} />
+            <EditButton />
+            <TweetButton />
+          </Flex>
+        </Container>
       </Box>
     </>
   );

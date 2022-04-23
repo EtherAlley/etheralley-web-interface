@@ -6,7 +6,7 @@ export const PREMIUM_TOTAL_BADGE_COUNT = 50;
 
 export enum Routes {
   HOME = '/',
-  TOP_PROFILES = '/top-profiles',
+  TRENDING = '/trending',
   SHOP = '/shop',
   PROFILE = '/profiles/:address',
 }

@@ -55,7 +55,7 @@ function TopProfilesPage() {
   return (
     <Box>
       <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
-        {intl.formatMessage({ id: 'top-ten-profiles-caption', defaultMessage: 'Top 10 Profiles Today' })}
+        {intl.formatMessage({ id: 'trending-profiles-caption', defaultMessage: 'Trending Profiles' })}
       </Heading>
       <Center>
         <Divider w={250} />
@@ -92,7 +92,7 @@ function Row({ profile, rank }: { profile: Profile; rank: number }) {
         </Box>
         <Picture premium={premium} src={profileImage} />
         <Box ml={5} mr={2}>
-          <LinkOverlay>
+          <LinkOverlay as="span">
             <Text color="blue.400" fontWeight="bold" isTruncated maxWidth={maxWidth}>
               {profileId}
             </Text>

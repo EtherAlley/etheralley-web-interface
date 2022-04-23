@@ -7,7 +7,7 @@ import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useLogo from '../../../hooks/useLogo';
 import { selectStatistic } from '../slice';
 import Badge from './Badge';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 
 function StakeRewards({ index }: { index: number }) {
   const stat = useAppSelector((state) => selectStatistic(state, index));
@@ -28,10 +28,7 @@ function StakeRewards({ index }: { index: number }) {
 const logoStyling = {
   width: 90,
   height: 90,
-  backgroundColor: 'gray.900',
-  borderColor: 'gray.900',
   borderRadius: '50%',
-  boxShadow: 'dark-lg',
   borderWidth: '1px',
 };
 
@@ -62,7 +59,7 @@ function StakeDisplay({ stake, contract }: { stake: Stake | undefined; contract:
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {title}
       </Heading>
-      <BlockchainChip text={`${displayBalance} ${symbol}`} blockchain={contract.blockchain} />
+      <Chip text={`${displayBalance} ${symbol}`} />
     </Box>
   );
 }
