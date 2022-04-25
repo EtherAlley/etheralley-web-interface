@@ -1,4 +1,4 @@
-import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image, Heading } from '@chakra-ui/react';
+import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Heading } from '@chakra-ui/react';
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
@@ -8,7 +8,7 @@ import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
 import Chip from './Chip';
 import { useIntl } from 'react-intl';
-import useLogo from '../../../hooks/useLogo';
+import Logo from '../../../components/Logo';
 
 function SwapComponent({ index }: { index: number }) {
   const stat = useAppSelector((state) => selectStatistic(state, index));
@@ -26,17 +26,8 @@ function SwapComponent({ index }: { index: number }) {
   );
 }
 
-const logoStyling = {
-  width: 100,
-  height: 100,
-  padding: 2,
-  backgroundColor: 'gray.900',
-  borderRadius: '50%',
-};
-
 function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
   const intl = useIntl();
-  const url = useLogo({ interfaceName: contract.interface });
 
   let title: string = '';
   switch (contract.interface) {
@@ -66,7 +57,7 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={3}>
-        <Image alt={contract.interface} src={url} {...logoStyling} />
+        <Logo interfaceName={contract.interface} />
       </Flex>
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {title}
@@ -150,16 +141,15 @@ function SwapToken({
   blockchain: Blockchains;
 }) {
   const intl = useIntl();
-  const logo = useLogo({ contractAddress, blockchain });
 
   console.log(contractAddress);
-  console.log(logo);
+  console.log(blockchain);
 
   return (
     <Box>
       <Flex alignItems="center">
-        {logo && <Image borderRadius="50%" src={logo} width="30px" height="30px" mr={2} />}
-        <Text>
+        <Logo contractAddress={contractAddress} blockchain={blockchain} width={30} height={30} />
+        <Text ml={2}>
           {intl.formatNumber(amount as any)} {symbol}
         </Text>
       </Flex>

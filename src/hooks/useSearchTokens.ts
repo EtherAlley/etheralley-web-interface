@@ -26,7 +26,7 @@ function useSearchTokens(keyword: string, blockchain: Blockchains | undefined) {
           x.symbol.toLowerCase().includes(keyword.toLowerCase()) || x.name.toLowerCase().includes(keyword.toLowerCase())
       )
       .slice(0, 5);
-    setResults(matches.map((match) => ({ address: match.address, name: match.name })));
+    setResults(matches.map((match) => ({ address: match.id, name: match.name })));
   }, [keyword, blockchain]);
 
   return results;

@@ -1,16 +1,15 @@
-import { Image, Text, Box, Flex, Heading } from '@chakra-ui/react';
+import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import Badge from './Badge';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
-import Coin from '../../../icons/Coin';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectAddress, selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
 import Chip from './Chip';
 import { Contract, FungibleMetadata } from '../../../common/types';
-import useLogo from '../../../hooks/useLogo';
 import { useIntl } from 'react-intl';
+import Logo from '../../../components/Logo';
 
 function FungibleTokenComponent({ index }: { index: number }) {
   const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
@@ -39,7 +38,7 @@ function FungibleDisplay({
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={5}>
-        <FungibleLogo address={address} blockchain={blockchain} symbol={symbol} />
+        <Logo contractAddress={address} blockchain={blockchain} />
       </Flex>
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {name}
@@ -74,7 +73,7 @@ function FungibleDialog({
   return (
     <Box>
       <Flex justifyContent="center">
-        <FungibleLogo address={contractAddress} blockchain={blockchain} symbol={symbol} />
+        <Logo contractAddress={contractAddress} blockchain={blockchain} />
       </Flex>
       <Flex alignItems="center" mt={3} mb={3}>
         <Box flexGrow={1} />
@@ -115,32 +114,6 @@ function FungibleDialog({
         </Text>
       </Flex>
     </Box>
-  );
-}
-
-const coinStyling = {
-  width: 85,
-  height: 85,
-  borderRadius: '50%',
-  borderWidth: '0px',
-};
-
-function FungibleLogo({
-  address,
-  blockchain,
-  symbol,
-}: {
-  address: string;
-  blockchain: Blockchains;
-  symbol: string | undefined;
-}) {
-  const url = useLogo({ contractAddress: address, blockchain });
-  return !url ? (
-    <Box {...coinStyling}>
-      <Coin width="85px" height="85px" />
-    </Box>
-  ) : (
-    <Image alt={symbol} src={url} {...coinStyling} />
   );
 }
 

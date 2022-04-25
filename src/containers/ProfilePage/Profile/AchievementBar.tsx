@@ -21,7 +21,7 @@ import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
-import Logo from '../../../icons/Logo';
+import EtherAlley from '../../../icons/EtherAlley';
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Divider from './Divider';
 import { Transaction } from '../../../common/types';
@@ -66,7 +66,7 @@ function AchievementBar() {
           <Box mr={3} key={0}>
             <ErrorBoundary>
               <AchievementPopover
-                trigger={<Logo {...iconStyling} />}
+                trigger={<EtherAlley {...iconStyling} />}
                 header={intl.formatMessage({
                   id: 'beta-tester-header',
                   defaultMessage: 'EtherAlley Beta Tester!',

@@ -23,7 +23,7 @@ import {
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
 import { useEthers } from '@usedapp/core';
-import Logo from '../../icons/Logo';
+import EtherAlley from '../../icons/EtherAlley';
 
 interface NavItem {
   label: string;
@@ -86,7 +86,7 @@ function Navbar() {
           <HStack alignItems={'center'}>
             <LinkBox>
               <Flex alignItems="center">
-                <Logo width={30} height={30} />
+                <EtherAlley width={30} height={30} />
                 <LinkOverlay to="/" as={RouterLink}>
                   <Heading size="md" as="span" ml={3}>
                     EtherAlley

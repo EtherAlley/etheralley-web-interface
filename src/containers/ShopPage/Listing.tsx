@@ -23,12 +23,12 @@ import { useDispatch } from 'react-redux';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Link from '../../components/Link';
+import Logo from '../../components/Logo';
 import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
 import useCurrencySymbol from '../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useHexToRgb from '../../hooks/useHexToRgb';
-import useLogo from '../../hooks/useLogo';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 
@@ -48,7 +48,6 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const balances = useAppSelector(selectBalances);
   const { chainId } = useEthers();
-  const url = useLogo({ blockchain });
   const symbol = useCurrencySymbol(blockchain);
   const theme = useTheme();
   const rgb = useHexToRgb(theme.colors.brand[400]);
@@ -69,10 +68,10 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
             </Box>
           </Flex>
           <Flex alignItems="center" justifyContent="center" ml={6} mt={2}>
-            <Text fontWeight="bold" textAlign="center">
+            <Text fontWeight="bold" textAlign="center" mr={2}>
               {`${formatPrice} ${symbol}`}
             </Text>
-            <Image alt={blockchain} src={url} ml={2} height={6} width={6} />
+            <Logo blockchain={blockchain} height={6} width={6} />
           </Flex>
           <PurchaseButton
             price={price}

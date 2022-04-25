@@ -1,0 +1,247 @@
+[
+  {
+    "name": "ChainLink",
+    "symbol": "LINK",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "A blockchain-based middleware, acting as a bridge between cryptocurrency smart contracts, data feeds, APIs and traditional bank account payments.",
+    "website": "https://chain.link/",
+    "explorer": "https://optimistic.etherscan.io/token/0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6",
+    "status": "active",
+    "id": "0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/chainlink"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/coins/chainlink/"
+      },
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/chainlink/"
+      }
+    ]
+  },
+  {
+    "name": "Wrapped Ether",
+    "symbol": "WETH",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "wETH is wrapped ETH",
+    "website": "https://weth.io/",
+    "explorer": "https://optimistic.etherscan.io/token/0x4200000000000000000000000000000000000006",
+    "status": "active",
+    "id": "0x4200000000000000000000000000000000000006",
+    "links": [
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/weth/"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/coins/weth/"
+      }
+    ]
+  },
+  {
+    "name": "BitANT",
+    "symbol": "BitANT",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "BitANT is a governance token of BitBTC Protocol.10 billion BitANT have been minted at genesis, the team does not own any tokens: 80% liquidity is locked in DEX for 8 years; 15%,community airdrops; 5%,community mining. The exchange fee of the platform is mainly used to repurchase and burn BitANT.",
+    "website": "https://bitbtc.money/",
+    "explorer": "https://optimistic.etherscan.io/token/0x5029C236320b8f15eF0a657054B84d90bfBEDED3",
+    "status": "active",
+    "id": "0x5029C236320b8f15eF0a657054B84d90bfBEDED3",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/SatoshiNJunior"
+      },
+      {
+        "name": "medium",
+        "url": "https://ibitlabs.medium.com/"
+      },
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/bitant/"
+      }
+    ],
+    "tags": [
+      "defi"
+    ]
+  },
+  {
+    "name": "Lyra Finance",
+    "symbol": "LYRA",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "Lyra is an options trading protocol accessing the scalability of Layer 2 Ethereum to provide a robust, lightning-fast and reliable trading experience.",
+    "website": "https://www.lyra.finance",
+    "explorer": "https://optimistic.etherscan.io/token/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    "status": "active",
+    "id": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/lyrafinance"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/coins/lyra-finance"
+      }
+    ]
+  },
+  {
+    "name": "Aelin Token",
+    "symbol": "AELIN",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "Aelin is a fundraising protocol built on Ethereum and launched on Optimism",
+    "website": "https://aelin.xyz",
+    "explorer": "https://optimistic.etherscan.io/token/0x61BAADcF22d2565B0F471b291C475db5555e0b76",
+    "status": "active",
+    "id": "0x61BAADcF22d2565B0F471b291C475db5555e0b76",
+    "links": [
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/aelin/"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/coins/aelin"
+      }
+    ]
+  },
+  {
+    "name": "Synthetix Network",
+    "symbol": "SNX",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "Synthetix is a derivatives liquidity protocol on Ethereum that enables the issuance and trading of synthetic assets.",
+    "website": "https://synthetix.io",
+    "explorer": "https://optimistic.etherscan.io/token/0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+    "research": "https://research.binance.com/en/projects/synthetix",
+    "status": "active",
+    "id": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+    "links": [
+      {
+        "name": "github",
+        "url": "https://github.com/havven/havven"
+      },
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/synthetix_io"
+      },
+      {
+        "name": "reddit",
+        "url": "https://reddit.com/r/synthetix_io/"
+      },
+      {
+        "name": "blog",
+        "url": "https://blog.synthetix.io/"
+      },
+      {
+        "name": "whitepaper",
+        "url": "https://synthetix.io/uploads/havven_whitepaper.pdf"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/en/coins/havven/"
+      }
+    ]
+  },
+  {
+    "name": "Rocket Pool ETH",
+    "symbol": "rETH",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "Rocket Pool is the first truly decentralised Ethereum staking pool.",
+    "website": "https://rocketpool.net",
+    "explorer": "https://optimistic.etherscan.io/token/0x9Bcef72be871e61ED4fBbc7630889beE758eb81D",
+    "status": "active",
+    "id": "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/Rocket_Pool"
+      },
+      {
+        "name": "medium",
+        "url": "https://medium.com/rocket-pool"
+      }
+    ]
+  },
+  {
+    "name": "Perpetual",
+    "symbol": "PERP",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "On-chain derivative DEX with liquidity provisioning and up to 10x leverage for makers and takers.",
+    "website": "https://www.perp.com/",
+    "explorer": "https://optimistic.etherscan.io/token/0x9e1028F5F1D5eDE59748FFceE5532509976840E0",
+    "status": "active",
+    "id": "0x9e1028F5F1D5eDE59748FFceE5532509976840E0",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/perpprotocol"
+      },
+      {
+        "name": "coingecko",
+        "url": "https://coingecko.com/coins/perpetual-protocol/"
+      },
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/perpetual-protocol/"
+      }
+    ],
+    "tags": [
+      "defi"
+    ]
+  },
+  {
+    "name": "Kromatika",
+    "symbol": "KROM",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "Non-mintable ERC20 token deployed on Ethereum, secured by OpenZepellin and audited by MythX with a total supply of 100 million.",
+    "website": "https://kromatika.finance",
+    "explorer": "https://optimistic.etherscan.io/token/0xF98dCd95217E15E05d8638da4c91125E59590B07",
+    "status": "active",
+    "id": "0xF98dCd95217E15E05d8638da4c91125E59590B07",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/KromatikaFi"
+      },
+      {
+        "name": "coinmarketcap",
+        "url": "https://coinmarketcap.com/currencies/kromatika/"
+      }
+    ]
+  },
+  {
+    "name": "Rubicon",
+    "symbol": "Rubicon",
+    "type": "OPTIMISM",
+    "decimals": 18,
+    "description": "The Rubicon Protocol is a decentralized exchange protocol on the Ethereum blockchain.",
+    "website": "https://www.rubicon.finance",
+    "explorer": "https://optimistic.etherscan.io/token/0xffD27b572246f35c992EfB28DD8cB730b93Ed301",
+    "status": "active",
+    "id": "0xffD27b572246f35c992EfB28DD8cB730b93Ed301",
+    "links": [
+      {
+        "name": "twitter",
+        "url": "https://twitter.com/rubicondefi"
+      },
+      {
+        "name": "telegram",
+        "url": "https://t.me/rubicondefi"
+      }
+    ]
+  }
+]

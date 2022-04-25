@@ -231,9 +231,6 @@ export const slice = createSlice({
           buildDefaultDisplayConfig(state.profile, profile);
         } else {
           state.profile.display_config = profile.display_config;
-          // TODO: remove this
-          state.profile.display_config.colors.accent = '#36e2bc';
-          state.profile.display_config.colors.shadow = '#000000';
         }
       })
       .addCase(saveProfile.pending, (state, _) => {

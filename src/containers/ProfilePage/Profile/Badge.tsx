@@ -51,7 +51,7 @@ function Badge({
           <ModalCloseButton color="profile.accent" />
           <ModalBody>{DialogBody}</ModalBody>
           <ModalFooter>
-            <Button bgColor="profile.accent" textColor="profile.secondaryText" onClick={onClose}>
+            <Button bgColor="profile.accent" textColor="profile.secondary" onClick={onClose}>
               Close
             </Button>
           </ModalFooter>
