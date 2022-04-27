@@ -30,6 +30,7 @@ import useCurrencySymbol from '../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useHexToRgb from '../../hooks/useHexToRgb';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
+import useTrimmedString from '../../hooks/useTrimmedString';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 
 function ListingComponent({ listing, index }: { listing: Listing; index: number }) {
@@ -51,6 +52,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const symbol = useCurrencySymbol(blockchain);
   const theme = useTheme();
   const rgb = useHexToRgb(theme.colors.brand[400]);
+  const trimmedAddress = useTrimmedString(address);
 
   const hasPurchased = !loadingBalances && !!balances[index] && balances[index] !== '0';
   const correctChainId = chainId === Settings.STORE_CHAIN_ID;
@@ -137,7 +139,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
                     {intl.formatMessage({ id: 'nft-dialog-contract-address', defaultMessage: 'Contract Address' })}
                   </Text>
                   <Text fontWeight="semibold" fontSize="md">
-                    {address.replace(address.substring(6, 38), '...')}
+                    {trimmedAddress}
                   </Text>
                 </Flex>
                 <Flex>

@@ -9,6 +9,7 @@ import { Contract, NonFungibleMetadata } from '../../../common/types';
 import Paper from './Paper';
 import useHexToRgb from '../../../hooks/useHexToRgb';
 import { useIntl } from 'react-intl';
+import useTrimmedString from '../../../hooks/useTrimmedString';
 
 function NonFungibleTokenComponent({
   index,
@@ -88,6 +89,8 @@ function NonFungibleDialog({
   const { accent } = useAppSelector(selectColors);
   const rgbAccent = useHexToRgb(accent);
   const intl = useIntl();
+  const trimmedAddress = useTrimmedString(address);
+  const trimmedTokenId = useTrimmedString(token_id);
 
   // TODO: We can probably render more than this
   if (!metadata) {
@@ -150,7 +153,7 @@ function NonFungibleDialog({
             {intl.formatMessage({ id: 'nft-dialog-contract-address', defaultMessage: 'Contract Address' })}
           </Text>
           <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
-            {address.replace(address.substring(6, address.length - 4), '...')}
+            {trimmedAddress}
           </Text>
         </Flex>
         <Flex>
@@ -158,7 +161,7 @@ function NonFungibleDialog({
             {intl.formatMessage({ id: 'nft-dialog-token-id', defaultMessage: 'Token Id' })}
           </Text>
           <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
-            {token_id.length > 10 ? token_id.replace(token_id.substring(6, token_id.length - 4), '...') : token_id}
+            {trimmedTokenId}
           </Text>
         </Flex>
         <Flex>

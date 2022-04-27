@@ -1,45 +1,43 @@
-import { Box, Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
-import { BADGE_HEIGHT } from '../../../common/constants';
+import { Heading, Skeleton, Stack, Text } from '@chakra-ui/react';
+import { BADGE_WIDTH } from '../../../common/constants';
 import Paper from './Paper';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectLoading, selectInfo } from './../slice';
 
 function ProfileText() {
-  return (
-    <Paper py={2} px={4}>
-      <Box height={BADGE_HEIGHT + 50}>
-        <TextArea />
-      </Box>
-    </Paper>
-  );
-}
-
-function TextArea() {
-  const { title, description } = useAppSelector(selectInfo);
+  const { title, description, twitter_handle } = useAppSelector(selectInfo);
   const loading = useAppSelector(selectLoading);
+
+  const height = BADGE_WIDTH + 24;
 
   if (loading) {
     return (
-      <Stack>
-        <Skeleton width="30%" height={8} />;
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-        <Skeleton width="100%" height={8} mt={2} />
-      </Stack>
+      <Paper p={4}>
+        <Stack height={height}>
+          <Skeleton width="30%" height={height / 6} />;
+          <Skeleton width="100%" height={height / 6 - 2} mt={2} />
+          <Skeleton width="100%" height={height / 6 - 2} mt={2} />
+          <Skeleton width="100%" height={height / 6 - 2} mt={2} />
+          <Skeleton width="100%" height={height / 6 - 2} mt={2} />
+          <Skeleton width="100%" height={height / 6 - 2} mt={2} />
+        </Stack>
+      </Paper>
     );
   }
 
-  return (
-    <Stack>
-      <Heading size="lg" mb={5} noOfLines={1} textColor="profile.secondaryText">
-        {title}
-      </Heading>
-      <Text size="md" fontWeight="semibold" noOfLines={7} textColor="profile.secondaryText">
-        {description}
-      </Text>
-    </Stack>
+  return !!title || !!description ? (
+    <Paper p={4}>
+      <Stack height={height + (!!twitter_handle ? 32 : 0)}>
+        <Heading size="lg" mb={5} noOfLines={1} textColor="profile.secondaryText">
+          {title}
+        </Heading>
+        <Text size="md" fontWeight="semibold" noOfLines={6} textColor="profile.secondaryText">
+          {description}
+        </Text>
+      </Stack>
+    </Paper>
+  ) : (
+    <></>
   );
 }
 

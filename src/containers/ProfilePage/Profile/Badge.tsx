@@ -37,6 +37,7 @@ function Badge({
     height,
     borderRadius: 8,
     transition: 'all .1s ease-in-out',
+    display: 'block',
   };
 
   return (
