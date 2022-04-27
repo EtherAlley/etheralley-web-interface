@@ -1,4 +1,4 @@
-import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Heading } from '@chakra-ui/react';
+import { Box, Flex, OrderedList, ListItem, Text, Heading, Icon } from '@chakra-ui/react';
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
@@ -9,6 +9,9 @@ import Link from '../../../components/Link';
 import Chip from './Chip';
 import { useIntl } from 'react-intl';
 import Logo from '../../../components/Logo';
+import { MdSwapHoriz } from 'react-icons/md';
+import useDisplayNumber from '../../../hooks/useDisplayNumber';
+import Divider from './Divider';
 
 function SwapComponent({ index }: { index: number }) {
   const stat = useAppSelector((state) => selectStatistic(state, index));
@@ -70,7 +73,11 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
 function SwapHeader() {
   const intl = useIntl();
 
-  return <Text>{intl.formatMessage({ id: 'top-swaps', defaultMessage: 'Top Swaps' })}</Text>;
+  return (
+    <Text textAlign="center" textColor="profile.secondaryText">
+      {intl.formatMessage({ id: 'top-swaps', defaultMessage: 'Top Swaps' })}
+    </Text>
+  );
 }
 
 function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
@@ -83,6 +90,7 @@ function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Co
       {swaps.map((swap, i) => (
         <Box key={i}>
           <SwapItem swap={swap} contract={contract} />
+          <Divider my={2} />
         </Box>
       ))}
     </OrderedList>
@@ -100,31 +108,21 @@ function SwapItem({
   const etherscanUrl = useEtherscanUrl(blockchain, 'tx', id);
 
   return (
-    <ListItem>
-      <UnorderedList>
-        <ListItem key={0}>
-          <Link href={etherscanUrl} isExternal color="profile.accent">
-            Etherscan
-          </Link>
-        </ListItem>
-        <ListItem key={1}>
-          <Text>{intl.formatDate(Number.parseInt(timestamp) * 1000)}</Text>
-        </ListItem>
-        <ListItem key={2}>
-          <Text>Amount: {intl.formatNumber(Number.parseFloat(amountUSD), { style: 'currency', currency: 'USD' })}</Text>
-        </ListItem>
-        <ListItem key={3}>
-          <SwapToken amount={input.amount} symbol={input.symbol} contractAddress={input.id} blockchain={blockchain} />
-        </ListItem>
-        <ListItem key={4}>
-          <SwapToken
-            amount={output.amount}
-            symbol={output.symbol}
-            contractAddress={output.id}
-            blockchain={blockchain}
-          />
-        </ListItem>
-      </UnorderedList>
+    <ListItem fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+      <Flex mb={2}>
+        <Text ml={2}>
+          {intl.formatNumber(Number.parseFloat(amountUSD), { style: 'currency', currency: 'USD' })} USD
+        </Text>
+        <Box flexGrow={1} />
+        <Link href={etherscanUrl} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+      <Flex alignItems="center" height={50}>
+        <SwapToken amount={input.amount} symbol={input.symbol} contractAddress={input.id} blockchain={blockchain} />
+        <Icon as={MdSwapHoriz} w={7} h={7} mr={7} />
+        <SwapToken amount={output.amount} symbol={output.symbol} contractAddress={output.id} blockchain={blockchain} />
+      </Flex>
     </ListItem>
   );
 }
@@ -140,20 +138,15 @@ function SwapToken({
   contractAddress: string;
   blockchain: Blockchains;
 }) {
-  const intl = useIntl();
-
-  console.log(contractAddress);
-  console.log(blockchain);
+  const displayAmount = useDisplayNumber(amount, 0);
 
   return (
-    <Box>
-      <Flex alignItems="center">
-        <Logo contractAddress={contractAddress} blockchain={blockchain} width={30} height={30} />
-        <Text ml={2}>
-          {intl.formatNumber(amount as any)} {symbol}
-        </Text>
-      </Flex>
-    </Box>
+    <Flex alignItems="center" width={170}>
+      <Logo contractAddress={contractAddress} blockchain={blockchain} width={7} height={7} />
+      <Text ml={2} isTruncated>
+        {displayAmount} {symbol}
+      </Text>
+    </Flex>
   );
 }
 
