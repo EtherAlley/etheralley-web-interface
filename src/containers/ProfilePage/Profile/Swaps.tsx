@@ -35,13 +35,13 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
   let title: string = '';
   switch (contract.interface) {
     case Interfaces.SUSHISWAP_EXCHANGE:
-      title = intl.formatMessage({ id: 'sushiswap', defaultMessage: 'Sushiswap' });
+      title = 'Sushiswap';
       break;
     case Interfaces.UNISWAP_V2_EXCHANGE:
-      title = intl.formatMessage({ id: 'uniswap-v2', defaultMessage: 'Uniswap V2' });
+      title = 'Uniswap V2';
       break;
     case Interfaces.UNISWAP_V3_EXCHANGE:
-      title = intl.formatMessage({ id: 'uniswap-v3', defaultMessage: 'Uniswap V3' });
+      title = 'Uniswap V3';
       break;
   }
 
@@ -81,8 +81,12 @@ function SwapHeader() {
 }
 
 function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
-  if (!swaps) {
-    return <></>;
+  if (!swaps || !swaps.length) {
+    return (
+      <Text textColor="profile.secondaryText" textAlign="center" fontWeight="semibold" mt={5}>
+        No Swaps Found
+      </Text>
+    );
   }
 
   return (
@@ -98,7 +102,7 @@ function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Co
 }
 
 function SwapItem({
-  swap: { id, timestamp, amountUSD, input, output },
+  swap: { id, amountUSD, input, output },
   contract: { blockchain },
 }: {
   swap: Swap;

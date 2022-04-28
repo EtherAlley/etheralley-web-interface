@@ -134,7 +134,7 @@
   "beta-tester-header": [
     {
       "type": 0,
-      "value": "Participated in the Ether Alley Beta!SSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "EtherAlley Beta Tester!SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "change-profile-picture": [
@@ -179,6 +179,18 @@
       "value": "Deployed Smart Contract AchievementSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "currency-dialog-balance": [
+    {
+      "type": 0,
+      "value": "BalanceSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "currency-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "BlockchainSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "currency-option": [
     {
       "type": 0,
@@ -195,6 +207,18 @@
     {
       "type": 0,
       "value": "Deployed a Smart ContractSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "display-heading": [
+    {
+      "type": 0,
+      "value": "Stake RewardsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "edit-accent-color": [
+    {
+      "type": 0,
+      "value": "AccentSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "edit-description": [
@@ -239,16 +263,44 @@
       "value": "Secondary TextSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "edit-shadow-color": [
+    {
+      "type": 0,
+      "value": "ShadowSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "edit-title": [
     {
       "type": 0,
       "value": "TitleSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "edit-twitter-handle": [
+    {
+      "type": 0,
+      "value": "Twitter HandleSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "enter-wallet-address": [
     {
       "type": 0,
-      "value": "Enter ENS name or Ethereum address...SSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Enter "
+    },
+    {
+      "type": 1,
+      "value": "ensname"
+    },
+    {
+      "type": 0,
+      "value": " or "
+    },
+    {
+      "type": 1,
+      "value": "ethereum"
+    },
+    {
+      "type": 0,
+      "value": " address...SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "error-loading-page": [
@@ -267,6 +319,12 @@
     {
       "type": 0,
       "value": "Error saving profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "first-swap": [
+    {
+      "type": 0,
+      "value": "FIRST SWAPSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "fungible-token-option": [
@@ -311,10 +369,26 @@
       "value": "Transaction IdSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "interaction-earned": [
+    {
+      "type": 0,
+      "value": "EarnedSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "item-owned": [
     {
       "type": 0,
       "value": "OwnedSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "learn-more": [
+    {
+      "type": 0,
+      "value": "Learn more about "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "more": [
@@ -329,16 +403,70 @@
       "value": "My ProfileSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "nft-dialog-attributes": [
+    {
+      "type": 0,
+      "value": "AttributesSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-balance": [
+    {
+      "type": 0,
+      "value": "BalanceSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "BlockchainSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Contract AddressSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-description": [
+    {
+      "type": 0,
+      "value": "DescriptionSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-token-id": [
+    {
+      "type": 0,
+      "value": "Token IdSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "nft-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Token StandardSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "nft-fallback": [
     {
       "type": 0,
       "value": "Non Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "no-swaps": [
+    {
+      "type": 0,
+      "value": "NO SWAPSSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "non-existent-page": [
     {
       "type": 0,
       "value": "The page you're looking for does not seem to existSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "non-existent-profile": [
+    {
+      "type": 0,
+      "value": "The profile you're looking for does not seem to existSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "non-fungible-token-option": [
@@ -365,6 +493,22 @@
       "value": "Unexpected ErrorSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "premium-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " badges is the maximum number for a premium accountSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profile-not-found": [
+    {
+      "type": 0,
+      "value": "Profile Not FoundSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "profile-picture-form": [
     {
       "type": 0,
@@ -389,6 +533,38 @@
       "value": "PurchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "regular-max-badge-count-drawer": [
+    {
+      "type": 0,
+      "value": "You have exceed the max number of badges for a premium account. You have ("
+    },
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": ") and the max is ("
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": ")SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "regular-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " badges is the maximum number for a regular account. Purchase premium from the store to access a higher badge countSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "remove-achievement": [
     {
       "type": 0,
@@ -405,6 +581,28 @@
     {
       "type": 0,
       "value": "Remove ItemSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "rewards": [
+    {
+      "type": 0,
+      "value": "RewardsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "rocket-pool-rewards": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " RewardsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "rocket-pool-stake-rewards": [
+    {
+      "type": 0,
+      "value": "Rocket Pool Stake RewardsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "save-edits-button": [
@@ -491,6 +689,12 @@
       "value": "We couldn't seem to load the page at this timeSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "stake-rewards": [
+    {
+      "type": 0,
+      "value": "Stake RewardsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -509,16 +713,38 @@
       "value": "Successfully processed purchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "swaps": [
-    {
-      "type": 0,
-      "value": "SWAPSSSSSSSSSSSSSSSSSSSSSSSSSS"
-    }
-  ],
   "switch-chains": [
     {
       "type": 0,
-      "value": "Switch to PolygonSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Switch to "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "token-dialog-balance": [
+    {
+      "type": 0,
+      "value": "BalanceSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "token-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "BlockchainSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "token-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Contract AddressSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "token-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Token StandardSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "token-fallback": [
@@ -527,10 +753,102 @@
       "value": "Fungible TokenSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "top-profiles": [
+  "top-arbitrum-sushi-swaps": [
     {
       "type": 0,
-      "value": "Top ProfilesSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-eth-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-eth-uni-v2-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-eth-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-n-swaps": [
+    {
+      "type": 0,
+      "value": "TOP "
+    },
+    {
+      "type": 1,
+      "value": "swapcount"
+    },
+    {
+      "type": 0,
+      "value": " SWAPSSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-polygon-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "top-polygon-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "top-profiles-load-error": [
@@ -551,16 +869,42 @@
       "value": "Top SwapsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "top-ten-profiles-caption": [
+  "trending": [
     {
       "type": 0,
-      "value": "Top 10 Profiles TodaySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "TrendingSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "trending-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Trending ProfilesSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "twitter-button": [
+    {
+      "type": 0,
+      "value": "Share on TwitterSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "view-sourcecode": [
+    {
+      "type": 0,
+      "value": "View the source code on "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "welcome-message": [
     {
       "type": 0,
-      "value": "Welcome to Ether AlleySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Welcome to "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ]
 }

@@ -134,7 +134,7 @@
   "beta-tester-header": [
     {
       "type": 0,
-      "value": "Participated in the Ether Alley Beta!"
+      "value": "EtherAlley Beta Tester!"
     }
   ],
   "change-profile-picture": [
@@ -179,6 +179,18 @@
       "value": "Deployed Smart Contract Achievement"
     }
   ],
+  "currency-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Balance"
+    }
+  ],
+  "currency-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Blockchain"
+    }
+  ],
   "currency-option": [
     {
       "type": 0,
@@ -195,6 +207,18 @@
     {
       "type": 0,
       "value": "Deployed a Smart Contract"
+    }
+  ],
+  "display-heading": [
+    {
+      "type": 0,
+      "value": "Stake Rewards"
+    }
+  ],
+  "edit-accent-color": [
+    {
+      "type": 0,
+      "value": "Accent"
     }
   ],
   "edit-description": [
@@ -239,16 +263,44 @@
       "value": "Secondary Text"
     }
   ],
+  "edit-shadow-color": [
+    {
+      "type": 0,
+      "value": "Shadow"
+    }
+  ],
   "edit-title": [
     {
       "type": 0,
       "value": "Title"
     }
   ],
+  "edit-twitter-handle": [
+    {
+      "type": 0,
+      "value": "Twitter Handle"
+    }
+  ],
   "enter-wallet-address": [
     {
       "type": 0,
-      "value": "Enter ENS name or Ethereum address..."
+      "value": "Enter "
+    },
+    {
+      "type": 1,
+      "value": "ensname"
+    },
+    {
+      "type": 0,
+      "value": " or "
+    },
+    {
+      "type": 1,
+      "value": "ethereum"
+    },
+    {
+      "type": 0,
+      "value": " address..."
     }
   ],
   "error-loading-page": [
@@ -267,6 +319,12 @@
     {
       "type": 0,
       "value": "Error saving profile"
+    }
+  ],
+  "first-swap": [
+    {
+      "type": 0,
+      "value": "FIRST SWAP"
     }
   ],
   "fungible-token-option": [
@@ -311,10 +369,26 @@
       "value": "Transaction Id"
     }
   ],
+  "interaction-earned": [
+    {
+      "type": 0,
+      "value": "Earned"
+    }
+  ],
   "item-owned": [
     {
       "type": 0,
       "value": "Owned"
+    }
+  ],
+  "learn-more": [
+    {
+      "type": 0,
+      "value": "Learn more about "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "more": [
@@ -329,16 +403,70 @@
       "value": "My Profile"
     }
   ],
+  "nft-dialog-attributes": [
+    {
+      "type": 0,
+      "value": "Attributes"
+    }
+  ],
+  "nft-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Balance"
+    }
+  ],
+  "nft-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Blockchain"
+    }
+  ],
+  "nft-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Contract Address"
+    }
+  ],
+  "nft-dialog-description": [
+    {
+      "type": 0,
+      "value": "Description"
+    }
+  ],
+  "nft-dialog-token-id": [
+    {
+      "type": 0,
+      "value": "Token Id"
+    }
+  ],
+  "nft-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Token Standard"
+    }
+  ],
   "nft-fallback": [
     {
       "type": 0,
       "value": "Non Fungible Token"
     }
   ],
+  "no-swaps": [
+    {
+      "type": 0,
+      "value": "NO SWAPS"
+    }
+  ],
   "non-existent-page": [
     {
       "type": 0,
       "value": "The page you're looking for does not seem to exist"
+    }
+  ],
+  "non-existent-profile": [
+    {
+      "type": 0,
+      "value": "The profile you're looking for does not seem to exist"
     }
   ],
   "non-fungible-token-option": [
@@ -365,6 +493,22 @@
       "value": "Unexpected Error"
     }
   ],
+  "premium-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " badges is the maximum number for a premium account"
+    }
+  ],
+  "profile-not-found": [
+    {
+      "type": 0,
+      "value": "Profile Not Found"
+    }
+  ],
   "profile-picture-form": [
     {
       "type": 0,
@@ -389,6 +533,38 @@
       "value": "Purchase"
     }
   ],
+  "regular-max-badge-count-drawer": [
+    {
+      "type": 0,
+      "value": "You have exceed the max number of badges for a premium account. You have ("
+    },
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": ") and the max is ("
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "regular-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " badges is the maximum number for a regular account. Purchase premium from the store to access a higher badge count"
+    }
+  ],
   "remove-achievement": [
     {
       "type": 0,
@@ -405,6 +581,28 @@
     {
       "type": 0,
       "value": "Remove Item"
+    }
+  ],
+  "rewards": [
+    {
+      "type": 0,
+      "value": "Rewards"
+    }
+  ],
+  "rocket-pool-rewards": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " Rewards"
+    }
+  ],
+  "rocket-pool-stake-rewards": [
+    {
+      "type": 0,
+      "value": "Rocket Pool Stake Rewards"
     }
   ],
   "save-edits-button": [
@@ -491,6 +689,12 @@
       "value": "We couldn't seem to load the page at this time"
     }
   ],
+  "stake-rewards": [
+    {
+      "type": 0,
+      "value": "Stake Rewards"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -509,16 +713,38 @@
       "value": "Successfully processed purchase"
     }
   ],
-  "swaps": [
-    {
-      "type": 0,
-      "value": "SWAPS"
-    }
-  ],
   "switch-chains": [
     {
       "type": 0,
-      "value": "Switch to Polygon"
+      "value": "Switch to "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "token-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Balance"
+    }
+  ],
+  "token-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Blockchain"
+    }
+  ],
+  "token-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Contract Address"
+    }
+  ],
+  "token-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Token Standard"
     }
   ],
   "token-fallback": [
@@ -527,10 +753,102 @@
       "value": "Fungible Token"
     }
   ],
-  "top-profiles": [
+  "top-arbitrum-sushi-swaps": [
     {
       "type": 0,
-      "value": "Top Profiles"
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
+    }
+  ],
+  "top-eth-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
+    }
+  ],
+  "top-eth-uni-v2-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
+    }
+  ],
+  "top-eth-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
+    }
+  ],
+  "top-n-swaps": [
+    {
+      "type": 0,
+      "value": "TOP "
+    },
+    {
+      "type": 1,
+      "value": "swapcount"
+    },
+    {
+      "type": 0,
+      "value": " SWAPS"
+    }
+  ],
+  "top-polygon-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
+    }
+  ],
+  "top-polygon-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Top "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Swaps"
     }
   ],
   "top-profiles-load-error": [
@@ -551,16 +869,42 @@
       "value": "Top Swaps"
     }
   ],
-  "top-ten-profiles-caption": [
+  "trending": [
     {
       "type": 0,
-      "value": "Top 10 Profiles Today"
+      "value": "Trending"
+    }
+  ],
+  "trending-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Trending Profiles"
+    }
+  ],
+  "twitter-button": [
+    {
+      "type": 0,
+      "value": "Share on Twitter"
+    }
+  ],
+  "view-sourcecode": [
+    {
+      "type": 0,
+      "value": "View the source code on "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "welcome-message": [
     {
       "type": 0,
-      "value": "Welcome to Ether Alley"
+      "value": "Welcome to "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ]
 }

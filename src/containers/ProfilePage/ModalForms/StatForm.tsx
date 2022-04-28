@@ -41,7 +41,10 @@ function StatForm() {
         },
         {
           id: Interfaces.ROCKET_POOL,
-          label: intl.formatMessage({ id: 'rocket-pool-rewards', defaultMessage: 'Rocket Pool Rewards' }),
+          label: intl.formatMessage(
+            { id: 'rocket-pool-rewards', defaultMessage: '{name} Rewards' },
+            { name: 'Rocket Pool' }
+          ),
         },
       ];
       break;

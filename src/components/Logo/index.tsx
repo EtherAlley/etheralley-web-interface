@@ -11,17 +11,19 @@ function Logo({
   interfaceName,
   width,
   height,
+  background,
 }: {
   contractAddress?: string;
   blockchain?: Blockchains;
   interfaceName?: Interfaces;
   width?: string | number;
   height?: string | number;
+  background?: boolean;
 }): JSX.Element {
   if (contractAddress && blockchain) {
     return <Token contractAddress={contractAddress} blockchain={blockchain} width={width} height={height} />;
   } else if (blockchain && !contractAddress) {
-    return <Blockchain blockchain={blockchain} width={width} height={height} />;
+    return <Blockchain blockchain={blockchain} width={width} height={height} background={background} />;
   } else if (interfaceName) {
     return <Interface interfaceName={interfaceName} width={width} height={height} />;
   }
@@ -109,12 +111,14 @@ function Blockchain({
   blockchain,
   width = 85,
   height = 85,
+  background = true,
 }: {
   blockchain: Blockchains;
   width?: string | number;
   height?: string | number;
+  background?: boolean;
 }): JSX.Element {
-  let styling: ImageProps = { p: 2, backgroundColor: 'gray.900' };
+  let styling: ImageProps = background ? { p: 2, backgroundColor: 'gray.900' } : {};
   let fileName: string | undefined;
   switch (blockchain) {
     case Blockchains.ETHEREUM:

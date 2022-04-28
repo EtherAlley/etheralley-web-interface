@@ -41,7 +41,7 @@ function ProfileEditDrawer() {
   const maxBadgeCountReached = !premium && badgeCount > REGULAR_TOTAL_BADGE_COUNT; // this is possible if they have previously had premium and are now trying to save their profile without.
   const label = intl.formatMessage(
     {
-      id: 'regular-max-badge-count',
+      id: 'regular-max-badge-count-drawer',
       defaultMessage:
         'You have exceed the max number of badges for a premium account. You have ({current}) and the max is ({max})',
     },

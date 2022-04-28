@@ -66,7 +66,7 @@
     "defaultMessage": "This achievement is earned by claiming the Beta Tester token from the Ether Alley store"
   },
   "beta-tester-header": {
-    "defaultMessage": "Participated in the Ether Alley Beta!"
+    "defaultMessage": "EtherAlley Beta Tester!"
   },
   "change-profile-picture": {
     "defaultMessage": "Change Profile Picture"
@@ -89,6 +89,12 @@
   "contract-creation-label": {
     "defaultMessage": "Deployed Smart Contract Achievement"
   },
+  "currency-dialog-balance": {
+    "defaultMessage": "Balance"
+  },
+  "currency-dialog-blockchain": {
+    "defaultMessage": "Blockchain"
+  },
   "currency-option": {
     "defaultMessage": "Currency"
   },
@@ -97,6 +103,12 @@
   },
   "deployed-smart-contract": {
     "defaultMessage": "Deployed a Smart Contract"
+  },
+  "display-heading": {
+    "defaultMessage": "Stake Rewards"
+  },
+  "edit-accent-color": {
+    "defaultMessage": "Accent"
   },
   "edit-description": {
     "defaultMessage": "Description"
@@ -119,11 +131,17 @@
   "edit-secondary-text-color": {
     "defaultMessage": "Secondary Text"
   },
+  "edit-shadow-color": {
+    "defaultMessage": "Shadow"
+  },
   "edit-title": {
     "defaultMessage": "Title"
   },
+  "edit-twitter-handle": {
+    "defaultMessage": "Twitter Handle"
+  },
   "enter-wallet-address": {
-    "defaultMessage": "Enter ENS name or Ethereum address..."
+    "defaultMessage": "Enter {ensname} or {ethereum} address..."
   },
   "error-loading-page": {
     "defaultMessage": "Error loading page"
@@ -133,6 +151,9 @@
   },
   "error-saving-profile": {
     "defaultMessage": "Error saving profile"
+  },
+  "first-swap": {
+    "defaultMessage": "FIRST SWAP"
   },
   "fungible-token-option": {
     "defaultMessage": "Token"
@@ -155,8 +176,14 @@
   "input-transaction-id": {
     "defaultMessage": "Transaction Id"
   },
+  "interaction-earned": {
+    "defaultMessage": "Earned"
+  },
   "item-owned": {
     "defaultMessage": "Owned"
+  },
+  "learn-more": {
+    "defaultMessage": "Learn more about {name}"
   },
   "more": {
     "defaultMessage": "More"
@@ -164,11 +191,38 @@
   "my-profile": {
     "defaultMessage": "My Profile"
   },
+  "nft-dialog-attributes": {
+    "defaultMessage": "Attributes"
+  },
+  "nft-dialog-balance": {
+    "defaultMessage": "Balance"
+  },
+  "nft-dialog-blockchain": {
+    "defaultMessage": "Blockchain"
+  },
+  "nft-dialog-contract-address": {
+    "defaultMessage": "Contract Address"
+  },
+  "nft-dialog-description": {
+    "defaultMessage": "Description"
+  },
+  "nft-dialog-token-id": {
+    "defaultMessage": "Token Id"
+  },
+  "nft-dialog-token-standard": {
+    "defaultMessage": "Token Standard"
+  },
   "nft-fallback": {
     "defaultMessage": "Non Fungible Token"
   },
+  "no-swaps": {
+    "defaultMessage": "NO SWAPS"
+  },
   "non-existent-page": {
     "defaultMessage": "The page you're looking for does not seem to exist"
+  },
+  "non-existent-profile": {
+    "defaultMessage": "The profile you're looking for does not seem to exist"
   },
   "non-fungible-token-option": {
     "defaultMessage": "NFT"
@@ -182,6 +236,12 @@
   "page-wrapper-error": {
     "defaultMessage": "Unexpected Error"
   },
+  "premium-max-badge-count-form": {
+    "defaultMessage": "{max} badges is the maximum number for a premium account"
+  },
+  "profile-not-found": {
+    "defaultMessage": "Profile Not Found"
+  },
   "profile-picture-form": {
     "defaultMessage": "Profile Picture"
   },
@@ -194,6 +254,12 @@
   "purchase": {
     "defaultMessage": "Purchase"
   },
+  "regular-max-badge-count-drawer": {
+    "defaultMessage": "You have exceed the max number of badges for a premium account. You have ({current}) and the max is ({max})"
+  },
+  "regular-max-badge-count-form": {
+    "defaultMessage": "{max} badges is the maximum number for a regular account. Purchase premium from the store to access a higher badge count"
+  },
   "remove-achievement": {
     "defaultMessage": "Remove achievement"
   },
@@ -202,6 +268,15 @@
   },
   "remove-item": {
     "defaultMessage": "Remove Item"
+  },
+  "rewards": {
+    "defaultMessage": "Rewards"
+  },
+  "rocket-pool-rewards": {
+    "defaultMessage": "{name} Rewards"
+  },
+  "rocket-pool-stake-rewards": {
+    "defaultMessage": "Rocket Pool Stake Rewards"
   },
   "save-edits-button": {
     "defaultMessage": "Save"
@@ -245,6 +320,9 @@
   "shop-load-error-subtext": {
     "defaultMessage": "We couldn't seem to load the page at this time"
   },
+  "stake-rewards": {
+    "defaultMessage": "Stake Rewards"
+  },
   "statistic-option": {
     "defaultMessage": "Statistic"
   },
@@ -254,17 +332,44 @@
   "success-making-purchase-description": {
     "defaultMessage": "Successfully processed purchase"
   },
-  "swaps": {
-    "defaultMessage": "SWAPS"
-  },
   "switch-chains": {
-    "defaultMessage": "Switch to Polygon"
+    "defaultMessage": "Switch to {name}"
+  },
+  "token-dialog-balance": {
+    "defaultMessage": "Balance"
+  },
+  "token-dialog-blockchain": {
+    "defaultMessage": "Blockchain"
+  },
+  "token-dialog-contract-address": {
+    "defaultMessage": "Contract Address"
+  },
+  "token-dialog-token-standard": {
+    "defaultMessage": "Token Standard"
   },
   "token-fallback": {
     "defaultMessage": "Fungible Token"
   },
-  "top-profiles": {
-    "defaultMessage": "Top Profiles"
+  "top-arbitrum-sushi-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
+  },
+  "top-eth-sushi-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
+  },
+  "top-eth-uni-v2-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
+  },
+  "top-eth-uni-v3-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
+  },
+  "top-n-swaps": {
+    "defaultMessage": "TOP {swapcount} SWAPS"
+  },
+  "top-polygon-sushi-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
+  },
+  "top-polygon-uni-v3-swaps": {
+    "defaultMessage": "Top {dex} Swaps"
   },
   "top-profiles-load-error": {
     "defaultMessage": "Error Loading Top Profiles Page"
@@ -275,10 +380,19 @@
   "top-swaps": {
     "defaultMessage": "Top Swaps"
   },
-  "top-ten-profiles-caption": {
-    "defaultMessage": "Top 10 Profiles Today"
+  "trending": {
+    "defaultMessage": "Trending"
+  },
+  "trending-profiles-caption": {
+    "defaultMessage": "Trending Profiles"
+  },
+  "twitter-button": {
+    "defaultMessage": "Share on Twitter"
+  },
+  "view-sourcecode": {
+    "defaultMessage": "View the source code on {name}"
   },
   "welcome-message": {
-    "defaultMessage": "Welcome to Ether Alley"
+    "defaultMessage": "Welcome to {name}"
   }
 }

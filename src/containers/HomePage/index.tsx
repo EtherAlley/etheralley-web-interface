@@ -25,7 +25,7 @@ function HomePage() {
         fontWeight="extrabold"
         textAlign="center"
       >
-        {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to Ether Alley' })}
+        {intl.formatMessage({ id: 'welcome-message', defaultMessage: 'Welcome to {name}' }, { name: 'EtherAlley' })}
       </Text>
       <Paper mt={5} mb={20}>
         <form
@@ -39,10 +39,13 @@ function HomePage() {
             id="searchbar"
             size="lg"
             variant="filled"
-            placeholder={intl.formatMessage({
-              id: 'enter-wallet-address',
-              defaultMessage: 'Enter ENS name or Ethereum address...',
-            })}
+            placeholder={intl.formatMessage(
+              {
+                id: 'enter-wallet-address',
+                defaultMessage: 'Enter {ensname} or {ethereum} address...',
+              },
+              { ensname: 'ENS name', ethereum: 'Ethereum' }
+            )}
             value={address}
             onChange={(event) => dispatch(setAddress(event.target.value))}
             iconProps={{

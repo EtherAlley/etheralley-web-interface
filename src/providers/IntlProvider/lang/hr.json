@@ -134,7 +134,7 @@
   "beta-tester-header": [
     {
       "type": 0,
-      "value": "Ṕâŕṭíćíṗâṭèḋ íń ṭḫè Ḕṭḫèŕ Ḁĺĺèẏ Ḃèṭâ!"
+      "value": "ḔṭḫèŕḀĺĺèẏ Ḃèṭâ Ṯèśṭèŕ!"
     }
   ],
   "change-profile-picture": [
@@ -179,6 +179,18 @@
       "value": "Ḋèṗĺŏẏèḋ Ṡṁâŕṭ Ḉŏńṭŕâćṭ Ḁćḫíèṿèṁèńṭ"
     }
   ],
+  "currency-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Ḃâĺâńćè"
+    }
+  ],
+  "currency-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Ḃĺŏćǩćḫâíń"
+    }
+  ],
   "currency-option": [
     {
       "type": 0,
@@ -195,6 +207,18 @@
     {
       "type": 0,
       "value": "Ḋèṗĺŏẏèḋ â Ṡṁâŕṭ Ḉŏńṭŕâćṭ"
+    }
+  ],
+  "display-heading": [
+    {
+      "type": 0,
+      "value": "Ṡṭâǩè Ŕèẘâŕḋś"
+    }
+  ],
+  "edit-accent-color": [
+    {
+      "type": 0,
+      "value": "Ḁććèńṭ"
     }
   ],
   "edit-description": [
@@ -239,16 +263,44 @@
       "value": "Ṡèćŏńḋâŕẏ Ṯèẋṭ"
     }
   ],
+  "edit-shadow-color": [
+    {
+      "type": 0,
+      "value": "Ṡḫâḋŏẘ"
+    }
+  ],
   "edit-title": [
     {
       "type": 0,
       "value": "Ṯíṭĺè"
     }
   ],
+  "edit-twitter-handle": [
+    {
+      "type": 0,
+      "value": "Ṯẘíṭṭèŕ Ḣâńḋĺè"
+    }
+  ],
   "enter-wallet-address": [
     {
       "type": 0,
-      "value": "Ḕńṭèŕ ḔŊṠ ńâṁè ŏŕ Ḕṭḫèŕèůṁ âḋḋŕèśś..."
+      "value": "Ḕńṭèŕ "
+    },
+    {
+      "type": 1,
+      "value": "ensname"
+    },
+    {
+      "type": 0,
+      "value": " ŏŕ "
+    },
+    {
+      "type": 1,
+      "value": "ethereum"
+    },
+    {
+      "type": 0,
+      "value": " âḋḋŕèśś..."
     }
   ],
   "error-loading-page": [
@@ -267,6 +319,12 @@
     {
       "type": 0,
       "value": "Ḕŕŕŏŕ śâṿíńĝ ṗŕŏḟíĺè"
+    }
+  ],
+  "first-swap": [
+    {
+      "type": 0,
+      "value": "ḞḬŔṠṮ ṠẄḀṔ"
     }
   ],
   "fungible-token-option": [
@@ -311,10 +369,26 @@
       "value": "Ṯŕâńśâćṭíŏń Ḭḋ"
     }
   ],
+  "interaction-earned": [
+    {
+      "type": 0,
+      "value": "Ḕâŕńèḋ"
+    }
+  ],
   "item-owned": [
     {
       "type": 0,
       "value": "Õẘńèḋ"
+    }
+  ],
+  "learn-more": [
+    {
+      "type": 0,
+      "value": "Ļèâŕń ṁŏŕè âḃŏůṭ "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "more": [
@@ -329,16 +403,70 @@
       "value": "Ḿẏ Ṕŕŏḟíĺè"
     }
   ],
+  "nft-dialog-attributes": [
+    {
+      "type": 0,
+      "value": "Ḁṭṭŕíḃůṭèś"
+    }
+  ],
+  "nft-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Ḃâĺâńćè"
+    }
+  ],
+  "nft-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Ḃĺŏćǩćḫâíń"
+    }
+  ],
+  "nft-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Ḉŏńṭŕâćṭ Ḁḋḋŕèśś"
+    }
+  ],
+  "nft-dialog-description": [
+    {
+      "type": 0,
+      "value": "Ḋèśćŕíṗṭíŏń"
+    }
+  ],
+  "nft-dialog-token-id": [
+    {
+      "type": 0,
+      "value": "Ṯŏǩèń Ḭḋ"
+    }
+  ],
+  "nft-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Ṯŏǩèń Ṡṭâńḋâŕḋ"
+    }
+  ],
   "nft-fallback": [
     {
       "type": 0,
       "value": "Ŋŏń Ḟůńĝíḃĺè Ṯŏǩèń"
     }
   ],
+  "no-swaps": [
+    {
+      "type": 0,
+      "value": "ŊÕ ṠẄḀṔṠ"
+    }
+  ],
   "non-existent-page": [
     {
       "type": 0,
       "value": "Ṯḫè ṗâĝè ẏŏů'ŕè ĺŏŏǩíńĝ ḟŏŕ ḋŏèś ńŏṭ śèèṁ ṭŏ èẋíśṭ"
+    }
+  ],
+  "non-existent-profile": [
+    {
+      "type": 0,
+      "value": "Ṯḫè ṗŕŏḟíĺè ẏŏů'ŕè ĺŏŏǩíńĝ ḟŏŕ ḋŏèś ńŏṭ śèèṁ ṭŏ èẋíśṭ"
     }
   ],
   "non-fungible-token-option": [
@@ -365,6 +493,22 @@
       "value": "Ũńèẋṗèćṭèḋ Ḕŕŕŏŕ"
     }
   ],
+  "premium-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " ḃâḋĝèś íś ṭḫè ṁâẋíṁůṁ ńůṁḃèŕ ḟŏŕ â ṗŕèṁíůṁ âććŏůńṭ"
+    }
+  ],
+  "profile-not-found": [
+    {
+      "type": 0,
+      "value": "Ṕŕŏḟíĺè Ŋŏṭ Ḟŏůńḋ"
+    }
+  ],
   "profile-picture-form": [
     {
       "type": 0,
@@ -389,6 +533,38 @@
       "value": "Ṕůŕćḫâśè"
     }
   ],
+  "regular-max-badge-count-drawer": [
+    {
+      "type": 0,
+      "value": "Ÿŏů ḫâṿè èẋćèèḋ ṭḫè ṁâẋ ńůṁḃèŕ ŏḟ ḃâḋĝèś ḟŏŕ â ṗŕèṁíůṁ âććŏůńṭ. Ÿŏů ḫâṿè ("
+    },
+    {
+      "type": 1,
+      "value": "current"
+    },
+    {
+      "type": 0,
+      "value": ") âńḋ ṭḫè ṁâẋ íś ("
+    },
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": ")"
+    }
+  ],
+  "regular-max-badge-count-form": [
+    {
+      "type": 1,
+      "value": "max"
+    },
+    {
+      "type": 0,
+      "value": " ḃâḋĝèś íś ṭḫè ṁâẋíṁůṁ ńůṁḃèŕ ḟŏŕ â ŕèĝůĺâŕ âććŏůńṭ. Ṕůŕćḫâśè ṗŕèṁíůṁ ḟŕŏṁ ṭḫè śṭŏŕè ṭŏ âććèśś â ḫíĝḫèŕ ḃâḋĝè ćŏůńṭ"
+    }
+  ],
   "remove-achievement": [
     {
       "type": 0,
@@ -405,6 +581,28 @@
     {
       "type": 0,
       "value": "Ŕèṁŏṿè Ḭṭèṁ"
+    }
+  ],
+  "rewards": [
+    {
+      "type": 0,
+      "value": "Ŕèẘâŕḋś"
+    }
+  ],
+  "rocket-pool-rewards": [
+    {
+      "type": 1,
+      "value": "name"
+    },
+    {
+      "type": 0,
+      "value": " Ŕèẘâŕḋś"
+    }
+  ],
+  "rocket-pool-stake-rewards": [
+    {
+      "type": 0,
+      "value": "Ŕŏćǩèṭ Ṕŏŏĺ Ṡṭâǩè Ŕèẘâŕḋś"
     }
   ],
   "save-edits-button": [
@@ -491,6 +689,12 @@
       "value": "Ẅè ćŏůĺḋń'ṭ śèèṁ ṭŏ ĺŏâḋ ṭḫè ṗâĝè âṭ ṭḫíś ṭíṁè"
     }
   ],
+  "stake-rewards": [
+    {
+      "type": 0,
+      "value": "Ṡṭâǩè Ŕèẘâŕḋś"
+    }
+  ],
   "statistic-option": [
     {
       "type": 0,
@@ -509,16 +713,38 @@
       "value": "Ṡůććèśśḟůĺĺẏ ṗŕŏćèśśèḋ ṗůŕćḫâśè"
     }
   ],
-  "swaps": [
-    {
-      "type": 0,
-      "value": "ṠẄḀṔṠ"
-    }
-  ],
   "switch-chains": [
     {
       "type": 0,
-      "value": "Ṡẘíṭćḫ ṭŏ Ṕŏĺẏĝŏń"
+      "value": "Ṡẘíṭćḫ ṭŏ "
+    },
+    {
+      "type": 1,
+      "value": "name"
+    }
+  ],
+  "token-dialog-balance": [
+    {
+      "type": 0,
+      "value": "Ḃâĺâńćè"
+    }
+  ],
+  "token-dialog-blockchain": [
+    {
+      "type": 0,
+      "value": "Ḃĺŏćǩćḫâíń"
+    }
+  ],
+  "token-dialog-contract-address": [
+    {
+      "type": 0,
+      "value": "Ḉŏńṭŕâćṭ Ḁḋḋŕèśś"
+    }
+  ],
+  "token-dialog-token-standard": [
+    {
+      "type": 0,
+      "value": "Ṯŏǩèń Ṡṭâńḋâŕḋ"
     }
   ],
   "token-fallback": [
@@ -527,10 +753,102 @@
       "value": "Ḟůńĝíḃĺè Ṯŏǩèń"
     }
   ],
-  "top-profiles": [
+  "top-arbitrum-sushi-swaps": [
     {
       "type": 0,
-      "value": "Ṯŏṗ Ṕŕŏḟíĺèś"
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
+    }
+  ],
+  "top-eth-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
+    }
+  ],
+  "top-eth-uni-v2-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
+    }
+  ],
+  "top-eth-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
+    }
+  ],
+  "top-n-swaps": [
+    {
+      "type": 0,
+      "value": "ṮÕṔ "
+    },
+    {
+      "type": 1,
+      "value": "swapcount"
+    },
+    {
+      "type": 0,
+      "value": " ṠẄḀṔṠ"
+    }
+  ],
+  "top-polygon-sushi-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
+    }
+  ],
+  "top-polygon-uni-v3-swaps": [
+    {
+      "type": 0,
+      "value": "Ṯŏṗ "
+    },
+    {
+      "type": 1,
+      "value": "dex"
+    },
+    {
+      "type": 0,
+      "value": " Ṡẘâṗś"
     }
   ],
   "top-profiles-load-error": [
@@ -551,16 +869,42 @@
       "value": "Ṯŏṗ Ṡẘâṗś"
     }
   ],
-  "top-ten-profiles-caption": [
+  "trending": [
     {
       "type": 0,
-      "value": "Ṯŏṗ 10 Ṕŕŏḟíĺèś Ṯŏḋâẏ"
+      "value": "Ṯŕèńḋíńĝ"
+    }
+  ],
+  "trending-profiles-caption": [
+    {
+      "type": 0,
+      "value": "Ṯŕèńḋíńĝ Ṕŕŏḟíĺèś"
+    }
+  ],
+  "twitter-button": [
+    {
+      "type": 0,
+      "value": "Ṡḫâŕè ŏń Ṯẘíṭṭèŕ"
+    }
+  ],
+  "view-sourcecode": [
+    {
+      "type": 0,
+      "value": "Ṽíèẘ ṭḫè śŏůŕćè ćŏḋè ŏń "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ],
   "welcome-message": [
     {
       "type": 0,
-      "value": "Ẅèĺćŏṁè ṭŏ Ḕṭḫèŕ Ḁĺĺèẏ"
+      "value": "Ẅèĺćŏṁè ṭŏ "
+    },
+    {
+      "type": 1,
+      "value": "name"
     }
   ]
 }

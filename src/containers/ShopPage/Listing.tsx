@@ -73,7 +73,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
             <Text fontWeight="bold" textAlign="center" mr={2}>
               {`${formatPrice} ${symbol}`}
             </Text>
-            <Logo blockchain={blockchain} height={6} width={6} />
+            <Logo blockchain={blockchain} height={6} width={6} background={false} />
           </Flex>
           <PurchaseButton
             price={price}
@@ -229,7 +229,7 @@ function ButtonLabel({
   }
 
   if (!correctChainId) {
-    return <>{intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to Polygon' })}</>;
+    return <>{intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to {name}' }, { name: 'Polygon' })}</>;
   }
 
   if (hasPurchased) {

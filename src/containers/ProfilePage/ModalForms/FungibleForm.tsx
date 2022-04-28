@@ -14,6 +14,7 @@ import {
   updateFungibleKeyword,
 } from './slice';
 import { useRef } from 'react';
+import Logo from '../../../components/Logo';
 
 function FungibleForm() {
   const intl = useIntl();
@@ -81,6 +82,7 @@ function FungibleForm() {
                 onClick={() => dispatch(submitFungibleSearch({ address, name }))}
               >
                 {name}
+                <Logo blockchain={blockchain} contractAddress={address} />
               </Button>
             );
           })}

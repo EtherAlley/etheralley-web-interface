@@ -57,12 +57,18 @@ function Navbar() {
       children: [
         {
           label: intl.formatMessage({ id: 'about', defaultMessage: 'About' }),
-          subLabel: 'Learn more about EtherAlley',
+          subLabel: intl.formatMessage(
+            { id: 'learn-more', defaultMessage: 'Learn more about {name}' },
+            { name: 'EtherAlley' }
+          ),
           href: '#',
         },
         {
           label: intl.formatMessage({ id: 'github', defaultMessage: 'GitHub' }),
-          subLabel: 'View the source code on GitHub',
+          subLabel: intl.formatMessage(
+            { id: 'view-sourcecode', defaultMessage: 'View the source code on {name}' },
+            { name: 'GitHub' }
+          ),
           href: 'https://github.com/EtherAlley',
           isExternal: true,
         },

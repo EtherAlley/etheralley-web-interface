@@ -19,7 +19,7 @@ function StakeRewards({ index }: { index: number }) {
       width={BADGE_WIDTH}
       height={BADGE_HEIGHT}
       Display={<StakeDisplay stake={data} contract={contract} />}
-      DialogHeader={<StakeHeader />}
+      DialogHeader={<StakeHeader contract={contract} />}
       DialogBody={<StakeBody stake={data} contract={contract} />}
     />
   );
@@ -29,45 +29,51 @@ function StakeDisplay({ stake, contract }: { stake: Stake | undefined; contract:
   const intl = useIntl();
   const displayBalance = useDisplayNumber(stake?.total_rewards, 18);
 
-  let title: string = '';
-  switch (contract.interface) {
-    case Interfaces.ROCKET_POOL:
-      title = intl.formatMessage({ id: 'rocketpool', defaultMessage: 'Rocket Pool' });
-      break;
-  }
-
-  let symbol: string = '';
-  switch (contract.interface) {
-    case Interfaces.ROCKET_POOL:
-      symbol = 'RETH';
-      break;
-  }
-
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={3}>
         <Logo interfaceName={contract.interface} />
       </Flex>
       <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
-        {title}
+        {intl.formatMessage({ id: 'display-heading', defaultMessage: 'Stake Rewards' })}
       </Heading>
-      <Chip text={`${displayBalance} ${symbol}`} />
+      <Chip text={`${displayBalance} ETH`} />
     </Box>
   );
 }
 
-function StakeHeader() {
+function StakeHeader({ contract }: { contract: Contract }) {
   const intl = useIntl();
 
-  return <Text>{intl.formatMessage({ id: 'stake-rewards', defaultMessage: 'Stake Rewards' })}</Text>;
+  switch (contract.interface) {
+    case Interfaces.ROCKET_POOL:
+      return (
+        <Text color="profile.secondaryText" textAlign="center">
+          {intl.formatMessage({ id: 'rocket-pool-stake-rewards', defaultMessage: 'Rocket Pool Stake Rewards' })}
+        </Text>
+      );
+    default:
+      return (
+        <Text color="profile.secondaryText" textAlign="center">
+          {intl.formatMessage({ id: 'stake-rewards', defaultMessage: 'Stake Rewards' })}
+        </Text>
+      );
+  }
 }
 
 function StakeBody({ stake, contract }: { stake: Stake | undefined; contract: Contract }) {
-  if (!stake) {
-    return <></>;
-  }
+  const displayEther = useDisplayNumber(stake?.total_rewards ?? '0', 18);
 
-  return <></>;
+  return (
+    <>
+      <Flex justifyContent="center" mb={3}>
+        <Logo interfaceName={contract.interface} />
+      </Flex>
+      <Text color="profile.secondaryText" textAlign="center" fontWeight="semibold">
+        Total Eth Earned: {displayEther} ETH
+      </Text>
+    </>
+  );
 }
 
 export default StakeRewards;

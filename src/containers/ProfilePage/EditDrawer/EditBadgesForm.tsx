@@ -40,12 +40,15 @@ function EditBadgesForm() {
   const label =
     premium && badgeCount >= PREMIUM_TOTAL_BADGE_COUNT
       ? intl.formatMessage(
-          { id: 'premium-max-badge-count', defaultMessage: '{max} badges is the maximum number for a premium account' },
+          {
+            id: 'premium-max-badge-count-form',
+            defaultMessage: '{max} badges is the maximum number for a premium account',
+          },
           { max: PREMIUM_TOTAL_BADGE_COUNT }
         )
       : intl.formatMessage(
           {
-            id: 'regular-max-badge-count',
+            id: 'regular-max-badge-count-form',
             defaultMessage:
               '{max} badges is the maximum number for a regular account. Purchase premium from the store to access a higher badge count',
           },
