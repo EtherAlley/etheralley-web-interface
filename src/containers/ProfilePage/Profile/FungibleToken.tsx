@@ -1,15 +1,16 @@
-import { Image, Text, Box, Flex } from '@chakra-ui/react';
+import { Text, Box, Flex, Heading } from '@chakra-ui/react';
 import Badge from './Badge';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
-import Coin from '../../../icons/Coin';
+import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectFungibleToken } from './../slice';
+import { selectAddress, selectFungibleToken } from './../slice';
 import Link from '../../../components/Link';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 import { Contract, FungibleMetadata } from '../../../common/types';
-import useLogo from '../../../hooks/useLogo';
+import { useIntl } from 'react-intl';
+import Logo from '../../../components/Logo';
+import useTrimmedString from '../../../hooks/useTrimmedString';
 
 function FungibleTokenComponent({ index }: { index: number }) {
   const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
@@ -20,13 +21,13 @@ function FungibleTokenComponent({ index }: { index: number }) {
       height={BADGE_HEIGHT}
       Display={<FungibleDisplay metadata={metadata} contract={contract} balance={balance} />}
       DialogHeader={<FungibleHeader name={metadata.name} />}
-      DialogBody={<FungibleDialog metadata={metadata} contract={contract} />}
+      DialogBody={<FungibleDialog metadata={metadata} contract={contract} balance={balance} />}
     />
   );
 }
 
 function FungibleDisplay({
-  metadata: { symbol, decimals },
+  metadata: { symbol, decimals, name },
   contract: { address, blockchain },
   balance,
 }: {
@@ -38,77 +39,83 @@ function FungibleDisplay({
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={5}>
-        <FungibleLogo address={address} blockchain={blockchain} symbol={symbol} />
+        <Logo contractAddress={address} blockchain={blockchain} />
       </Flex>
-      {displayBalance && <BlockchainChip text={`${displayBalance} ${symbol ?? ''}`} blockchain={blockchain} />}
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
+        {name}
+      </Heading>
+      {displayBalance && <Chip text={`${displayBalance} ${symbol ?? ''}`} />}
     </Box>
   );
 }
 
 function FungibleHeader({ name }: { name: string | undefined }) {
-  return <Text>{name ?? ''}</Text>;
-}
-
-function FungibleDialog({
-  metadata: { symbol, name },
-  contract: { address, blockchain, interface: interfaceName },
-}: {
-  contract: Contract;
-  metadata: FungibleMetadata;
-}) {
-  const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
-
   return (
-    <>
-      <FungibleLogo address={address} blockchain={blockchain} symbol={symbol} />
-      <Link href={etherscanUrl} isExternal>
-        Etherscan
-      </Link>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Name: {name}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Symbol: {symbol}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Address: {address}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Blockchain: {blockchain}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Interface: {interfaceName}
-      </Text>
-    </>
+    <Text textAlign="center" textColor="profile.secondaryText">
+      {name ?? ''}
+    </Text>
   );
 }
 
-const coinStyling = {
-  width: 85,
-  height: 85,
-  backgroundColor: 'profile.primary',
-  borderColor: 'profile.primary',
-  borderRadius: '50%',
-  boxShadow: 'dark-lg',
-  borderWidth: '1px',
-};
-
-function FungibleLogo({
-  address,
-  blockchain,
-  symbol,
+function FungibleDialog({
+  metadata: { symbol, decimals },
+  contract: { address: contractAddress, blockchain, interface: interfaceName },
+  balance,
 }: {
-  address: string;
-  blockchain: Blockchains;
-  symbol: string | undefined;
+  contract: Contract;
+  metadata: FungibleMetadata;
+  balance: string | undefined;
 }) {
-  const url = useLogo({ contractAddress: address, blockchain });
-  return !url ? (
-    <Box {...coinStyling}>
-      <Coin width="85px" height="85px" />
+  const intl = useIntl();
+  const address = useAppSelector(selectAddress);
+  const etherscanUrl = useEtherscanUrl(blockchain, 'token', `${contractAddress}?a=${address}`);
+  const displayBalance = useDisplayNumber(balance, decimals);
+  const trimmedAddress = useTrimmedString(contractAddress);
+
+  return (
+    <Box>
+      <Flex justifyContent="center">
+        <Logo contractAddress={contractAddress} blockchain={blockchain} />
+      </Flex>
+      <Flex alignItems="center" mt={3} mb={3}>
+        <Box flexGrow={1} />
+        <Link href={etherscanUrl} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-balance', defaultMessage: 'Balance' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {`${displayBalance} ${symbol}`}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-contract-address', defaultMessage: 'Contract Address' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {trimmedAddress}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-blockchain', defaultMessage: 'Blockchain' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {blockchain}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'token-dialog-token-standard', defaultMessage: 'Token Standard' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {interfaceName}
+        </Text>
+      </Flex>
     </Box>
-  ) : (
-    <Image alt={symbol} src={url} {...coinStyling} />
   );
 }
 

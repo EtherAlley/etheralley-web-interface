@@ -1,5 +1,4 @@
-import { Box, Center, Divider, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
-import { nanoid } from '@reduxjs/toolkit';
+import { Box, Center, Flex, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import { BadgeTypes, DisplayItem } from '../../../common/types';
 import ErrorBoundary from '../../../components/ErrorBoundary';
@@ -10,63 +9,16 @@ import NonFungibleTokenComponent from './NonFungibleToken';
 import { selectGroups, selectLoading } from './../slice';
 import Statistic from './Statistic';
 import Currency from './Currency';
+import Divider from './Divider';
 
 function Groups() {
   const groups = useAppSelector(selectGroups);
-  const loading = useAppSelector(selectLoading);
-
-  // rendering a group with hard coded items to show a loading skeleton
-  if (loading) {
-    return (
-      <Box mt={20}>
-        <Group
-          text=""
-          items={[
-            {
-              id: nanoid(),
-              index: 0,
-              type: BadgeTypes.FungibleToken,
-            },
-            {
-              id: nanoid(),
-              index: 1,
-              type: BadgeTypes.FungibleToken,
-            },
-            {
-              id: nanoid(),
-              index: 2,
-              type: BadgeTypes.FungibleToken,
-            },
-            {
-              id: nanoid(),
-              index: 3,
-              type: BadgeTypes.FungibleToken,
-            },
-            {
-              id: nanoid(),
-              index: 4,
-              type: BadgeTypes.FungibleToken,
-            },
-            {
-              id: nanoid(),
-              index: 5,
-              type: BadgeTypes.FungibleToken,
-            },
-          ]}
-        />
-      </Box>
-    );
-  }
 
   return (
     <>
       {groups.length > 0 &&
         groups.map(({ text, items }, i) => {
-          return (
-            <Box mt={20} key={i}>
-              <Group text={text} items={items} />
-            </Box>
-          );
+          return <Group text={text} items={items} key={i} />;
         })}
     </>
   );
@@ -74,7 +26,7 @@ function Groups() {
 
 function Group({ text, items }: { text: string; items: DisplayItem[] }) {
   return (
-    <>
+    <Box mt={20}>
       <GroupTitle text={text} />
       <Divider mb={10} />
       {items.length > 0 && (
@@ -96,7 +48,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
           })}
         </Grid>
       )}
-    </>
+    </Box>
   );
 }
 
@@ -115,8 +67,10 @@ function GroupItem({ type, index }: { type: BadgeTypes | undefined; index: numbe
 
   if (loading) {
     return (
-      <Paper width={BADGE_WIDTH} height={BADGE_HEIGHT}>
-        <Skeleton width={BADGE_WIDTH} height={BADGE_HEIGHT} />
+      <Paper>
+        <Flex width={BADGE_WIDTH} height={BADGE_HEIGHT} justifyContent="center" alignItems="center">
+          <Skeleton width={BADGE_WIDTH - 30} height={BADGE_HEIGHT - 30} />
+        </Flex>
       </Paper>
     );
   }

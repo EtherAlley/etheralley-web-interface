@@ -3,7 +3,17 @@ import { ReactChild } from 'react';
 import { RiExternalLinkLine } from 'react-icons/ri';
 import { Link as RouterLink } from 'react-router-dom';
 
-function Link({ href, isExternal, children }: { href: string; isExternal?: boolean; children: ReactChild }) {
+function Link({
+  href,
+  isExternal,
+  children,
+  color = 'blue.500',
+}: {
+  href: string;
+  isExternal?: boolean;
+  children: ReactChild;
+  color?: string;
+}) {
   const externalProps = {
     isExternal,
     href: href,
@@ -14,7 +24,7 @@ function Link({ href, isExternal, children }: { href: string; isExternal?: boole
     to: href,
   };
   return (
-    <LinkComponent color="blue.500" {...(isExternal ? externalProps : props)}>
+    <LinkComponent color={color} {...(isExternal ? externalProps : props)}>
       {children}
       {isExternal && <Icon as={RiExternalLinkLine} ml={2}></Icon>}
     </LinkComponent>

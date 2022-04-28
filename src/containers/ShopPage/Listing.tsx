@@ -1,7 +1,5 @@
 import {
   Box,
-  UnorderedList,
-  ListItem,
   Text,
   Flex,
   Heading,
@@ -14,6 +12,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  GridItem,
+  SimpleGrid,
+  useTheme,
 } from '@chakra-ui/react';
 import { useEthers } from '@usedapp/core';
 import { useState } from 'react';
@@ -22,11 +23,14 @@ import { useDispatch } from 'react-redux';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Link from '../../components/Link';
+import Logo from '../../components/Logo';
 import Paper from '../../components/Paper';
 import useAppSelector from '../../hooks/useAppSelector';
+import useCurrencySymbol from '../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
-import useLogo from '../../hooks/useLogo';
+import useHexToRgb from '../../hooks/useHexToRgb';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
+import useTrimmedString from '../../hooks/useTrimmedString';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 
 function ListingComponent({ listing, index }: { listing: Listing; index: number }) {
@@ -37,6 +41,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
     token_id,
   } = listing;
 
+  const intl = useIntl();
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
   const formatPrice = useDisplayNumber(price, 18);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +49,10 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const balances = useAppSelector(selectBalances);
   const { chainId } = useEthers();
-  const url = useLogo({ blockchain });
+  const symbol = useCurrencySymbol(blockchain);
+  const theme = useTheme();
+  const rgb = useHexToRgb(theme.colors.brand[400]);
+  const trimmedAddress = useTrimmedString(address);
 
   const hasPurchased = !loadingBalances && !!balances[index] && balances[index] !== '0';
   const correctChainId = chainId === Settings.STORE_CHAIN_ID;
@@ -61,11 +69,11 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
               <Image alt={name} src={image} width={150} height={150} />
             </Box>
           </Flex>
-          <Flex alignItems="center" justifyContent="center" ml={6}>
-            <Text fontWeight="bold" textAlign="center">
-              {`${formatPrice} MATIC`}
+          <Flex alignItems="center" justifyContent="center" ml={6} mt={2}>
+            <Text fontWeight="bold" textAlign="center" mr={2}>
+              {`${formatPrice} ${symbol}`}
             </Text>
-            <Image alt={blockchain} src={url} ml={2} height={6} width={6} />
+            <Logo blockchain={blockchain} height={6} width={6} />
           </Flex>
           <PurchaseButton
             price={price}
@@ -79,47 +87,87 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent backgroundColor="gray.900">
-          <ModalHeader fontSize="lg" fontWeight="bold">
+          <ModalHeader fontSize="lg" fontWeight="bold" textAlign="center">
             {name}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <>
-              <Image alt={name} src={image} width={150} height={150} />
-              {openSeaUrl && (
-                <Link href={openSeaUrl} isExternal>
+            <Box>
+              <Flex justifyContent="center">
+                <Image alt={name} src={image} width={150} height={150} />
+              </Flex>
+              <Flex alignItems="center" mt={3}>
+                <Heading as="h5" size="sm">
+                  {intl.formatMessage({ id: 'nft-dialog-description', defaultMessage: 'Description' })}
+                </Heading>
+                <Box flexGrow={1} />
+                <Link href={openSeaUrl} isExternal color="brand.400">
                   Opensea
                 </Link>
-              )}
-              <Text fontSize="md" noOfLines={3} mt={3}>
+              </Flex>
+              <Text fontWeight="semibold" fontSize="md" noOfLines={3} mt={3}>
                 {description}
               </Text>
               {attributes && attributes.length > 0 && (
                 <>
-                  <Text fontSize="md" mt={3}>
-                    Attributes:
-                  </Text>
-                  <UnorderedList>
+                  <Heading as="h5" size="sm" my={3}>
+                    {intl.formatMessage({ id: 'nft-dialog-attributes', defaultMessage: 'Attributes' })}
+                  </Heading>
+                  <SimpleGrid columns={3} spacing={3}>
                     {attributes.map(({ trait_type, value }, i) => (
-                      <ListItem key={i}>
-                        <Text>
-                          {trait_type}: {value}
+                      <GridItem
+                        key={i}
+                        border={`1px solid ${theme.colors.brand[400]}`}
+                        backgroundColor={`rgba(${rgb}, 0.05)`}
+                        borderRadius="5px"
+                        p={2}
+                      >
+                        <Text fontWeight="bold" textAlign="center" color="brand.400">
+                          {trait_type}
                         </Text>
-                      </ListItem>
+                        <Text fontWeight="semibold" textAlign="center">
+                          {`${value}`}
+                        </Text>
+                      </GridItem>
                     ))}
-                  </UnorderedList>
+                  </SimpleGrid>
                 </>
               )}
-              <Text fontSize="md" noOfLines={3} mt={3}>
-                Address: {address}
-              </Text>
-              <Text fontSize="md" noOfLines={3} mt={3}>
-                Blockchain: {blockchain}
-              </Text>
-              <Text fontSize="md" noOfLines={3} mt={3}>
-                Interface: {interfaceName}
-              </Text>
-            </>
+              <Box mt={3}>
+                <Flex>
+                  <Text fontWeight="bold" fontSize="md" flexGrow={1}>
+                    {intl.formatMessage({ id: 'nft-dialog-contract-address', defaultMessage: 'Contract Address' })}
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md">
+                    {trimmedAddress}
+                  </Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" fontSize="md" flexGrow={1}>
+                    {intl.formatMessage({ id: 'nft-dialog-token-id', defaultMessage: 'Token Id' })}
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md">
+                    {token_id}
+                  </Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" fontSize="md" flexGrow={1}>
+                    {intl.formatMessage({ id: 'nft-dialog-blockchain', defaultMessage: 'Blockchain' })}
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md">
+                    {blockchain}
+                  </Text>
+                </Flex>
+                <Flex>
+                  <Text fontWeight="bold" fontSize="md" flexGrow={1}>
+                    {intl.formatMessage({ id: 'nft-dialog-token-standard', defaultMessage: 'Token Standard' })}
+                  </Text>
+                  <Text fontWeight="semibold" fontSize="md">
+                    {interfaceName}
+                  </Text>
+                </Flex>
+              </Box>
+            </Box>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>

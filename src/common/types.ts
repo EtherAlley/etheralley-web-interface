@@ -47,6 +47,8 @@ export type DisplayConfig = {
   colors: {
     primary: string;
     secondary: string;
+    accent: string;
+    shadow: string;
     primary_text: string;
     secondary_text: string;
   };
@@ -111,7 +113,7 @@ export type NonFungibleMetadata = {
   name: string;
   description: string;
   image: string;
-  attributes?: { [x: string]: string }[];
+  attributes?: { [x: string]: string | number | boolean | undefined }[];
 };
 
 export type FungibleToken = {

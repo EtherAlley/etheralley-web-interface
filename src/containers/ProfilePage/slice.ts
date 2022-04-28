@@ -48,6 +48,8 @@ const initialState: State = {
       colors: {
         primary: '',
         secondary: '',
+        accent: '',
+        shadow: '',
         primary_text: '',
         secondary_text: '',
       },
@@ -63,7 +65,45 @@ const initialState: State = {
         text: '',
         items: [],
       },
-      groups: [],
+      groups: [
+        // rendering a group with hard coded items to show a loading skeleton
+        {
+          id: nanoid(),
+          text: '',
+          items: [
+            {
+              id: nanoid(),
+              index: 0,
+              type: BadgeTypes.FungibleToken,
+            },
+            {
+              id: nanoid(),
+              index: 1,
+              type: BadgeTypes.FungibleToken,
+            },
+            {
+              id: nanoid(),
+              index: 2,
+              type: BadgeTypes.FungibleToken,
+            },
+            {
+              id: nanoid(),
+              index: 3,
+              type: BadgeTypes.FungibleToken,
+            },
+            {
+              id: nanoid(),
+              index: 4,
+              type: BadgeTypes.FungibleToken,
+            },
+            {
+              id: nanoid(),
+              index: 5,
+              type: BadgeTypes.FungibleToken,
+            },
+          ],
+        },
+      ],
     },
     interactions: [],
     non_fungible_tokens: [],
@@ -151,6 +191,12 @@ export const slice = createSlice({
     },
     updateSecondaryColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.secondary = action.payload;
+    },
+    updateAccentColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.accent = action.payload;
+    },
+    updateShadowColor: (state, action: PayloadAction<string>) => {
+      state.profile.display_config.colors.shadow = action.payload;
     },
     updatePrimaryTextColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.primary_text = action.payload;
@@ -292,17 +338,15 @@ export const slice = createSlice({
 
 // build a pleasant display config when the user does not have one configured
 function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Profile): void {
-  stateProfile.display_config.info.title = '💎 My Profile 💎';
-  stateProfile.display_config.info.description = `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat.
-  `;
+  stateProfile.display_config.info.title = '';
+  stateProfile.display_config.info.description = '';
   stateProfile.display_config.colors = {
     primary: '#121212',
     secondary: '#1a1a1b',
-    primary_text: '#FFF',
-    secondary_text: '#FFF',
+    accent: '#36e2bc',
+    shadow: '#000000',
+    primary_text: '#F7F5F2',
+    secondary_text: '#F7F5F2',
   };
   stateProfile.display_config.groups = [];
 
@@ -489,6 +533,8 @@ export const {
   updateProfileTwitterhandle,
   updatePrimaryColor,
   updateSecondaryColor,
+  updateAccentColor,
+  updateShadowColor,
   updatePrimaryTextColor,
   updateSecondaryTextColor,
   updateGroupText,

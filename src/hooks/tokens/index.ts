@@ -1,13 +1,9 @@
-import ethereumMainnet from './mainnet/ethereum.json';
-import arbitrumMainnet from './mainnet/arbitrum.json';
-import optimismMainnet from './mainnet/optimism.json';
-import polygonMainnet from './mainnet/polygon.json';
-import ethereumTestnet from './testnet/ethereum.json';
-import arbitrumTestnet from './testnet/arbitrum.json';
-import optimismTestnet from './testnet/optimism.json';
-import polygonTestnet from './testnet/polygon.json';
+import ethereumMainnet from './ethereum.json';
+import arbitrumMainnet from './arbitrum.json';
+import optimismMainnet from './optimism.json';
+import polygonMainnet from './polygon.json';
 
-type Token = { name: string; symbol: string; address: string };
+type Token = { name: string; symbol: string; id: string };
 
 type Tokens = {
   ethereum: Token[];
@@ -23,11 +19,4 @@ const MainnetTokens: Tokens = {
   polygon: polygonMainnet,
 };
 
-const TestnetTokens: Tokens = {
-  ethereum: ethereumTestnet,
-  arbitrum: arbitrumTestnet,
-  optimism: optimismTestnet,
-  polygon: polygonTestnet,
-};
-
-export default process.env.NODE_ENV === 'development' ? TestnetTokens : MainnetTokens;
+export default MainnetTokens;

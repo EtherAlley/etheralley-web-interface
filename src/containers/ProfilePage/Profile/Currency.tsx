@@ -1,12 +1,16 @@
-import { Box, Flex, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
+import { useIntl } from 'react-intl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
+import Link from '../../../components/Link';
+import Logo from '../../../components/Logo';
 import useAppSelector from '../../../hooks/useAppSelector';
+import useBlockchainLabel from '../../../hooks/useBlockchainLabel';
+import useCurrencySymbol from '../../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
-import useLogo from '../../../hooks/useLogo';
-import Coin from '../../../icons/Coin';
-import { selectCurrency } from '../slice';
+import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
+import { selectAddress, selectCurrency } from '../slice';
 import Badge from './Badge';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 
 function Currency({ index }: { index: number }) {
   const { blockchain, balance } = useAppSelector((state) => selectCurrency(state, index));
@@ -16,7 +20,7 @@ function Currency({ index }: { index: number }) {
       width={BADGE_WIDTH}
       height={BADGE_HEIGHT}
       Display={<CurrencyDisplay blockchain={blockchain} balance={balance} />}
-      DialogHeader={<CurrencyHeader blockchain={blockchain} />}
+      DialogHeader={<CurrencyHeader />}
       DialogBody={<CurrencyDialog blockchain={blockchain} balance={balance} />}
     />
   );
@@ -24,69 +28,66 @@ function Currency({ index }: { index: number }) {
 
 function CurrencyDisplay({ blockchain, balance }: { blockchain: Blockchains; balance: string | undefined }) {
   const displayBalance = useDisplayNumber(balance, 18);
+  const blockchainLabel = useBlockchainLabel(blockchain);
+  const symbol = useCurrencySymbol(blockchain);
+
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={5}>
-        <CurrencyLogo blockchain={blockchain} />
+        <Logo blockchain={blockchain} />
       </Flex>
-      {displayBalance && (
-        <BlockchainChip text={`${displayBalance} ${currencyAbbreviation(blockchain)}`} blockchain={blockchain} />
-      )}
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
+        {blockchainLabel}
+      </Heading>
+      {displayBalance && <Chip text={`${displayBalance} ${symbol}`} />}
     </Box>
   );
 }
 
-function CurrencyHeader({ blockchain }: { blockchain: Blockchains }) {
-  return <Text>{blockchain}</Text>;
+function CurrencyHeader() {
+  return (
+    <Text textAlign="center" textColor="profile.secondaryText">
+      Currency
+    </Text>
+  );
 }
 
 function CurrencyDialog({ blockchain, balance }: { blockchain: Blockchains; balance: string | undefined }) {
+  const intl = useIntl();
   const displayBalance = useDisplayNumber(balance, 18);
+  const address = useAppSelector(selectAddress);
+  const etherscanUrl = useEtherscanUrl(blockchain, 'address', address);
+  const symbol = useCurrencySymbol(blockchain);
+
   return (
     <>
-      <CurrencyLogo blockchain={blockchain} />
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Blockchain: {blockchain}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Balance: {displayBalance}
-      </Text>
+      <Flex justifyContent="center">
+        <Logo blockchain={blockchain} />
+      </Flex>
+      <Flex alignItems="center" mt={3} mb={3}>
+        <Box flexGrow={1} />
+        <Link href={etherscanUrl} color="profile.accent" isExternal>
+          Etherscan
+        </Link>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'currency-dialog-balance', defaultMessage: 'Balance' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {`${displayBalance} ${symbol}`}
+        </Text>
+      </Flex>
+      <Flex>
+        <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+          {intl.formatMessage({ id: 'currency-dialog-blockchain', defaultMessage: 'Blockchain' })}
+        </Text>
+        <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+          {blockchain}
+        </Text>
+      </Flex>
     </>
   );
-}
-
-const coinStyling = {
-  width: 85,
-  height: 85,
-  p: 2,
-  backgroundColor: 'profile.primary',
-  borderColor: 'profile.primary',
-  borderRadius: '50%',
-  boxShadow: 'dark-lg',
-  borderWidth: '1px',
-};
-
-function CurrencyLogo({ blockchain }: { blockchain: Blockchains }) {
-  const url = useLogo({ blockchain });
-  return !url ? (
-    <Box {...coinStyling}>
-      <Coin width="85px" height="85px" />
-    </Box>
-  ) : (
-    <Image alt={blockchain} src={url} {...coinStyling} />
-  );
-}
-
-function currencyAbbreviation(blockchain: Blockchains): string {
-  switch (blockchain) {
-    case Blockchains.POLYGON:
-      return 'MATIC';
-    case Blockchains.ETHEREUM:
-    case Blockchains.OPTIMISM:
-    case Blockchains.ARBITRUM:
-    default:
-      return 'ETH';
-  }
 }
 
 export default Currency;

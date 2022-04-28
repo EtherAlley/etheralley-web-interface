@@ -10,7 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import Paper from '../../../components/Paper';
+import Paper from './Paper';
 
 function Badge({
   width,
@@ -37,6 +37,7 @@ function Badge({
     height,
     borderRadius: 8,
     transition: 'all .1s ease-in-out',
+    display: 'block',
   };
 
   return (
@@ -44,14 +45,16 @@ function Badge({
       {usePaper ? <Paper {...boxStyling}>{Display}</Paper> : <Box {...boxStyling}>{Display}</Box>}
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent backgroundColor="profile.primary">
+        <ModalContent backgroundColor="profile.secondary">
           <ModalHeader fontSize="lg" fontWeight="bold">
             {DialogHeader}
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton color="profile.accent" />
           <ModalBody>{DialogBody}</ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button bgColor="profile.accent" textColor="profile.secondary" onClick={onClose}>
+              Close
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

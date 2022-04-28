@@ -1,6 +1,5 @@
 import {
   Box,
-  Divider,
   Flex,
   Heading,
   Popover,
@@ -22,8 +21,10 @@ import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import Handshake from '../../../icons/Handshake';
 import Rocket from '../../../icons/Rocket';
 import { selectAchievements, selectInteraction, selectStoreAssets } from '../slice';
-import Logo from '../../../icons/Logo';
+import EtherAlley from '../../../icons/EtherAlley';
 import ErrorBoundary from '../../../components/ErrorBoundary';
+import Divider from './Divider';
+import { Transaction } from '../../../common/types';
 
 const badgeStyling: any = {
   justifyContent: 'center',
@@ -56,25 +57,29 @@ function AchievementBar() {
 
   return (
     <Box mt={10}>
-      <Heading as="h3" size="lg" mb={5} textAlign={textAlign}>
+      <Heading as="h3" size="lg" mb={5} textAlign={textAlign} textColor="profile.primaryText">
         {text}
       </Heading>
-      <Divider />
+      <Divider mb={5} />
       <Flex p={3} justifyContent={justifyContent}>
         {beta_tester && (
           <Box mr={3} key={0}>
             <ErrorBoundary>
               <AchievementPopover
-                trigger={<Logo {...iconStyling} />}
+                trigger={<EtherAlley {...iconStyling} />}
                 header={intl.formatMessage({
                   id: 'beta-tester-header',
-                  defaultMessage: 'Participated in the Ether Alley Beta!',
+                  defaultMessage: 'EtherAlley Beta Tester!',
                 })}
-                body={intl.formatMessage({
-                  id: 'beta-tester-body',
-                  defaultMessage:
-                    'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
-                })}
+                body={
+                  <Text textColor="profile.secondaryText">
+                    {intl.formatMessage({
+                      id: 'beta-tester-body',
+                      defaultMessage:
+                        'This achievement is earned by claiming the Beta Tester token from the Ether Alley store',
+                    })}
+                  </Text>
+                }
               />
             </ErrorBoundary>
           </Box>
@@ -94,7 +99,6 @@ function AchievementBar() {
 function InteractionAchievement({ index }: { index: number }) {
   const intl = useIntl();
   const { type, transaction, timestamp } = useAppSelector((state) => selectInteraction(state, index));
-  const url = useEtherscanUrl(transaction.blockchain, 'tx', transaction.id);
 
   switch (type) {
     case InteractionTypes.CONTRACT_CREATION:
@@ -105,14 +109,7 @@ function InteractionAchievement({ index }: { index: number }) {
             id: 'deployed-achievement-header',
             defaultMessage: 'Deployed a smart contract!',
           })}
-          body={
-            <>
-              <Text>Timestamp: {timestamp}</Text>
-              <Link href={url} isExternal>
-                Etherscan
-              </Link>
-            </>
-          }
+          body={<InteractionPopoverBody transaction={transaction} timestamp={timestamp} />}
         />
       );
     case InteractionTypes.SEND_ETHER:
@@ -120,19 +117,38 @@ function InteractionAchievement({ index }: { index: number }) {
         <AchievementPopover
           trigger={<Handshake {...iconStyling} />}
           header={intl.formatMessage({ id: 'sent-ether-achievement-header', defaultMessage: 'Sent Ether!' })}
-          body={
-            <>
-              <Text>Timestamp: {timestamp}</Text>
-              <Link href={url} isExternal>
-                Etherscan
-              </Link>
-            </>
-          }
+          body={<InteractionPopoverBody transaction={transaction} timestamp={timestamp} />}
         />
       );
     default:
       return <></>;
   }
+}
+
+function InteractionPopoverBody({
+  transaction: { blockchain, id },
+  timestamp,
+}: {
+  transaction: Transaction;
+  timestamp: number;
+}) {
+  const intl = useIntl();
+  const url = useEtherscanUrl(blockchain, 'tx', id);
+
+  return (
+    <>
+      <Flex>
+        <Text color="profile.secondaryText" fontWeight="semibold">
+          {intl.formatMessage({ id: 'interaction-earned', defaultMessage: 'Earned' })}:{' '}
+          {intl.formatDate(timestamp * 1000)}
+        </Text>
+        <Box flexGrow={1} />
+        <Link href={url} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+    </>
+  );
 }
 
 function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; header: string; body: ReactNode }) {
@@ -141,15 +157,17 @@ function AchievementPopover({ trigger, header, body }: { trigger: ReactNode; hea
       <PopoverTrigger>
         <Flex {...badgeStyling}>{trigger}</Flex>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent backgroundColor="profile.secondary" borderColor="profile.secondary">
         <PopoverArrow />
-        <PopoverCloseButton />
-        <PopoverHeader>
-          <Heading as="h4" size="sm">
+        <PopoverCloseButton color="profile.accent" />
+        <PopoverHeader borderColor="profile.secondaryText">
+          <Heading as="h4" size="sm" textColor="profile.secondaryText">
             {header}
           </Heading>
         </PopoverHeader>
-        <PopoverBody>{body}</PopoverBody>
+        <PopoverBody textColor="profile.secondaryText" fontWeight="semibold">
+          {body}
+        </PopoverBody>
       </PopoverContent>
     </Popover>
   );

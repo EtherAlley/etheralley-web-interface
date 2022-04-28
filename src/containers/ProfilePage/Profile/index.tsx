@@ -5,7 +5,7 @@ import ProfileHeader from './ProfileHeader';
 
 function Profile() {
   return (
-    <Box mb={100}>
+    <Box>
       <ProfileHeader />
       <AchievementBar />
       <Groups />

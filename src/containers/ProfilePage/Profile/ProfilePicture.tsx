@@ -1,5 +1,5 @@
-import { Box, Flex, Icon, LinkBox, LinkOverlay, Skeleton, Text } from '@chakra-ui/react';
-import Paper from '../../../components/Paper';
+import { Flex, Icon, LinkBox, LinkOverlay, Skeleton, Text } from '@chakra-ui/react';
+import Paper from './Paper';
 import NonFungibleTokenComponent from './NonFungibleToken';
 import ProfileUser from '../../../icons/ProfileUser';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -7,14 +7,15 @@ import { selectAddress, selectENSName, selectInfo, selectLoading, selectPicture,
 import { BADGE_WIDTH } from '../../../common/constants';
 import Verified from '../../../icons/Verified';
 import { FaTwitter } from 'react-icons/fa';
+import useTrimmedString from '../../../hooks/useTrimmedString';
 
 function ProfilePicture() {
   return (
-    <Paper py={2} px={2} width={BADGE_WIDTH + 20}>
-      <Box>
+    <Paper p={2}>
+      <>
         <Picture />
         <Info />
-      </Box>
+      </>
     </Paper>
   );
 }
@@ -28,7 +29,11 @@ function Picture() {
   }
 
   if (!item) {
-    return <ProfileUser width={BADGE_WIDTH} height={BADGE_WIDTH} />;
+    return (
+      <Flex justifyContent="center" alignItems="center" p={4}>
+        <ProfileUser width={BADGE_WIDTH - 32} height={BADGE_WIDTH - 32} />
+      </Flex>
+    );
   }
 
   return <NonFungibleTokenComponent index={item.index} useHeader={false} usePaper={false} />;
@@ -40,33 +45,29 @@ function Info() {
   const loading = useAppSelector(selectLoading);
   const { premium } = useAppSelector(selectStoreAssets);
   const { twitter_handle } = useAppSelector(selectInfo);
+  const trimmedAddress = useTrimmedString(address);
 
   if (loading) {
-    return (
-      <>
-        <Skeleton width={BADGE_WIDTH} height={10} mt={2} />
-        <Skeleton width={BADGE_WIDTH} height={10} mt={2} />
-      </>
-    );
+    return <Skeleton width={BADGE_WIDTH} height={8} mt={2} />;
   }
 
   return (
     <>
-      <Flex alignItems="center" justifyContent="center">
-        <Text fontWeight="bold" isTruncated height={8} mt={2} mr={premium ? 2 : 0} maxWidth="160px">
-          {ens_name || address}
+      <Flex alignItems="center" justifyContent="center" height={8} mt={2}>
+        <Text fontWeight="bold" isTruncated mr={premium ? 2 : 0} maxWidth="160px" textColor="profile.secondaryText">
+          {ens_name || trimmedAddress}
         </Text>
         {premium && <Verified width="20px" height="20px" display="inline" />}
       </Flex>
       {twitter_handle && (
         <LinkBox>
-          <Flex alignItems="center" justifyContent="center">
-            <Text size="md">
+          <Flex alignItems="center" justifyContent="center" mt={2}>
+            <Text fontWeight="semibold" size="md" textColor="profile.secondaryText">
               <LinkOverlay href={`https://twitter.com/${twitter_handle}`} isExternal>
                 @{twitter_handle}
               </LinkOverlay>
             </Text>
-            <Icon as={FaTwitter} w={4} height={4} ml={1} />
+            <Icon color="profile.secondaryText" as={FaTwitter} w={4} height={4} ml={1} />
           </Flex>
         </LinkBox>
       )}

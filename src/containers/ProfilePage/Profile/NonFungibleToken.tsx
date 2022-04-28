@@ -1,13 +1,15 @@
-import { Flex, Image, Text, ListItem, UnorderedList, Heading, Box, Center } from '@chakra-ui/react';
+import { Flex, Image, Text, Heading, Box, Center, SimpleGrid, GridItem } from '@chakra-ui/react';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import Badge from './Badge';
 import useOpenSeaUrl from '../../../hooks/useOpenSeaUrl';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectNonFungibleToken } from './../slice';
+import { selectColors, selectNonFungibleToken } from './../slice';
 import Link from '../../../components/Link';
 import { Contract, NonFungibleMetadata } from '../../../common/types';
-import Lock from '../../../icons/Lock';
-import Paper from '../../../components/Paper';
+import Paper from './Paper';
+import useHexToRgb from '../../../hooks/useHexToRgb';
+import { useIntl } from 'react-intl';
+import useTrimmedString from '../../../hooks/useTrimmedString';
 
 function NonFungibleTokenComponent({
   index,
@@ -20,15 +22,9 @@ function NonFungibleTokenComponent({
 }) {
   const { metadata, contract, token_id, balance } = useAppSelector((state) => selectNonFungibleToken(state, index));
 
-  // user does not own this nft. we should not display it as if they own it and instead display something slightly more aggressive
+  // user does not own this nft. we should not display it and imply they own it
   if (balance === '0') {
-    return (
-      <Paper>
-        <Flex width={BADGE_WIDTH} height={BADGE_HEIGHT} justifyContent="center" alignItems="center">
-          <Lock width="80px" height="80px" />
-        </Flex>
-      </Paper>
-    );
+    return <Paper width={BADGE_WIDTH} height={useHeader ? BADGE_HEIGHT : BADGE_WIDTH} />;
   }
 
   return (
@@ -61,7 +57,7 @@ function NonFungibleDisplay({
     <Box maxHeight="100%" maxWidth="100%">
       <ImageWrapper image={image} alt={name} fallbackText={name} />
       {useHeader && (
-        <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2}>
+        <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2} textColor="profile.secondaryText">
           {name}
         </Heading>
       )}
@@ -70,7 +66,11 @@ function NonFungibleDisplay({
 }
 
 function NonFungibleHeader({ metadata }: { metadata: NonFungibleMetadata | undefined }) {
-  return <Heading>{metadata ? metadata.name : ''}</Heading>;
+  return (
+    <Text textAlign="center" textColor="profile.secondaryText">
+      {metadata ? metadata.name : ''}
+    </Text>
+  );
 }
 
 function NonFungibleDialog({
@@ -86,6 +86,11 @@ function NonFungibleDialog({
 }) {
   const { address, blockchain, interface: interfaceName } = contract;
   const openSeaUrl = useOpenSeaUrl(address, token_id, blockchain);
+  const { accent } = useAppSelector(selectColors);
+  const rgbAccent = useHexToRgb(accent);
+  const intl = useIntl();
+  const trimmedAddress = useTrimmedString(address);
+  const trimmedTokenId = useTrimmedString(token_id);
 
   // TODO: We can probably render more than this
   if (!metadata) {
@@ -95,45 +100,88 @@ function NonFungibleDialog({
   const { name, image, description, attributes } = metadata;
 
   return (
-    <>
-      <ImageWrapper image={image} alt={name} fallbackText={name} />
-      {openSeaUrl && (
-        <Link href={openSeaUrl} isExternal>
+    <Box>
+      <Flex justifyContent="center">
+        <ImageWrapper image={image} alt={name} fallbackText={name} />
+      </Flex>
+      <Flex alignItems="center" mt={3}>
+        <Heading as="h5" size="sm" textColor="profile.secondaryText">
+          {intl.formatMessage({ id: 'nft-dialog-description', defaultMessage: 'Description' })}
+        </Heading>
+        <Box flexGrow={1} />
+        <Link href={openSeaUrl} isExternal color="profile.accent">
           Opensea
         </Link>
-      )}
-      <Text fontSize="md" noOfLines={3} mt={3}>
+      </Flex>
+      <Text fontWeight="semibold" fontSize="md" noOfLines={3} mt={3} textColor="profile.secondaryText">
         {description}
       </Text>
       {attributes && attributes.length > 0 && (
         <>
-          <Text fontSize="md" mt={3}>
-            Attributes:
-          </Text>
-          <UnorderedList>
-            {attributes.map(({ trait_type, value }, i) => (
-              <ListItem key={i}>
-                <Text>
-                  {trait_type}: {value}
+          <Heading as="h5" size="sm" textColor="profile.secondaryText" my={3}>
+            {intl.formatMessage({ id: 'nft-dialog-attributes', defaultMessage: 'Attributes' })}
+          </Heading>
+          <SimpleGrid columns={3} spacing={3}>
+            {attributes.map(({ trait_type, value, display_type }, i) => (
+              <GridItem
+                key={i}
+                border={`1px solid ${accent}`}
+                backgroundColor={`rgba(${rgbAccent},0.05)`}
+                borderRadius="5px"
+                p={2}
+              >
+                <Text fontWeight="bold" textAlign="center" textColor="profile.accent">
+                  {trait_type}
                 </Text>
-              </ListItem>
+                <AttributeValue value={value} display_type={display_type} />
+              </GridItem>
             ))}
-          </UnorderedList>
+          </SimpleGrid>
         </>
       )}
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Balance: {balance}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Address: {address}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Blockchain: {blockchain}
-      </Text>
-      <Text fontSize="md" noOfLines={3} mt={3}>
-        Interface: {interfaceName}
-      </Text>
-    </>
+      <Box mt={3}>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-balance', defaultMessage: 'Balance' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {balance}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-contract-address', defaultMessage: 'Contract Address' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {trimmedAddress}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-token-id', defaultMessage: 'Token Id' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {trimmedTokenId}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-blockchain', defaultMessage: 'Blockchain' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {blockchain}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text fontWeight="bold" fontSize="md" textColor="profile.secondaryText" flexGrow={1}>
+            {intl.formatMessage({ id: 'nft-dialog-token-standard', defaultMessage: 'Token Standard' })}
+          </Text>
+          <Text fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+            {interfaceName}
+          </Text>
+        </Flex>
+      </Box>
+    </Box>
   );
 }
 
@@ -154,6 +202,30 @@ function ImageWrapper({ image, alt, fallbackText }: { image: string; alt: string
         borderRadius={8}
       />
     </Flex>
+  );
+}
+
+function AttributeValue({
+  value,
+  display_type,
+}: {
+  value: string | number | boolean | undefined;
+  display_type: string | number | boolean | undefined;
+}) {
+  const intl = useIntl();
+
+  if (!!display_type && display_type === 'date' && typeof value === 'number') {
+    return (
+      <Text fontWeight="semibold" textAlign="center" textColor="profile.secondaryText">
+        {intl.formatDate(value)}
+      </Text>
+    );
+  }
+
+  return (
+    <Text fontWeight="semibold" textAlign="center" textColor="profile.secondaryText">
+      {value}
+    </Text>
   );
 }
 

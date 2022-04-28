@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import {
   loadProfile,
+  updateAccentColor,
   updatePrimaryColor,
   updatePrimaryTextColor,
   updateSecondaryColor,
@@ -30,20 +31,10 @@ export interface State {
     profile: {
       primary: string;
       secondary: string;
+      accent: string;
+      shadow: string;
       primaryText: string;
       secondaryText: string;
-    };
-    polygon: {
-      [x: number]: string;
-    };
-    arbitrum: {
-      [x: number]: string;
-    };
-    optimism: {
-      [x: number]: string;
-    };
-    ethereum: {
-      [x: number]: string;
     };
   };
 }
@@ -81,20 +72,10 @@ const initialState: State = {
     profile: {
       primary: '#121212',
       secondary: '#1a1a1b',
-      primaryText: '#FFF',
-      secondaryText: '#FFF',
-    },
-    polygon: {
-      200: '#8247e5',
-    },
-    arbitrum: {
-      200: '#3182CE',
-    },
-    optimism: {
-      200: '#E53E3E',
-    },
-    ethereum: {
-      200: '#ecf0f1',
+      accent: '#36e2bc',
+      shadow: '#000000',
+      primaryText: '#F7F5F2',
+      secondaryText: '#F7F5F2',
     },
   },
 };
@@ -117,6 +98,8 @@ export const slice = createSlice({
       }
       state.colors.profile.primary = payload.display_config.colors.primary;
       state.colors.profile.secondary = payload.display_config.colors.secondary;
+      state.colors.profile.accent = payload.display_config.colors.accent;
+      state.colors.profile.shadow = payload.display_config.colors.shadow;
       state.colors.profile.primaryText = payload.display_config.colors.primary_text;
       state.colors.profile.secondaryText = payload.display_config.colors.secondary_text;
     });
@@ -131,6 +114,9 @@ export const slice = createSlice({
     });
     builder.addCase(updateSecondaryTextColor, (state, { payload }) => {
       state.colors.profile.secondaryText = payload;
+    });
+    builder.addCase(updateAccentColor, (state, { payload }) => {
+      state.colors.profile.accent = payload;
     });
   },
 });

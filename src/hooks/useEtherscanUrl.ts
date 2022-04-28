@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Blockchains } from '../common/constants';
 import Settings from '../common/settings';
 
-export default function useEtherscanUrl(blockchain: Blockchains, resource: string, id: string): string {
+function useEtherscanUrl(blockchain: Blockchains, resource: string, id: string): string {
   const [url, setUrl] = useState('');
 
   useEffect(() => {
@@ -25,3 +25,5 @@ export default function useEtherscanUrl(blockchain: Blockchains, resource: strin
 
   return url;
 }
+
+export default useEtherscanUrl;

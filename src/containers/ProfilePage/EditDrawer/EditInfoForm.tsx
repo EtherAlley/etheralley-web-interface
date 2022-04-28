@@ -24,7 +24,7 @@ function EditInfoForm() {
         label={intl.formatMessage({ id: 'edit-description', defaultMessage: 'Description' })}
         value={description}
         onChange={(event) => dispatch(updateProfileDescription(event.target.value))}
-        maxLength={500}
+        maxLength={1000}
         height={400}
       />
       <Input

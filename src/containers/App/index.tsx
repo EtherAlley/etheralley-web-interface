@@ -18,7 +18,7 @@ function App() {
       <Routes>
         <Route path={RouteStrings.PROFILE} element={<ProfilePage />} />
         <Route
-          path={RouteStrings.TOP_PROFILES}
+          path={RouteStrings.TRENDING}
           element={
             <PageWrapper>
               <TopProfilesPage />

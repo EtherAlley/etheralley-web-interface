@@ -1,14 +1,17 @@
-import { Box, Flex, UnorderedList, OrderedList, ListItem, Text, Image, Heading } from '@chakra-ui/react';
+import { Box, Flex, OrderedList, ListItem, Text, Heading, Icon } from '@chakra-ui/react';
 import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { BADGE_HEIGHT, BADGE_WIDTH, Interfaces } from '../../../common/constants';
+import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains, Interfaces } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
-import BlockchainChip from './BlockchainChip';
+import Chip from './Chip';
 import { useIntl } from 'react-intl';
-import useLogo from '../../../hooks/useLogo';
+import Logo from '../../../components/Logo';
+import { MdSwapHoriz } from 'react-icons/md';
+import useDisplayNumber from '../../../hooks/useDisplayNumber';
+import Divider from './Divider';
 
 function SwapComponent({ index }: { index: number }) {
   const stat = useAppSelector((state) => selectStatistic(state, index));
@@ -26,20 +29,8 @@ function SwapComponent({ index }: { index: number }) {
   );
 }
 
-const logoStyling = {
-  width: 100,
-  height: 100,
-  padding: 2,
-  backgroundColor: 'gray.900',
-  borderColor: 'gray.900',
-  borderRadius: '50%',
-  boxShadow: 'dark-lg',
-  borderWidth: '1px',
-};
-
 function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
   const intl = useIntl();
-  const url = useLogo({ interfaceName: contract.interface });
 
   let title: string = '';
   switch (contract.interface) {
@@ -69,12 +60,12 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
   return (
     <Box maxWidth="100%" maxHeight="100%">
       <Flex justifyContent="center" mb={3}>
-        <Image alt={contract.interface} src={url} {...logoStyling} />
+        <Logo interfaceName={contract.interface} />
       </Flex>
-      <Heading as="h4" size="md" mt={2}>
+      <Heading as="h4" size="md" mt={2} textColor="profile.secondaryText">
         {title}
       </Heading>
-      <BlockchainChip text={text} blockchain={contract.blockchain} />
+      <Chip text={text} />
     </Box>
   );
 }
@@ -82,7 +73,11 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
 function SwapHeader() {
   const intl = useIntl();
 
-  return <Text>{intl.formatMessage({ id: 'top-swaps', defaultMessage: 'Top Swaps' })}</Text>;
+  return (
+    <Text textAlign="center" textColor="profile.secondaryText">
+      {intl.formatMessage({ id: 'top-swaps', defaultMessage: 'Top Swaps' })}
+    </Text>
+  );
 }
 
 function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
@@ -95,6 +90,7 @@ function SwapBody({ swaps, contract }: { swaps: Swap[] | undefined; contract: Co
       {swaps.map((swap, i) => (
         <Box key={i}>
           <SwapItem swap={swap} contract={contract} />
+          <Divider my={2} />
         </Box>
       ))}
     </OrderedList>
@@ -108,33 +104,49 @@ function SwapItem({
   swap: Swap;
   contract: Contract;
 }) {
+  const intl = useIntl();
   const etherscanUrl = useEtherscanUrl(blockchain, 'tx', id);
+
   return (
-    <ListItem>
-      <UnorderedList>
-        <ListItem key={0}>
-          <Link href={etherscanUrl} isExternal>
-            Etherscan
-          </Link>
-        </ListItem>
-        <ListItem key={1}>
-          <Text>{timestamp}</Text>
-        </ListItem>
-        <ListItem key={2}>
-          <Text>Amount: {amountUSD} USD</Text>
-        </ListItem>
-        <ListItem key={3}>
-          <Text>
-            Input: {input.amount} {input.symbol}
-          </Text>
-        </ListItem>
-        <ListItem key={4}>
-          <Text>
-            Output: {output.amount} {output.symbol}
-          </Text>
-        </ListItem>
-      </UnorderedList>
+    <ListItem fontWeight="semibold" fontSize="md" textColor="profile.secondaryText">
+      <Flex mb={2}>
+        <Text ml={2}>
+          {intl.formatNumber(Number.parseFloat(amountUSD), { style: 'currency', currency: 'USD' })} USD
+        </Text>
+        <Box flexGrow={1} />
+        <Link href={etherscanUrl} isExternal color="profile.accent">
+          Etherscan
+        </Link>
+      </Flex>
+      <Flex alignItems="center" height={50}>
+        <SwapToken amount={input.amount} symbol={input.symbol} contractAddress={input.id} blockchain={blockchain} />
+        <Icon as={MdSwapHoriz} w={7} h={7} mr={7} />
+        <SwapToken amount={output.amount} symbol={output.symbol} contractAddress={output.id} blockchain={blockchain} />
+      </Flex>
     </ListItem>
+  );
+}
+
+function SwapToken({
+  amount,
+  symbol,
+  contractAddress,
+  blockchain,
+}: {
+  amount: string;
+  symbol: string;
+  contractAddress: string;
+  blockchain: Blockchains;
+}) {
+  const displayAmount = useDisplayNumber(amount, 0);
+
+  return (
+    <Flex alignItems="center" width={170}>
+      <Logo contractAddress={contractAddress} blockchain={blockchain} width={7} height={7} />
+      <Text ml={2} isTruncated>
+        {displayAmount} {symbol}
+      </Text>
+    </Flex>
   );
 }
 
