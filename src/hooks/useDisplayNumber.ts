@@ -59,7 +59,7 @@ function formatValue(
   value: string | undefined,
   decimals: number | undefined
 ): { prefix: string; suffix: string; infix: string } {
-  if (value === undefined || (!decimals && decimals !== 0)) {
+  if (!value || (!decimals && decimals !== 0)) {
     return { prefix: '', infix: '', suffix: '' };
   }
 

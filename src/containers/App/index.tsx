@@ -8,6 +8,7 @@ import NavBar from './NavBar';
 import useToasts from './useToasts';
 import PageWrapper from '../../components/PageWrapper';
 import NotFound from '../../components/NotFound';
+import AboutPage from '../AboutPage';
 
 function App() {
   useToasts();
@@ -30,6 +31,14 @@ function App() {
           element={
             <PageWrapper>
               <ShopPage />
+            </PageWrapper>
+          }
+        />
+        <Route
+          path={RouteStrings.ABOUT}
+          element={
+            <PageWrapper>
+              <AboutPage />
             </PageWrapper>
           }
         />

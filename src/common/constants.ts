@@ -8,6 +8,7 @@ export enum Routes {
   HOME = '/',
   TRENDING = '/trending',
   SHOP = '/shop',
+  ABOUT = '/about',
   PROFILE = '/profiles/:address',
 }
 

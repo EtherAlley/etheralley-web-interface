@@ -64,7 +64,8 @@ function useToasts() {
         isClosable: true,
       });
     }
-  }, [toastId, toast, status, showToast, intl]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toastId]);
 }
 
 export default useToasts;

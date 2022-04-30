@@ -61,7 +61,7 @@ function Navbar() {
             { id: 'learn-more', defaultMessage: 'Learn more about {name}' },
             { name: 'EtherAlley' }
           ),
-          href: '#',
+          href: Routes.ABOUT,
         },
         {
           label: intl.formatMessage({ id: 'github', defaultMessage: 'GitHub' }),

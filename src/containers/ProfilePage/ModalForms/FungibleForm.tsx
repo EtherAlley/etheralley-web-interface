@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Popover, PopoverAnchor, PopoverContent, PopoverTrigger } from '@chakra-ui/react';
+import { Box, Button, Flex, Popover, PopoverAnchor, PopoverContent, PopoverTrigger, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { Blockchains } from '../../../common/constants';
 import Input from '../../../components/Input';
@@ -80,9 +80,13 @@ function FungibleForm() {
                 key={address}
                 borderRadius="none"
                 onClick={() => dispatch(submitFungibleSearch({ address, name }))}
+                display="block"
               >
-                {name}
-                <Logo blockchain={blockchain} contractAddress={address} />
+                <Flex alignItems="center">
+                  <Text>{name}</Text>
+                  <Box flexGrow={1} />
+                  <Logo blockchain={blockchain} contractAddress={address} width={8} height={8} />
+                </Flex>
               </Button>
             );
           })}

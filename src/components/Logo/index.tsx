@@ -62,7 +62,7 @@ function Token({
 
   return (
     <Image
-      src={`https://raw.githubusercontent.com/EtherAlley/assets/master/tokens/${blockchain}/${contractAddress}.png`}
+      src={`https://raw.githubusercontent.com/EtherAlley/assets/master/tokens/${blockchain}/${contractAddress.toLowerCase()}.png`}
       width={width}
       height={height}
       borderRadius="50%"
