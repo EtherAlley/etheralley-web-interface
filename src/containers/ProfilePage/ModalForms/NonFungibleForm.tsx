@@ -61,6 +61,14 @@ function NonFungibleForm() {
             id: Interfaces.ENS_REGISTRAR,
             label: 'ENS Name',
           },
+          {
+            id: Interfaces.CRYPTO_PUNKS,
+            label: 'CryptoPunks',
+          },
+          {
+            id: Interfaces.CRYPTO_KITTIES,
+            label: 'CryptoKitties',
+          },
         ]}
         onChange={(event) => dispatch(updateNonFungibleInterface(event.target.value))}
         mt={5}

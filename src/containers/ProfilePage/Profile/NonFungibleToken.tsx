@@ -23,6 +23,9 @@ function NonFungibleTokenComponent({
   const { metadata, contract, token_id, balance } = useAppSelector((state) => selectNonFungibleToken(state, index));
 
   // user does not own this nft. we should not display it and imply they own it
+  // we do not check for null/undefined explicitely here because they are considered to usually be transient errors that have happened internally.
+  // in those scenarios we still want to show as much of the users profile as possible
+  // and so we will erh on the side of believing the user has a positive balance when the balance is null/undefined
   if (balance === '0') {
     return <Paper width={BADGE_WIDTH} height={useHeader ? BADGE_HEIGHT : BADGE_WIDTH} />;
   }
