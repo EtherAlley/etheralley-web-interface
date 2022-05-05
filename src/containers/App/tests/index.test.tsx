@@ -1,17 +1,8 @@
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from '../../../store';
+import { render } from '../../../tests/test-utils';
 import App from '../index';
-import { HashRouter as Router } from 'react-router-dom';
 
 test('renders highlight message', () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <Router>
-        <App />
-      </Router>
-    </Provider>
-  );
+  const { getByText } = render(<App />);
 
-  expect(getByText(/Ether/i)).toBeInTheDocument();
+  expect(getByText(/Welcome to EtherAlley/i)).toBeInTheDocument();
 });
