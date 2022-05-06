@@ -1,13 +1,13 @@
 # etheralley-web-interface
 
-The web interface for the Ether Alley platform
+The web interface for the EtherAlley platform
 
 [![build](https://github.com/EtherAlley/etheralley-web-interface/actions/workflows/build.yml/badge.svg)](https://github.com/EtherAlley/etheralley-web-interface/actions/workflows/build.yml)
 [![GPL-3.0 License](https://img.shields.io/github/license/EtherAlley/etheralley-web-interface.svg)](https://github.com/EtherAlley/etheralley-web-interface/blob/main/LICENSE)
 
 ## Local Setup
 
-1. Download [node.js v16.x](https://nodejs.org/en/download/)
+1. Download [node.js v14.x](https://nodejs.org/en/download/)
 
 2. Install dependancies
 
