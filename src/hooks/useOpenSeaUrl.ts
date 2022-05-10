@@ -6,7 +6,9 @@ export default function useOpenSeaUrl(address: string, token_id: string, blockch
   const [url, setUrl] = useState('');
 
   useEffect(() => {
-    setUrl(`${Settings.OPENSEA_URL}/assets${infixFromBlockchain(blockchain)}/${address}/${token_id}`);
+    setUrl(
+      `${Settings.OPENSEA_URL}/assets${infixFromBlockchain(blockchain)}/${address}/${BigInt(token_id).toString()}`
+    );
   }, [blockchain, address, token_id]);
 
   return url;
