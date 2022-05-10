@@ -116,25 +116,39 @@ function medal(rank: number): string {
   }
 }
 
+function Anonymous() {
+  return (
+    <Flex
+      width="50px"
+      height="50px"
+      borderRadius="50%"
+      backgroundColor="gray.700"
+      alignItems="center"
+      justifyContent="center"
+      boxShadow="dark-lg"
+    >
+      <ProfileUser width="35px" height="35px" />
+    </Flex>
+  );
+}
+
 function Picture({ src, premium }: { src: string | undefined; premium: boolean }) {
   return (
     <Box position="relative">
       {src ? (
         <Flex>
-          <Image src={src} width="50px" height="50px" borderRadius="50%" maxWidth="inherit" boxShadow="dark-lg" />
+          <Image
+            src={src}
+            fallback={<Anonymous />}
+            width="50px"
+            height="50px"
+            borderRadius="50%"
+            maxWidth="inherit"
+            boxShadow="dark-lg"
+          />
         </Flex>
       ) : (
-        <Flex
-          width="50px"
-          height="50px"
-          borderRadius="50%"
-          backgroundColor="gray.700"
-          alignItems="center"
-          justifyContent="center"
-          boxShadow="dark-lg"
-        >
-          <ProfileUser width="35px" height="35px" />
-        </Flex>
+        <Anonymous />
       )}
       <Box position="absolute" right="0%" bottom="0%">
         {premium && <Verified width="20px" height="20px" />}
