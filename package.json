@@ -1,6 +1,16 @@
 {
   "name": "etheralley-web-interface",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:nowatch": "react-scripts test --watchAll=false",
+    "extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file lang/en.json",
+    "compile-folder": "formatjs compile-folder --ast lang src/providers/IntlProvider/lang",
+    "compile-pseudos": "formatjs compile lang/en.json --out-file src/providers/IntlProvider/lang/ro.json --ast --pseudo-locale xx-LS && formatjs compile lang/en.json --out-file src/providers/IntlProvider/lang/hr.json --ast --pseudo-locale en-XA",
+    "intl": "npm run extract && npm run compile-folder && npm run compile-pseudos"
+  },
   "dependencies": {
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
@@ -37,16 +47,6 @@
   "eslintConfig": {
     "extends": "react-app",
     "rules": {}
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:nowatch": "react-scripts test --watchAll=false",
-    "extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file lang/en.json",
-    "compile-folder": "formatjs compile-folder --ast lang src/providers/IntlProvider/lang",
-    "compile-pseudos": "formatjs compile lang/en.json --out-file src/providers/IntlProvider/lang/ro.json --ast --pseudo-locale xx-LS && formatjs compile lang/en.json --out-file src/providers/IntlProvider/lang/hr.json --ast --pseudo-locale en-XA",
-    "intl": "npm run extract && npm run compile-folder && npm run compile-pseudos"
   },
   "browserslist": {
     "production": [
