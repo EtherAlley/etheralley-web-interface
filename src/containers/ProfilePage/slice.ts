@@ -350,13 +350,15 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
   };
   stateProfile.display_config.groups = [];
 
-  for (let i = 0; i < actionProfile.interactions.length; i++) {
+  if (actionProfile.store_assets.beta_tester || actionProfile.interactions.length > 0) {
     stateProfile.display_config.achievements.text = 'Achievements';
-    stateProfile.display_config.achievements.items.push({
-      id: nanoid(),
-      index: i,
-      type: AchievementTypes.Interactions,
-    });
+    for (let i = 0; i < actionProfile.interactions.length; i++) {
+      stateProfile.display_config.achievements.items.push({
+        id: nanoid(),
+        index: i,
+        type: AchievementTypes.Interactions,
+      });
+    }
   }
 
   if (actionProfile.statistics.length > 0) {

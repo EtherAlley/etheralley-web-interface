@@ -87,11 +87,9 @@ export const purchase = createAsyncThunk<
     throw ex;
   }
 
-  const { error } = await FetchCoreAPI(`/profiles/${account}/refresh`);
+  dispatch(getBalances({ library, account }));
 
-  if (error) {
-    throw new Error('error refreshing profile');
-  }
+  await FetchCoreAPI<void>(`/profiles/${account}/refresh`);
 });
 
 export const slice = createSlice({
