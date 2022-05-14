@@ -51,7 +51,7 @@ function AchievementBar() {
   const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
   const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
 
-  if (items.length <= 0) {
+  if (items.length <= 0 && !beta_tester) {
     return <></>;
   }
 
