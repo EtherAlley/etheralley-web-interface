@@ -23,6 +23,7 @@ export interface State {
   saveProfileState: AsyncStates;
   showEditBar: boolean;
   profile: StateProfile;
+  hiddenBadges: { [x: string]: boolean };
 }
 
 // some pre-amble about the relationship between display_config and interactions/non_fungible_tokens/fungible_tokens/statistics:
@@ -111,6 +112,7 @@ const initialState: State = {
     statistics: [],
     currencies: [],
   },
+  hiddenBadges: {}, // these badge ids will be hidden during rendering
 };
 
 export const loadProfile = createAsyncThunk<Profile | undefined, { address: string }, { state: RootState }>(
@@ -238,6 +240,9 @@ export const slice = createSlice({
       }
       achievements.splice(action.payload, 1);
       state.profile[achievementBeingDeleted.type].splice(achievementBeingDeleted.index, 1);
+    },
+    hideBadge: (state, action: PayloadAction<string>) => {
+      state.hiddenBadges[action.payload] = true;
     },
   },
   extraReducers: (builder) => {
@@ -525,6 +530,8 @@ export const selectBadgeCount = (state: RootState) =>
 
 export const selectInteractions = (state: RootState) => state.profilePage.profile.interactions;
 
+export const selectHiddenBadges = (state: RootState) => state.profilePage.hiddenBadges;
+
 export default slice.reducer;
 
 export const {
@@ -545,4 +552,5 @@ export const {
   removeItem,
   updateAchievementText,
   removeAchievement,
+  hideBadge,
 } = slice.actions;

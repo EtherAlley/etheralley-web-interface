@@ -1,5 +1,5 @@
 import { Box, Flex, Button, Icon, Input, Text, Tooltip } from '@chakra-ui/react';
-import { MdAdd, MdRemove, MdDragIndicator } from 'react-icons/md';
+import { MdAdd, MdRemove, MdDragIndicator, MdWarning } from 'react-icons/md';
 import { Droppable, Draggable, DraggingStyle } from 'react-beautiful-dnd';
 import IconButton from '../../../components/IconButton';
 import useAppDispatch from '../../../hooks/useAppDispatch';
@@ -12,6 +12,7 @@ import {
   selectCurrency,
   selectFungibleToken,
   selectGroups,
+  selectHiddenBadges,
   selectNonFungibleToken,
   selectStatistic,
   selectStoreAssets,
@@ -146,6 +147,7 @@ function Item({
 }) {
   const intl = useIntl();
   const dispatch = useAppDispatch();
+  const hiddenBadges = useAppSelector(selectHiddenBadges);
   const { id, type, index } = item;
 
   let label: ReactNode;
@@ -193,6 +195,18 @@ function Item({
             </Box>
             {label}
             <Box flexGrow={1}></Box>
+            {hiddenBadges[id] && (
+              <Tooltip
+                label={intl.formatMessage({
+                  id: 'visually-hidden',
+                  defaultMessage: 'We had problems loading this badge. It is being visually hidden from the screen.',
+                })}
+              >
+                <span>
+                  <Icon as={MdWarning} w={5} h={5} color="yellow.300" />
+                </span>
+              </Tooltip>
+            )}
             <IconButton
               aria-label={intl.formatMessage({ id: 'aria-remove-item', defaultMessage: 'Remove Item' })}
               tooltip={intl.formatMessage({ id: 'remove-item', defaultMessage: 'Remove Item' })}

@@ -36,7 +36,7 @@ function Picture() {
     );
   }
 
-  return <NonFungibleTokenComponent index={item.index} useHeader={false} usePaper={false} />;
+  return <NonFungibleTokenComponent id={item.id} index={item.index} useHeader={false} usePaper={false} />;
 }
 
 function Info() {
