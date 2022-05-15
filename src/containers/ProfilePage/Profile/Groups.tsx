@@ -6,7 +6,7 @@ import Paper from '../../../components/Paper';
 import useAppSelector from '../../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import { selectGroups, selectLoading } from './../slice';
+import { selectGroups, selectHiddenBadges, selectLoading } from './../slice';
 import Statistic from './Statistic';
 import Currency from './Currency';
 import Divider from './Divider';
@@ -25,6 +25,8 @@ function Groups() {
 }
 
 function Group({ text, items }: { text: string; items: DisplayItem[] }) {
+  const hiddenBadges = useAppSelector(selectHiddenBadges);
+
   return (
     <Box mt={20}>
       <GroupTitle text={text} />
@@ -35,17 +37,19 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
           justifyContent="space-between"
           gap={20}
         >
-          {items.map(({ type, index, id }) => {
-            return (
-              <GridItem key={id}>
-                <Center>
-                  <ErrorBoundary>
-                    <GroupItem type={type} index={index} />
-                  </ErrorBoundary>
-                </Center>
-              </GridItem>
-            );
-          })}
+          {items
+            .filter(({ id }) => !hiddenBadges[id])
+            .map(({ type, index, id }) => {
+              return (
+                <GridItem key={id}>
+                  <Center>
+                    <ErrorBoundary>
+                      <GroupItem type={type} index={index} id={id} />
+                    </ErrorBoundary>
+                  </Center>
+                </GridItem>
+              );
+            })}
         </Grid>
       )}
     </Box>
@@ -62,7 +66,7 @@ function GroupTitle({ text }: { text: string }) {
   );
 }
 
-function GroupItem({ type, index }: { type: BadgeTypes | undefined; index: number }) {
+function GroupItem({ type, index, id }: { type: BadgeTypes | undefined; index: number; id: string }) {
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
@@ -77,7 +81,7 @@ function GroupItem({ type, index }: { type: BadgeTypes | undefined; index: numbe
 
   switch (type) {
     case BadgeTypes.NonFungibleToken:
-      return <NonFungibleTokenComponent index={index} />;
+      return <NonFungibleTokenComponent index={index} id={id} />;
     case BadgeTypes.FungibleToken:
       return <FungibleTokenComponent index={index} />;
     case BadgeTypes.Statistics:
