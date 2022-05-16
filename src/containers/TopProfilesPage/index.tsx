@@ -93,7 +93,7 @@ function Row({ profile, rank }: { profile: Profile; rank: number }) {
         <Picture premium={premium} src={profileImage} />
         <Box ml={5} mr={2}>
           <LinkOverlay as="span">
-            <Text color="blue.400" fontWeight="bold" isTruncated maxWidth={maxWidth}>
+            <Text color="blue.400" fontWeight="bold" noOfLines={1} maxWidth={maxWidth}>
               {profileId}
             </Text>
           </LinkOverlay>

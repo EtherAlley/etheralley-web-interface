@@ -60,7 +60,7 @@ function GroupTitle({ text }: { text: string }) {
   const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
 
   return (
-    <Heading textColor="profile.primaryText" as="h3" size="lg" mb={10} isTruncated textAlign={textAlign}>
+    <Heading textColor="profile.primaryText" as="h3" size="lg" mb={10} noOfLines={1} textAlign={textAlign}>
       {text}
     </Heading>
   );

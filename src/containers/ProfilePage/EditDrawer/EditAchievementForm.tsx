@@ -42,7 +42,7 @@ function EditAchievementForm() {
             label = <InteractionLabel index={index} />;
             break;
           default:
-            label = <Text isTruncated>{type}</Text>;
+            label = <Text noOfLines={1}>{type}</Text>;
             break;
         }
         return (
@@ -73,7 +73,7 @@ function InteractionLabel({ index }: { index: number }) {
   switch (interaction.type) {
     case InteractionTypes.CONTRACT_CREATION:
       return (
-        <Text isTruncated>
+        <Text noOfLines={1}>
           {intl.formatMessage({
             id: 'contract-creation-label',
             defaultMessage: 'Deployed Smart Contract Achievement',
@@ -82,12 +82,12 @@ function InteractionLabel({ index }: { index: number }) {
       );
     case InteractionTypes.SEND_ETHER:
       return (
-        <Text isTruncated>
+        <Text noOfLines={1}>
           {intl.formatMessage({ id: 'send-ether-label', defaultMessage: 'Sent Ether Achievement' })}
         </Text>
       );
     default:
-      return <Text isTruncated>{interaction.type}</Text>;
+      return <Text noOfLines={1}>{interaction.type}</Text>;
   }
 }
 

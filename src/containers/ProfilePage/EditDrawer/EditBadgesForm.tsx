@@ -165,7 +165,7 @@ function Item({
       label = <CurrencyLabel index={index} />;
       break;
     default:
-      label = <Text isTruncated>{type}</Text>;
+      label = <Text noOfLines={1}>{type}</Text>;
       break;
   }
 
@@ -230,10 +230,12 @@ function NonFungibleLabel({ index }: { index: number }) {
   const nft = useAppSelector((state) => selectNonFungibleToken(state, index));
 
   if (!nft.metadata || !nft.metadata.name) {
-    return <Text isTruncated>{intl.formatMessage({ id: 'nft-fallback', defaultMessage: 'Non Fungible Token' })}</Text>;
+    return (
+      <Text noOfLines={1}>{intl.formatMessage({ id: 'nft-fallback', defaultMessage: 'Non Fungible Token' })}</Text>
+    );
   }
 
-  return <Text isTruncated>{nft.metadata.name}</Text>;
+  return <Text noOfLines={1}>{nft.metadata.name}</Text>;
 }
 
 function FungibleLabel({ index }: { index: number }) {
@@ -241,10 +243,10 @@ function FungibleLabel({ index }: { index: number }) {
   const token = useAppSelector((state) => selectFungibleToken(state, index));
 
   if (!token.metadata.name) {
-    return <Text isTruncated>{intl.formatMessage({ id: 'token-fallback', defaultMessage: 'Fungible Token' })}</Text>;
+    return <Text noOfLines={1}>{intl.formatMessage({ id: 'token-fallback', defaultMessage: 'Fungible Token' })}</Text>;
   }
 
-  return <Text isTruncated>{token.metadata.name}</Text>;
+  return <Text noOfLines={1}>{token.metadata.name}</Text>;
 }
 
 function StatisticLabel({ index }: { index: number }) {
@@ -253,15 +255,15 @@ function StatisticLabel({ index }: { index: number }) {
 
   switch (stat.contract.interface) {
     case Interfaces.SUSHISWAP_EXCHANGE:
-      return <Text isTruncated>Sushiswap {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
+      return <Text noOfLines={1}>Sushiswap {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.UNISWAP_V2_EXCHANGE:
-      return <Text isTruncated>Uniswap V2 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
+      return <Text noOfLines={1}>Uniswap V2 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.UNISWAP_V3_EXCHANGE:
-      return <Text isTruncated>Uniswap V3 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
+      return <Text noOfLines={1}>Uniswap V3 {intl.formatMessage({ id: 'stats', defaultMessage: 'Stats' })}</Text>;
     case Interfaces.ROCKET_POOL:
-      return <Text isTruncated>Rocket Pool {intl.formatMessage({ id: 'rewards', defaultMessage: 'Rewards' })}</Text>;
+      return <Text noOfLines={1}>Rocket Pool {intl.formatMessage({ id: 'rewards', defaultMessage: 'Rewards' })}</Text>;
     default:
-      return <Text isTruncated>{stat.contract.interface}</Text>;
+      return <Text noOfLines={1}>{stat.contract.interface}</Text>;
   }
 }
 
@@ -270,15 +272,15 @@ function CurrencyLabel({ index }: { index: number }) {
 
   switch (currency.blockchain) {
     case Blockchains.ETHEREUM:
-      return <Text isTruncated>Mainnet Ether</Text>;
+      return <Text noOfLines={1}>Mainnet Ether</Text>;
     case Blockchains.ARBITRUM:
-      return <Text isTruncated>Arbitrum Ether</Text>;
+      return <Text noOfLines={1}>Arbitrum Ether</Text>;
     case Blockchains.OPTIMISM:
-      return <Text isTruncated>Optimism Ether</Text>;
+      return <Text noOfLines={1}>Optimism Ether</Text>;
     case Blockchains.POLYGON:
-      return <Text isTruncated>Matic</Text>;
+      return <Text noOfLines={1}>Matic</Text>;
     default:
-      return <Text isTruncated>{currency.blockchain}</Text>;
+      return <Text noOfLines={1}>{currency.blockchain}</Text>;
   }
 }
 

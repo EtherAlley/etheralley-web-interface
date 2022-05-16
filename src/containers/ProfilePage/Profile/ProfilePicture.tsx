@@ -54,7 +54,7 @@ function Info() {
   return (
     <>
       <Flex alignItems="center" justifyContent="center" height={8} mt={2}>
-        <Text fontWeight="bold" isTruncated mr={premium ? 2 : 0} maxWidth="160px" textColor="profile.secondaryText">
+        <Text fontWeight="bold" noOfLines={1} mr={premium ? 2 : 0} maxWidth="160px" textColor="profile.secondaryText">
           {ens_name || trimmedAddress}
         </Text>
         {premium && <Verified width="20px" height="20px" display="inline" />}
