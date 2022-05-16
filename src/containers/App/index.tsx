@@ -5,9 +5,9 @@ import { Routes as RouteStrings } from '../../common/constants';
 import NavBar from './NavBar';
 import useToasts from './useToasts';
 import ErrorBoundary from '../../components/ErrorBoundary';
+import HomePage from '../HomePage'; // We don't lazy load home page for SEO. We won't want a second network call involved in loading the landing page.
 
 const NotFound = lazy(() => import('../../components/NotFound'));
-const HomePage = lazy(() => import('../HomePage'));
 const ProfilePage = lazy(() => import('../ProfilePage'));
 const TopProfilesPage = lazy(() => import('../TopProfilesPage'));
 const ShopPage = lazy(() => import('../ShopPage'));
