@@ -4,7 +4,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll",
     "test:nowatch": "react-scripts test --watchAll=false",
     "extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file lang/en.json",
     "compile-folder": "formatjs compile-folder --ast lang src/providers/IntlProvider/lang",

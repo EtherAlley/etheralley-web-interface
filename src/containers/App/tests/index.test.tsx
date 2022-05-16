@@ -1,8 +1,8 @@
-import { render } from '../../../tests/test-utils';
+import { render, waitFor } from '../../../tests/test-utils';
 import App from '../index';
 
-test('renders highlight message', () => {
+test('renders highlight message', async () => {
   const { getByText } = render(<App />);
 
-  expect(getByText(/Welcome to EtherAlley/i)).toBeInTheDocument();
+  await waitFor(() => expect(getByText(/Welcome to EtherAlley/i)).toBeInTheDocument());
 });
