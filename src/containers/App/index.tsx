@@ -23,15 +23,17 @@ function App() {
         <Route
           path={RouteStrings.PROFILE}
           element={
-            <Suspense
-              fallback={
-                <Center>
-                  <Spinner />
-                </Center>
-              }
-            >
-              <ProfilePage />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense
+                fallback={
+                  <Center>
+                    <Spinner />
+                  </Center>
+                }
+              >
+                <ProfilePage />
+              </Suspense>
+            </ErrorBoundary>
           }
         />
         <Route

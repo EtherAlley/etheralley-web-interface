@@ -14,6 +14,7 @@ import AddProfilePictureModal from './ModalForms/AddProfilePictureModal';
 import AddAchievementModal from './ModalForms/AddAchievementModal';
 import Error from '../../components/Error';
 import NotFound from '../../components/NotFound';
+import DragDropProvider from '../../providers/DragDropProvider';
 
 function PageWrapper() {
   return (
@@ -70,7 +71,9 @@ function ProfilePage() {
   return (
     <>
       <Profile />
-      <EditDrawer />
+      <DragDropProvider>
+        <EditDrawer />
+      </DragDropProvider>
       <AddBadgeModal />
       <AddProfilePictureModal />
       <AddAchievementModal />
