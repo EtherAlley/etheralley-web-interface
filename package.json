@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
+    "start:prod": "serve -s build",
     "build": "react-scripts build",
+    "analyze": "source-map-explorer 'build/static/js/*.js' --html analyze/result.html",
     "test": "react-scripts test --watchAll",
     "test:nowatch": "react-scripts test --watchAll=false",
     "extract": "formatjs extract 'src/**/*.ts*' --ignore='**/*.d.ts' --out-file lang/en.json",
@@ -15,8 +17,8 @@
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@reduxjs/toolkit": "^1.5.1",
-    "@usedapp/core": "^0.12.2",
+    "@reduxjs/toolkit": "^1.8.1",
+    "@usedapp/core": "^1.0.2",
     "decimal.js": "^10.3.1",
     "ethers": "^5.5.4",
     "framer-motion": "^5.5.5",
@@ -26,7 +28,7 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
     "react-intl": "^5.24.6",
-    "react-redux": "^7.2.0",
+    "react-redux": "^8.0.1",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0"
   },
@@ -42,6 +44,8 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.7",
     "@types/react-router-dom": "^5.3.3",
+    "serve": "^13.0.2",
+    "source-map-explorer": "^2.5.2",
     "typescript": "~4.1.5"
   },
   "eslintConfig": {

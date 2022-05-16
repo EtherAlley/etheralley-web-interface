@@ -19,12 +19,12 @@ import {
 import { useEthers } from '@usedapp/core';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Link from '../../components/Link';
 import Logo from '../../components/Logo';
 import Paper from '../../components/Paper';
+import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useCurrencySymbol from '../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
@@ -191,7 +191,7 @@ function PurchaseButton({
   hasPurchased: boolean;
   correctChainId: boolean;
 }) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { library, account } = useEthers();
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const submittingPurchase = useAppSelector(selectSubmittingPurchase);
