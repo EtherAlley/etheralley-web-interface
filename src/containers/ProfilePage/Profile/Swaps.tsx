@@ -147,7 +147,7 @@ function SwapToken({
   return (
     <Flex alignItems="center" width={170}>
       <Logo contractAddress={contractAddress} blockchain={blockchain} width={7} height={7} />
-      <Text ml={2} isTruncated>
+      <Text ml={2} noOfLines={1}>
         {displayAmount} {symbol}
       </Text>
     </Flex>
