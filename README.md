@@ -7,7 +7,7 @@ The web interface for the EtherAlley platform
 
 ## Local Setup
 
-1. Download [node.js v14.x](https://nodejs.org/en/download/)
+1. Download [node.js v14.x or greater](https://nodejs.org/en/download/)
 
 2. Install dependancies
 
