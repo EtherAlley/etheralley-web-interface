@@ -26,7 +26,7 @@ function AddProfilePictureModal() {
   const submitting = useAppSelector(selectProfilePictureSubmitting);
 
   return (
-    <Modal isOpen={show} onClose={() => dispatch(closeProfilePictureModal())}>
+    <Modal isOpen={show} onClose={() => dispatch(closeProfilePictureModal())} preserveScrollBarGap>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

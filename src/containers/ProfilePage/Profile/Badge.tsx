@@ -43,7 +43,7 @@ function Badge({
   return (
     <>
       {usePaper ? <Paper {...boxStyling}>{Display}</Paper> : <Box {...boxStyling}>{Display}</Box>}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} preserveScrollBarGap>
         <ModalOverlay />
         <ModalContent backgroundColor="profile.secondary">
           <ModalHeader fontSize="lg" fontWeight="bold">

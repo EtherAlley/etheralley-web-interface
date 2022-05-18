@@ -1,4 +1,4 @@
-import { ReactChild, Suspense, lazy } from 'react';
+import { Suspense, lazy, ReactNode } from 'react';
 import { Route, Routes } from 'react-router';
 import { Box, Center, Container, Spinner } from '@chakra-ui/react';
 import { Routes as RouteStrings } from '../../common/constants';
@@ -81,7 +81,7 @@ function App() {
   );
 }
 
-function PageWrapper({ children }: { children: ReactChild }) {
+function PageWrapper({ children }: { children: ReactNode }) {
   return (
     <Container maxW="container.lg">
       <Box mt="15vh" />

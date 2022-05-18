@@ -34,7 +34,7 @@ function AddAchievementModal() {
   const { blockchain, type, transactionId } = useAppSelector(selectInteractionForm);
 
   return (
-    <Modal isOpen={show} onClose={() => dispatch(closeAchievementModal())}>
+    <Modal isOpen={show} onClose={() => dispatch(closeAchievementModal())} preserveScrollBarGap>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
