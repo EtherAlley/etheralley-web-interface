@@ -55,7 +55,7 @@ function AddBadgeModal() {
   }
 
   return (
-    <Modal isOpen={show} onClose={() => dispatch(closeBadgeModal())}>
+    <Modal isOpen={show} onClose={() => dispatch(closeBadgeModal())} preserveScrollBarGap>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

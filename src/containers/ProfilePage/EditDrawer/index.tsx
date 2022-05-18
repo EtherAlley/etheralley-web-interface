@@ -49,7 +49,7 @@ function ProfileEditDrawer() {
   );
 
   return (
-    <Drawer size="md" isOpen={showEditBar} onClose={closeEdit} placement="right">
+    <Drawer size="md" isOpen={showEditBar} onClose={closeEdit} placement="right" preserveScrollBarGap>
       <DrawerContent>
         <DrawerCloseButton onClick={closeEdit} />
 

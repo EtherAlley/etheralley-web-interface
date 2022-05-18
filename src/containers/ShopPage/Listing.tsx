@@ -84,7 +84,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
           />
         </Box>
       </Paper>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} preserveScrollBarGap>
         <ModalOverlay />
         <ModalContent backgroundColor="gray.900">
           <ModalHeader fontSize="lg" fontWeight="bold" textAlign="center">
