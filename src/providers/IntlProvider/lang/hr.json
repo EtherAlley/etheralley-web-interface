@@ -348,7 +348,7 @@
   "error-making-purchase-description": [
     {
       "type": 0,
-      "value": "Ḕŕŕŏŕ ṗŕŏćèśśíńĝ ṗůŕćḫâśè"
+      "value": "Ḕŕŕŏŕ ṗŕŏćèśśíńĝ ṭŕâńśâćṭíŏń"
     }
   ],
   "error-saving-profile": [
@@ -758,7 +758,7 @@
   "success-making-purchase-description": [
     {
       "type": 0,
-      "value": "Ṡůććèśśḟůĺĺẏ ṗŕŏćèśśèḋ ṗůŕćḫâśè"
+      "value": "Ṡůććèśśḟůĺĺẏ ṗŕŏćèśśèḋ ṭŕâńśâćṭíŏń"
     }
   ],
   "switch-chains": [
@@ -943,6 +943,12 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "visually-hidden": [
+    {
+      "type": 0,
+      "value": "Ẅè ḫâḋ ṗŕŏḃĺèṁś ĺŏâḋíńĝ ṭḫíś ḃâḋĝè. Ḭṭ íś ḃèíńĝ ṿíśůâĺĺẏ ḫíḋḋèń ḟŕŏṁ ṭḫè śćŕèèń."
     }
   ],
   "welcome-message": [

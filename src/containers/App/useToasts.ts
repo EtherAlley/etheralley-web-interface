@@ -15,50 +15,51 @@ function useToasts() {
 
   useEffect(() => {
     if (toastId) {
-      let description = '';
+      let title = '';
       switch (toast) {
         case Toasts.ADDING_BADGE:
-          description = intl.formatMessage({ id: 'adding-badge-description', defaultMessage: 'Error adding badge' });
+          title = intl.formatMessage({ id: 'adding-badge-description', defaultMessage: 'Error adding badge' });
           break;
         case Toasts.ADDING_PROFILE_PICTURE:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'adding-profile-picture-description',
             defaultMessage: 'Error adding profile picture',
           });
           break;
         case Toasts.ADDING_ACHIEVEMENT:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'adding-achievemenet-description',
             defaultMessage: 'Error adding achievement',
           });
           break;
         case Toasts.SUCCESS_SUBMITTING_PURCHASE:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'success-making-purchase-description',
-            defaultMessage: 'Successfully processed purchase',
+            defaultMessage: 'Successfully processed transaction',
           });
           break;
         case Toasts.ERROR_SUBMITTING_PURCHASE:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'error-making-purchase-description',
-            defaultMessage: 'Error processing purchase',
+            defaultMessage: 'Error processing transaction',
           });
           break;
         case Toasts.ERROR_SAVING_PROFILE:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'error-saving-profile',
             defaultMessage: 'Error saving profile',
           });
           break;
         case Toasts.ERROR_LOADING_PAGE:
-          description = intl.formatMessage({
+          title = intl.formatMessage({
             id: 'error-loading-page',
             defaultMessage: 'Error loading page',
           });
           break;
       }
       showToast({
-        description,
+        variant: 'solid',
+        title,
         status,
         duration: 5000,
         isClosable: true,

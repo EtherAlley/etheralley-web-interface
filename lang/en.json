@@ -165,7 +165,7 @@
     "defaultMessage": "Error loading page"
   },
   "error-making-purchase-description": {
-    "defaultMessage": "Error processing purchase"
+    "defaultMessage": "Error processing transaction"
   },
   "error-saving-profile": {
     "defaultMessage": "Error saving profile"
@@ -354,7 +354,7 @@
     "defaultMessage": "Stats"
   },
   "success-making-purchase-description": {
-    "defaultMessage": "Successfully processed purchase"
+    "defaultMessage": "Successfully processed transaction"
   },
   "switch-chains": {
     "defaultMessage": "Switch to {name}"
@@ -415,6 +415,9 @@
   },
   "view-sourcecode": {
     "defaultMessage": "View the source code on {name}"
+  },
+  "visually-hidden": {
+    "defaultMessage": "We had problems loading this badge. It is being visually hidden from the screen."
   },
   "welcome-message": {
     "defaultMessage": "Welcome to {name}"

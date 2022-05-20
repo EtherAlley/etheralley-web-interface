@@ -9,6 +9,7 @@ import {
   Image,
   LinkOverlay,
   LinkBox,
+  Skeleton,
 } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
@@ -18,24 +19,29 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import ProfileUser from '../../icons/ProfileUser';
 import Verified from '../../icons/Verified';
-import { getTopProfiles, selectErrorLoadingTopProfiles, selectLoadingTopProfiles, selectProfiles } from './slice';
+import {
+  getTopProfiles,
+  selectErrorLoadingTopProfiles,
+  selectFulfilledTopProfiles,
+  selectLoadingTopProfiles,
+  selectProfiles,
+} from './slice';
 import Error from '../../components/Error';
-import Loading from '../../components/Loading';
 
 function TopProfilesPage() {
   const intl = useIntl();
-  const loading = useAppSelector(selectLoadingTopProfiles);
-  const profiles = useAppSelector(selectProfiles);
   const dispatch = useAppDispatch();
+  const profiles = useAppSelector(selectProfiles);
+  const loading = useAppSelector(selectLoadingTopProfiles);
   const error = useAppSelector(selectErrorLoadingTopProfiles);
+  const loaded = useAppSelector(selectFulfilledTopProfiles);
 
   useEffect(() => {
-    dispatch(getTopProfiles());
-  }, [dispatch]);
-
-  if (loading) {
-    return <Loading />;
-  }
+    // We don't re-fetch top profiles if we already have. They don't change often.
+    if (!loaded) {
+      dispatch(getTopProfiles());
+    }
+  }, [dispatch, loaded]);
 
   if (error) {
     return (
@@ -61,9 +67,17 @@ function TopProfilesPage() {
         <Divider w={250} />
       </Center>
       <Box m={2}>
-        {profiles.map((profile, i) => {
-          return <Row key={profile.address} profile={profile} rank={i + 1} />;
-        })}
+        {loading
+          ? Array(10)
+              .fill(0)
+              .map(() => (
+                <Box mx="8px" my="18px">
+                  <Skeleton width="517px" height="64px" borderRadius="8px" />
+                </Box>
+              ))
+          : profiles.map((profile, i) => {
+              return <Row key={profile.address} profile={profile} rank={i + 1} />;
+            })}
       </Box>
     </Box>
   );

@@ -1,16 +1,21 @@
-import { Heading, VStack, Text, Image, Divider, Box, Flex } from '@chakra-ui/react';
+import { Heading, VStack, Text, Image, Divider, Box, Flex, LinkOverlay, LinkBox } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
+import { Link as RouterLink } from 'react-router-dom';
 
 function AboutPage() {
   const intl = useIntl();
   return (
     <Box>
       <Flex justifyContent="center">
-        <VStack width={200}>
-          <Image src="https://avatars.githubusercontent.com/u/9041078?v=4" w={200} h={200} borderRadius="50%" />
-          <Text textAlign="center">Evan Fleming</Text>
-          <Text textAlign="center">Founder, EtherAlley</Text>
-        </VStack>
+        <LinkBox as={RouterLink} to={`/profiles/oldmanfleming.eth`}>
+          <VStack width={200}>
+            <LinkOverlay as="span">
+              <Image src="https://avatars.githubusercontent.com/u/9041078?v=4" w={200} h={200} borderRadius="50%" />
+            </LinkOverlay>
+            <Text textAlign="center">Evan Fleming</Text>
+            <Text textAlign="center">Founder, EtherAlley</Text>
+          </VStack>
+        </LinkBox>
       </Flex>
       <VStack spacing="5" alignItems="flex-start" mt={10} mb={10}>
         <Heading as="h2">

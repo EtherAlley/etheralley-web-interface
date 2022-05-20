@@ -348,7 +348,7 @@
   "error-making-purchase-description": [
     {
       "type": 0,
-      "value": "Error processing purchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Error processing transactionSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "error-saving-profile": [
@@ -758,7 +758,7 @@
   "success-making-purchase-description": [
     {
       "type": 0,
-      "value": "Successfully processed purchaseSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Successfully processed transactionSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "switch-chains": [
@@ -943,6 +943,12 @@
     {
       "type": 0,
       "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "visually-hidden": [
+    {
+      "type": 0,
+      "value": "We had problems loading this badge. It is being visually hidden from the screen.SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "welcome-message": [
