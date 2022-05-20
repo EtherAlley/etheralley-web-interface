@@ -49,6 +49,9 @@ export const slice = createSlice({
 export const selectLoadingTopProfiles = (state: RootState) =>
   state.topProfilesPage.getTopProfilesState === AsyncStates.PENDING;
 
+export const selectFulfilledTopProfiles = (state: RootState) =>
+  state.topProfilesPage.getTopProfilesState === AsyncStates.FULFILLED;
+
 export const selectErrorLoadingTopProfiles = (state: RootState) =>
   state.topProfilesPage.getTopProfilesState === AsyncStates.REJECTED;
 

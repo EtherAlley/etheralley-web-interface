@@ -8,20 +8,30 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import Error from '../../components/Error';
 import ListingComponent from './Listing';
-import { getBalances, getListings, selectErrorLoadingListings, selectListings, selectLoadingListings } from './slice';
+import {
+  getBalances,
+  getListings,
+  selectErrorLoadingListings,
+  selectFulfilledListings,
+  selectListings,
+  selectLoadingListings,
+} from './slice';
 import { useIntl } from 'react-intl';
 
 function ShopPage() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingListings);
+  const loaded = useAppSelector(selectFulfilledListings);
   const error = useAppSelector(selectErrorLoadingListings);
   const listings = useAppSelector(selectListings);
   const { library, account, chainId } = useEthers();
 
   useEffect(() => {
-    dispatch(getListings());
-  }, [dispatch]);
+    if (!loaded) {
+      dispatch(getListings());
+    }
+  }, [dispatch, loaded]);
 
   useEffect(() => {
     if (chainId === Settings.STORE_CHAIN_ID) {

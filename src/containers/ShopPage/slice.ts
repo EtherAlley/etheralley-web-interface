@@ -87,9 +87,13 @@ export const purchase = createAsyncThunk<
     throw ex;
   }
 
-  dispatch(getBalances({ library, account }));
+  try {
+    dispatch(getBalances({ library, account }));
+  } catch {}
 
-  await FetchCoreAPI<void>(`/profiles/${account}/refresh`);
+  try {
+    await FetchCoreAPI<void>(`/profiles/${account}/refresh`);
+  } catch {}
 });
 
 export const slice = createSlice({
@@ -132,6 +136,8 @@ export const slice = createSlice({
 });
 
 export const selectLoadingListings = (state: RootState) => state.shopPage.getListingsState === AsyncStates.PENDING;
+
+export const selectFulfilledListings = (state: RootState) => state.shopPage.getListingsState === AsyncStates.FULFILLED;
 
 export const selectErrorLoadingListings = (state: RootState) =>
   state.shopPage.getListingsState === AsyncStates.REJECTED;
