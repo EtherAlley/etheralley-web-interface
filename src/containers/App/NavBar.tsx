@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
@@ -270,11 +271,16 @@ function UserButton() {
   const intl = useIntl();
   const navigate = useNavigate();
   const { activateBrowserWallet, account } = useEthers();
+  const isMobile = useMediaQuery('only screen and (max-width: 760px)')[0]; // TODO: Remove this when we support non-browser wallets
+
+  if (isMobile) {
+    return <span />;
+  }
 
   if (!account) {
     return (
       <Button colorScheme="brand" variant="solid" onClick={activateBrowserWallet}>
-        {intl.formatMessage({ id: 'connect-wallet', defaultMessage: 'Connect wallet' })}
+        {intl.formatMessage({ id: 'connect', defaultMessage: 'Connect' })}
       </Button>
     );
   }

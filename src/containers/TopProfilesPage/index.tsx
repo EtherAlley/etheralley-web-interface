@@ -35,6 +35,7 @@ function TopProfilesPage() {
   const loading = useAppSelector(selectLoadingTopProfiles);
   const error = useAppSelector(selectErrorLoadingTopProfiles);
   const loaded = useAppSelector(selectFulfilledTopProfiles);
+  const maxWidth = useBreakpointValue({ base: 280, sm: 500 });
 
   useEffect(() => {
     // We don't re-fetch top profiles if we already have. They don't change often.
@@ -70,9 +71,9 @@ function TopProfilesPage() {
         {loading
           ? Array(10)
               .fill(0)
-              .map(() => (
-                <Box mx="8px" my="18px">
-                  <Skeleton width="517px" height="64px" borderRadius="8px" />
+              .map((_, i) => (
+                <Box mx="8px" my="18px" key={i}>
+                  <Skeleton width={maxWidth} height="64px" borderRadius="8px" />
                 </Box>
               ))
           : profiles.map((profile, i) => {
