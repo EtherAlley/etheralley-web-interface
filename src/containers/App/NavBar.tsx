@@ -99,9 +99,11 @@ function Navbar() {
                     EtherAlley
                   </Heading>
                 </LinkOverlay>
-                <Badge colorScheme="brand" ml={3} display={['none', 'inherit']}>
+                <Badge colorScheme="brand" ml={3}>
                   {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
                 </Badge>
+                {/* Adding box with same width as logo on left to center the words EtherAlley better */}
+                <Box width={30} />
               </Flex>
             </LinkBox>
             <Flex display={{ base: 'none', md: 'flex' }}>
