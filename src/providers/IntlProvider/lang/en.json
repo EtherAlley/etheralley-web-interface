@@ -173,13 +173,13 @@
       "value": "Colors"
     }
   ],
-  "connect-to-wallet": [
+  "connect": [
     {
       "type": 0,
-      "value": "Connect wallet"
+      "value": "Connect"
     }
   ],
-  "connect-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
       "value": "Connect wallet"
@@ -549,6 +549,18 @@
     {
       "type": 0,
       "value": " badges is the maximum number for a premium account"
+    }
+  ],
+  "profile-banned": [
+    {
+      "type": 0,
+      "value": "Profile Banned"
+    }
+  ],
+  "profile-banned-subtext": [
+    {
+      "type": 0,
+      "value": "The profile you're looking for has been banned"
     }
   ],
   "profile-not-found": [

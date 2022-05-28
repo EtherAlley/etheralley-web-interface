@@ -173,13 +173,13 @@
       "value": "ColorsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "connect-to-wallet": [
+  "connect": [
     {
       "type": 0,
-      "value": "Connect walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "ConnectSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "connect-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
       "value": "Connect walletSSSSSSSSSSSSSSSSSSSSSSSSS"
@@ -549,6 +549,18 @@
     {
       "type": 0,
       "value": " badges is the maximum number for a premium accountSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profile-banned": [
+    {
+      "type": 0,
+      "value": "Profile BannedSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "profile-banned-subtext": [
+    {
+      "type": 0,
+      "value": "The profile you're looking for has been bannedSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "profile-not-found": [

@@ -93,15 +93,18 @@ export const slice = createSlice({
       state.colors.profile = { ...initialState.colors.profile };
     });
     builder.addCase(loadProfile.fulfilled, (state, { payload }) => {
-      if (!payload || !payload.display_config || !payload.display_config.colors) {
+      if (payload.error || !payload.data || !payload.data.display_config || !payload.data.display_config.colors) {
         return;
       }
-      state.colors.profile.primary = payload.display_config.colors.primary;
-      state.colors.profile.secondary = payload.display_config.colors.secondary;
-      state.colors.profile.accent = payload.display_config.colors.accent;
-      state.colors.profile.shadow = payload.display_config.colors.shadow;
-      state.colors.profile.primaryText = payload.display_config.colors.primary_text;
-      state.colors.profile.secondaryText = payload.display_config.colors.secondary_text;
+      state.colors.profile.primary = payload.data.display_config.colors.primary;
+      state.colors.profile.secondary = payload.data.display_config.colors.secondary;
+      state.colors.profile.accent = payload.data.display_config.colors.accent;
+      state.colors.profile.shadow = payload.data.display_config.colors.shadow;
+      state.colors.profile.primaryText = payload.data.display_config.colors.primary_text;
+      state.colors.profile.secondaryText = payload.data.display_config.colors.secondary_text;
+    });
+    builder.addCase(loadProfile.rejected, (state) => {
+      state.colors.profile = { ...initialState.colors.profile };
     });
     builder.addCase(updatePrimaryColor, (state, { payload }) => {
       state.colors.profile.primary = payload;

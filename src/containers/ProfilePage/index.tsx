@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Box, Container } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
-import { loadProfile, selectError, selectProfileNotFound } from './slice';
+import { loadProfile, selectError, selectProfileNotFound, selectProfileBanned } from './slice';
 import Toolbar from './Toolbar';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -36,6 +36,7 @@ function ProfilePage() {
   const { address } = useParams<{ address: string }>();
   const error = useAppSelector(selectError);
   const profileNotFound = useAppSelector(selectProfileNotFound);
+  const profileBanned = useAppSelector(selectProfileBanned);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -51,6 +52,18 @@ function ProfilePage() {
         subtitle={intl.formatMessage({
           id: 'non-existent-profile',
           defaultMessage: "The profile you're looking for does not seem to exist",
+        })}
+      />
+    );
+  }
+
+  if (error && profileBanned) {
+    return (
+      <Error
+        message={intl.formatMessage({ id: 'profile-banned', defaultMessage: 'Profile Banned' })}
+        subtext={intl.formatMessage({
+          id: 'profile-banned-subtext',
+          defaultMessage: "The profile you're looking for has been banned",
         })}
       />
     );

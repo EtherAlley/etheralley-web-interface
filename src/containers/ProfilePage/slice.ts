@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { FetchCoreAPI } from '../../common/http';
+import { FetchCoreAPI, Result } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
@@ -20,6 +20,7 @@ export type StateProfile = Profile & { display_config: DisplayConfig }; // displ
 export interface State {
   loadProfileState: AsyncStates;
   profileNotFound: boolean;
+  profileBanned: boolean;
   saveProfileState: AsyncStates;
   showEditBar: boolean;
   profile: StateProfile;
@@ -36,6 +37,7 @@ export interface State {
 const initialState: State = {
   loadProfileState: AsyncStates.PENDING,
   profileNotFound: false,
+  profileBanned: false,
   saveProfileState: AsyncStates.READY,
   showEditBar: false,
   profile: {
@@ -115,20 +117,10 @@ const initialState: State = {
   hiddenBadges: {}, // these badge ids will be hidden during rendering
 };
 
-export const loadProfile = createAsyncThunk<Profile | undefined, { address: string }, { state: RootState }>(
+export const loadProfile = createAsyncThunk<Result<Profile>, { address: string }, { state: RootState }>(
   'profile/load',
   async ({ address }) => {
-    const { data, error } = await FetchCoreAPI<Profile>(`/profiles/${address}`);
-
-    if (error && error.status === 404) {
-      return undefined;
-    }
-
-    if (error || !data) {
-      throw new Error('error loading profile');
-    }
-
-    return data;
+    return FetchCoreAPI<Profile>(`/profiles/${address}`);
   }
 );
 
@@ -251,16 +243,27 @@ export const slice = createSlice({
         return initialState;
       })
       .addCase(loadProfile.rejected, (state, action) => {
-        console.log(action);
         state.loadProfileState = AsyncStates.REJECTED;
       })
-      .addCase(loadProfile.fulfilled, (state, { payload: profile }) => {
-        if (!profile) {
+      .addCase(loadProfile.fulfilled, (state, { payload }) => {
+        if (payload.error && payload.error.status === 404) {
           state.loadProfileState = AsyncStates.REJECTED;
           state.profileNotFound = true;
           return;
         }
 
+        if (payload.error && payload.error.status === 403) {
+          state.loadProfileState = AsyncStates.REJECTED;
+          state.profileBanned = true;
+          return;
+        }
+
+        if (!payload.data) {
+          state.loadProfileState = AsyncStates.REJECTED;
+          return;
+        }
+
+        const profile = payload.data;
         state.loadProfileState = AsyncStates.FULFILLED;
         state.profile.address = profile.address;
         state.profile.ens_name = profile.ens_name;
@@ -486,9 +489,11 @@ export const selectLoading = (state: RootState) => state.profilePage.loadProfile
 
 export const selectError = (state: RootState) => state.profilePage.loadProfileState === AsyncStates.REJECTED;
 
+export const selectSaving = (state: RootState) => state.profilePage.saveProfileState === AsyncStates.PENDING;
+
 export const selectProfileNotFound = (state: RootState) => state.profilePage.profileNotFound;
 
-export const selectSaving = (state: RootState) => state.profilePage.saveProfileState === AsyncStates.PENDING;
+export const selectProfileBanned = (state: RootState) => state.profilePage.profileBanned;
 
 export const selectShowEditBar = (state: RootState) => state.profilePage.showEditBar;
 
