@@ -86,10 +86,10 @@
   "colors-form": {
     "defaultMessage": "Colors"
   },
-  "connect-to-wallet": {
-    "defaultMessage": "Connect wallet"
+  "connect": {
+    "defaultMessage": "Connect"
   },
-  "connect-wallet": {
+  "connect-to-wallet": {
     "defaultMessage": "Connect wallet"
   },
   "contract-creation-label": {
@@ -262,6 +262,12 @@
   },
   "premium-max-badge-count-form": {
     "defaultMessage": "{max} badges is the maximum number for a premium account"
+  },
+  "profile-banned": {
+    "defaultMessage": "Profile Banned"
+  },
+  "profile-banned-subtext": {
+    "defaultMessage": "The profile you're looking for has been banned"
   },
   "profile-not-found": {
     "defaultMessage": "Profile Not Found"

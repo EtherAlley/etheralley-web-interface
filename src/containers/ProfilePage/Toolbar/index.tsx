@@ -3,12 +3,13 @@ import { openEditBar, selectAddress, selectShowEditBar } from '../../ProfilePage
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Container, Flex } from '@chakra-ui/react';
 import IconButton from '../../../components/IconButton';
-import { MdKeyboardBackspace, MdModeEdit } from 'react-icons/md';
+import { MdHome, MdModeEdit } from 'react-icons/md';
 import { FaTwitter } from 'react-icons/fa';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { useEthers } from '@usedapp/core';
 import Settings from '../../../common/settings';
+import { Routes } from '../../../common/constants';
 
 function ProfileBar() {
   return (
@@ -36,8 +37,8 @@ function HomeButton() {
     <IconButton
       aria-label={goHomeLabel}
       tooltip={goHomeLabel}
-      Icon={MdKeyboardBackspace}
-      onClick={() => navigate(-1)}
+      Icon={MdHome}
+      onClick={() => navigate(Routes.HOME)}
       iconColor="profile.accent"
       bgColor="profile.secondary"
     />

@@ -173,13 +173,13 @@
       "value": "Ḉŏĺŏŕś"
     }
   ],
-  "connect-to-wallet": [
+  "connect": [
     {
       "type": 0,
-      "value": "Ḉŏńńèćṭ ẘâĺĺèṭ"
+      "value": "Ḉŏńńèćṭ"
     }
   ],
-  "connect-wallet": [
+  "connect-to-wallet": [
     {
       "type": 0,
       "value": "Ḉŏńńèćṭ ẘâĺĺèṭ"
@@ -549,6 +549,18 @@
     {
       "type": 0,
       "value": " ḃâḋĝèś íś ṭḫè ṁâẋíṁůṁ ńůṁḃèŕ ḟŏŕ â ṗŕèṁíůṁ âććŏůńṭ"
+    }
+  ],
+  "profile-banned": [
+    {
+      "type": 0,
+      "value": "Ṕŕŏḟíĺè Ḃâńńèḋ"
+    }
+  ],
+  "profile-banned-subtext": [
+    {
+      "type": 0,
+      "value": "Ṯḫè ṗŕŏḟíĺè ẏŏů'ŕè ĺŏŏǩíńĝ ḟŏŕ ḫâś ḃèèń ḃâńńèḋ"
     }
   ],
   "profile-not-found": [
