@@ -60,7 +60,7 @@ function AboutPage() {
           on your profile can be added, removed, grouped, and ordered in whatever way suits you.`,
           })}
         </Text>
-        <Image src="/gifs/customization_2.gif" />
+        <Image src="/gifs/add-reorder-token.gif" />
         <Divider h={5} />
         <Heading as="h2" mb={5}>
           {intl.formatMessage({
@@ -74,7 +74,7 @@ function AboutPage() {
             defaultMessage: `Every color that appears on your profile can be customized to suit your style`,
           })}
         </Text>
-        <Image src="/gifs/customization_1.gif" />
+        <Image src="/gifs/change-colors.gif" />
         <Divider h={5} />
         <Heading as="h2" mb={5}>
           {intl.formatMessage({
@@ -89,7 +89,7 @@ function AboutPage() {
           smart contract, being a beta tester and much more.`,
           })}
         </Text>
-        <Image src="/gifs/customization_3.gif" />
+        <Image src="/gifs/add-achievement.gif" />
       </VStack>
     </Box>
   );
