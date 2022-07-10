@@ -113,6 +113,7 @@ const initialState: State = {
     fungible_tokens: [],
     statistics: [],
     currencies: [],
+    last_modified: undefined,
   },
   hiddenBadges: {}, // these badge ids will be hidden during rendering
 };
@@ -276,8 +277,8 @@ export const slice = createSlice({
 
           const profile = payload.data;
 
-          // open the edit bar if they are loading their own profile
-          if (account && account.toLowerCase() === profile.address.toLowerCase()) {
+          // open the edit bar if they are loading their own profile and they have not saved it yet
+          if (!profile.last_modified && account && account.toLowerCase() === profile.address.toLowerCase()) {
             state.showEditBar = true;
           }
 
