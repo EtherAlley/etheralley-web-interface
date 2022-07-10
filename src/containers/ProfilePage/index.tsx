@@ -15,6 +15,7 @@ import AddAchievementModal from './ModalForms/AddAchievementModal';
 import Error from '../../components/Error';
 import NotFound from '../../components/NotFound';
 import DragDropProvider from '../../providers/DragDropProvider';
+import { useEthers } from '@usedapp/core';
 
 function PageWrapper() {
   return (
@@ -38,12 +39,13 @@ function ProfilePage() {
   const profileNotFound = useAppSelector(selectProfileNotFound);
   const profileBanned = useAppSelector(selectProfileBanned);
   const dispatch = useAppDispatch();
+  const { account } = useEthers();
 
   useEffect(() => {
     if (address) {
-      dispatch(loadProfile({ address }));
+      dispatch(loadProfile({ address, account }));
     }
-  }, [address, dispatch]);
+  }, [address, dispatch, account]);
 
   if (error && profileNotFound) {
     return (

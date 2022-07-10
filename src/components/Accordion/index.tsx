@@ -3,7 +3,8 @@ import { ReactNode } from 'react';
 
 function AccordionComponent({ items }: { items: { header: string; body: ReactNode }[] }) {
   return (
-    <Accordion allowMultiple>
+    <Accordion allowMultiple defaultIndex={[0, 1, 2, 3, 4]}>
+      {/** TODO: Find a more dynamic way of building this array */}
       {items.map(({ header, body }, i) => (
         <AccordionItem key={i}>
           <h2>

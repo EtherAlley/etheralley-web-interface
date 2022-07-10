@@ -56,6 +56,18 @@ function useToasts() {
             defaultMessage: 'Error loading page',
           });
           break;
+        case Toasts.MOBILE_WALLET_SUPPORT:
+          title = intl.formatMessage({
+            id: 'mobile-wallet-support',
+            defaultMessage: 'Mobile Wallet support is coming soon!',
+          });
+          break;
+        case Toasts.ERROR_CONNECTING_TO_WALLET:
+          title = intl.formatMessage({
+            id: 'error-connecting-to-wallet',
+            defaultMessage: 'Error connecting to wallet',
+          });
+          break;
       }
       showToast({
         variant: 'solid',
