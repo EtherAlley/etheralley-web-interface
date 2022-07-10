@@ -339,6 +339,12 @@
       "value": " address..."
     }
   ],
+  "error-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Error connecting to wallet"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -375,10 +381,10 @@
       "value": "GitHub"
     }
   ],
-  "go-home-button": [
+  "go-back-button": [
     {
       "type": 0,
-      "value": "Go Home"
+      "value": "Go Back"
     }
   ],
   "how-does-it-work-header": [
@@ -437,6 +443,12 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "mobile-wallet-support": [
+    {
+      "type": 0,
+      "value": "Mobile Wallet support is coming soon!"
     }
   ],
   "more": [

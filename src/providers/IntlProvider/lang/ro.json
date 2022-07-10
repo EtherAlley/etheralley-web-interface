@@ -339,6 +339,12 @@
       "value": " address...SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "error-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Error connecting to walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -375,10 +381,10 @@
       "value": "GitHubSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "go-home-button": [
+  "go-back-button": [
     {
       "type": 0,
-      "value": "Go HomeSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Go BackSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "how-does-it-work-header": [
@@ -437,6 +443,12 @@
     {
       "type": 0,
       "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "mobile-wallet-support": [
+    {
+      "type": 0,
+      "value": "Mobile Wallet support is coming soon!SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "more": [

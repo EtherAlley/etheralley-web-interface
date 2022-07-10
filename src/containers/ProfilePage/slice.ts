@@ -117,12 +117,13 @@ const initialState: State = {
   hiddenBadges: {}, // these badge ids will be hidden during rendering
 };
 
-export const loadProfile = createAsyncThunk<Result<Profile>, { address: string }, { state: RootState }>(
-  'profile/load',
-  async ({ address }) => {
-    return FetchCoreAPI<Profile>(`/profiles/${address}`);
-  }
-);
+export const loadProfile = createAsyncThunk<
+  Result<Profile>,
+  { address: string; account: string | null | undefined },
+  { state: RootState }
+>('profile/load', async ({ address }) => {
+  return FetchCoreAPI<Profile>(`/profiles/${address}`);
+});
 
 export const saveProfile = createAsyncThunk<void, { address: string; library: any }, { state: RootState }>(
   'profile/save',
@@ -245,40 +246,57 @@ export const slice = createSlice({
       .addCase(loadProfile.rejected, (state, action) => {
         state.loadProfileState = AsyncStates.REJECTED;
       })
-      .addCase(loadProfile.fulfilled, (state, { payload }) => {
-        if (payload.error && payload.error.status === 404) {
-          state.loadProfileState = AsyncStates.REJECTED;
-          state.profileNotFound = true;
-          return;
-        }
+      .addCase(
+        loadProfile.fulfilled,
+        (
+          state,
+          {
+            payload,
+            meta: {
+              arg: { account },
+            },
+          }
+        ) => {
+          if (payload.error && payload.error.status === 404) {
+            state.loadProfileState = AsyncStates.REJECTED;
+            state.profileNotFound = true;
+            return;
+          }
 
-        if (payload.error && payload.error.status === 403) {
-          state.loadProfileState = AsyncStates.REJECTED;
-          state.profileBanned = true;
-          return;
-        }
+          if (payload.error && payload.error.status === 403) {
+            state.loadProfileState = AsyncStates.REJECTED;
+            state.profileBanned = true;
+            return;
+          }
 
-        if (!payload.data) {
-          state.loadProfileState = AsyncStates.REJECTED;
-          return;
-        }
+          if (!payload.data) {
+            state.loadProfileState = AsyncStates.REJECTED;
+            return;
+          }
 
-        const profile = payload.data;
-        state.loadProfileState = AsyncStates.FULFILLED;
-        state.profile.address = profile.address;
-        state.profile.ens_name = profile.ens_name;
-        state.profile.store_assets = profile.store_assets;
-        state.profile.non_fungible_tokens = profile.non_fungible_tokens;
-        state.profile.fungible_tokens = profile.fungible_tokens;
-        state.profile.statistics = profile.statistics;
-        state.profile.interactions = profile.interactions;
-        state.profile.currencies = profile.currencies;
-        if (!profile.display_config) {
-          buildDefaultDisplayConfig(state.profile, profile);
-        } else {
-          state.profile.display_config = profile.display_config;
+          const profile = payload.data;
+
+          // open the edit bar if they are loading their own profile
+          if (account && account.toLowerCase() === profile.address.toLowerCase()) {
+            state.showEditBar = true;
+          }
+
+          state.loadProfileState = AsyncStates.FULFILLED;
+          state.profile.address = profile.address;
+          state.profile.ens_name = profile.ens_name;
+          state.profile.store_assets = profile.store_assets;
+          state.profile.non_fungible_tokens = profile.non_fungible_tokens;
+          state.profile.fungible_tokens = profile.fungible_tokens;
+          state.profile.statistics = profile.statistics;
+          state.profile.interactions = profile.interactions;
+          state.profile.currencies = profile.currencies;
+          if (!profile.display_config) {
+            buildDefaultDisplayConfig(state.profile, profile);
+          } else {
+            state.profile.display_config = profile.display_config;
+          }
         }
-      })
+      )
       .addCase(saveProfile.pending, (state, _) => {
         state.saveProfileState = AsyncStates.PENDING;
       })

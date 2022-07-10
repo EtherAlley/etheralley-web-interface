@@ -19,12 +19,15 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
 import { useEthers } from '@usedapp/core';
 import EtherAlley from '../../icons/EtherAlley';
+import useIsMobile from '../../hooks/useIsMobile';
+import { connectToWallet, selectIsConnecting } from './slice';
+import useAppSelector from '../../hooks/useAppSelector';
+import useAppDispatch from '../../hooks/useAppDispatch';
 
 interface NavItem {
   label: string;
@@ -271,17 +274,20 @@ const MobileNavItem = ({ label, children, href, onToggleMenu }: NavItem & { onTo
 
 function UserButton() {
   const intl = useIntl();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { activateBrowserWallet, account } = useEthers();
-  const isMobile = useMediaQuery('only screen and (max-width: 760px)')[0]; // TODO: Remove this when we support non-browser wallets
-
-  if (isMobile) {
-    return <span />;
-  }
+  const isMobile = useIsMobile();
+  const connecting = useAppSelector(selectIsConnecting);
 
   if (!account) {
     return (
-      <Button colorScheme="brand" variant="solid" onClick={activateBrowserWallet}>
+      <Button
+        isLoading={connecting}
+        colorScheme="brand"
+        variant="solid"
+        onClick={() => dispatch(connectToWallet({ isMobile, activateBrowserWallet }))}
+      >
         {intl.formatMessage({ id: 'connect', defaultMessage: 'Connect' })}
       </Button>
     );
