@@ -356,6 +356,9 @@
   "shop-load-error-subtext": {
     "defaultMessage": "We couldn't seem to load the page at this time"
   },
+  "spotlight-profile-caption": {
+    "defaultMessage": "Spotlight Profile"
+  },
   "stake-rewards": {
     "defaultMessage": "Stake Rewards"
   },
@@ -408,7 +411,7 @@
     "defaultMessage": "Top {dex} Swaps"
   },
   "top-profiles-load-error": {
-    "defaultMessage": "Error Loading Top Profiles Page"
+    "defaultMessage": "Error Loading Trending Page"
   },
   "top-profiles-load-error-subtext": {
     "defaultMessage": "We couldn't seem to load the page at this time"
@@ -420,7 +423,7 @@
     "defaultMessage": "Trending"
   },
   "trending-profiles-caption": {
-    "defaultMessage": "Trending Profiles"
+    "defaultMessage": "Trending Profiles Today"
   },
   "twitter-button": {
     "defaultMessage": "Share on Twitter"
