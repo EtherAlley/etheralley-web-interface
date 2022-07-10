@@ -36,6 +36,7 @@ export type Profile = {
   [BadgeTypes.FungibleToken]: FungibleToken[];
   [BadgeTypes.Statistics]: Statistic[];
   [BadgeTypes.Currencies]: Currency[];
+  last_modified: string | undefined;
 };
 
 export type StoreAssets = {
