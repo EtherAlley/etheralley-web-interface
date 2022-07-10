@@ -9,7 +9,7 @@ import HomePage from '../HomePage'; // We don't lazy load home page for SEO. We 
 
 const NotFound = lazy(() => import('../../components/NotFound'));
 const ProfilePage = lazy(() => import('../ProfilePage'));
-const TopProfilesPage = lazy(() => import('../TopProfilesPage'));
+const TrendingPage = lazy(() => import('../TrendingPage'));
 const ShopPage = lazy(() => import('../ShopPage'));
 const AboutPage = lazy(() => import('../AboutPage'));
 
@@ -40,7 +40,7 @@ function App() {
           path={RouteStrings.TRENDING}
           element={
             <PageWrapper>
-              <TopProfilesPage />
+              <TrendingPage />
             </PageWrapper>
           }
         />

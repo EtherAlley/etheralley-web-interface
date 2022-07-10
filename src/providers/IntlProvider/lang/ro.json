@@ -761,6 +761,12 @@
       "value": "We couldn't seem to load the page at this timeSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "spotlight-profile-caption": [
+    {
+      "type": 0,
+      "value": "Spotlight ProfileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "stake-rewards": [
     {
       "type": 0,
@@ -926,7 +932,7 @@
   "top-profiles-load-error": [
     {
       "type": 0,
-      "value": "Error Loading Top Profiles PageSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Error Loading Trending PageSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "top-profiles-load-error-subtext": [
@@ -950,7 +956,7 @@
   "trending-profiles-caption": [
     {
       "type": 0,
-      "value": "Trending ProfilesSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Trending Profiles TodaySSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "twitter-button": [

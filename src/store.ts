@@ -4,7 +4,7 @@ import themeReducer from './providers/ThemeProvider/slice';
 import dragDropReducer from './providers/DragDropProvider/slice';
 import homeReducer from './containers/HomePage/slice';
 import profileReducer from './containers/ProfilePage/slice';
-import topProfilesReducer from './containers/TopProfilesPage/slice';
+import trendingReducer from './containers/TrendingPage/slice';
 import shopReducer from './containers/ShopPage/slice';
 import modalFormsReducer from './containers/ProfilePage/ModalForms/slice';
 
@@ -13,7 +13,7 @@ export const store = configureStore({
     app: appReducer,
     home: homeReducer,
     profilePage: profileReducer,
-    topProfilesPage: topProfilesReducer,
+    trendingPage: trendingReducer,
     shopPage: shopReducer,
     theme: themeReducer,
     dragDrop: dragDropReducer,

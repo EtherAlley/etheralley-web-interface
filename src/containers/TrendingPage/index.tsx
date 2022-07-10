@@ -1,16 +1,4 @@
-import {
-  Text,
-  Heading,
-  useBreakpointValue,
-  Flex,
-  Box,
-  Divider,
-  Center,
-  Image,
-  LinkOverlay,
-  LinkBox,
-  Skeleton,
-} from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box, Image, LinkOverlay, LinkBox, Skeleton } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
@@ -20,18 +8,20 @@ import useAppSelector from '../../hooks/useAppSelector';
 import ProfileUser from '../../icons/ProfileUser';
 import Verified from '../../icons/Verified';
 import {
-  getTopProfiles,
+  getProfiles,
   selectErrorLoadingTopProfiles,
   selectFulfilledTopProfiles,
   selectLoadingTopProfiles,
-  selectProfiles,
+  selectSpotlightProfile,
+  selectTrendingProfiles,
 } from './slice';
 import Error from '../../components/Error';
 
-function TopProfilesPage() {
+function TrendingPage() {
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const profiles = useAppSelector(selectProfiles);
+  const trendingProfiles = useAppSelector(selectTrendingProfiles);
+  const spotlightProfile = useAppSelector(selectSpotlightProfile);
   const loading = useAppSelector(selectLoadingTopProfiles);
   const error = useAppSelector(selectErrorLoadingTopProfiles);
   const loaded = useAppSelector(selectFulfilledTopProfiles);
@@ -40,7 +30,7 @@ function TopProfilesPage() {
   useEffect(() => {
     // We don't re-fetch top profiles if we already have. They don't change often.
     if (!loaded) {
-      dispatch(getTopProfiles());
+      dispatch(getProfiles());
     }
   }, [dispatch, loaded]);
 
@@ -49,7 +39,7 @@ function TopProfilesPage() {
       <Error
         message={intl.formatMessage({
           id: 'top-profiles-load-error',
-          defaultMessage: 'Error Loading Top Profiles Page',
+          defaultMessage: 'Error Loading Trending Page',
         })}
         subtext={intl.formatMessage({
           id: 'top-profiles-load-error-subtext',
@@ -62,11 +52,19 @@ function TopProfilesPage() {
   return (
     <Box>
       <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
-        {intl.formatMessage({ id: 'trending-profiles-caption', defaultMessage: 'Trending Profiles' })}
+        {intl.formatMessage({ id: 'spotlight-profile-caption', defaultMessage: 'Spotlight Profile' })}
       </Heading>
-      <Center>
-        <Divider w={250} />
-      </Center>
+      {loading || !spotlightProfile ? (
+        <Box mx="8px" my="18px">
+          <Skeleton width={maxWidth} height="64px" borderRadius="8px" />
+        </Box>
+      ) : (
+        <Row profile={spotlightProfile} />
+      )}
+      <Box my="150px" />
+      <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
+        {intl.formatMessage({ id: 'trending-profiles-caption', defaultMessage: 'Trending Profiles Today' })}
+      </Heading>
       <Box m={2}>
         {loading
           ? Array(10)
@@ -76,7 +74,7 @@ function TopProfilesPage() {
                   <Skeleton width={maxWidth} height="64px" borderRadius="8px" />
                 </Box>
               ))
-          : profiles.map((profile, i) => {
+          : trendingProfiles.map((profile, i) => {
               return <Row key={profile.address} profile={profile} rank={i + 1} />;
             })}
       </Box>
@@ -84,7 +82,7 @@ function TopProfilesPage() {
   );
 }
 
-function Row({ profile, rank }: { profile: Profile; rank: number }) {
+function Row({ profile, rank }: { profile: Profile; rank?: number }) {
   const maxWidth = useBreakpointValue({ base: 200, sm: 400 });
   const profileId = profile.ens_name || profile.address;
   const premium = profile.store_assets.premium;
@@ -99,12 +97,16 @@ function Row({ profile, rank }: { profile: Profile; rank: number }) {
         }}
         borderRadius="8px"
         py={3}
+        justifyContent={rank ? undefined : 'center'}
       >
-        <Box minWidth="60px">
-          <Text fontWeight="bold" fontSize="xl" textAlign="center">
-            {medal(rank)}
-          </Text>
-        </Box>
+        {rank && (
+          <Box minWidth="60px">
+            <Text fontWeight="bold" fontSize="xl" textAlign="center">
+              {medal(rank)}
+            </Text>
+          </Box>
+        )}
+
         <Picture premium={premium} src={profileImage} />
         <Box ml={5} mr={2}>
           <LinkOverlay as="span">
@@ -202,4 +204,4 @@ function getProfileImage(profile: Profile): string | undefined {
   return nft.metadata.image;
 }
 
-export default TopProfilesPage;
+export default TrendingPage;
