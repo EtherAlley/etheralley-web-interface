@@ -339,6 +339,12 @@
       "value": " âḋḋŕèśś..."
     }
   ],
+  "error-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ ćŏńńèćṭíńĝ ṭŏ ẘâĺĺèṭ"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -375,10 +381,10 @@
       "value": "ḠíṭḢůḃ"
     }
   ],
-  "go-home-button": [
+  "go-back-button": [
     {
       "type": 0,
-      "value": "Ḡŏ Ḣŏṁè"
+      "value": "Ḡŏ Ḃâćǩ"
     }
   ],
   "how-does-it-work-header": [
@@ -437,6 +443,12 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "mobile-wallet-support": [
+    {
+      "type": 0,
+      "value": "Ḿŏḃíĺè Ẅâĺĺèṭ śůṗṗŏŕṭ íś ćŏṁíńĝ śŏŏń!"
     }
   ],
   "more": [

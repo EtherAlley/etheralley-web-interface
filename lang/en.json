@@ -161,6 +161,9 @@
   "enter-wallet-address": {
     "defaultMessage": "Enter {ensname} or {ethereum} address..."
   },
+  "error-connecting-to-wallet": {
+    "defaultMessage": "Error connecting to wallet"
+  },
   "error-loading-page": {
     "defaultMessage": "Error loading page"
   },
@@ -179,8 +182,8 @@
   "github": {
     "defaultMessage": "GitHub"
   },
-  "go-home-button": {
-    "defaultMessage": "Go Home"
+  "go-back-button": {
+    "defaultMessage": "Go Back"
   },
   "how-does-it-work-header": {
     "defaultMessage": "How does it work?"
@@ -208,6 +211,9 @@
   },
   "learn-more": {
     "defaultMessage": "Learn more about {name}"
+  },
+  "mobile-wallet-support": {
+    "defaultMessage": "Mobile Wallet support is coming soon!"
   },
   "more": {
     "defaultMessage": "More"
