@@ -3,7 +3,7 @@ const Settings = {
   IS_DEV: process.env.NODE_ENV === 'development',
   PUBLIC_URL: process.env.PUBLIC_URL ?? '',
   BASE_URL: process.env.REACT_APP_BASE_URL ?? '',
-  CORE_API_URL: process.env.REACT_APP_CORE_API_URL ?? '',
+  PROFILES_API_URL: process.env.REACT_APP_PROFILES_API_URL ?? '',
   STORE_ADDRESS: process.env.REACT_APP_STORE_ADDRESS ?? '',
   STORE_CHAIN_ID: Number.parseInt(process.env.REACT_APP_STORE_CHAIN_ID ?? '0'),
   STORE_BLOCKCHAIN: process.env.REACT_APP_STORE_BLOCKCHAIN ?? '',

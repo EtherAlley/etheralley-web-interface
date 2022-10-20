@@ -14,7 +14,7 @@ export const FetchCoreAPI = async <T>(
   resource: string,
   options: RequestInit = { method: 'GET' }
 ): Promise<Result<T>> => {
-  const response = await fetch(`${Settings.CORE_API_URL}${resource}`, options);
+  const response = await fetch(`${Settings.PROFILES_API_URL}${resource}`, options);
 
   const textBody = await response.text();
 
