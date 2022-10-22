@@ -1,9 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { BigNumber, Contract, utils } from 'ethers';
-import EtherAlleyStoreAbi from '../../abi/EtherAlleyStore';
+import { BigNumber } from 'ethers';
 import { AsyncStates, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
 import { FetchCoreAPI } from '../../common/http';
-import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import { RootState } from '../../store';
 import { showToast } from '../App/slice';
@@ -47,52 +45,46 @@ export const getListings = createAsyncThunk<Listing[], undefined, { state: RootS
 
 export const getBalances = createAsyncThunk<
   string[],
-  { library: any; account: string | null | undefined },
+  { contract: any; address: string | null | undefined },
   { state: RootState }
->('shopPage/getBalances', async ({ library, account }) => {
-  if (!account) {
+>('shopPage/getBalances', async ({ contract, address }) => {
+  if (!address) {
     return [];
   }
 
-  const contract = new Contract(
-    Settings.STORE_ADDRESS,
-    new utils.Interface(EtherAlleyStoreAbi),
-    library.getSigner(account).connectUnchecked()
-  );
+  try {
+    const balances = await contract.balanceOfBatch([address, address], [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]);
 
-  const balances = await contract.balanceOfBatch([account, account], [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]);
-
-  return balances.map((balance: BigNumber) => balance.toString());
+    return balances.map((balance: BigNumber) => balance.toString());
+  } catch (ex) {
+    console.log(ex);
+    throw ex;
+  }
 });
 
 export const purchase = createAsyncThunk<
   void,
-  { library: any; account: string; tokenId: string; price: string; quantity: string },
+  { contract: any; address: string; tokenId: string; price: string; quantity: string },
   { state: RootState }
->('shopPage/purchase', async ({ library, account, tokenId, price, quantity }, { dispatch }) => {
+>('shopPage/purchase', async ({ contract, address, tokenId, price, quantity }, { dispatch }) => {
   try {
-    const contract = new Contract(
-      Settings.STORE_ADDRESS,
-      new utils.Interface(EtherAlleyStoreAbi),
-      library.getSigner(account).connectUnchecked()
-    );
-
-    const tx = await contract.purchase(account, tokenId, quantity, [], { value: price, gasLimit: 1000000 });
+    const tx = await contract.purchase(address, tokenId, quantity, [], { value: price, gasLimit: 1000000 });
 
     await tx.wait();
 
     dispatch(showToast({ toast: Toasts.SUCCESS_SUBMITTING_PURCHASE, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_SUBMITTING_PURCHASE, status: ToastStatuses.ERROR }));
+    console.error(ex);
     throw ex;
   }
 
   try {
-    dispatch(getBalances({ library, account }));
+    dispatch(getBalances({ contract, address }));
   } catch {}
 
   try {
-    await FetchCoreAPI<void>(`/profiles/${account}/refresh`);
+    await FetchCoreAPI<void>(`/profiles/${address}/refresh`);
   } catch {}
 });
 

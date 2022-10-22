@@ -15,7 +15,7 @@ import AddAchievementModal from './ModalForms/AddAchievementModal';
 import Error from '../../components/Error';
 import NotFound from '../../components/NotFound';
 import DragDropProvider from '../../providers/DragDropProvider';
-import { useEthers } from '@usedapp/core';
+import { useAccount } from 'wagmi';
 
 function PageWrapper() {
   return (
@@ -39,13 +39,13 @@ function ProfilePage() {
   const profileNotFound = useAppSelector(selectProfileNotFound);
   const profileBanned = useAppSelector(selectProfileBanned);
   const dispatch = useAppDispatch();
-  const { account } = useEthers();
+  const { address: walletAddress } = useAccount();
 
   useEffect(() => {
     if (address) {
-      dispatch(loadProfile({ address, account }));
+      dispatch(loadProfile({ address, account: walletAddress }));
     }
-  }, [address, dispatch, account]);
+  }, [address, dispatch, walletAddress]);
 
   if (error && profileNotFound) {
     return (

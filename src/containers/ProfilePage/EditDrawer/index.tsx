@@ -25,7 +25,7 @@ import EditColorsForm from './EditColorsForm';
 import EditBadgesForm from './EditBadgesForm';
 import EditProfilePictureForm from './EditProfilePictureForm';
 import EditAchievementForm from './EditAchievementForm';
-import { useEthers } from '@usedapp/core';
+import { useSigner, useAccount } from 'wagmi';
 import { REGULAR_TOTAL_BADGE_COUNT } from '../../../common/constants';
 
 function ProfileEditDrawer() {
@@ -33,7 +33,8 @@ function ProfileEditDrawer() {
   const showEditBar = useAppSelector(selectShowEditBar);
   const saving = useAppSelector(selectSaving);
   const dispatch = useAppDispatch();
-  const { account, library } = useEthers();
+  const { data: signer } = useSigner();
+  const { address } = useAccount();
   const closeEdit = () => dispatch(closeEditBar());
   const badgeCount = useAppSelector(selectBadgeCount);
   const { premium } = useAppSelector(selectStoreAssets);
@@ -82,7 +83,7 @@ function ProfileEditDrawer() {
           <Tooltip label={label} shouldWrapChildren isDisabled={!maxBadgeCountReached}>
             <Button
               colorScheme="brand"
-              onClick={() => dispatch(saveProfile({ address: account!, library }))}
+              onClick={() => dispatch(saveProfile({ address: address!, signer }))}
               isLoading={saving}
               disabled={maxBadgeCountReached}
             >

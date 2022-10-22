@@ -68,6 +68,12 @@ function useToasts() {
             defaultMessage: 'Error connecting to wallet',
           });
           break;
+        case Toasts.ERROR_SWITCHING_NETWORK:
+          title = intl.formatMessage({
+            id: 'error-switching-network',
+            defaultMessage: 'Error switching network',
+          });
+          break;
       }
       showToast({
         variant: 'solid',
