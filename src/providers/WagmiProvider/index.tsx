@@ -6,7 +6,7 @@ import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
 import Settings from '../../common/settings';
 
 const { chains, provider } = configureChains(
-  [Settings.IS_DEV ? chain.polygonMumbai : chain.polygon],
+  [chain[Settings.CHAIN_KEY as 'polygon' | 'polygonMumbai']],
   [alchemyProvider({ apiKey: Settings.ALCHEMY_API_KEY })]
 );
 

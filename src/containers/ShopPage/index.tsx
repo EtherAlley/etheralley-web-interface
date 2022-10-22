@@ -10,6 +10,7 @@ import {
   getBalances,
   getListings,
   selectErrorLoadingListings,
+  selectErrorLoadingBalances,
   selectFulfilledListings,
   selectListings,
   selectLoadingListings,
@@ -24,7 +25,8 @@ function ShopPage() {
   const dispatch = useAppDispatch();
   const loading = useAppSelector(selectLoadingListings);
   const loaded = useAppSelector(selectFulfilledListings);
-  const error = useAppSelector(selectErrorLoadingListings);
+  const errorListings = useAppSelector(selectErrorLoadingListings);
+  const errorBalances = useAppSelector(selectErrorLoadingBalances);
   const listings = useAppSelector(selectListings);
   const { address, isConnected } = useAccount();
   const { data: signer } = useSigner();
@@ -51,7 +53,7 @@ function ShopPage() {
     return <Loading />;
   }
 
-  if (error) {
+  if (errorListings || errorBalances) {
     return (
       <Error
         message={intl.formatMessage({ id: 'shop-load-error', defaultMessage: 'Error Loading Shop Page' })}

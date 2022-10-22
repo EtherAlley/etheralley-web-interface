@@ -54,10 +54,8 @@ export const getBalances = createAsyncThunk<
 
   try {
     const balances = await contract.balanceOfBatch([address, address], [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]);
-
     return balances.map((balance: BigNumber) => balance.toString());
   } catch (ex) {
-    // TODO: What should we do here?
     throw ex;
   }
 });
@@ -112,7 +110,7 @@ export const slice = createSlice({
       state.balances = action.payload;
     });
     builder.addCase(getBalances.rejected, (state, action) => {
-      state.getListingsState = AsyncStates.REJECTED;
+      state.getBalancesState = AsyncStates.REJECTED;
     });
     builder.addCase(purchase.pending, (state, action) => {
       state.purchaseState = AsyncStates.PENDING;
@@ -134,6 +132,9 @@ export const selectErrorLoadingListings = (state: RootState) =>
   state.shopPage.getListingsState === AsyncStates.REJECTED;
 
 export const selectLoadingBalances = (state: RootState) => state.shopPage.getBalancesState === AsyncStates.PENDING;
+
+export const selectErrorLoadingBalances = (state: RootState) =>
+  state.shopPage.getBalancesState === AsyncStates.REJECTED;
 
 export const selectSubmittingPurchase = (state: RootState) => state.shopPage.purchaseState === AsyncStates.PENDING;
 
