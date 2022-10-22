@@ -7,7 +7,7 @@ import Settings from '../../common/settings';
 
 const { chains, provider } = configureChains(
   [Settings.IS_DEV ? chain.polygonMumbai : chain.polygon],
-  [alchemyProvider({ apiKey: Settings.CHAIN_URL })]
+  [alchemyProvider({ apiKey: Settings.ALCHEMY_API_KEY })]
 );
 
 export const walletConnectConnector = new WalletConnectConnector({
