@@ -1,11 +1,10 @@
 import { useIntl } from 'react-intl';
 import { Routes } from '../../common/constants';
-import { useNavigate, useMatch, Link as RouterLink } from 'react-router-dom';
+import { useMatch, Link as RouterLink } from 'react-router-dom';
 import {
   Box,
   Flex,
   Heading,
-  Button,
   Badge,
   Link,
   LinkOverlay,
@@ -22,12 +21,8 @@ import {
 } from '@chakra-ui/react';
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
-import { useEthers } from '@usedapp/core';
 import EtherAlley from '../../icons/EtherAlley';
-import useIsMobile from '../../hooks/useIsMobile';
-import { connectToWallet, selectIsConnecting } from './slice';
-import useAppSelector from '../../hooks/useAppSelector';
-import useAppDispatch from '../../hooks/useAppDispatch';
+import UserButton from './UserButton';
 
 interface NavItem {
   label: string;
@@ -271,33 +266,5 @@ const MobileNavItem = ({ label, children, href, onToggleMenu }: NavItem & { onTo
     </Stack>
   );
 };
-
-function UserButton() {
-  const intl = useIntl();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const { activateBrowserWallet, account } = useEthers();
-  const isMobile = useIsMobile();
-  const connecting = useAppSelector(selectIsConnecting);
-
-  if (!account) {
-    return (
-      <Button
-        isLoading={connecting}
-        colorScheme="brand"
-        variant="solid"
-        onClick={() => dispatch(connectToWallet({ isMobile, activateBrowserWallet }))}
-      >
-        {intl.formatMessage({ id: 'connect', defaultMessage: 'Connect' })}
-      </Button>
-    );
-  }
-
-  return (
-    <Button colorScheme="brand" variant="solid" onClick={() => navigate(Routes.PROFILE.replace(':address', account))}>
-      {intl.formatMessage({ id: 'my-profile', defaultMessage: 'My Profile' })}
-    </Button>
-  );
-}
 
 export default Navbar;

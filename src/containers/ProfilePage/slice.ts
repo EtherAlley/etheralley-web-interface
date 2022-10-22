@@ -126,9 +126,9 @@ export const loadProfile = createAsyncThunk<
   return FetchCoreAPI<Profile>(`/profiles/${address}`);
 });
 
-export const saveProfile = createAsyncThunk<void, { address: string; library: any }, { state: RootState }>(
+export const saveProfile = createAsyncThunk<void, { address: string; signer: any }, { state: RootState }>(
   'profile/save',
-  async ({ address, library }, { getState, dispatch }) => {
+  async ({ address, signer }, { getState, dispatch }) => {
     try {
       const { profilePage } = getState();
 
@@ -138,7 +138,6 @@ export const saveProfile = createAsyncThunk<void, { address: string; library: an
         throw new Error('error getting challenge message');
       }
 
-      const signer = library.getSigner(address);
       const signature = await signer.signMessage(data.message);
 
       const result = await FetchCoreAPI<void>(`/profiles/${address}`, {

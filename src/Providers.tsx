@@ -1,23 +1,21 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import ThemeProvider from './providers/ThemeProvider';
 import IntlProvider from './providers/IntlProvider';
-import { DAppProvider } from '@usedapp/core';
+import WagmiProvider from './providers/WagmiProvider';
 
 export const Providers = ({ children }: { children: ReactElement }) => {
   return (
-    <React.StrictMode>
-      <Provider store={store}>
+    <Provider store={store}>
+      <WagmiProvider>
         <ThemeProvider>
           <IntlProvider>
-            <DAppProvider config={{}}>
-              <Router>{children}</Router>
-            </DAppProvider>
+            <Router>{children}</Router>
           </IntlProvider>
         </ThemeProvider>
-      </Provider>
-    </React.StrictMode>
+      </WagmiProvider>
+    </Provider>
   );
 };

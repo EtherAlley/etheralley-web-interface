@@ -601,6 +601,6 @@ const EtherAlleyStoreAbi = [
     stateMutability: 'view',
     type: 'function',
   },
-];
+] as const;
 
 export default EtherAlleyStoreAbi;
