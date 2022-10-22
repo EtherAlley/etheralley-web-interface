@@ -1,0 +1,27 @@
+{
+  "name": "EtherAlley Premium",
+  "description": "This is a semi-fungible token that gives the holder access to premium features on EtherAlley.io",
+  "image": "https://etheralley.io/store/1.png",
+  "attributes": [
+    {
+      "trait_type": "Status",
+      "value": "Verified"
+    },
+    {
+      "trait_type": "Badge Count",
+      "value": "50"
+    },
+    {
+      "trait_type": "Fungibility",
+      "value": "Semi-Fungible"
+    },
+    {
+      "trait_type": "Transferable",
+      "value": "true"
+    },
+    {
+      "trait_type": "Max balance",
+      "value": "unlimited"
+    }
+  ]
+}
