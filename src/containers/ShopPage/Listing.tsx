@@ -16,9 +16,9 @@ import {
   SimpleGrid,
   useTheme,
 } from '@chakra-ui/react';
-import { useEthers } from '@usedapp/core';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
+import EtherAlleyStoreAbi from '../../abi/EtherAlleyStore';
 import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Link from '../../components/Link';
@@ -32,6 +32,8 @@ import useHexToRgb from '../../hooks/useHexToRgb';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 import useTrimmedString from '../../hooks/useTrimmedString';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
+import { useContract, useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi';
+import { switchNetwork } from '../App/slice';
 
 function ListingComponent({ listing, index }: { listing: Listing; index: number }) {
   const {
@@ -46,16 +48,10 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const formatPrice = useDisplayNumber(price, 18);
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
-  const loadingBalances = useAppSelector(selectLoadingBalances);
-  const balances = useAppSelector(selectBalances);
-  const { chainId } = useEthers();
   const symbol = useCurrencySymbol(blockchain);
   const theme = useTheme();
   const rgb = useHexToRgb(theme.colors.brand[400]);
   const trimmedAddress = useTrimmedString(address);
-
-  const hasPurchased = !loadingBalances && !!balances[index] && balances[index] !== '0';
-  const correctChainId = chainId === Settings.STORE_CHAIN_ID;
 
   return (
     <>
@@ -75,13 +71,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
             </Text>
             <Logo blockchain={blockchain} height={6} width={6} background={false} />
           </Flex>
-          <PurchaseButton
-            price={price}
-            tokenId={token_id}
-            quantity="1"
-            hasPurchased={hasPurchased}
-            correctChainId={correctChainId}
-          />
+          <PurchaseButton price={price} tokenId={token_id} quantity="1" index={index} />
         </Box>
       </Paper>
       <Modal isOpen={isOpen} onClose={onClose} preserveScrollBarGap>
@@ -182,55 +172,70 @@ function PurchaseButton({
   price,
   tokenId,
   quantity,
-  hasPurchased,
-  correctChainId,
+  index,
 }: {
   price: string;
   tokenId: string;
   quantity: string;
-  hasPurchased: boolean;
-  correctChainId: boolean;
+  index: number;
 }) {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
-  const { library, account } = useEthers();
   const loadingBalances = useAppSelector(selectLoadingBalances);
   const submittingPurchase = useAppSelector(selectSubmittingPurchase);
+  const { address, isConnected } = useAccount();
+  const balances = useAppSelector(selectBalances);
+  const { data: signer } = useSigner();
+  const contract = useContract({
+    address: Settings.STORE_ADDRESS,
+    abi: EtherAlleyStoreAbi,
+    signerOrProvider: signer,
+  });
+  const { chain } = useNetwork();
+  const { switchNetworkAsync, isLoading } = useSwitchNetwork();
+
+  if (!address || !isConnected || !switchNetworkAsync || !signer) {
+    return (
+      <Button disabled colorScheme="brand" mt={3} width="100%">
+        {intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' })}
+      </Button>
+    );
+  }
+
+  if (chain?.id !== Settings.CHAIN_ID) {
+    return (
+      <Button
+        isLoading={isLoading}
+        onClick={() => dispatch(switchNetwork({ switchNetworkAsync, chainId: Settings.CHAIN_ID }))}
+        colorScheme="brand"
+        mt={3}
+        width="100%"
+      >
+        {intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to {name}' }, { name: 'Polygon' })}
+      </Button>
+    );
+  }
+
+  const hasPurchased = !loadingBalances && !!balances && balances[index] !== '0';
 
   return (
     <Button
-      isLoading={!!account && (loadingBalances || submittingPurchase)}
+      isLoading={loadingBalances || submittingPurchase}
+      disabled={hasPurchased}
+      onClick={() => dispatch(purchase({ contract, address, tokenId, price, quantity }))}
       colorScheme="brand"
       mt={3}
       width="100%"
-      disabled={!account || hasPurchased || !correctChainId}
-      onClick={() => dispatch(purchase({ library, account: account!, tokenId, price, quantity }))}
     >
       <Text fontWeight="bold">
-        <ButtonLabel price={price} hasPurchased={hasPurchased} correctChainId={correctChainId} />
+        <PurchaseButtonLabel price={price} hasPurchased={hasPurchased} />
       </Text>
     </Button>
   );
 }
 
-function ButtonLabel({
-  price,
-  hasPurchased,
-  correctChainId,
-}: {
-  price: string;
-  hasPurchased: boolean;
-  correctChainId: boolean;
-}) {
+function PurchaseButtonLabel({ price, hasPurchased }: { price: string; hasPurchased: boolean }) {
   const intl = useIntl();
-  const { account } = useEthers();
-
-  if (!account) {
-    return <>{intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' })}</>;
-  }
-
-  if (!correctChainId) {
-    return <>{intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to {name}' }, { name: 'Polygon' })}</>;
-  }
 
   if (hasPurchased) {
     return <>{intl.formatMessage({ id: 'item-owned', defaultMessage: 'Owned' })}</>;

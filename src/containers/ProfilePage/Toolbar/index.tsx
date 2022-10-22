@@ -7,10 +7,10 @@ import { MdModeEdit } from 'react-icons/md';
 import { FaArrowLeft, FaTwitter } from 'react-icons/fa';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { useEthers } from '@usedapp/core';
+import { useAccount } from 'wagmi';
 import Settings from '../../../common/settings';
 import useIsMobile from '../../../hooks/useIsMobile';
-import { connectToWallet, selectIsConnecting } from '../../App/slice';
+import { openWalletModal, selectIsConnectingToWallet } from '../../App/slice';
 import { Routes } from '../../../common/constants';
 
 function Toolbar() {
@@ -91,22 +91,21 @@ function getTweetUrl(pathname: string): string {
 }
 
 function EditButton() {
-  const isMobile = useIsMobile();
   const intl = useIntl();
   const dispatch = useAppDispatch();
-  const { account, activateBrowserWallet } = useEthers();
-  const address = useAppSelector(selectAddress);
-  const connecting = useAppSelector(selectIsConnecting);
+  const { address, isConnected } = useAccount();
+  const profileAddress = useAppSelector(selectAddress);
+  const connecting = useAppSelector(selectIsConnectingToWallet);
   const navigate = useNavigate();
 
   // try to connect to wallet if no account
   // if account and not on the account profile, navigate to account profile
   // if connected and on the account profile, open the drawer
   const onClickEditButton = () => {
-    if (!account) {
-      dispatch(connectToWallet({ isMobile, activateBrowserWallet }));
-    } else if (account && account.toLowerCase() !== address.toLowerCase()) {
-      navigate(Routes.PROFILE.replace(':address', account));
+    if (!isConnected || !address) {
+      dispatch(openWalletModal());
+    } else if (address.toLowerCase() !== profileAddress.toLowerCase()) {
+      navigate(Routes.PROFILE.replace(':address', address));
     } else {
       dispatch(openEditBar());
     }

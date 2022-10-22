@@ -1,7 +1,5 @@
 import { GridItem, SimpleGrid } from '@chakra-ui/react';
-import { useEthers } from '@usedapp/core';
 import { useEffect } from 'react';
-import Settings from '../../common/settings';
 import { Listing } from '../../common/types';
 import Loading from '../../components/Loading';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -17,6 +15,9 @@ import {
   selectLoadingListings,
 } from './slice';
 import { useIntl } from 'react-intl';
+import { useContract, useAccount, useSigner, useNetwork } from 'wagmi';
+import Settings from '../../common/settings';
+import EtherAlleyStoreAbi from '../../abi/EtherAlleyStore';
 
 function ShopPage() {
   const intl = useIntl();
@@ -25,7 +26,14 @@ function ShopPage() {
   const loaded = useAppSelector(selectFulfilledListings);
   const error = useAppSelector(selectErrorLoadingListings);
   const listings = useAppSelector(selectListings);
-  const { library, account, chainId } = useEthers();
+  const { address, isConnected } = useAccount();
+  const { data: signer } = useSigner();
+  const { chain } = useNetwork();
+  const contract = useContract({
+    address: Settings.STORE_ADDRESS,
+    abi: EtherAlleyStoreAbi,
+    signerOrProvider: signer,
+  });
 
   useEffect(() => {
     if (!loaded) {
@@ -34,10 +42,10 @@ function ShopPage() {
   }, [dispatch, loaded]);
 
   useEffect(() => {
-    if (chainId === Settings.STORE_CHAIN_ID) {
-      dispatch(getBalances({ library, account }));
+    if (isConnected && signer && chain?.id === Settings.CHAIN_ID) {
+      dispatch(getBalances({ contract, address }));
     }
-  }, [dispatch, account, library, chainId]);
+  }, [dispatch, contract, address, isConnected, signer, chain]);
 
   if (loading) {
     return <Loading />;
