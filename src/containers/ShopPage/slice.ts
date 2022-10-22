@@ -57,7 +57,7 @@ export const getBalances = createAsyncThunk<
 
     return balances.map((balance: BigNumber) => balance.toString());
   } catch (ex) {
-    console.log(ex);
+    // TODO: What should we do here?
     throw ex;
   }
 });
@@ -75,7 +75,6 @@ export const purchase = createAsyncThunk<
     dispatch(showToast({ toast: Toasts.SUCCESS_SUBMITTING_PURCHASE, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_SUBMITTING_PURCHASE, status: ToastStatuses.ERROR }));
-    console.error(ex);
     throw ex;
   }
 

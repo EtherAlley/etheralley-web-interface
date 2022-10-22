@@ -102,9 +102,9 @@ function EditButton() {
   // if account and not on the account profile, navigate to account profile
   // if connected and on the account profile, open the drawer
   const onClickEditButton = () => {
-    if (!isConnected) {
+    if (!isConnected || !address) {
       dispatch(openWalletModal());
-    } else if (address && address.toLowerCase() !== profileAddress.toLowerCase()) {
+    } else if (address.toLowerCase() !== profileAddress.toLowerCase()) {
       navigate(Routes.PROFILE.replace(':address', address));
     } else {
       dispatch(openEditBar());
