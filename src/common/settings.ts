@@ -4,7 +4,6 @@ const Settings = {
   PUBLIC_URL: process.env.PUBLIC_URL ?? '',
   BASE_URL: process.env.REACT_APP_BASE_URL ?? '',
   PROFILES_API_URL: process.env.REACT_APP_PROFILES_API_URL ?? '',
-  CHAIN_URL: process.env.REACT_APP_CHAIN_URL ?? '',
   ALCHEMY_API_KEY: process.env.REACT_APP_ALCHEMY_API_KEY ?? '',
   CHAIN_ID: Number.parseInt(process.env.REACT_APP_CHAIN_ID ?? '0'),
   STORE_ADDRESS: process.env.REACT_APP_STORE_ADDRESS ?? '',
