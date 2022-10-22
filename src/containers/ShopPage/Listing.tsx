@@ -197,7 +197,9 @@ function PurchaseButton({
   if (!address || !isConnected || !switchNetworkAsync || !signer) {
     return (
       <Button disabled colorScheme="brand" mt={3} width="100%">
-        {intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' })}
+        <Text fontWeight="bold">
+          {intl.formatMessage({ id: 'connect-to-wallet', defaultMessage: 'Connect wallet' })}
+        </Text>
       </Button>
     );
   }
@@ -211,7 +213,9 @@ function PurchaseButton({
         mt={3}
         width="100%"
       >
-        {intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to {name}' }, { name: 'Polygon' })}
+        <Text fontWeight="bold">
+          {intl.formatMessage({ id: 'switch-chains', defaultMessage: 'Switch to {name}' }, { name: 'Polygon' })}
+        </Text>
       </Button>
     );
   }
