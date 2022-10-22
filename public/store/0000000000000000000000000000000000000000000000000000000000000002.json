@@ -1,0 +1,23 @@
+{
+  "name": "EtherAlley Beta Tester",
+  "description": "This is a semi-fungible & soulbound token that indicates the holder participated in the EtherAlley.io beta",
+  "image": "https://etheralley.io/store/2.png",
+  "attributes": [
+    {
+      "trait_type": "Achievement",
+      "value": "Beta Tester"
+    },
+    {
+      "trait_type": "Fungibility",
+      "value": "Semi-Fungible"
+    },
+    {
+      "trait_type": "Transferable",
+      "value": "false"
+    },
+    {
+      "trait_type": "Max balance",
+      "value": "1"
+    }
+  ]
+}

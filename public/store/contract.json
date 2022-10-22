@@ -1,0 +1,8 @@
+{
+  "name": "EtherAlley Store",
+  "description": "Purchasable assets that unlock powerful features on the EtherAlley.io platform",
+  "image": "https://etheralley.io/store/contract.png",
+  "external_link": "https://etheralley.io",
+  "seller_fee_basis_points": 500,
+  "fee_recipient": "0x4c5d1C6eA7c485F491f9Dd79105949867b01fFa5"
+}
