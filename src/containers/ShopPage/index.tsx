@@ -15,7 +15,7 @@ import {
   selectLoadingListings,
 } from './slice';
 import { useIntl } from 'react-intl';
-import { useContract, useAccount, useSigner, useNetwork, useProvider } from 'wagmi';
+import { useContract, useAccount, useProvider } from 'wagmi';
 import Settings from '../../common/settings';
 import EtherAlleyStoreAbi from '../../abi/EtherAlleyStore';
 
@@ -26,10 +26,8 @@ function ShopPage() {
   const loaded = useAppSelector(selectFulfilledListings);
   const error = useAppSelector(selectErrorLoadingListings);
   const listings = useAppSelector(selectListings);
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const provider = useProvider();
-  const { data: signer } = useSigner();
-  const { chain } = useNetwork();
   const contract = useContract({
     address: Settings.STORE_ADDRESS,
     abi: EtherAlleyStoreAbi,
@@ -37,16 +35,16 @@ function ShopPage() {
   });
 
   useEffect(() => {
-    if (!loaded && contract && provider) {
+    if (!loaded && contract) {
       dispatch(getListings({ contract }));
     }
-  }, [dispatch, loaded, contract, provider]);
+  }, [dispatch, loaded, contract]);
 
   useEffect(() => {
-    if (isConnected && signer && chain?.id === Settings.CHAIN_ID) {
+    if (address && contract) {
       dispatch(getBalances({ contract, address }));
     }
-  }, [dispatch, contract, address, isConnected, signer, chain]);
+  }, [dispatch, contract, address]);
 
   if (loading) {
     return <Loading />;

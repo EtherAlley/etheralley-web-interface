@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BigNumber } from 'ethers';
+import { EtheralleyStoreType } from '../../abi/EtherAlleyStore';
 import { AsyncStates, Blockchains, Interfaces, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
 import { Fetch, FetchProfilesAPI } from '../../common/http';
 import Settings from '../../common/settings';
-import { Listing, ListingInfo, NonFungibleMetadata } from '../../common/types';
+import { Listing, NonFungibleMetadata } from '../../common/types';
 import { RootState } from '../../store';
 import { showToast } from '../App/slice';
 
@@ -23,12 +24,14 @@ const initialState: State = {
   balances: [],
 };
 
-export const getListings = createAsyncThunk<Listing[], { contract: any }, { state: RootState }>(
+export const getListings = createAsyncThunk<Listing[], { contract: EtheralleyStoreType }, { state: RootState }>(
   'shopPage/getListings',
   async ({ contract }) => {
     try {
+      // TODO:
+      // - clean this up a bit.
       const [listings, premium, beta] = await Promise.all([
-        contract.getListingBatch([StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]),
+        contract.getListingBatch([BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]),
         Fetch<NonFungibleMetadata>(
           `/store/000000000000000000000000000000000000000000000000000000000000000${StoreAssets.PREMIUM}.json`,
           {
@@ -51,17 +54,18 @@ export const getListings = createAsyncThunk<Listing[], { contract: any }, { stat
         throw new Error('error fetching balance metadata');
       }
 
-      const listingInfo: ListingInfo[] = listings.map((listing: any) => {
+      const listInfo = listings.map((listing) => {
         return {
-          purchasable: listing[0],
-          transferable: listing[1],
-          price: listing[2].toString(),
-          supply_limit: listing[3].toString(),
-          balance_limit: listing[4].toString(),
+          purchasable: listing.purchasable,
+          transferable: listing.transferable,
+          price: listing.price.toString(),
+          supplyLimit: listing.supplyLimit.toString(),
+          balanceLimit: listing.balanceLimit.toString(),
+          supply: listing.supply.toString(),
         };
       });
 
-      const premiumListing: Listing = {
+      const premiumListing = {
         contract: {
           blockchain: Blockchains.POLYGON,
           address: Settings.STORE_ADDRESS,
@@ -69,10 +73,10 @@ export const getListings = createAsyncThunk<Listing[], { contract: any }, { stat
         },
         token_id: StoreAssets.PREMIUM,
         metadata: premium.data,
-        info: listingInfo[0],
+        info: listInfo[0],
       };
 
-      const betaListing: Listing = {
+      const betaListing = {
         contract: {
           blockchain: Blockchains.POLYGON,
           address: Settings.STORE_ADDRESS,
@@ -80,7 +84,7 @@ export const getListings = createAsyncThunk<Listing[], { contract: any }, { stat
         },
         token_id: StoreAssets.BETA_TESTER,
         metadata: beta.data,
-        info: listingInfo[1],
+        info: listInfo[1],
       };
 
       return [premiumListing, betaListing];
@@ -93,7 +97,7 @@ export const getListings = createAsyncThunk<Listing[], { contract: any }, { stat
 
 export const getBalances = createAsyncThunk<
   string[],
-  { contract: any; address: string | null | undefined },
+  { contract: EtheralleyStoreType; address: `0x${string}` },
   { state: RootState }
 >('shopPage/getBalances', async ({ contract, address }) => {
   if (!address) {
@@ -101,7 +105,10 @@ export const getBalances = createAsyncThunk<
   }
 
   try {
-    const balances = await contract.balanceOfBatch([address, address], [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]);
+    const balances = await contract.balanceOfBatch(
+      [address, address],
+      [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
+    );
     return balances.map((balance: BigNumber) => balance.toString());
   } catch (ex) {
     throw ex;
@@ -110,11 +117,14 @@ export const getBalances = createAsyncThunk<
 
 export const purchase = createAsyncThunk<
   void,
-  { contract: any; address: string; tokenId: string; price: string; quantity: string },
+  { contract: EtheralleyStoreType; address: `0x${string}`; tokenId: string; price: string; quantity: string },
   { state: RootState }
 >('shopPage/purchase', async ({ contract, address, tokenId, price, quantity }, { dispatch }) => {
   try {
-    const tx = await contract.purchase(address, tokenId, quantity, [], { value: price, gasLimit: 1000000 });
+    const tx = await contract.purchase(address, BigNumber.from(tokenId), BigNumber.from(quantity), address, {
+      value: BigNumber.from(price),
+      gasLimit: BigNumber.from(1000000),
+    });
 
     await tx.wait();
 

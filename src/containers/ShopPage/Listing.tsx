@@ -194,7 +194,7 @@ function PurchaseButton({
   const { chain } = useNetwork();
   const { switchNetworkAsync, isLoading } = useSwitchNetwork();
 
-  if (!address || !isConnected || !switchNetworkAsync || !signer) {
+  if (!address || !isConnected || !switchNetworkAsync || !signer || !contract) {
     return (
       <Button disabled colorScheme="brand" mt={3} width="100%">
         <Text fontWeight="bold">

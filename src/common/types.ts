@@ -22,8 +22,9 @@ export type ListingInfo = {
   purchasable: boolean;
   transferable: boolean;
   price: string;
-  balance_limit: string;
-  supply_limit: string;
+  balanceLimit: string;
+  supplyLimit: string;
+  supply: string;
 };
 
 export type Profile = {

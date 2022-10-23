@@ -1,3 +1,5 @@
+import { GetContractResult } from '@wagmi/core';
+
 const EtherAlleyStoreAbi = [
   {
     anonymous: false,
@@ -602,5 +604,7 @@ const EtherAlleyStoreAbi = [
     type: 'function',
   },
 ] as const;
+
+export type EtheralleyStoreType = GetContractResult<typeof EtherAlleyStoreAbi>;
 
 export default EtherAlleyStoreAbi;
