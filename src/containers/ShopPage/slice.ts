@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BigNumber } from 'ethers';
-import { AsyncStates, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
-import { FetchCoreAPI } from '../../common/http';
-import { Listing } from '../../common/types';
+import { AsyncStates, Blockchains, Interfaces, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
+import { Fetch, FetchProfilesAPI } from '../../common/http';
+import Settings from '../../common/settings';
+import { Listing, ListingInfo, NonFungibleMetadata } from '../../common/types';
 import { RootState } from '../../store';
 import { showToast } from '../App/slice';
 
@@ -22,24 +23,71 @@ const initialState: State = {
   balances: [],
 };
 
-export const getListings = createAsyncThunk<Listing[], undefined, { state: RootState }>(
+export const getListings = createAsyncThunk<Listing[], { contract: any }, { state: RootState }>(
   'shopPage/getListings',
-  async () => {
-    const { data, error } = await FetchCoreAPI<Listing[]>('/listings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token_ids: [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER],
-      }),
-    });
+  async ({ contract }) => {
+    try {
+      const [listings, premium, beta] = await Promise.all([
+        contract.getListingBatch([StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]),
+        Fetch<NonFungibleMetadata>(
+          `/store/000000000000000000000000000000000000000000000000000000000000000${StoreAssets.PREMIUM}.json`,
+          {
+            method: 'GET',
+          }
+        ),
+        Fetch<NonFungibleMetadata>(
+          `/store/000000000000000000000000000000000000000000000000000000000000000${StoreAssets.BETA_TESTER}.json`,
+          {
+            method: 'GET',
+          }
+        ),
+      ]);
 
-    if (error || !data) {
-      throw new Error('error fetching listings');
+      if (premium.error || !premium.data) {
+        throw new Error('error fetching premium metadata');
+      }
+
+      if (beta.error || !beta.data) {
+        throw new Error('error fetching balance metadata');
+      }
+
+      const listingInfo: ListingInfo[] = listings.map((listing: any) => {
+        return {
+          purchasable: listing[0],
+          transferable: listing[1],
+          price: listing[2].toString(),
+          supply_limit: listing[3].toString(),
+          balance_limit: listing[4].toString(),
+        };
+      });
+
+      const premiumListing: Listing = {
+        contract: {
+          blockchain: Blockchains.POLYGON,
+          address: Settings.STORE_ADDRESS,
+          interface: Interfaces.ERC1155,
+        },
+        token_id: StoreAssets.PREMIUM,
+        metadata: premium.data,
+        info: listingInfo[0],
+      };
+
+      const betaListing: Listing = {
+        contract: {
+          blockchain: Blockchains.POLYGON,
+          address: Settings.STORE_ADDRESS,
+          interface: Interfaces.ERC1155,
+        },
+        token_id: StoreAssets.BETA_TESTER,
+        metadata: beta.data,
+        info: listingInfo[1],
+      };
+
+      return [premiumListing, betaListing];
+    } catch (ex) {
+      console.error(ex);
+      throw ex;
     }
-
-    return data;
   }
 );
 
@@ -81,7 +129,7 @@ export const purchase = createAsyncThunk<
   } catch {}
 
   try {
-    await FetchCoreAPI<void>(`/profiles/${address}/refresh`);
+    await FetchProfilesAPI<void>(`/profiles/${address}/refresh`);
   } catch {}
 });
 

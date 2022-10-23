@@ -10,11 +10,15 @@ export type ResultError = {
   message: string;
 };
 
-export const FetchCoreAPI = async <T>(
+export const FetchProfilesAPI = async <T>(
   resource: string,
   options: RequestInit = { method: 'GET' }
 ): Promise<Result<T>> => {
-  const response = await fetch(`${Settings.PROFILES_API_URL}${resource}`, options);
+  return Fetch(`${Settings.PROFILES_API_URL}${resource}`, options);
+};
+
+export const Fetch = async <T>(url: string, options: RequestInit = { method: 'GET' }): Promise<Result<T>> => {
+  const response = await fetch(url, options);
 
   const textBody = await response.text();
 
