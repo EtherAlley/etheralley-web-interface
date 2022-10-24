@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AsyncStates } from '../../common/constants';
-import { FetchCoreAPI } from '../../common/http';
+import { FetchProfilesAPI } from '../../common/http';
 import { Profile } from '../../common/types';
 import { RootState } from '../../store';
 
@@ -20,8 +20,8 @@ export const getProfiles = createAsyncThunk<[Profile[], Profile], undefined, { s
   'home/getProfiles',
   async () => {
     const [trending, spotlight] = await Promise.all([
-      FetchCoreAPI<Profile[]>('/profiles/top'),
-      FetchCoreAPI<Profile>('/profiles/spotlight'),
+      FetchProfilesAPI<Profile[]>('/profiles/top'),
+      FetchProfilesAPI<Profile>('/profiles/spotlight'),
     ]);
 
     if (trending.error || !trending.data) {

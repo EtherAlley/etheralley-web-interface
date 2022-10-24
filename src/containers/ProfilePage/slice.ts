@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
-import { FetchCoreAPI, Result } from '../../common/http';
+import { FetchProfilesAPI, Result } from '../../common/http';
 import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
@@ -123,7 +123,7 @@ export const loadProfile = createAsyncThunk<
   { address: string; account: string | null | undefined },
   { state: RootState }
 >('profile/load', async ({ address }) => {
-  return FetchCoreAPI<Profile>(`/profiles/${address}`);
+  return FetchProfilesAPI<Profile>(`/profiles/${address}`);
 });
 
 export const saveProfile = createAsyncThunk<void, { address: string; signer: any }, { state: RootState }>(
@@ -132,7 +132,7 @@ export const saveProfile = createAsyncThunk<void, { address: string; signer: any
     try {
       const { profilePage } = getState();
 
-      const { data, error } = await FetchCoreAPI<{ message: string }>(`/challenges/${address}`);
+      const { data, error } = await FetchProfilesAPI<{ message: string }>(`/challenges/${address}`);
 
       if (error || !data) {
         throw new Error('error getting challenge message');
@@ -140,7 +140,7 @@ export const saveProfile = createAsyncThunk<void, { address: string; signer: any
 
       const signature = await signer.signMessage(data.message);
 
-      const result = await FetchCoreAPI<void>(`/profiles/${address}`, {
+      const result = await FetchProfilesAPI<void>(`/profiles/${address}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${signature}`,

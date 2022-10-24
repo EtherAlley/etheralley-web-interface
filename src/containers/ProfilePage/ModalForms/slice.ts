@@ -11,7 +11,7 @@ import {
   ZeroAddress,
   InteractionTypes,
 } from '../../../common/constants';
-import { FetchCoreAPI } from '../../../common/http';
+import { FetchProfilesAPI } from '../../../common/http';
 import { showToast } from '../../App/slice';
 
 export interface State {
@@ -132,7 +132,7 @@ export const getNonFungibleToken = createAsyncThunk<NonFungibleToken, undefined,
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<NonFungibleToken>(
+      const { data, error } = await FetchProfilesAPI<NonFungibleToken>(
         `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
       );
 
@@ -159,7 +159,7 @@ export const getFungibleToken = createAsyncThunk<FungibleToken, undefined, { sta
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<FungibleToken>(
+      const { data, error } = await FetchProfilesAPI<FungibleToken>(
         `/contracts/token?blockchain=${blockchain}&interface=${Interfaces.ERC20}&contract=${address}&user_address=${profile.address}`
       );
 
@@ -186,7 +186,7 @@ export const getCurrency = createAsyncThunk<Currency, undefined, { state: RootSt
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<Currency>(
+      const { data, error } = await FetchProfilesAPI<Currency>(
         `/currency?blockchain=${blockchain}&address=${profile.address}`
       );
 
@@ -213,7 +213,7 @@ export const getStatistic = createAsyncThunk<Statistic, undefined, { state: Root
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<Statistic>(
+      const { data, error } = await FetchProfilesAPI<Statistic>(
         `/contracts/statistic?blockchain=${blockchain}&interface=${interfaceName}&type=${type}&user_address=${profile.address}&contract=${ZeroAddress}`
       );
 
@@ -240,7 +240,7 @@ export const getProfilePicture = createAsyncThunk<NonFungibleToken, undefined, {
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<NonFungibleToken>(
+      const { data, error } = await FetchProfilesAPI<NonFungibleToken>(
         `/contracts/nft?blockchain=${blockchain}&interface=${interfaceName}&contract=${address}&token_id=${token_id}&user_address=${profile.address}`
       );
 
@@ -267,7 +267,7 @@ export const getAchievement = createAsyncThunk<Interaction, undefined, { state: 
     } = getState();
 
     try {
-      const { data, error } = await FetchCoreAPI<Interaction>(
+      const { data, error } = await FetchProfilesAPI<Interaction>(
         `/transactions/interaction?blockchain=${blockchain}&type=${type}&tx_id=${transactionId}&user_address=${profile.address}`
       );
 

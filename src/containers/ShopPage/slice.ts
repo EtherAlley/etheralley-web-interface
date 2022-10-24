@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { BigNumber } from 'ethers';
-import { AsyncStates, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
-import { FetchCoreAPI } from '../../common/http';
-import { Listing } from '../../common/types';
+import { EtheralleyStoreType } from '../../abi/EtherAlleyStore';
+import { AsyncStates, Blockchains, Interfaces, StoreAssets, Toasts, ToastStatuses } from '../../common/constants';
+import { Fetch, FetchProfilesAPI } from '../../common/http';
+import Settings from '../../common/settings';
+import { Listing, NonFungibleMetadata } from '../../common/types';
 import { RootState } from '../../store';
 import { showToast } from '../App/slice';
 
@@ -22,30 +24,80 @@ const initialState: State = {
   balances: [],
 };
 
-export const getListings = createAsyncThunk<Listing[], undefined, { state: RootState }>(
+export const getListings = createAsyncThunk<Listing[], { contract: EtheralleyStoreType }, { state: RootState }>(
   'shopPage/getListings',
-  async () => {
-    const { data, error } = await FetchCoreAPI<Listing[]>('/listings', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        token_ids: [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER],
-      }),
-    });
+  async ({ contract }) => {
+    try {
+      // TODO:
+      // - clean this up a bit.
+      const [listings, premium, beta] = await Promise.all([
+        contract.getListingBatch([BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]),
+        Fetch<NonFungibleMetadata>(
+          `/store/000000000000000000000000000000000000000000000000000000000000000${StoreAssets.PREMIUM}.json`,
+          {
+            method: 'GET',
+          }
+        ),
+        Fetch<NonFungibleMetadata>(
+          `/store/000000000000000000000000000000000000000000000000000000000000000${StoreAssets.BETA_TESTER}.json`,
+          {
+            method: 'GET',
+          }
+        ),
+      ]);
 
-    if (error || !data) {
-      throw new Error('error fetching listings');
+      if (premium.error || !premium.data) {
+        throw new Error('error fetching premium metadata');
+      }
+
+      if (beta.error || !beta.data) {
+        throw new Error('error fetching balance metadata');
+      }
+
+      const listInfo = listings.map((listing) => {
+        return {
+          purchasable: listing.purchasable,
+          transferable: listing.transferable,
+          price: listing.price.toString(),
+          supplyLimit: listing.supplyLimit.toString(),
+          balanceLimit: listing.balanceLimit.toString(),
+          supply: listing.supply.toString(),
+        };
+      });
+
+      const premiumListing = {
+        contract: {
+          blockchain: Blockchains.POLYGON,
+          address: Settings.STORE_ADDRESS,
+          interface: Interfaces.ERC1155,
+        },
+        token_id: StoreAssets.PREMIUM,
+        metadata: premium.data,
+        info: listInfo[0],
+      };
+
+      const betaListing = {
+        contract: {
+          blockchain: Blockchains.POLYGON,
+          address: Settings.STORE_ADDRESS,
+          interface: Interfaces.ERC1155,
+        },
+        token_id: StoreAssets.BETA_TESTER,
+        metadata: beta.data,
+        info: listInfo[1],
+      };
+
+      return [premiumListing, betaListing];
+    } catch (ex) {
+      console.error(ex);
+      throw ex;
     }
-
-    return data;
   }
 );
 
 export const getBalances = createAsyncThunk<
   string[],
-  { contract: any; address: string | null | undefined },
+  { contract: EtheralleyStoreType; address: `0x${string}` },
   { state: RootState }
 >('shopPage/getBalances', async ({ contract, address }) => {
   if (!address) {
@@ -53,7 +105,10 @@ export const getBalances = createAsyncThunk<
   }
 
   try {
-    const balances = await contract.balanceOfBatch([address, address], [StoreAssets.PREMIUM, StoreAssets.BETA_TESTER]);
+    const balances = await contract.balanceOfBatch(
+      [address, address],
+      [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
+    );
     return balances.map((balance: BigNumber) => balance.toString());
   } catch (ex) {
     throw ex;
@@ -62,11 +117,14 @@ export const getBalances = createAsyncThunk<
 
 export const purchase = createAsyncThunk<
   void,
-  { contract: any; address: string; tokenId: string; price: string; quantity: string },
+  { contract: EtheralleyStoreType; address: `0x${string}`; tokenId: string; price: string; quantity: string },
   { state: RootState }
 >('shopPage/purchase', async ({ contract, address, tokenId, price, quantity }, { dispatch }) => {
   try {
-    const tx = await contract.purchase(address, tokenId, quantity, [], { value: price, gasLimit: 1000000 });
+    const tx = await contract.purchase(address, BigNumber.from(tokenId), BigNumber.from(quantity), address, {
+      value: BigNumber.from(price),
+      gasLimit: BigNumber.from(1000000),
+    });
 
     await tx.wait();
 
@@ -81,7 +139,7 @@ export const purchase = createAsyncThunk<
   } catch {}
 
   try {
-    await FetchCoreAPI<void>(`/profiles/${address}/refresh`);
+    await FetchProfilesAPI<void>(`/profiles/${address}/refresh`);
   } catch {}
 });
 
