@@ -10,7 +10,7 @@ import Chip from './Chip';
 import { Contract, FungibleMetadata } from '../../../common/types';
 import { useIntl } from 'react-intl';
 import Logo from '../../../components/Logo';
-import useTrimmedString from '../../../hooks/useTrimmedString';
+import useDisplayId from '../../../hooks/useDisplayId';
 
 function FungibleTokenComponent({ index }: { index: number }) {
   const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
@@ -70,7 +70,7 @@ function FungibleDialog({
   const address = useAppSelector(selectAddress);
   const etherscanUrl = useEtherscanUrl(blockchain, 'token', `${contractAddress}?a=${address}`);
   const displayBalance = useDisplayNumber(balance, decimals);
-  const trimmedAddress = useTrimmedString(contractAddress);
+  const trimmedAddress = useDisplayId(contractAddress);
 
   return (
     <Box>

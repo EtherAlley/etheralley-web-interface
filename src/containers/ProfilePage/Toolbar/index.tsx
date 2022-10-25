@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Box, Flex } from '@chakra-ui/react';
 import IconButton from '../../../components/IconButton';
 import { MdModeEdit } from 'react-icons/md';
-import { FaArrowLeft, FaTwitter } from 'react-icons/fa';
+import { FaHome, FaTwitter } from 'react-icons/fa';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
 import { useAccount } from 'wagmi';
@@ -23,7 +23,7 @@ function MobileToolbar() {
   return (
     <Box position="fixed" bottom={0} width="100%" bgColor="profile.secondary">
       <Flex alignItems="center" justifyContent="space-between" mx="3">
-        <GoBackButton />
+        <GoHomeButton />
         <EditButton />
         <TweetButton />
       </Flex>
@@ -36,7 +36,7 @@ function DesktopToolbar() {
     <Box position="fixed" width="100%" ml="10">
       <Flex flexDirection="column" width="50px">
         <Box height="15vh" />
-        <GoBackButton />
+        <GoHomeButton />
         <EditButton />
         <TweetButton />
       </Flex>
@@ -44,17 +44,17 @@ function DesktopToolbar() {
   );
 }
 
-function GoBackButton() {
+function GoHomeButton() {
   const navigate = useNavigate();
   const intl = useIntl();
 
-  const goBackLabel = intl.formatMessage({ id: 'go-back-button', defaultMessage: 'Go Back' });
+  const goHomeLabel = intl.formatMessage({ id: 'go-home-button', defaultMessage: 'Go Home' });
   return (
     <IconButton
-      aria-label={goBackLabel}
-      tooltip={goBackLabel}
-      Icon={FaArrowLeft}
-      onClick={() => navigate(-1)}
+      aria-label={goHomeLabel}
+      tooltip={goHomeLabel}
+      Icon={FaHome}
+      onClick={() => navigate(Routes.HOME)}
       iconColor="profile.accent"
       bgColor="profile.secondary"
       borderRadius="8px 8px 0px 0px"

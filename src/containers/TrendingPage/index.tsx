@@ -16,6 +16,7 @@ import {
   selectTrendingProfiles,
 } from './slice';
 import Error from '../../components/Error';
+import useDisplayId from '../../hooks/useDisplayId';
 
 function TrendingPage() {
   const intl = useIntl();
@@ -63,7 +64,7 @@ function TrendingPage() {
       )}
       <Box my="150px" />
       <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
-        {intl.formatMessage({ id: 'trending-profiles-caption', defaultMessage: 'Trending Profiles Today' })}
+        {intl.formatMessage({ id: 'trending-profiles-caption', defaultMessage: 'Trending Profiles' })}
       </Heading>
       <Box m={2}>
         {loading
@@ -84,12 +85,12 @@ function TrendingPage() {
 
 function Row({ profile, rank }: { profile: Profile; rank?: number }) {
   const maxWidth = useBreakpointValue({ base: 200, sm: 400 });
-  const profileId = profile.ens_name || profile.address;
+  const trimmedAddress = useDisplayId(profile.address);
   const premium = profile.store_assets.premium;
   const profileImage = getProfileImage(profile);
 
   return (
-    <LinkBox as={RouterLink} to={`/profiles/${profileId}`}>
+    <LinkBox as={RouterLink} to={`/profiles/${profile.ens_name || profile.address}`}>
       <Flex
         alignItems="center"
         _hover={{
@@ -111,7 +112,7 @@ function Row({ profile, rank }: { profile: Profile; rank?: number }) {
         <Box ml={5} mr={2}>
           <LinkOverlay as="span">
             <Text color="blue.400" fontWeight="bold" noOfLines={1} maxWidth={maxWidth}>
-              {profileId}
+              {profile.ens_name || trimmedAddress}
             </Text>
           </LinkOverlay>
         </Box>
