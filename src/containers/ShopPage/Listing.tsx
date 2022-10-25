@@ -30,7 +30,7 @@ import useCurrencySymbol from '../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../hooks/useDisplayNumber';
 import useHexToRgb from '../../hooks/useHexToRgb';
 import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
-import useTrimmedString from '../../hooks/useTrimmedString';
+import useDisplayId from '../../hooks/useDisplayId';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 import { useContract, useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi';
 import { switchNetwork } from '../App/slice';
@@ -51,7 +51,7 @@ function ListingComponent({ listing, index }: { listing: Listing; index: number 
   const symbol = useCurrencySymbol(blockchain);
   const theme = useTheme();
   const rgb = useHexToRgb(theme.colors.brand[400]);
-  const trimmedAddress = useTrimmedString(address);
+  const trimmedAddress = useDisplayId(address);
 
   return (
     <>

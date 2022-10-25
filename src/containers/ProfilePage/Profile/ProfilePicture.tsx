@@ -7,7 +7,7 @@ import { selectAddress, selectENSName, selectInfo, selectLoading, selectPicture,
 import { BADGE_WIDTH } from '../../../common/constants';
 import Verified from '../../../icons/Verified';
 import { FaTwitter } from 'react-icons/fa';
-import useTrimmedString from '../../../hooks/useTrimmedString';
+import useDisplayId from '../../../hooks/useDisplayId';
 
 function ProfilePicture() {
   return (
@@ -45,7 +45,7 @@ function Info() {
   const loading = useAppSelector(selectLoading);
   const { premium } = useAppSelector(selectStoreAssets);
   const { twitter_handle } = useAppSelector(selectInfo);
-  const trimmedAddress = useTrimmedString(address);
+  const trimmedAddress = useDisplayId(address);
 
   if (loading) {
     return <Skeleton width={BADGE_WIDTH} height={8} mt={2} />;

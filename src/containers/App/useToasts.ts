@@ -56,10 +56,25 @@ function useToasts() {
             defaultMessage: 'Error loading page',
           });
           break;
-        case Toasts.MOBILE_WALLET_SUPPORT:
+        case Toasts.SUCCESS_CONNECTING_TO_WALLET:
           title = intl.formatMessage({
-            id: 'mobile-wallet-support',
-            defaultMessage: 'Mobile Wallet support is coming soon!',
+            id: 'success-connecting-to-wallet',
+            defaultMessage: 'Successfully connected to wallet',
+          });
+          break;
+        case Toasts.SUCCESS_SWITCHING_NETWORK:
+          title = intl.formatMessage(
+            {
+              id: 'success-switching-network',
+              defaultMessage: 'Successfully switched to {chain}',
+            },
+            { chain: 'Polygon (Matic)' }
+          );
+          break;
+        case Toasts.SUCCESS_DISCONNECTING_FROM_WALLET:
+          title = intl.formatMessage({
+            id: 'success-disconnecting-from-wallet',
+            defaultMessage: 'Succesfully disconnected from wallet',
           });
           break;
         case Toasts.ERROR_CONNECTING_TO_WALLET:
@@ -72,6 +87,12 @@ function useToasts() {
           title = intl.formatMessage({
             id: 'error-switching-network',
             defaultMessage: 'Error switching network',
+          });
+          break;
+        case Toasts.ERROR_DISCONNECTING_FROM_WALLET:
+          title = intl.formatMessage({
+            id: 'error-disconnecting-from-wallet',
+            defaultMessage: 'Error disconnecting from wallet',
           });
           break;
       }

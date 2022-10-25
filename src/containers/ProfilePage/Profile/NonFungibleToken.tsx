@@ -8,7 +8,7 @@ import Link from '../../../components/Link';
 import { Contract, NonFungibleMetadata } from '../../../common/types';
 import useHexToRgb from '../../../hooks/useHexToRgb';
 import { useIntl } from 'react-intl';
-import useTrimmedString from '../../../hooks/useTrimmedString';
+import useDisplayId from '../../../hooks/useDisplayId';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { useEffect } from 'react';
 
@@ -100,8 +100,8 @@ function NonFungibleDialog({
   const { accent } = useAppSelector(selectColors);
   const rgbAccent = useHexToRgb(accent);
   const intl = useIntl();
-  const trimmedAddress = useTrimmedString(address);
-  const trimmedTokenId = useTrimmedString(token_id);
+  const trimmedAddress = useDisplayId(address);
+  const trimmedTokenId = useDisplayId(token_id);
 
   // TODO: We can probably render more than this
   if (!metadata) {
