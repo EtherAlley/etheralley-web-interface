@@ -83,11 +83,17 @@
   "close-edit-button": {
     "defaultMessage": "Close"
   },
+  "coinbase-wallet": {
+    "defaultMessage": "Coinbase Wallet"
+  },
   "colors-form": {
     "defaultMessage": "Colors"
   },
   "connect": {
     "defaultMessage": "Connect"
+  },
+  "connect-a-wallet": {
+    "defaultMessage": "Connect a Wallet"
   },
   "connect-to-wallet": {
     "defaultMessage": "Connect wallet"
@@ -115,6 +121,9 @@
   },
   "deployed-smart-contract": {
     "defaultMessage": "Deployed a Smart Contract"
+  },
+  "disconnect-wallet": {
+    "defaultMessage": "Disconnect Wallet"
   },
   "display-assets-header": {
     "defaultMessage": "Display the assets and interactions that you want"
@@ -164,6 +173,9 @@
   "error-connecting-to-wallet": {
     "defaultMessage": "Error connecting to wallet"
   },
+  "error-disconnecting-from-wallet": {
+    "defaultMessage": "Error disconnecting from wallet"
+  },
   "error-loading-page": {
     "defaultMessage": "Error loading page"
   },
@@ -172,6 +184,9 @@
   },
   "error-saving-profile": {
     "defaultMessage": "Error saving profile"
+  },
+  "error-switching-network": {
+    "defaultMessage": "Error switching network"
   },
   "first-swap": {
     "defaultMessage": "FIRST SWAP"
@@ -182,8 +197,8 @@
   "github": {
     "defaultMessage": "GitHub"
   },
-  "go-back-button": {
-    "defaultMessage": "Go Back"
+  "go-home-button": {
+    "defaultMessage": "Go Home"
   },
   "how-does-it-work-header": {
     "defaultMessage": "How does it work?"
@@ -212,8 +227,11 @@
   "learn-more": {
     "defaultMessage": "Learn more about {name}"
   },
-  "mobile-wallet-support": {
-    "defaultMessage": "Mobile Wallet support is coming soon!"
+  "login": {
+    "defaultMessage": "Login"
+  },
+  "metamask": {
+    "defaultMessage": "MetaMask"
   },
   "more": {
     "defaultMessage": "More"
@@ -368,11 +386,26 @@
   "stats": {
     "defaultMessage": "Stats"
   },
+  "success-connecting-to-wallet": {
+    "defaultMessage": "Successfully connected to wallet"
+  },
+  "success-disconnecting-from-wallet": {
+    "defaultMessage": "Succesfully disconnected from wallet"
+  },
   "success-making-purchase-description": {
     "defaultMessage": "Successfully processed transaction"
   },
+  "success-saving-profile": {
+    "defaultMessage": "Successfully saved profile"
+  },
+  "success-switching-network": {
+    "defaultMessage": "Successfully switched to {chain}"
+  },
   "switch-chains": {
     "defaultMessage": "Switch to {name}"
+  },
+  "switch-network": {
+    "defaultMessage": "Switch to {chain}"
   },
   "token-dialog-balance": {
     "defaultMessage": "Balance"
@@ -423,7 +456,7 @@
     "defaultMessage": "Trending"
   },
   "trending-profiles-caption": {
-    "defaultMessage": "Trending Profiles Today"
+    "defaultMessage": "Trending Profiles"
   },
   "twitter-button": {
     "defaultMessage": "Share on Twitter"
@@ -433,6 +466,9 @@
   },
   "visually-hidden": {
     "defaultMessage": "We had problems loading this badge. It is being visually hidden from the screen."
+  },
+  "wallet-connect": {
+    "defaultMessage": "WalletConnect"
   },
   "welcome-message": {
     "defaultMessage": "Welcome to {name}"

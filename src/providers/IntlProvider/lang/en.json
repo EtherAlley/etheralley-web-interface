@@ -167,6 +167,12 @@
       "value": "Close"
     }
   ],
+  "coinbase-wallet": [
+    {
+      "type": 0,
+      "value": "Coinbase Wallet"
+    }
+  ],
   "colors-form": [
     {
       "type": 0,
@@ -177,6 +183,12 @@
     {
       "type": 0,
       "value": "Connect"
+    }
+  ],
+  "connect-a-wallet": [
+    {
+      "type": 0,
+      "value": "Connect a Wallet"
     }
   ],
   "connect-to-wallet": [
@@ -231,6 +243,12 @@
     {
       "type": 0,
       "value": "Deployed a Smart Contract"
+    }
+  ],
+  "disconnect-wallet": [
+    {
+      "type": 0,
+      "value": "Disconnect Wallet"
     }
   ],
   "display-assets-header": [
@@ -345,6 +363,12 @@
       "value": "Error connecting to wallet"
     }
   ],
+  "error-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Error disconnecting from wallet"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -361,6 +385,12 @@
     {
       "type": 0,
       "value": "Error saving profile"
+    }
+  ],
+  "error-switching-network": [
+    {
+      "type": 0,
+      "value": "Error switching network"
     }
   ],
   "first-swap": [
@@ -381,10 +411,10 @@
       "value": "GitHub"
     }
   ],
-  "go-back-button": [
+  "go-home-button": [
     {
       "type": 0,
-      "value": "Go Back"
+      "value": "Go Home"
     }
   ],
   "how-does-it-work-header": [
@@ -445,10 +475,16 @@
       "value": "name"
     }
   ],
-  "mobile-wallet-support": [
+  "login": [
     {
       "type": 0,
-      "value": "Mobile Wallet support is coming soon!"
+      "value": "Login"
+    }
+  ],
+  "metamask": [
+    {
+      "type": 0,
+      "value": "MetaMask"
     }
   ],
   "more": [
@@ -785,10 +821,38 @@
       "value": "Stats"
     }
   ],
+  "success-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Successfully connected to wallet"
+    }
+  ],
+  "success-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Succesfully disconnected from wallet"
+    }
+  ],
   "success-making-purchase-description": [
     {
       "type": 0,
       "value": "Successfully processed transaction"
+    }
+  ],
+  "success-saving-profile": [
+    {
+      "type": 0,
+      "value": "Successfully saved profile"
+    }
+  ],
+  "success-switching-network": [
+    {
+      "type": 0,
+      "value": "Successfully switched to "
+    },
+    {
+      "type": 1,
+      "value": "chain"
     }
   ],
   "switch-chains": [
@@ -799,6 +863,16 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "switch-network": [
+    {
+      "type": 0,
+      "value": "Switch to "
+    },
+    {
+      "type": 1,
+      "value": "chain"
     }
   ],
   "token-dialog-balance": [
@@ -956,7 +1030,7 @@
   "trending-profiles-caption": [
     {
       "type": 0,
-      "value": "Trending Profiles Today"
+      "value": "Trending Profiles"
     }
   ],
   "twitter-button": [
@@ -979,6 +1053,12 @@
     {
       "type": 0,
       "value": "We had problems loading this badge. It is being visually hidden from the screen."
+    }
+  ],
+  "wallet-connect": [
+    {
+      "type": 0,
+      "value": "WalletConnect"
     }
   ],
   "welcome-message": [

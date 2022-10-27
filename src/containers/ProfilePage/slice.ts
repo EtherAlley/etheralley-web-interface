@@ -146,6 +146,8 @@ export const saveProfile = createAsyncThunk<void, { address: string; signer: any
       if (result.error) {
         throw new Error('error saving profile');
       }
+
+      dispatch(showToast({ toast: Toasts.SUCCESS_SAVING_PROFILE, status: ToastStatuses.SUCCESS }));
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ERROR_SAVING_PROFILE, status: ToastStatuses.ERROR }));
       throw ex;

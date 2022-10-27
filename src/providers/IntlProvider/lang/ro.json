@@ -167,6 +167,12 @@
       "value": "CloseSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "coinbase-wallet": [
+    {
+      "type": 0,
+      "value": "Coinbase WalletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "colors-form": [
     {
       "type": 0,
@@ -177,6 +183,12 @@
     {
       "type": 0,
       "value": "ConnectSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "connect-a-wallet": [
+    {
+      "type": 0,
+      "value": "Connect a WalletSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "connect-to-wallet": [
@@ -231,6 +243,12 @@
     {
       "type": 0,
       "value": "Deployed a Smart ContractSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "disconnect-wallet": [
+    {
+      "type": 0,
+      "value": "Disconnect WalletSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "display-assets-header": [
@@ -345,6 +363,12 @@
       "value": "Error connecting to walletSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "error-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Error disconnecting from walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -361,6 +385,12 @@
     {
       "type": 0,
       "value": "Error saving profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "error-switching-network": [
+    {
+      "type": 0,
+      "value": "Error switching networkSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "first-swap": [
@@ -381,10 +411,10 @@
       "value": "GitHubSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "go-back-button": [
+  "go-home-button": [
     {
       "type": 0,
-      "value": "Go BackSSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Go HomeSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "how-does-it-work-header": [
@@ -445,10 +475,16 @@
       "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
-  "mobile-wallet-support": [
+  "login": [
     {
       "type": 0,
-      "value": "Mobile Wallet support is coming soon!SSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "LoginSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "metamask": [
+    {
+      "type": 0,
+      "value": "MetaMaskSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "more": [
@@ -785,13 +821,51 @@
       "value": "StatsSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "success-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Successfully connected to walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "success-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Succesfully disconnected from walletSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "success-making-purchase-description": [
     {
       "type": 0,
       "value": "Successfully processed transactionSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
+  "success-saving-profile": [
+    {
+      "type": 0,
+      "value": "Successfully saved profileSSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "success-switching-network": [
+    {
+      "type": 0,
+      "value": "Successfully switched to "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
   "switch-chains": [
+    {
+      "type": 0,
+      "value": "Switch to "
+    },
+    {
+      "type": 0,
+      "value": "SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "switch-network": [
     {
       "type": 0,
       "value": "Switch to "
@@ -956,7 +1030,7 @@
   "trending-profiles-caption": [
     {
       "type": 0,
-      "value": "Trending Profiles TodaySSSSSSSSSSSSSSSSSSSSSSSSS"
+      "value": "Trending ProfilesSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "twitter-button": [
@@ -979,6 +1053,12 @@
     {
       "type": 0,
       "value": "We had problems loading this badge. It is being visually hidden from the screen.SSSSSSSSSSSSSSSSSSSSSSSSS"
+    }
+  ],
+  "wallet-connect": [
+    {
+      "type": 0,
+      "value": "WalletConnectSSSSSSSSSSSSSSSSSSSSSSSSS"
     }
   ],
   "welcome-message": [
