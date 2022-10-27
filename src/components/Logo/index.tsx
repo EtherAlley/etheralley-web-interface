@@ -31,14 +31,6 @@ function Logo({
   return <></>;
 }
 
-function buildUrl(urlSuffix: string | undefined): string | undefined {
-  if (!urlSuffix) {
-    return undefined;
-  }
-
-  return `${Settings.PUBLIC_URL}/${urlSuffix}`;
-}
-
 function Token({
   contractAddress,
   blockchain,
@@ -97,7 +89,7 @@ function Interface({
 
   return (
     <Image
-      src={buildUrl(`logos/${fileName}`)}
+      src={`/logos/${fileName}`}
       alt={interfaceName}
       width={width}
       height={height}
@@ -132,14 +124,7 @@ function Blockchain({
   }
 
   return (
-    <Image
-      src={buildUrl(`logos/${fileName}`)}
-      alt={blockchain}
-      width={width}
-      height={height}
-      borderRadius="50%"
-      {...styling}
-    />
+    <Image src={`/logos/${fileName}`} alt={blockchain} width={width} height={height} borderRadius="50%" {...styling} />
   );
 }
 
