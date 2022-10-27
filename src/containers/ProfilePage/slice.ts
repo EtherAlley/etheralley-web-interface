@@ -13,7 +13,7 @@ import {
   getProfilePicture,
   getStatistic,
 } from './ModalForms/slice';
-import { showToast } from '../App/slice';
+import { showToast, signMessage } from '../App/slice';
 
 export type StateProfile = Profile & { display_config: DisplayConfig }; // display config is never undefined in the state so we override the typing
 
@@ -132,13 +132,7 @@ export const saveProfile = createAsyncThunk<void, { address: string; signer: any
     try {
       const { profilePage } = getState();
 
-      const { data, error } = await FetchProfilesAPI<{ message: string }>(`/challenges/${address}`);
-
-      if (error || !data) {
-        throw new Error('error getting challenge message');
-      }
-
-      const signature = await signer.signMessage(data.message);
+      const signature = await dispatch(signMessage({ address, signer })).unwrap();
 
       const result = await FetchProfilesAPI<void>(`/profiles/${address}`, {
         headers: {
