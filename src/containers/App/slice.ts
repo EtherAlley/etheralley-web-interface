@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/t
 import { Toasts, ToastStatuses } from '../../common/constants';
 import { RootState } from '../../store';
 import { Connector } from 'wagmi';
+import { FetchProfilesAPI } from '../../common/http';
 
 export interface State {
   toastId: string | undefined;
@@ -11,6 +12,7 @@ export interface State {
   isConnectingToWallet: boolean;
   isSwitchingNetwork: boolean;
   isDisconnectingFromWallet: boolean;
+  isSigningMessage: boolean;
 }
 
 const initialState: State = {
@@ -21,6 +23,7 @@ const initialState: State = {
   isConnectingToWallet: false,
   isSwitchingNetwork: false,
   isDisconnectingFromWallet: false,
+  isSigningMessage: false,
 };
 
 export const connectToWallet = createAsyncThunk<
@@ -70,6 +73,38 @@ export const disconnectFromWallet = createAsyncThunk<
   }
 });
 
+/**
+ * Prompt the user to sign a message that is provided by the profiles api.
+ * if a signed message is already in localStorage and it has not expired, use that instead.
+ * if noCache is true, we will ignore any values in local storage
+ */
+export const signMessage = createAsyncThunk<
+  void,
+  { address: string; signer: any; noCache?: boolean },
+  { state: RootState }
+>('profile/signMessage', async ({ address, signer, noCache }) => {
+  const storageSignature = window.localStorage.getItem(`etheralley_signature_${address}`);
+  const storageSignatureExpirey = window.localStorage.getItem(`etheralley_signature_expirey_${address}`);
+  const now = Date.now() / 1000;
+
+  if (!noCache && storageSignature && storageSignatureExpirey && Number.parseInt(storageSignatureExpirey) > now) {
+    return storageSignature;
+  }
+
+  const { data, error } = await FetchProfilesAPI<{ message: string; expires: number }>(`/challenges/${address}`);
+
+  if (error || !data) {
+    throw new Error('error getting challenge message');
+  }
+
+  const signature = await signer.signMessage(data.message);
+
+  window.localStorage.setItem(`etheralley_signature_${address}`, signature);
+  window.localStorage.setItem(`etheralley_signature_expirey_${address}`, data.expires.toString());
+
+  return signature;
+});
+
 export const slice = createSlice({
   name: 'app',
   initialState,
@@ -115,6 +150,15 @@ export const slice = createSlice({
       })
       .addCase(disconnectFromWallet.fulfilled, (state, _) => {
         state.isDisconnectingFromWallet = false;
+      })
+      .addCase(signMessage.pending, (state, _) => {
+        state.isSigningMessage = true;
+      })
+      .addCase(signMessage.rejected, (state, _) => {
+        state.isSigningMessage = false;
+      })
+      .addCase(signMessage.fulfilled, (state, _) => {
+        state.isSigningMessage = false;
       });
   },
 });
@@ -130,5 +174,7 @@ export const selectIsWalletModalOpen = (state: RootState) => state.app.isWalletM
 export const selectIsSwitchingNetwork = (state: RootState) => state.app.isSwitchingNetwork;
 
 export const selectIsDisconnectingFromWallet = (state: RootState) => state.app.isDisconnectingFromWallet;
+
+export const selectIsSigningMessage = (state: RootState) => state.app.isSigningMessage;
 
 export default slice.reducer;

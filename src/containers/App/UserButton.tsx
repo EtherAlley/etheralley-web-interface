@@ -1,8 +1,8 @@
 import { Button, Divider, Flex, Icon, Popover, PopoverContent, PopoverTrigger, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { useAccount, useSwitchNetwork, useDisconnect, useNetwork } from 'wagmi';
-import { MdAccountCircle, MdLanguage, MdOutlineCancel } from 'react-icons/md';
+import { useAccount, useSwitchNetwork, useDisconnect, useNetwork, useSigner } from 'wagmi';
+import { MdAccountCircle, MdLanguage, MdLogin, MdOutlineCancel } from 'react-icons/md';
 import { Routes } from '../../common/constants';
 import Settings from '../../common/settings';
 import useAppDispatch from '../../hooks/useAppDispatch';
@@ -13,8 +13,10 @@ import {
   openWalletModal,
   selectIsConnectingToWallet,
   selectIsDisconnectingFromWallet,
+  selectIsSigningMessage,
   selectIsSwitchingNetwork,
   selectIsWalletModalOpen,
+  signMessage,
   switchNetwork,
 } from './slice';
 
@@ -23,6 +25,7 @@ function UserButton() {
   const isWalletModalOpen = useAppSelector(selectIsWalletModalOpen);
   const isSwitchingNetwork = useAppSelector(selectIsSwitchingNetwork);
   const isDisconnectingFromWallet = useAppSelector(selectIsDisconnectingFromWallet);
+  const isSigningMessage = useAppSelector(selectIsSigningMessage);
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const { address, isConnected } = useAccount();
@@ -31,8 +34,9 @@ function UserButton() {
   const { disconnectAsync } = useDisconnect();
   const navigate = useNavigate();
   const shortAddress = useDisplayId(address);
+  const { data: signer } = useSigner();
 
-  if (!isConnected || !address || !switchNetworkAsync || !disconnectAsync) {
+  if (!isConnected || !address) {
     return (
       <Button
         onClick={() => dispatch(openWalletModal())}
@@ -76,7 +80,25 @@ function UserButton() {
               {intl.formatMessage({ id: 'my-profile', defaultMessage: 'My Profile' })}
             </Text>
           </Button>
-          {chain?.id !== Settings.CHAIN_ID && (
+          {signer && (
+            <Button
+              isLoading={isSigningMessage}
+              onClick={() => dispatch(signMessage({ address, signer, noCache: true }))}
+              _hover={{ bg: 'gray.900', color: 'brand.400' }}
+              variant="ghost"
+              justifyContent="flext-start"
+              leftIcon={
+                <Flex alignItems="center">
+                  <Icon as={MdLogin} w={5} h={5} />
+                </Flex>
+              }
+            >
+              <Text ml={3} fontWeight="semibold">
+                {intl.formatMessage({ id: 'login', defaultMessage: 'Login' })}
+              </Text>
+            </Button>
+          )}
+          {chain?.id !== Settings.CHAIN_ID && switchNetworkAsync && (
             <Button
               isLoading={isSwitchingNetwork}
               onClick={() => dispatch(switchNetwork({ switchNetworkAsync, chainId: Settings.CHAIN_ID }))}
