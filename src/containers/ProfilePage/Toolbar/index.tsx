@@ -87,7 +87,7 @@ function getTweetContent(): string {
 }
 
 function getTweetUrl(pathname: string): string {
-  return encodeURIComponent(`${Settings.BASE_URL}/#${pathname}`);
+  return encodeURIComponent(`${Settings.BASE_URL}${pathname}`);
 }
 
 function EditButton() {
