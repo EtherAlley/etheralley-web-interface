@@ -1,7 +1,6 @@
 import { Box } from '@chakra-ui/layout';
-import { ReactChild } from 'react';
 
-function Paper({ children, ...props }: { children: ReactChild; [x: string]: any }) {
+function Paper({ children, ...props }: { children: React.ReactNode; [x: string]: string | number | React.ReactNode }) {
   return (
     <Box
       borderRadius="lg"

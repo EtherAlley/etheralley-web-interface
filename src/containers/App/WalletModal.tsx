@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { useConnect } from 'wagmi';
-import Settings from '../../common/settings';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { metaMaskConnector, coinbaseWalletConnector, walletConnectConnector } from '../../providers/WagmiProvider';
@@ -43,13 +42,7 @@ function WalletModal() {
                 height={50}
                 my={3}
               >
-                <Image
-                  src={`${Settings.PUBLIC_URL}/logos/metamask.svg`}
-                  width="30px"
-                  height="30px"
-                  borderRadius="8px"
-                  mr={3}
-                />
+                <Image src={`/logos/metamask.svg`} width="30px" height="30px" borderRadius="8px" mr={3} />
                 {intl.formatMessage({ id: 'metamask', defaultMessage: 'MetaMask' })}
               </Button>
               <Button
@@ -57,13 +50,7 @@ function WalletModal() {
                 height={50}
                 my={3}
               >
-                <Image
-                  src={`${Settings.PUBLIC_URL}/logos/coinbasewallet.svg`}
-                  width="30px"
-                  height="30px"
-                  borderRadius="8px"
-                  mr={3}
-                />
+                <Image src={`/logos/coinbasewallet.svg`} width="30px" height="30px" borderRadius="8px" mr={3} />
                 {intl.formatMessage({ id: 'coinbase-wallet', defaultMessage: 'Coinbase Wallet' })}
               </Button>
               <Button
@@ -71,13 +58,7 @@ function WalletModal() {
                 my={3}
                 height={50}
               >
-                <Image
-                  src={`${Settings.PUBLIC_URL}/logos/walletconnect.svg`}
-                  width="30px"
-                  height="30px"
-                  borderRadius="8px"
-                  mr={3}
-                />
+                <Image src={`/logos/walletconnect.svg`} width="30px" height="30px" borderRadius="8px" mr={3} />
                 {intl.formatMessage({ id: 'wallet-connect', defaultMessage: 'WalletConnect' })}
               </Button>
             </Flex>

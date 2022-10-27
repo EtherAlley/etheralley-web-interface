@@ -1,4 +1,5 @@
 import {
+  As,
   Box,
   Flex,
   Heading,
@@ -26,10 +27,10 @@ import ErrorBoundary from '../../../components/ErrorBoundary';
 import Divider from './Divider';
 import { Transaction } from '../../../common/types';
 
-const badgeStyling: any = {
+const badgeStyling = {
   justifyContent: 'center',
   alignItems: 'center',
-  as: 'button',
+  as: 'button' as As,
   width: '43px',
   height: '43px',
   backgroundColor: 'profile.secondary',
@@ -48,8 +49,8 @@ function AchievementBar() {
   const intl = useIntl();
   const { beta_tester } = useAppSelector(selectStoreAssets);
   const { items, text } = useAppSelector(selectAchievements);
-  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
-  const justifyContent: any = useBreakpointValue({ base: 'center', sm: 'start' });
+  const textAlign: 'center' | 'left' | undefined = useBreakpointValue({ base: 'center', sm: 'left' });
+  const justifyContent = useBreakpointValue({ base: 'center', sm: 'start' });
 
   if (items.length <= 0 && !beta_tester) {
     return <></>;

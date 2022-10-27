@@ -41,7 +41,7 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getProfiles.pending, (state, _) => {
+    builder.addCase(getProfiles.pending, (state) => {
       state.getProfilesState = AsyncStates.PENDING;
       state.trendingProfiles = [];
       state.spotlightProfile = undefined;
@@ -52,7 +52,7 @@ export const slice = createSlice({
       state.trendingProfiles = trendingProfiles;
       state.spotlightProfile = spotlightProfile;
     });
-    builder.addCase(getProfiles.rejected, (state, _) => {
+    builder.addCase(getProfiles.rejected, (state) => {
       state.getProfilesState = AsyncStates.REJECTED;
     });
   },

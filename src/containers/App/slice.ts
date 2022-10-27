@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, nanoid, PayloadAction } from '@reduxjs/t
 import { Toasts, ToastStatuses } from '../../common/constants';
 import { RootState } from '../../store';
 import { Connector } from 'wagmi';
+import { Chain, ConnectArgs, ConnectResult, Provider, Signer } from '@wagmi/core';
+import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { FetchProfilesAPI } from '../../common/http';
 
 export interface State {
@@ -29,7 +31,7 @@ const initialState: State = {
 export const connectToWallet = createAsyncThunk<
   void,
   {
-    connectAsync: Function;
+    connectAsync: (args?: Partial<ConnectArgs> | undefined) => Promise<ConnectResult<Provider>>;
     connector: Connector;
   },
   { state: RootState }
@@ -45,7 +47,7 @@ export const connectToWallet = createAsyncThunk<
 export const switchNetwork = createAsyncThunk<
   void,
   {
-    switchNetworkAsync: Function;
+    switchNetworkAsync: (chainId_?: number | undefined) => Promise<Chain>;
     chainId: number;
   },
   { state: RootState }
@@ -61,7 +63,7 @@ export const switchNetwork = createAsyncThunk<
 export const disconnectFromWallet = createAsyncThunk<
   void,
   {
-    disconnectAsync: Function;
+    disconnectAsync: UseMutateAsyncFunction<void, Error, void, unknown>;
   },
   { state: RootState }
 >('app/disconnectFromWallet', async ({ disconnectAsync }, { dispatch }) => {
@@ -79,8 +81,8 @@ export const disconnectFromWallet = createAsyncThunk<
  * if noCache is true, we will ignore any values in local storage
  */
 export const signMessage = createAsyncThunk<
-  void,
-  { address: string; signer: any; noCache?: boolean },
+  string,
+  { address: string; signer: Signer; noCache?: boolean },
   { state: RootState }
 >('profile/signMessage', async ({ address, signer, noCache }) => {
   const storageSignature = window.localStorage.getItem(`etheralley_signature_${address}`);
@@ -123,41 +125,41 @@ export const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(connectToWallet.pending, (state, _) => {
+      .addCase(connectToWallet.pending, (state) => {
         state.isConnectingToWallet = true;
         state.isWalletModalOpen = false;
       })
-      .addCase(connectToWallet.rejected, (state, _) => {
+      .addCase(connectToWallet.rejected, (state) => {
         state.isConnectingToWallet = false;
       })
-      .addCase(connectToWallet.fulfilled, (state, _) => {
+      .addCase(connectToWallet.fulfilled, (state) => {
         state.isConnectingToWallet = false;
       })
-      .addCase(switchNetwork.pending, (state, _) => {
+      .addCase(switchNetwork.pending, (state) => {
         state.isSwitchingNetwork = true;
       })
-      .addCase(switchNetwork.rejected, (state, _) => {
+      .addCase(switchNetwork.rejected, (state) => {
         state.isSwitchingNetwork = false;
       })
-      .addCase(switchNetwork.fulfilled, (state, _) => {
+      .addCase(switchNetwork.fulfilled, (state) => {
         state.isSwitchingNetwork = false;
       })
-      .addCase(disconnectFromWallet.pending, (state, _) => {
+      .addCase(disconnectFromWallet.pending, (state) => {
         state.isDisconnectingFromWallet = true;
       })
-      .addCase(disconnectFromWallet.rejected, (state, _) => {
+      .addCase(disconnectFromWallet.rejected, (state) => {
         state.isDisconnectingFromWallet = false;
       })
-      .addCase(disconnectFromWallet.fulfilled, (state, _) => {
+      .addCase(disconnectFromWallet.fulfilled, (state) => {
         state.isDisconnectingFromWallet = false;
       })
-      .addCase(signMessage.pending, (state, _) => {
+      .addCase(signMessage.pending, (state) => {
         state.isSigningMessage = true;
       })
-      .addCase(signMessage.rejected, (state, _) => {
+      .addCase(signMessage.rejected, (state) => {
         state.isSigningMessage = false;
       })
-      .addCase(signMessage.fulfilled, (state, _) => {
+      .addCase(signMessage.fulfilled, (state) => {
         state.isSigningMessage = false;
       });
   },

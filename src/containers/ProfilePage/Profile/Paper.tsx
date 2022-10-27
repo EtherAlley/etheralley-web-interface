@@ -1,10 +1,16 @@
 import { Box } from '@chakra-ui/layout';
-import { ReactChild } from 'react';
+import { As } from '@chakra-ui/react';
 import useAppSelector from '../../../hooks/useAppSelector';
 import useHexToRgb from '../../../hooks/useHexToRgb';
 import { selectColors } from '../slice';
 
-function Paper({ children, ...props }: { children?: ReactChild; [x: string]: any }) {
+function Paper({
+  children,
+  ...props
+}: {
+  children?: JSX.Element;
+  [x: string]: JSX.Element | string | number | undefined | As | (() => void) | { [x: string]: string };
+}) {
   const { shadow } = useAppSelector(selectColors);
   const rgbAccent = useHexToRgb(shadow);
 

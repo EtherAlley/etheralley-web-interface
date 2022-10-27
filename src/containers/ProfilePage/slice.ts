@@ -1,7 +1,18 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 import { FetchProfilesAPI, Result } from '../../common/http';
-import { AchievementTypes, BadgeTypes, DisplayConfig, DisplayGroup, DisplayItem, Profile } from '../../common/types';
+import {
+  AchievementTypes,
+  BadgeTypes,
+  Currency,
+  DisplayConfig,
+  DisplayGroup,
+  DisplayItem,
+  FungibleToken,
+  NonFungibleToken,
+  Profile,
+  Statistic,
+} from '../../common/types';
 import { onDragDrop } from '../../providers/DragDropProvider/slice';
 import { nanoid } from 'nanoid';
 import { AsyncStates, Toasts, ToastStatuses } from '../../common/constants';
@@ -14,6 +25,7 @@ import {
   getStatistic,
 } from './ModalForms/slice';
 import { showToast, signMessage } from '../App/slice';
+import { Signer } from '@wagmi/core';
 
 export type StateProfile = Profile & { display_config: DisplayConfig }; // display config is never undefined in the state so we override the typing
 
@@ -126,7 +138,7 @@ export const loadProfile = createAsyncThunk<
   return FetchProfilesAPI<Profile>(`/profiles/${address}`);
 });
 
-export const saveProfile = createAsyncThunk<void, { address: string; signer: any }, { state: RootState }>(
+export const saveProfile = createAsyncThunk<void, { address: string; signer: Signer }, { state: RootState }>(
   'profile/save',
   async ({ address, signer }, { getState, dispatch }) => {
     try {
@@ -239,7 +251,7 @@ export const slice = createSlice({
       .addCase(loadProfile.pending, () => {
         return initialState;
       })
-      .addCase(loadProfile.rejected, (state, action) => {
+      .addCase(loadProfile.rejected, (state) => {
         state.loadProfileState = AsyncStates.REJECTED;
       })
       .addCase(
@@ -293,13 +305,13 @@ export const slice = createSlice({
           }
         }
       )
-      .addCase(saveProfile.pending, (state, _) => {
+      .addCase(saveProfile.pending, (state) => {
         state.saveProfileState = AsyncStates.PENDING;
       })
-      .addCase(saveProfile.rejected, (state, _) => {
+      .addCase(saveProfile.rejected, (state) => {
         state.saveProfileState = AsyncStates.REJECTED;
       })
-      .addCase(saveProfile.fulfilled, (state, _) => {
+      .addCase(saveProfile.fulfilled, (state) => {
         state.saveProfileState = AsyncStates.FULFILLED;
         state.showEditBar = false;
       })
@@ -480,8 +492,9 @@ function removeBadge(state: State, itemBeingDeleted: DisplayItem) {
 // add the badge to the bottom of the specified badge type array
 // add an item at the front of the first group
 // if the group does not exist, create one
-function addBadge(state: State, type: BadgeTypes, badge: any) {
-  state.profile[type].push(badge);
+function addBadge(state: State, type: BadgeTypes, badge: Currency | Statistic | FungibleToken | NonFungibleToken) {
+  const badgeArr = state.profile[type] as unknown as typeof badge[];
+  badgeArr.push(badge);
   const groups = state.profile.display_config.groups;
   const item = {
     id: nanoid(),

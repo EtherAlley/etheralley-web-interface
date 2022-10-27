@@ -4,7 +4,12 @@ import App from './containers/App';
 import { Providers } from './Providers';
 
 const container = document.getElementById('root');
-const root = createRoot(container!);
+
+if (!container) {
+  throw Error('could not find root element');
+}
+
+const root = createRoot(container);
 
 root.render(
   <React.StrictMode>

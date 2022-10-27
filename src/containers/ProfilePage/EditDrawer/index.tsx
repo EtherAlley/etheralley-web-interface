@@ -49,6 +49,11 @@ function ProfileEditDrawer() {
     { current: badgeCount, max: REGULAR_TOTAL_BADGE_COUNT }
   );
 
+  // shouldn't be possible if they have gotten this far.
+  if (!address || !signer) {
+    return <></>;
+  }
+
   return (
     <Drawer size="md" isOpen={showEditBar} onClose={closeEdit} placement="right" preserveScrollBarGap>
       <DrawerContent>
@@ -83,7 +88,7 @@ function ProfileEditDrawer() {
           <Tooltip label={label} shouldWrapChildren isDisabled={!maxBadgeCountReached}>
             <Button
               colorScheme="brand"
-              onClick={() => dispatch(saveProfile({ address: address!, signer }))}
+              onClick={() => dispatch(saveProfile({ address, signer }))}
               isLoading={saving}
               disabled={maxBadgeCountReached}
             >

@@ -1,6 +1,5 @@
 import { Box, Image, ImageProps } from '@chakra-ui/react';
 import { Blockchains, Interfaces } from '../../common/constants';
-import Settings from '../../common/settings';
 import tokens from '../../hooks/tokens';
 import Coin from '../../icons/Coin';
 
@@ -29,14 +28,6 @@ function Logo({
   }
 
   return <></>;
-}
-
-function buildUrl(urlSuffix: string | undefined): string | undefined {
-  if (!urlSuffix) {
-    return undefined;
-  }
-
-  return `${Settings.PUBLIC_URL}/${urlSuffix}`;
 }
 
 function Token({
@@ -97,7 +88,7 @@ function Interface({
 
   return (
     <Image
-      src={buildUrl(`logos/${fileName}`)}
+      src={`/logos/${fileName}`}
       alt={interfaceName}
       width={width}
       height={height}
@@ -118,7 +109,7 @@ function Blockchain({
   height?: string | number;
   background?: boolean;
 }): JSX.Element {
-  let styling: ImageProps = background ? { p: 2, backgroundColor: 'gray.900' } : {};
+  const styling: ImageProps = background ? { p: 2, backgroundColor: 'gray.900' } : {};
   let fileName: string | undefined;
   switch (blockchain) {
     case Blockchains.ETHEREUM:
@@ -132,14 +123,7 @@ function Blockchain({
   }
 
   return (
-    <Image
-      src={buildUrl(`logos/${fileName}`)}
-      alt={blockchain}
-      width={width}
-      height={height}
-      borderRadius="50%"
-      {...styling}
-    />
+    <Image src={`/logos/${fileName}`} alt={blockchain} width={width} height={height} borderRadius="50%" {...styling} />
   );
 }
 

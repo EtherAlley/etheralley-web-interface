@@ -15,7 +15,9 @@ class ErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch() {}
+  componentDidCatch() {
+    return;
+  }
 
   render() {
     const { children } = this.props;
