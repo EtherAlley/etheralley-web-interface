@@ -100,15 +100,20 @@ export const getBalances = createAsyncThunk<
   { contract: EtheralleyStoreType; address: `0x${string}` },
   { state: RootState }
 >('shopPage/getBalances', async ({ contract, address }) => {
-  if (!address) {
-    return [];
-  }
+  try {
+    if (!address) {
+      return [];
+    }
 
-  const balances = await contract.balanceOfBatch(
-    [address, address],
-    [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
-  );
-  return balances.map((balance: BigNumber) => balance.toString());
+    const balances = await contract.balanceOfBatch(
+      [address, address],
+      [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
+    );
+    return balances.map((balance: BigNumber) => balance.toString());
+  } catch (ex) {
+    console.error(ex);
+    throw ex;
+  }
 });
 
 export const purchase = createAsyncThunk<
@@ -127,6 +132,7 @@ export const purchase = createAsyncThunk<
     dispatch(showToast({ toast: Toasts.SUCCESS_SUBMITTING_PURCHASE, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_SUBMITTING_PURCHASE, status: ToastStatuses.ERROR }));
+    console.error(ex);
     throw ex;
   }
 

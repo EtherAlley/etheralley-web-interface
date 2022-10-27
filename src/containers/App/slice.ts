@@ -41,6 +41,8 @@ export const connectToWallet = createAsyncThunk<
     dispatch(showToast({ toast: Toasts.SUCCESS_CONNECTING_TO_WALLET, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_CONNECTING_TO_WALLET, status: ToastStatuses.ERROR }));
+    console.error(ex);
+    throw ex;
   }
 });
 
@@ -57,6 +59,8 @@ export const switchNetwork = createAsyncThunk<
     dispatch(showToast({ toast: Toasts.SUCCESS_SWITCHING_NETWORK, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_SWITCHING_NETWORK, status: ToastStatuses.ERROR }));
+    console.error(ex);
+    throw ex;
   }
 });
 
@@ -72,6 +76,8 @@ export const disconnectFromWallet = createAsyncThunk<
     dispatch(showToast({ toast: Toasts.SUCCESS_DISCONNECTING_FROM_WALLET, status: ToastStatuses.SUCCESS }));
   } catch (ex) {
     dispatch(showToast({ toast: Toasts.ERROR_DISCONNECTING_FROM_WALLET, status: ToastStatuses.ERROR }));
+    console.error(ex);
+    throw ex;
   }
 });
 

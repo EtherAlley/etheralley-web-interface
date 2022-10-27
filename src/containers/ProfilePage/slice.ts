@@ -162,6 +162,7 @@ export const saveProfile = createAsyncThunk<void, { address: string; signer: Sig
       dispatch(showToast({ toast: Toasts.SUCCESS_SAVING_PROFILE, status: ToastStatuses.SUCCESS }));
     } catch (ex) {
       dispatch(showToast({ toast: Toasts.ERROR_SAVING_PROFILE, status: ToastStatuses.ERROR }));
+      console.error(ex);
       throw ex;
     }
   }
