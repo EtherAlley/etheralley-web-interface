@@ -167,6 +167,12 @@
       "value": "Ḉĺŏśè"
     }
   ],
+  "coinbase-wallet": [
+    {
+      "type": 0,
+      "value": "Ḉŏíńḃâśè Ẅâĺĺèṭ"
+    }
+  ],
   "colors-form": [
     {
       "type": 0,
@@ -177,6 +183,12 @@
     {
       "type": 0,
       "value": "Ḉŏńńèćṭ"
+    }
+  ],
+  "connect-a-wallet": [
+    {
+      "type": 0,
+      "value": "Ḉŏńńèćṭ â Ẅâĺĺèṭ"
     }
   ],
   "connect-to-wallet": [
@@ -231,6 +243,12 @@
     {
       "type": 0,
       "value": "Ḋèṗĺŏẏèḋ â Ṡṁâŕṭ Ḉŏńṭŕâćṭ"
+    }
+  ],
+  "disconnect-wallet": [
+    {
+      "type": 0,
+      "value": "Ḋíśćŏńńèćṭ Ẅâĺĺèṭ"
     }
   ],
   "display-assets-header": [
@@ -345,6 +363,12 @@
       "value": "Ḕŕŕŏŕ ćŏńńèćṭíńĝ ṭŏ ẘâĺĺèṭ"
     }
   ],
+  "error-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ ḋíśćŏńńèćṭíńĝ ḟŕŏṁ ẘâĺĺèṭ"
+    }
+  ],
   "error-loading-page": [
     {
       "type": 0,
@@ -361,6 +385,12 @@
     {
       "type": 0,
       "value": "Ḕŕŕŏŕ śâṿíńĝ ṗŕŏḟíĺè"
+    }
+  ],
+  "error-switching-network": [
+    {
+      "type": 0,
+      "value": "Ḕŕŕŏŕ śẘíṭćḫíńĝ ńèṭẘŏŕǩ"
     }
   ],
   "first-swap": [
@@ -381,10 +411,10 @@
       "value": "ḠíṭḢůḃ"
     }
   ],
-  "go-back-button": [
+  "go-home-button": [
     {
       "type": 0,
-      "value": "Ḡŏ Ḃâćǩ"
+      "value": "Ḡŏ Ḣŏṁè"
     }
   ],
   "how-does-it-work-header": [
@@ -445,10 +475,16 @@
       "value": "name"
     }
   ],
-  "mobile-wallet-support": [
+  "login": [
     {
       "type": 0,
-      "value": "Ḿŏḃíĺè Ẅâĺĺèṭ śůṗṗŏŕṭ íś ćŏṁíńĝ śŏŏń!"
+      "value": "Ļŏĝíń"
+    }
+  ],
+  "metamask": [
+    {
+      "type": 0,
+      "value": "ḾèṭâḾâśǩ"
     }
   ],
   "more": [
@@ -785,10 +821,38 @@
       "value": "Ṡṭâṭś"
     }
   ],
+  "success-connecting-to-wallet": [
+    {
+      "type": 0,
+      "value": "Ṡůććèśśḟůĺĺẏ ćŏńńèćṭèḋ ṭŏ ẘâĺĺèṭ"
+    }
+  ],
+  "success-disconnecting-from-wallet": [
+    {
+      "type": 0,
+      "value": "Ṡůććèśḟůĺĺẏ ḋíśćŏńńèćṭèḋ ḟŕŏṁ ẘâĺĺèṭ"
+    }
+  ],
   "success-making-purchase-description": [
     {
       "type": 0,
       "value": "Ṡůććèśśḟůĺĺẏ ṗŕŏćèśśèḋ ṭŕâńśâćṭíŏń"
+    }
+  ],
+  "success-saving-profile": [
+    {
+      "type": 0,
+      "value": "Ṡůććèśśḟůĺĺẏ śâṿèḋ ṗŕŏḟíĺè"
+    }
+  ],
+  "success-switching-network": [
+    {
+      "type": 0,
+      "value": "Ṡůććèśśḟůĺĺẏ śẘíṭćḫèḋ ṭŏ "
+    },
+    {
+      "type": 1,
+      "value": "chain"
     }
   ],
   "switch-chains": [
@@ -799,6 +863,16 @@
     {
       "type": 1,
       "value": "name"
+    }
+  ],
+  "switch-network": [
+    {
+      "type": 0,
+      "value": "Ṡẘíṭćḫ ṭŏ "
+    },
+    {
+      "type": 1,
+      "value": "chain"
     }
   ],
   "token-dialog-balance": [
@@ -956,7 +1030,7 @@
   "trending-profiles-caption": [
     {
       "type": 0,
-      "value": "Ṯŕèńḋíńĝ Ṕŕŏḟíĺèś Ṯŏḋâẏ"
+      "value": "Ṯŕèńḋíńĝ Ṕŕŏḟíĺèś"
     }
   ],
   "twitter-button": [
@@ -979,6 +1053,12 @@
     {
       "type": 0,
       "value": "Ẅè ḫâḋ ṗŕŏḃĺèṁś ĺŏâḋíńĝ ṭḫíś ḃâḋĝè. Ḭṭ íś ḃèíńĝ ṿíśůâĺĺẏ ḫíḋḋèń ḟŕŏṁ ṭḫè śćŕèèń."
+    }
+  ],
+  "wallet-connect": [
+    {
+      "type": 0,
+      "value": "ẄâĺĺèṭḈŏńńèćṭ"
     }
   ],
   "welcome-message": [

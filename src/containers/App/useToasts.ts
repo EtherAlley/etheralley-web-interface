@@ -50,6 +50,12 @@ function useToasts() {
             defaultMessage: 'Error saving profile',
           });
           break;
+        case Toasts.SUCCESS_SAVING_PROFILE:
+          title = intl.formatMessage({
+            id: 'success-saving-profile',
+            defaultMessage: 'Successfully saved profile',
+          });
+          break;
         case Toasts.ERROR_LOADING_PAGE:
           title = intl.formatMessage({
             id: 'error-loading-page',
