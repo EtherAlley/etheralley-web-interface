@@ -27,7 +27,7 @@ function ProfileText() {
 
   return !!title || !!description ? (
     <Paper p={4}>
-      <Stack height={height + (!!twitter_handle ? 32 : 0)}>
+      <Stack height={height + (twitter_handle ? 32 : 0)}>
         <Heading size="lg" mb={5} noOfLines={1} textColor="profile.secondaryText">
           {title}
         </Heading>

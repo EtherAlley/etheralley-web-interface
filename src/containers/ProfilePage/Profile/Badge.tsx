@@ -9,6 +9,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  As,
 } from '@chakra-ui/react';
 import Paper from './Paper';
 
@@ -23,14 +24,14 @@ function Badge({
   width: number;
   height: number;
   usePaper?: boolean;
-  Display: ReactNode;
+  Display: JSX.Element;
   DialogHeader: ReactNode;
   DialogBody: ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
-  const boxStyling: any = {
-    as: 'button',
+  const boxStyling = {
+    as: 'button' as As,
     onClick: () => setIsOpen(true),
     _hover: { transform: 'scale(1.1)' },
     width,

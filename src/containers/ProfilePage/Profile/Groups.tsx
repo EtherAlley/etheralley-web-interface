@@ -57,7 +57,7 @@ function Group({ text, items }: { text: string; items: DisplayItem[] }) {
 }
 
 function GroupTitle({ text }: { text: string }) {
-  const textAlign: any = useBreakpointValue({ base: 'center', sm: 'left' });
+  const textAlign: 'center' | 'left' | undefined = useBreakpointValue({ base: 'center', sm: 'left' });
 
   return (
     <Heading textColor="profile.primaryText" as="h3" size="lg" mb={10} noOfLines={1} textAlign={textAlign}>

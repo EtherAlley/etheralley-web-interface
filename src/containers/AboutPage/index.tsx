@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 function AboutPage() {
   const intl = useIntl();
+
   return (
     <Box>
       <Flex justifyContent="center">

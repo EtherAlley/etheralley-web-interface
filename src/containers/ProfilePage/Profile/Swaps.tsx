@@ -32,7 +32,7 @@ function SwapComponent({ index }: { index: number }) {
 function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract: Contract }) {
   const intl = useIntl();
 
-  let title: string = '';
+  let title = '';
   switch (contract.interface) {
     case Interfaces.SUSHISWAP_EXCHANGE:
       title = 'Sushiswap';
@@ -45,7 +45,7 @@ function SwapDisplay({ swaps, contract }: { swaps: Swap[] | undefined; contract:
       break;
   }
 
-  let text: string = '';
+  let text = '';
   if (!swaps || !swaps.length) {
     text = intl.formatMessage({ id: 'no-swaps', defaultMessage: 'NO SWAPS' });
   } else if (swaps.length === 1) {

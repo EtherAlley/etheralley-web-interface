@@ -1,15 +1,14 @@
 import { IntlProvider as IntlProviderComponent } from 'react-intl';
 import translations from './translations';
 
-function IntlProvider({ children }: { children: any }) {
+function IntlProvider({ children }: { children: JSX.Element }) {
   const locale = navigator.language;
   const messages = translations[locale];
-  const AnyIntlProvider = IntlProviderComponent as any; // TODO: Something to do with lacking support for new React 18 type changes?
   return (
     <>
-      <AnyIntlProvider messages={messages} locale="en" defaultLocale="en">
+      <IntlProviderComponent messages={messages} locale="en" defaultLocale="en">
         {children}
-      </AnyIntlProvider>
+      </IntlProviderComponent>
     </>
   );
 }

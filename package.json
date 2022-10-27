@@ -8,7 +8,7 @@
     "start": "vite --port 3000",
     "start:prod": "vite preview --port 3000",
     "build": "tsc && vite build",
-    "lint": "prettier --check src '!**/*.json'",
+    "lint": "prettier --check src '!**/*.json' && eslint",
     "lint:fix": "prettier --write src '!**/*.json'",
     "analyze": "source-map-explorer 'dist/assets/*.js' --html analyze/result.html",
     "test": "vitest",
@@ -47,7 +47,13 @@
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^18.0.6",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
     "@vitejs/plugin-react": "^2.2.0",
+    "@wagmi/core": "^0.6.6",
+    "eslint": "^8.26.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "jsdom": "^20.0.1",
     "prettier": "^2.7.1",
     "source-map-explorer": "^2.5.3",
@@ -64,10 +70,26 @@
     "printWidth": 120
   },
   "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:react/recommended",
+      "plugin:react-hooks/recommended"
     ],
-    "rules": {}
+    "overrides": [],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/display-name": "off",
+      "react/prop-types": "off"
+    }
   }
 }

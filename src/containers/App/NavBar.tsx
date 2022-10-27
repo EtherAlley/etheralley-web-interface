@@ -159,7 +159,7 @@ const DesktopNav = ({ navItems }: { navItems: NavItem[] }) => {
 };
 
 const DesktopSubNav = ({ label, href, subLabel, isExternal }: NavItem) => {
-  const linkProps: any = isExternal ? { href } : { as: RouterLink, to: href };
+  const linkProps = isExternal ? { href, to: '' } : { as: RouterLink, to: href };
   return (
     <Link
       role={'group'}
@@ -244,7 +244,7 @@ const MobileNavItem = ({ label, children, href, onToggleMenu }: NavItem & { onTo
         <Stack mt={2} pl={4} borderLeft={1} borderStyle={'solid'} borderColor={'gray.700'} align={'start'}>
           {children &&
             children.map((child) => {
-              const linkProps: any = child.isExternal ? { href: child.href } : { as: RouterLink, to: child.href };
+              const linkProps = child.isExternal ? { href: child.href, to: '' } : { as: RouterLink, to: child.href };
               return (
                 <Link
                   key={child.label}

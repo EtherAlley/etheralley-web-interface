@@ -104,15 +104,11 @@ export const getBalances = createAsyncThunk<
     return [];
   }
 
-  try {
-    const balances = await contract.balanceOfBatch(
-      [address, address],
-      [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
-    );
-    return balances.map((balance: BigNumber) => balance.toString());
-  } catch (ex) {
-    throw ex;
-  }
+  const balances = await contract.balanceOfBatch(
+    [address, address],
+    [BigNumber.from(StoreAssets.PREMIUM), BigNumber.from(StoreAssets.BETA_TESTER)]
+  );
+  return balances.map((balance: BigNumber) => balance.toString());
 });
 
 export const purchase = createAsyncThunk<
@@ -136,11 +132,15 @@ export const purchase = createAsyncThunk<
 
   try {
     dispatch(getBalances({ contract, address }));
-  } catch {}
+  } catch {
+    // empty
+  }
 
   try {
     await FetchProfilesAPI<void>(`/profiles/${address}/refresh`);
-  } catch {}
+  } catch {
+    // empty
+  }
 });
 
 export const slice = createSlice({
@@ -148,7 +148,7 @@ export const slice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getListings.pending, (state, action) => {
+    builder.addCase(getListings.pending, (state) => {
       state.getListingsState = AsyncStates.PENDING;
       state.listings = [];
     });
@@ -156,10 +156,10 @@ export const slice = createSlice({
       state.getListingsState = AsyncStates.FULFILLED;
       state.listings = action.payload;
     });
-    builder.addCase(getListings.rejected, (state, action) => {
+    builder.addCase(getListings.rejected, (state) => {
       state.getListingsState = AsyncStates.REJECTED;
     });
-    builder.addCase(getBalances.pending, (state, action) => {
+    builder.addCase(getBalances.pending, (state) => {
       state.getBalancesState = AsyncStates.PENDING;
       state.balances = [];
     });
@@ -167,16 +167,16 @@ export const slice = createSlice({
       state.getBalancesState = AsyncStates.FULFILLED;
       state.balances = action.payload;
     });
-    builder.addCase(getBalances.rejected, (state, action) => {
+    builder.addCase(getBalances.rejected, (state) => {
       state.getBalancesState = AsyncStates.REJECTED;
     });
-    builder.addCase(purchase.pending, (state, action) => {
+    builder.addCase(purchase.pending, (state) => {
       state.purchaseState = AsyncStates.PENDING;
     });
-    builder.addCase(purchase.fulfilled, (state, action) => {
+    builder.addCase(purchase.fulfilled, (state) => {
       state.purchaseState = AsyncStates.FULFILLED;
     });
-    builder.addCase(purchase.rejected, (state, action) => {
+    builder.addCase(purchase.rejected, (state) => {
       state.purchaseState = AsyncStates.REJECTED;
     });
   },

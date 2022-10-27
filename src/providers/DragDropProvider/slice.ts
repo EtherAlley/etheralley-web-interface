@@ -2,15 +2,16 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DropResult } from 'react-beautiful-dnd';
 import { RootState } from '../../store';
 
-export interface State {}
-
-const initialState: State = {};
+const initialState = {};
 
 export const slice = createSlice({
   name: 'dragDrop',
   initialState,
   reducers: {
-    onDragDrop: (_state, _action: PayloadAction<DropResult>) => {},
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onDragDrop: (_state, _action: PayloadAction<DropResult>) => {
+      return;
+    },
   },
 });
 

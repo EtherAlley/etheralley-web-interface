@@ -1,6 +1,5 @@
 import { Box, Image, ImageProps } from '@chakra-ui/react';
 import { Blockchains, Interfaces } from '../../common/constants';
-import Settings from '../../common/settings';
 import tokens from '../../hooks/tokens';
 import Coin from '../../icons/Coin';
 
@@ -110,7 +109,7 @@ function Blockchain({
   height?: string | number;
   background?: boolean;
 }): JSX.Element {
-  let styling: ImageProps = background ? { p: 2, backgroundColor: 'gray.900' } : {};
+  const styling: ImageProps = background ? { p: 2, backgroundColor: 'gray.900' } : {};
   let fileName: string | undefined;
   switch (blockchain) {
     case Blockchains.ETHEREUM:

@@ -1,10 +1,10 @@
-import { IconButton, IconButtonProps, Tooltip, Icon as ChakraIcon } from '@chakra-ui/react';
+import { IconButton, IconButtonProps, Tooltip, Icon as ChakraIcon, As } from '@chakra-ui/react';
 import { MouseEventHandler } from 'react';
 
 export type IconButtonComponentProps = {
   'aria-label': string;
   tooltip: string;
-  Icon: any;
+  Icon: As;
   iconColor?: string;
   onClick: MouseEventHandler<HTMLInputElement>;
 } & IconButtonProps;

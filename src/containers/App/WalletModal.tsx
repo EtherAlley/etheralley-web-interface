@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { useConnect } from 'wagmi';
-import Settings from '../../common/settings';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { metaMaskConnector, coinbaseWalletConnector, walletConnectConnector } from '../../providers/WagmiProvider';

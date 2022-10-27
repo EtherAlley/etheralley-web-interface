@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom';
 import { render, waitFor } from '../../../tests/test-utils';
 import App from '../index';
 
