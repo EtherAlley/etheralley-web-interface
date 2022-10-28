@@ -3,18 +3,16 @@
 
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import nodePolyfillsDev from 'vite-plugin-node-stdlib-browser';
+import nodePolyfillsBuild from 'rollup-plugin-polyfill-node';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), nodePolyfillsDev()], // polyfills for WalletConnect
   build: {
     sourcemap: true,
     rollupOptions: {
-      plugins: [nodePolyfills()], // polyfills for walletconnect
+      plugins: [nodePolyfillsBuild()], // polyfills for WalletConnect
     },
-  },
-  define: {
-    global: 'window', // replacement for walletconnect
   },
   test: {
     globals: true,
