@@ -14,6 +14,7 @@ export default defineConfig({
       plugins: [nodePolyfillsBuild()], // polyfills for WalletConnect
     },
   },
+  envDir: 'env',
   test: {
     globals: true,
     environment: 'jsdom',
