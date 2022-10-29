@@ -60,9 +60,6 @@ export type DisplayConfig = {
     description: string;
     twitter_handle: string;
   };
-  picture: {
-    item: DisplayItem | undefined;
-  };
   achievements: {
     text: string;
     items: DisplayAchievement[];
