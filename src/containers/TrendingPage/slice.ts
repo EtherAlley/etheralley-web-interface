@@ -7,21 +7,21 @@ import { RootState } from '../../store';
 export interface State {
   getProfilesState: AsyncStates;
   trendingProfiles: Profile[];
-  spotlightProfile: Profile | undefined;
+  spotlightProfile: Profile[];
 }
 
 const initialState: State = {
   getProfilesState: AsyncStates.PENDING,
   trendingProfiles: [],
-  spotlightProfile: undefined,
+  spotlightProfile: [],
 };
 
-export const getProfiles = createAsyncThunk<[Profile[], Profile], undefined, { state: RootState }>(
+export const getProfiles = createAsyncThunk<[Profile[], Profile[]], undefined, { state: RootState }>(
   'home/getProfiles',
   async () => {
     const [trending, spotlight] = await Promise.all([
       FetchProfilesAPI<Profile[]>('/profiles/top'),
-      FetchProfilesAPI<Profile>('/profiles/spotlight'),
+      FetchProfilesAPI<Profile[]>('/profiles/spotlight'),
     ]);
 
     if (trending.error || !trending.data) {
@@ -44,7 +44,7 @@ export const slice = createSlice({
     builder.addCase(getProfiles.pending, (state) => {
       state.getProfilesState = AsyncStates.PENDING;
       state.trendingProfiles = [];
-      state.spotlightProfile = undefined;
+      state.spotlightProfile = [];
     });
     builder.addCase(getProfiles.fulfilled, (state, action) => {
       const [trendingProfiles, spotlightProfile] = action.payload;
