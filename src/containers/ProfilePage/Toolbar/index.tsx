@@ -10,8 +10,8 @@ import useAppSelector from '../../../hooks/useAppSelector';
 import { useAccount } from 'wagmi';
 import Settings from '../../../common/settings';
 import useIsMobile from '../../../hooks/useIsMobile';
-import { openWalletModal, selectIsConnectingToWallet } from '../../App/slice';
 import { Routes } from '../../../common/constants';
+import { openWalletModal, selectWallet } from '../../WalletManager/slice';
 
 function Toolbar() {
   const isMobile = useIsMobile();
@@ -95,7 +95,7 @@ function EditButton() {
   const dispatch = useAppDispatch();
   const { address, isConnected } = useAccount();
   const profileAddress = useAppSelector(selectAddress);
-  const connecting = useAppSelector(selectIsConnectingToWallet);
+  const { isConnectingToWallet } = useAppSelector(selectWallet);
   const navigate = useNavigate();
 
   // try to connect to wallet if no account
@@ -118,7 +118,7 @@ function EditButton() {
       aria-label={buttonLabel}
       tooltip={buttonLabel}
       Icon={MdModeEdit}
-      isLoading={connecting}
+      isLoading={isConnectingToWallet}
       onClick={onClickEditButton}
       iconColor="profile.accent"
       bgColor="profile.secondary"

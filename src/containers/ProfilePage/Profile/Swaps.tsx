@@ -3,8 +3,6 @@ import Badge from './Badge';
 import { Contract, Swap } from '../../../common/types';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains, Interfaces } from '../../../common/constants';
-import useAppSelector from '../../../hooks/useAppSelector';
-import { selectStatistic } from './../slice';
 import Link from '../../../components/Link';
 import Chip from './Chip';
 import { useIntl } from 'react-intl';
@@ -13,11 +11,7 @@ import { MdSwapHoriz } from 'react-icons/md';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import Divider from './Divider';
 
-function SwapComponent({ index }: { index: number }) {
-  const stat = useAppSelector((state) => selectStatistic(state, index));
-  const data = stat.data as Swap[] | undefined;
-  const contract = stat.contract;
-
+function SwapComponent({ data, contract }: { data: Swap[] | undefined; contract: Contract }) {
   return (
     <Badge
       width={BADGE_WIDTH}

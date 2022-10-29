@@ -6,7 +6,6 @@ import NavBar from './NavBar';
 import useToasts from './useToasts';
 import ErrorBoundary from '../../components/ErrorBoundary';
 import HomePage from '../HomePage'; // We don't lazy load home page for SEO. We won't want a second network call involved in loading the landing page.
-import WalletModal from './WalletModal';
 
 const NotFound = lazy(() => import('../../components/NotFound'));
 const ProfilePage = lazy(() => import('../ProfilePage'));
@@ -78,7 +77,6 @@ function App() {
           }
         />
       </Routes>
-      <WalletModal />
     </>
   );
 }

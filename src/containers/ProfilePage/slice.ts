@@ -24,7 +24,8 @@ import {
   getProfilePicture,
   getStatistic,
 } from './ModalForms/slice';
-import { showToast, signMessage } from '../App/slice';
+import { showToast } from '../App/slice';
+import { signMessage } from '../WalletManager/slice';
 import { Signer } from '@wagmi/core';
 
 export type StateProfile = Profile & { display_config: DisplayConfig }; // display config is never undefined in the state so we override the typing
@@ -59,6 +60,7 @@ const initialState: State = {
       premium: false,
       beta_tester: false,
     },
+    profile_picture: undefined,
     display_config: {
       colors: {
         primary: '',
@@ -293,6 +295,7 @@ export const slice = createSlice({
           state.loadProfileState = AsyncStates.FULFILLED;
           state.profile.address = profile.address;
           state.profile.ens_name = profile.ens_name;
+          state.profile.profile_picture = profile.profile_picture;
           state.profile.store_assets = profile.store_assets;
           state.profile.non_fungible_tokens = profile.non_fungible_tokens;
           state.profile.fungible_tokens = profile.fungible_tokens;
@@ -349,16 +352,7 @@ export const slice = createSlice({
         addBadge(state, BadgeTypes.Currencies, payload);
       })
       .addCase(getProfilePicture.fulfilled, (state, { payload }) => {
-        // remove the old profile picture config
-        if (state.profile.display_config.picture.item) {
-          removeBadge(state, state.profile.display_config.picture.item);
-        }
-        state.profile.non_fungible_tokens.push(payload);
-        state.profile.display_config.picture.item = {
-          id: nanoid(),
-          index: state.profile.non_fungible_tokens.length - 1,
-          type: BadgeTypes.NonFungibleToken,
-        };
+        state.profile.profile_picture = payload;
       })
       .addCase(getAchievement.fulfilled, (state, { payload }) => {
         state.profile.interactions.push(payload);
@@ -396,6 +390,10 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
     }
   }
 
+  if (actionProfile.profile_picture) {
+    stateProfile.profile_picture = actionProfile.profile_picture;
+  }
+
   if (actionProfile.statistics.length > 0) {
     const group: DisplayGroup = {
       id: nanoid(),
@@ -413,18 +411,12 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
   }
 
   if (actionProfile.non_fungible_tokens.length > 0) {
-    stateProfile.display_config.picture.item = {
-      id: nanoid(),
-      index: 0,
-      type: BadgeTypes.NonFungibleToken,
-    };
     const group: DisplayGroup = {
       id: nanoid(),
       text: 'NFTs',
       items: [],
     };
-    // we start at 1 because the profile picture has claimed item 0 in the display config
-    for (let i = 1; i < actionProfile.non_fungible_tokens.length; i++) {
+    for (let i = 0; i < actionProfile.non_fungible_tokens.length; i++) {
       group.items.push({
         id: nanoid(),
         index: i,
@@ -529,7 +521,7 @@ export const selectInfo = (state: RootState) => state.profilePage.profile.displa
 
 export const selectColors = (state: RootState) => state.profilePage.profile.display_config.colors;
 
-export const selectPicture = (state: RootState) => state.profilePage.profile.display_config.picture;
+export const selectPicture = (state: RootState) => state.profilePage.profile.profile_picture;
 
 export const selectGroups = (state: RootState) => state.profilePage.profile.display_config.groups;
 

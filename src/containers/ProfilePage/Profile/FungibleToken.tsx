@@ -4,17 +4,15 @@ import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
 import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { selectAddress, selectFungibleToken } from './../slice';
+import { selectAddress } from './../slice';
 import Link from '../../../components/Link';
 import Chip from './Chip';
-import { Contract, FungibleMetadata } from '../../../common/types';
+import { Contract, FungibleMetadata, FungibleToken } from '../../../common/types';
 import { useIntl } from 'react-intl';
 import Logo from '../../../components/Logo';
 import useDisplayId from '../../../hooks/useDisplayId';
 
-function FungibleTokenComponent({ index }: { index: number }) {
-  const { metadata, contract, balance } = useAppSelector((state) => selectFungibleToken(state, index));
-
+function FungibleTokenComponent({ token: { metadata, contract, balance } }: { token: FungibleToken }) {
   return (
     <Badge
       width={BADGE_WIDTH}

@@ -8,24 +8,11 @@ import Settings from '../../common/settings';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useDisplayId from '../../hooks/useDisplayId';
-import {
-  disconnectFromWallet,
-  openWalletModal,
-  selectIsConnectingToWallet,
-  selectIsDisconnectingFromWallet,
-  selectIsSigningMessage,
-  selectIsSwitchingNetwork,
-  selectIsWalletModalOpen,
-  signMessage,
-  switchNetwork,
-} from './slice';
+import { disconnectFromWallet, openWalletModal, selectWallet, signMessage, switchNetwork } from './slice';
 
 function UserButton() {
-  const isConnectingToWallet = useAppSelector(selectIsConnectingToWallet);
-  const isWalletModalOpen = useAppSelector(selectIsWalletModalOpen);
-  const isSwitchingNetwork = useAppSelector(selectIsSwitchingNetwork);
-  const isDisconnectingFromWallet = useAppSelector(selectIsDisconnectingFromWallet);
-  const isSigningMessage = useAppSelector(selectIsSigningMessage);
+  const { isConnectingToWallet, isWalletModalOpen, isSwitchingNetwork, isDisconnectingFromWallet, isSigningMessage } =
+    useAppSelector(selectWallet);
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const { address, isConnected } = useAccount();

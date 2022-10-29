@@ -33,7 +33,7 @@ import useOpenSeaUrl from '../../hooks/useOpenSeaUrl';
 import useDisplayId from '../../hooks/useDisplayId';
 import { purchase, selectBalances, selectLoadingBalances, selectSubmittingPurchase } from './slice';
 import { useContract, useAccount, useNetwork, useSigner, useSwitchNetwork } from 'wagmi';
-import { switchNetwork } from '../App/slice';
+import { switchNetwork } from '../WalletManager/slice';
 
 function ListingComponent({ listing, index }: { listing: Listing; index: number }) {
   const {

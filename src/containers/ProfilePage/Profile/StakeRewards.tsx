@@ -3,17 +3,11 @@ import { useIntl } from 'react-intl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Interfaces } from '../../../common/constants';
 import { Contract, Stake } from '../../../common/types';
 import Logo from '../../../components/Logo';
-import useAppSelector from '../../../hooks/useAppSelector';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
-import { selectStatistic } from '../slice';
 import Badge from './Badge';
 import Chip from './Chip';
 
-function StakeRewards({ index }: { index: number }) {
-  const stat = useAppSelector((state) => selectStatistic(state, index));
-  const data = stat.data as Stake | undefined;
-  const contract = stat.contract;
-
+function StakeRewards({ data, contract }: { data: Stake | undefined; contract: Contract }) {
   return (
     <Badge
       width={BADGE_WIDTH}
