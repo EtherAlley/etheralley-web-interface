@@ -55,12 +55,12 @@ function TrendingPage() {
       <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
         {intl.formatMessage({ id: 'spotlight-profile-caption', defaultMessage: 'Spotlight Profile' })}
       </Heading>
-      {loading || !spotlightProfile ? (
+      {loading || !spotlightProfile.length ? (
         <Box mx="8px" my="18px">
           <Skeleton width={maxWidth} height="64px" borderRadius="8px" />
         </Box>
       ) : (
-        <Row profile={spotlightProfile} />
+        <Row profile={spotlightProfile[0]} />
       )}
       <Box my="150px" />
       <Heading as="h2" fontSize="2xl" textAlign="center" mb={5}>
