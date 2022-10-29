@@ -1,15 +1,27 @@
 import { Box, Center, Flex, Grid, GridItem, Heading, Skeleton, useBreakpointValue } from '@chakra-ui/react';
-import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
-import { BadgeTypes, DisplayItem } from '../../../common/types';
+import { BADGE_HEIGHT, BADGE_WIDTH, StatisticTypes } from '../../../common/constants';
+import { BadgeTypes, DisplayItem, Stake, Swap } from '../../../common/types';
 import ErrorBoundary from '../../../components/ErrorBoundary';
 import Paper from '../../../components/Paper';
 import useAppSelector from '../../../hooks/useAppSelector';
 import FungibleTokenComponent from './FungibleToken';
 import NonFungibleTokenComponent from './NonFungibleToken';
-import { selectGroups, selectHiddenBadges, selectLoading } from './../slice';
-import Statistic from './Statistic';
+import {
+  hideBadge,
+  selectCurrency,
+  selectFungibleToken,
+  selectGroups,
+  selectHiddenBadges,
+  selectLoading,
+  selectNonFungibleToken,
+  selectStatistic,
+} from './../slice';
+import StakeRewards from './StakeRewards';
+import Swaps from './Swaps';
 import Currency from './Currency';
 import Divider from './Divider';
+import { useEffect } from 'react';
+import useAppDispatch from '../../../hooks/useAppDispatch';
 
 function Groups() {
   const groups = useAppSelector(selectGroups);
@@ -81,16 +93,56 @@ function GroupItem({ type, index, id }: { type: BadgeTypes | undefined; index: n
 
   switch (type) {
     case BadgeTypes.NonFungibleToken:
-      return <NonFungibleTokenComponent index={index} id={id} />;
+      return <NonFungibleTokenItem index={index} id={id} />;
     case BadgeTypes.FungibleToken:
-      return <FungibleTokenComponent index={index} />;
+      return <FungibleTokenItem index={index} />;
     case BadgeTypes.Statistics:
-      return <Statistic index={index} />;
+      return <StatisticItem index={index} />;
     case BadgeTypes.Currencies:
-      return <Currency index={index} />;
+      return <CurrencyItem index={index} />;
     default:
       return <></>;
   }
+}
+
+function NonFungibleTokenItem({ index, id }: { index: number; id: string }) {
+  const nft = useAppSelector((state) => selectNonFungibleToken(state, index));
+  const dispatch = useAppDispatch();
+
+  // hide the nft from the group if missing correct data so there is not a visual empty space
+  useEffect(() => {
+    if (!nft.metadata || !nft.balance || nft.balance === '0') {
+      dispatch(hideBadge(id));
+    }
+  }, [id, nft.metadata, nft.balance, dispatch]);
+
+  // If we fail to load the image, we call hideBadge to visually hide the badge from display
+  return <NonFungibleTokenComponent nft={nft} onImageLoadError={() => dispatch(hideBadge(id))} />;
+}
+
+function FungibleTokenItem({ index }: { index: number }) {
+  const token = useAppSelector((state) => selectFungibleToken(state, index));
+
+  return <FungibleTokenComponent token={token} />;
+}
+
+function StatisticItem({ index }: { index: number }) {
+  const stat = useAppSelector((state) => selectStatistic(state, index));
+
+  switch (stat.type) {
+    case StatisticTypes.SWAP:
+      return <Swaps data={stat.data as Swap[] | undefined} contract={stat.contract} />;
+    case StatisticTypes.STAKE:
+      return <StakeRewards data={stat.data as Stake | undefined} contract={stat.contract} />;
+    default:
+      return <></>;
+  }
+}
+
+function CurrencyItem({ index }: { index: number }) {
+  const currency = useAppSelector((state) => selectCurrency(state, index));
+
+  return <Currency currency={currency} />;
 }
 
 export default Groups;

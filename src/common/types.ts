@@ -30,6 +30,7 @@ export type ListingInfo = {
 export type Profile = {
   address: string;
   display_config: DisplayConfig | undefined;
+  profile_picture: NonFungibleToken | undefined;
   store_assets: StoreAssets;
   ens_name: string;
   interactions: Interaction[];

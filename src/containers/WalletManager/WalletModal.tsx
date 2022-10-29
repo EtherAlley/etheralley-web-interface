@@ -16,12 +16,12 @@ import { useConnect } from 'wagmi';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { metaMaskConnector, coinbaseWalletConnector, walletConnectConnector } from '../../providers/WagmiProvider';
-import { closeWalletModal, connectToWallet, selectIsWalletModalOpen } from './slice';
+import { closeWalletModal, connectToWallet, selectWallet } from './slice';
 
 function WalletModal() {
   const intl = useIntl();
   const { connectAsync } = useConnect();
-  const isWalletModalOpen = useAppSelector(selectIsWalletModalOpen);
+  const { isWalletModalOpen } = useAppSelector(selectWallet);
   const dispatch = useAppDispatch();
 
   return (

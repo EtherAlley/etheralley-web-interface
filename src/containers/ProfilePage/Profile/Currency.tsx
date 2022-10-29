@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useIntl } from 'react-intl';
 import { BADGE_HEIGHT, BADGE_WIDTH, Blockchains } from '../../../common/constants';
+import { Currency } from '../../../common/types';
 import Link from '../../../components/Link';
 import Logo from '../../../components/Logo';
 import useAppSelector from '../../../hooks/useAppSelector';
@@ -8,13 +9,11 @@ import useBlockchainLabel from '../../../hooks/useBlockchainLabel';
 import useCurrencySymbol from '../../../hooks/useCurrencyAbbreviation';
 import useDisplayNumber from '../../../hooks/useDisplayNumber';
 import useEtherscanUrl from '../../../hooks/useEtherscanUrl';
-import { selectAddress, selectCurrency } from '../slice';
+import { selectAddress } from '../slice';
 import Badge from './Badge';
 import Chip from './Chip';
 
-function Currency({ index }: { index: number }) {
-  const { blockchain, balance } = useAppSelector((state) => selectCurrency(state, index));
-
+function CurrencyComponent({ currency: { blockchain, balance } }: { currency: Currency }) {
   return (
     <Badge
       width={BADGE_WIDTH}
@@ -90,4 +89,4 @@ function CurrencyDialog({ blockchain, balance }: { blockchain: Blockchains; bala
   );
 }
 
-export default Currency;
+export default CurrencyComponent;

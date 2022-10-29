@@ -21,14 +21,14 @@ function ProfilePicture() {
 }
 
 function Picture() {
-  const { item } = useAppSelector(selectPicture);
+  const nft = useAppSelector(selectPicture);
   const loading = useAppSelector(selectLoading);
 
   if (loading) {
     return <Skeleton width={BADGE_WIDTH} height={BADGE_WIDTH} />;
   }
 
-  if (!item) {
+  if (!nft) {
     return (
       <Flex justifyContent="center" alignItems="center" p={4}>
         <ProfileUser width={BADGE_WIDTH - 32} height={BADGE_WIDTH - 32} />
@@ -36,7 +36,7 @@ function Picture() {
     );
   }
 
-  return <NonFungibleTokenComponent id={item.id} index={item.index} useHeader={false} usePaper={false} />;
+  return <NonFungibleTokenComponent nft={nft} useHeader={false} usePaper={false} />;
 }
 
 function Info() {

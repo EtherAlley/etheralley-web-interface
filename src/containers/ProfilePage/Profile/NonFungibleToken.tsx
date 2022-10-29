@@ -3,40 +3,29 @@ import { BADGE_HEIGHT, BADGE_WIDTH } from '../../../common/constants';
 import Badge from './Badge';
 import useOpenSeaUrl from '../../../hooks/useOpenSeaUrl';
 import useAppSelector from '../../../hooks/useAppSelector';
-import { hideBadge, selectColors, selectNonFungibleToken } from './../slice';
+import { selectColors } from './../slice';
 import Link from '../../../components/Link';
-import { Contract, NonFungibleMetadata } from '../../../common/types';
+import { Contract, NonFungibleMetadata, NonFungibleToken } from '../../../common/types';
 import useHexToRgb from '../../../hooks/useHexToRgb';
 import { useIntl } from 'react-intl';
 import useDisplayId from '../../../hooks/useDisplayId';
-import useAppDispatch from '../../../hooks/useAppDispatch';
-import { useEffect } from 'react';
 
 function NonFungibleTokenComponent({
-  id,
-  index,
+  onImageLoadError,
+  nft: { metadata, contract, token_id, balance },
   usePaper = true,
   useHeader = true,
 }: {
-  id: string;
-  index: number;
+  onImageLoadError?: () => void;
+  nft: NonFungibleToken;
   usePaper?: boolean;
   useHeader?: boolean;
 }) {
-  const dispatch = useAppDispatch();
-  const { metadata, contract, token_id, balance } = useAppSelector((state) => selectNonFungibleToken(state, index));
-
   // Three scenarios to account for here:
   //  1. Nil metadata. Failing to fetch metadata can be transient or a miss configuration.
   //  2. Nil balance. Failing to fetch the balance can be transient or a miss configuration.
   //  3. Zero balance. The user does not own this nft.
   // We will opt to visually hide the badge from the screen in all three of these scenarios
-  useEffect(() => {
-    if (!metadata || !balance || balance === '0') {
-      dispatch(hideBadge(id));
-    }
-  }, [id, metadata, balance, dispatch]);
-
   if (!metadata || !balance || balance === '0') {
     return <></>;
   }
@@ -46,7 +35,7 @@ function NonFungibleTokenComponent({
       width={BADGE_WIDTH}
       height={useHeader ? BADGE_HEIGHT : BADGE_WIDTH}
       usePaper={usePaper}
-      Display={<NonFungibleDisplay id={id} metadata={metadata} useHeader={useHeader} />}
+      Display={<NonFungibleDisplay onImageLoadError={onImageLoadError} metadata={metadata} useHeader={useHeader} />}
       DialogHeader={<NonFungibleHeader metadata={metadata} />}
       DialogBody={<NonFungibleDialog token_id={token_id} metadata={metadata} contract={contract} balance={balance} />}
     />
@@ -54,11 +43,11 @@ function NonFungibleTokenComponent({
 }
 
 function NonFungibleDisplay({
-  id,
+  onImageLoadError,
   metadata,
   useHeader,
 }: {
-  id: string;
+  onImageLoadError?: () => void;
   metadata: NonFungibleMetadata;
   useHeader: boolean;
 }) {
@@ -66,7 +55,7 @@ function NonFungibleDisplay({
 
   return (
     <Box maxHeight="100%" maxWidth="100%">
-      <ImageWrapper image={image} id={id} />
+      <ImageWrapper image={image} onImageLoadError={onImageLoadError} />
       {useHeader && (
         <Heading size="sm" my={2} maxWidth="100%" noOfLines={1} mx={2} textColor="profile.secondaryText">
           {name}
@@ -196,12 +185,8 @@ function NonFungibleDialog({
   );
 }
 
-// If we fail to load the image, we call hideBadge to visually hide the badge from display
-// ImageWrapper is loaded by both the display and dialog component.
-// We only want to call hide badge once per image so we will call it for the display load and not the dialog laod
-// Hidden badges are respected in the group component
-function ImageWrapper({ image, id }: { image: string; id?: string }) {
-  const dispatch = useAppDispatch();
+// if we fail to load the image, we call onImageLoadError if present.
+function ImageWrapper({ image, onImageLoadError }: { image: string; onImageLoadError?: () => void }) {
   return (
     <Flex height={BADGE_WIDTH} width={BADGE_WIDTH}>
       <Image
@@ -212,8 +197,8 @@ function ImageWrapper({ image, id }: { image: string; id?: string }) {
           </Center>
         }
         onError={() => {
-          if (id) {
-            dispatch(hideBadge(id));
+          if (onImageLoadError) {
+            onImageLoadError();
           }
         }}
         src={image}

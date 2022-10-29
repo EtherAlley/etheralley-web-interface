@@ -18,11 +18,14 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  Spinner,
 } from '@chakra-ui/react';
 import IconButtonComponent from '../../components/IconButton';
 import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'react-icons/md';
 import EtherAlley from '../../icons/EtherAlley';
-import UserButton from './UserButton';
+import { lazy, Suspense } from 'react';
+
+const WalletManager = lazy(() => import('../WalletManager')); // wallet connection is expensive so we should load it asyn
 
 interface NavItem {
   label: string;
@@ -108,7 +111,9 @@ function Navbar() {
               <DesktopNav navItems={NAV_ITEMS} />
             </Flex>
           </HStack>
-          <UserButton />
+          <Suspense fallback={<Spinner />}>
+            <WalletManager />
+          </Suspense>
         </Flex>
         <Collapse in={isOpen} animateOpacity>
           <MobileNav navItems={NAV_ITEMS} onToggleMenu={onToggle} />
