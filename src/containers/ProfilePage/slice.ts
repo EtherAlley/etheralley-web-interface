@@ -75,9 +75,6 @@ const initialState: State = {
         description: '',
         twitter_handle: '',
       },
-      picture: {
-        item: undefined,
-      },
       achievements: {
         text: '',
         items: [],
@@ -188,9 +185,6 @@ export const slice = createSlice({
     },
     updateProfileTwitterhandle: (state, action: PayloadAction<string>) => {
       state.profile.display_config.info.twitter_handle = action.payload;
-    },
-    removeProfilePicture: (state) => {
-      state.profile.display_config.picture.item = undefined;
     },
     updatePrimaryColor: (state, action: PayloadAction<string>) => {
       state.profile.display_config.colors.primary = action.payload;
@@ -462,15 +456,6 @@ function buildDefaultDisplayConfig(stateProfile: StateProfile, actionProfile: Pr
 // fix the pointers of all other items that are affected by the badge type being removed from the array
 // splice the item being deleted out of the array for the given badge type
 function removeBadge(state: State, itemBeingDeleted: DisplayItem) {
-  const picture = state.profile.display_config.picture;
-  if (
-    BadgeTypes.NonFungibleToken === itemBeingDeleted.type &&
-    picture.item &&
-    picture.item.index > itemBeingDeleted.index
-  ) {
-    picture.item.index--;
-  }
-
   for (const group of state.profile.display_config.groups) {
     for (const item of group.items) {
       if (item.type === itemBeingDeleted.type && item.index > itemBeingDeleted.index) {

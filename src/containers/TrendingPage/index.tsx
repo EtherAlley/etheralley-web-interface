@@ -2,7 +2,7 @@ import { Text, Heading, useBreakpointValue, Flex, Box, Image, LinkOverlay, LinkB
 import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
-import { BadgeTypes, NonFungibleToken, Profile } from '../../common/types';
+import { Profile } from '../../common/types';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import ProfileUser from '../../icons/ProfileUser';
@@ -176,33 +176,19 @@ function Picture({ src, premium }: { src: string | undefined; premium: boolean }
 }
 
 function getProfileImage(profile: Profile): string | undefined {
-  // take the first item in the nft array if there is no configured profile picture
+  if (!profile.profile_picture) {
+    return undefined;
+  }
+
   if (
-    !profile.display_config ||
-    !profile.display_config.picture.item ||
-    profile.display_config.picture.item.type !== BadgeTypes.NonFungibleToken
+    !profile.profile_picture.metadata ||
+    !profile.profile_picture.balance ||
+    profile.profile_picture.balance === '0'
   ) {
-    if (profile.non_fungible_tokens.length > 0 && !!profile.non_fungible_tokens[0].metadata) {
-      return profile.non_fungible_tokens[0].metadata.image;
-    }
-
     return undefined;
   }
 
-  const item = profile.display_config.picture.item;
-  const nfts = profile[item.type] as NonFungibleToken[];
-
-  if (item.index >= nfts.length || item.index < 0) {
-    return undefined;
-  }
-
-  const nft = nfts[item.index];
-
-  if (!nft.metadata) {
-    return undefined;
-  }
-
-  return nft.metadata.image;
+  return profile.profile_picture.metadata.image;
 }
 
 export default TrendingPage;
