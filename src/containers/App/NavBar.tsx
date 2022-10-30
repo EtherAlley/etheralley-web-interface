@@ -25,7 +25,7 @@ import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'reac
 import EtherAlley from '../../icons/EtherAlley';
 import { lazy, Suspense } from 'react';
 
-const WalletManager = lazy(() => import('../WalletManager')); // wallet connection is expensive so we should load it asyn
+const UserButton = lazy(() => import('../WalletManager/UserButton')); // wallet connection is expensive so we should load it asyn
 
 interface NavItem {
   label: string;
@@ -94,13 +94,15 @@ function Navbar() {
           <HStack alignItems={'center'}>
             <LinkBox>
               <Flex alignItems="center">
-                <EtherAlley width={30} height={30} />
+                <Box display={{ base: 'none', md: 'inherit' }}>
+                  <EtherAlley width={30} height={30} />
+                </Box>
                 <LinkOverlay to="/" as={RouterLink}>
                   <Heading size="md" as="span" ml={3}>
                     EtherAlley
                   </Heading>
                 </LinkOverlay>
-                <Badge colorScheme="brand" ml={3}>
+                <Badge colorScheme="brand" ml={3} display={{ base: 'none', md: 'inherit' }}>
                   {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
                 </Badge>
                 {/* Adding box with same width as logo on left to center the words EtherAlley better */}
@@ -112,7 +114,7 @@ function Navbar() {
             </Flex>
           </HStack>
           <Suspense fallback={<Spinner />}>
-            <WalletManager />
+            <UserButton />
           </Suspense>
         </Flex>
         <Collapse in={isOpen} animateOpacity>

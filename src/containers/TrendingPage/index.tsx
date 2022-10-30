@@ -1,12 +1,10 @@
-import { Text, Heading, useBreakpointValue, Flex, Box, Image, LinkOverlay, LinkBox, Skeleton } from '@chakra-ui/react';
+import { Text, Heading, useBreakpointValue, Flex, Box, LinkOverlay, LinkBox, Skeleton } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useIntl } from 'react-intl';
 import { Profile } from '../../common/types';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
-import ProfileUser from '../../icons/ProfileUser';
-import Verified from '../../icons/Verified';
 import {
   getProfiles,
   selectErrorLoadingTopProfiles,
@@ -17,6 +15,7 @@ import {
 } from './slice';
 import Error from '../../components/Error';
 import useDisplayId from '../../hooks/useDisplayId';
+import ProfilePicture from '../../components/ProfilePicture';
 
 function TrendingPage() {
   const intl = useIntl();
@@ -86,8 +85,6 @@ function TrendingPage() {
 function Row({ profile, rank }: { profile: Profile; rank?: number }) {
   const maxWidth = useBreakpointValue({ base: 200, sm: 400 });
   const trimmedAddress = useDisplayId(profile.address);
-  const premium = profile.store_assets.premium;
-  const profileImage = getProfileImage(profile);
 
   return (
     <LinkBox as={RouterLink} to={`/profiles/${profile.ens_name || profile.address}`}>
@@ -108,7 +105,7 @@ function Row({ profile, rank }: { profile: Profile; rank?: number }) {
           </Box>
         )}
 
-        <Picture premium={premium} src={profileImage} />
+        <ProfilePicture profile={profile} width={50} height={50} />
         <Box ml={5} mr={2}>
           <LinkOverlay as="span">
             <Text color="blue.400" fontWeight="bold" noOfLines={1} maxWidth={maxWidth}>
@@ -132,63 +129,6 @@ function medal(rank: number): string {
     default:
       return `${rank}`;
   }
-}
-
-function Anonymous() {
-  return (
-    <Flex
-      width="50px"
-      height="50px"
-      borderRadius="50%"
-      backgroundColor="gray.700"
-      alignItems="center"
-      justifyContent="center"
-      boxShadow="dark-lg"
-    >
-      <ProfileUser width="35px" height="35px" />
-    </Flex>
-  );
-}
-
-function Picture({ src, premium }: { src: string | undefined; premium: boolean }) {
-  return (
-    <Box position="relative">
-      {src ? (
-        <Flex>
-          <Image
-            src={src}
-            fallback={<Anonymous />}
-            width="50px"
-            height="50px"
-            borderRadius="50%"
-            maxWidth="inherit"
-            boxShadow="dark-lg"
-          />
-        </Flex>
-      ) : (
-        <Anonymous />
-      )}
-      <Box position="absolute" right="0%" bottom="0%">
-        {premium && <Verified width="20px" height="20px" />}
-      </Box>
-    </Box>
-  );
-}
-
-function getProfileImage(profile: Profile): string | undefined {
-  if (!profile.profile_picture) {
-    return undefined;
-  }
-
-  if (
-    !profile.profile_picture.metadata ||
-    !profile.profile_picture.balance ||
-    profile.profile_picture.balance === '0'
-  ) {
-    return undefined;
-  }
-
-  return profile.profile_picture.metadata.image;
 }
 
 export default TrendingPage;

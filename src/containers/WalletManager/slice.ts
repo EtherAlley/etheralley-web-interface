@@ -6,6 +6,7 @@ import { Chain, ConnectArgs, ConnectResult, Provider, Signer } from '@wagmi/core
 import { UseMutateAsyncFunction } from '@tanstack/react-query';
 import { FetchProfilesAPI } from '../../common/http';
 import { showToast } from '../App/slice';
+import { Profile } from '../../common/types';
 
 export interface State {
   isWalletModalOpen: boolean;
@@ -13,6 +14,8 @@ export interface State {
   isSwitchingNetwork: boolean;
   isDisconnectingFromWallet: boolean;
   isSigningMessage: boolean;
+  isLoadingConnectedProfile: boolean;
+  connectedProfile: Profile | undefined;
 }
 
 const initialState: State = {
@@ -21,6 +24,8 @@ const initialState: State = {
   isSwitchingNetwork: false,
   isDisconnectingFromWallet: false,
   isSigningMessage: false,
+  isLoadingConnectedProfile: false,
+  connectedProfile: undefined,
 };
 
 export const connectToWallet = createAsyncThunk<
@@ -30,7 +35,7 @@ export const connectToWallet = createAsyncThunk<
     connector: Connector;
   },
   { state: RootState }
->('app/connectToWallet', async ({ connectAsync, connector }, { dispatch }) => {
+>('wallet/connectToWallet', async ({ connectAsync, connector }, { dispatch }) => {
   try {
     await connectAsync({ connector });
     dispatch(showToast({ toast: Toasts.SUCCESS_CONNECTING_TO_WALLET, status: ToastStatuses.SUCCESS }));
@@ -48,7 +53,7 @@ export const switchNetwork = createAsyncThunk<
     chainId: number;
   },
   { state: RootState }
->('app/switchNetwork', async ({ switchNetworkAsync, chainId }, { dispatch }) => {
+>('wallet/switchNetwork', async ({ switchNetworkAsync, chainId }, { dispatch }) => {
   try {
     await switchNetworkAsync(chainId);
     dispatch(showToast({ toast: Toasts.SUCCESS_SWITCHING_NETWORK, status: ToastStatuses.SUCCESS }));
@@ -65,7 +70,7 @@ export const disconnectFromWallet = createAsyncThunk<
     disconnectAsync: UseMutateAsyncFunction<void, Error, void, unknown>;
   },
   { state: RootState }
->('app/disconnectFromWallet', async ({ disconnectAsync }, { dispatch }) => {
+>('wallet/disconnectFromWallet', async ({ disconnectAsync }, { dispatch }) => {
   try {
     await disconnectAsync();
     dispatch(showToast({ toast: Toasts.SUCCESS_DISCONNECTING_FROM_WALLET, status: ToastStatuses.SUCCESS }));
@@ -85,7 +90,7 @@ export const signMessage = createAsyncThunk<
   string,
   { address: string; signer: Signer; noCache?: boolean },
   { state: RootState }
->('profile/signMessage', async ({ address, signer, noCache }) => {
+>('wallet/signMessage', async ({ address, signer, noCache }) => {
   const storageSignature = window.localStorage.getItem(`etheralley_signature_${address}`);
   const storageSignatureExpirey = window.localStorage.getItem(`etheralley_signature_expirey_${address}`);
   const now = Date.now() / 1000;
@@ -107,6 +112,19 @@ export const signMessage = createAsyncThunk<
 
   return signature;
 });
+
+export const loadConnectedProfile = createAsyncThunk<Profile, { address: string }, { state: RootState }>(
+  'wallet/loadConnectedProfile',
+  async ({ address }) => {
+    const { error, data } = await FetchProfilesAPI<Profile>(`/profiles/${address}?hydration=light`);
+
+    if (error || !data) {
+      throw new Error('error fetching top profiles');
+    }
+
+    return data;
+  }
+);
 
 export const slice = createSlice({
   name: 'wallet',
@@ -157,6 +175,18 @@ export const slice = createSlice({
       })
       .addCase(signMessage.fulfilled, (state) => {
         state.isSigningMessage = false;
+      })
+      .addCase(loadConnectedProfile.pending, (state) => {
+        state.isLoadingConnectedProfile = true;
+        state.connectedProfile = undefined;
+      })
+      .addCase(loadConnectedProfile.rejected, (state) => {
+        state.isLoadingConnectedProfile = false;
+        state.connectedProfile = undefined;
+      })
+      .addCase(loadConnectedProfile.fulfilled, (state, action) => {
+        state.isLoadingConnectedProfile = false;
+        state.connectedProfile = action.payload;
       });
   },
 });

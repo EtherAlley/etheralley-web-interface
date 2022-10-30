@@ -8,11 +8,28 @@ import Settings from '../../common/settings';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import useDisplayId from '../../hooks/useDisplayId';
-import { disconnectFromWallet, openWalletModal, selectWallet, signMessage, switchNetwork } from './slice';
+import {
+  disconnectFromWallet,
+  loadConnectedProfile,
+  openWalletModal,
+  selectWallet,
+  signMessage,
+  switchNetwork,
+} from './slice';
+import { useEffect } from 'react';
+import Loading from '../../components/Loading';
+import ProfilePicture from '../../components/ProfilePicture';
 
-function UserButton() {
-  const { isConnectingToWallet, isWalletModalOpen, isSwitchingNetwork, isDisconnectingFromWallet, isSigningMessage } =
-    useAppSelector(selectWallet);
+export default function UserButton() {
+  const {
+    isConnectingToWallet,
+    isWalletModalOpen,
+    isSwitchingNetwork,
+    isDisconnectingFromWallet,
+    isSigningMessage,
+    isLoadingConnectedProfile,
+    connectedProfile,
+  } = useAppSelector(selectWallet);
   const dispatch = useAppDispatch();
   const intl = useIntl();
   const { address, isConnected } = useAccount();
@@ -22,6 +39,12 @@ function UserButton() {
   const navigate = useNavigate();
   const shortAddress = useDisplayId(address);
   const { data: signer } = useSigner();
+
+  useEffect(() => {
+    if (isConnected && address) {
+      dispatch(loadConnectedProfile({ address }));
+    }
+  }, [isConnected, address, dispatch]);
 
   if (!isConnected || !address) {
     return (
@@ -48,7 +71,14 @@ function UserButton() {
             }}
             variant="ghost"
           >
-            <Text>{shortAddress}</Text>
+            {isLoadingConnectedProfile ? (
+              <Loading />
+            ) : (
+              <>
+                {connectedProfile && <ProfilePicture profile={connectedProfile} width={30} height={30} />}
+                <Text ml={2}>{connectedProfile?.ens_name || shortAddress}</Text>
+              </>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent maxWidth={250} border={0} boxShadow={'xl'} bg={'gray.800'} rounded={'xl'}>
@@ -128,5 +158,3 @@ function UserButton() {
     </>
   );
 }
-
-export default UserButton;
