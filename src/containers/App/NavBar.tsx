@@ -25,7 +25,7 @@ import { MdMenu, MdClose, MdKeyboardArrowRight, MdKeyboardArrowDown } from 'reac
 import EtherAlley from '../../icons/EtherAlley';
 import { lazy, Suspense } from 'react';
 
-const WalletManager = lazy(() => import('../WalletManager')); // wallet connection is expensive so we should load it asyn
+const UserButton = lazy(() => import('../WalletManager/UserButton')); // wallet connection is expensive so we should load it asyn
 
 interface NavItem {
   label: string;
@@ -112,7 +112,7 @@ function Navbar() {
             </Flex>
           </HStack>
           <Suspense fallback={<Spinner />}>
-            <WalletManager />
+            <UserButton />
           </Suspense>
         </Flex>
         <Collapse in={isOpen} animateOpacity>

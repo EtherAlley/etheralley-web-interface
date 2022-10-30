@@ -12,6 +12,7 @@ const ProfilePage = lazy(() => import('../ProfilePage'));
 const TrendingPage = lazy(() => import('../TrendingPage'));
 const ShopPage = lazy(() => import('../ShopPage'));
 const AboutPage = lazy(() => import('../AboutPage'));
+const WalletModal = lazy(() => import('../WalletManager/WalletModal'));
 
 function App() {
   useToasts();
@@ -77,6 +78,9 @@ function App() {
           }
         />
       </Routes>
+      <Suspense>
+        <WalletModal />
+      </Suspense>
     </>
   );
 }
