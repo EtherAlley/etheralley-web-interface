@@ -76,7 +76,7 @@ export default function UserButton() {
             ) : (
               <>
                 {connectedProfile && <ProfilePicture profile={connectedProfile} width={30} height={30} />}
-                <Text ml={1}>{connectedProfile?.ens_name || shortAddress}</Text>
+                <Text ml={2}>{connectedProfile?.ens_name || shortAddress}</Text>
               </>
             )}
           </Button>

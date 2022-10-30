@@ -42,7 +42,7 @@ function Anonymous({ width, height }: { width: number; height: number }) {
       justifyContent="center"
       boxShadow="dark-lg"
     >
-      <ProfileUser width="35px" height="35px" />
+      <ProfileUser width={width * 0.7} height={height * 0.7} />
     </Flex>
   );
 }

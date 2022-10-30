@@ -94,13 +94,15 @@ function Navbar() {
           <HStack alignItems={'center'}>
             <LinkBox>
               <Flex alignItems="center">
-                <EtherAlley width={30} height={30} />
+                <Box display={{ base: 'none', md: 'inherit' }}>
+                  <EtherAlley width={30} height={30} />
+                </Box>
                 <LinkOverlay to="/" as={RouterLink}>
                   <Heading size="md" as="span" ml={3}>
                     EtherAlley
                   </Heading>
                 </LinkOverlay>
-                <Badge colorScheme="brand" ml={3}>
+                <Badge colorScheme="brand" ml={3} display={{ base: 'none', md: 'inherit' }}>
                   {intl.formatMessage({ id: 'alpha', defaultMessage: 'Alpha' })}
                 </Badge>
                 {/* Adding box with same width as logo on left to center the words EtherAlley better */}
